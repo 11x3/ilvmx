@@ -35,9 +35,10 @@ defrecord Bot,
   be signaled of updates.
   """
   def exe(nubspace, cupcake \\ []) do
-    # set :commands and spawn
     Bot.w(nubspace: nubspace, cupcake: fn bot, nub ->
-      #nub = ILM.Nubspace.pull! nubspace
+      # Transform the bot in real-time, from this
+      # fun to the fun originally passed into exe.
+      ILM.Nubspace.jump! bot.cupcake(cupcake), nubspace
     end)
     |> Castle.arrow!
   end

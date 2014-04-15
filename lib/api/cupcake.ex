@@ -8,6 +8,7 @@ defrecord Cupcake,
      exes: [],
      pips: [],
      elms: [],
+   unique: nil,
       fps: 1 do
 
   @moduledoc """
@@ -51,41 +52,41 @@ defrecord Cupcake,
   #   @(!) ["#ilm #signals #players #filter #latest", @player]
   # """
   
-  def from(nubspace) do
-    segments = nubspace |> String.split " "
-    
-    args = [
-      galaxy: Castle.galaxy,
-      castle: Castle.door,  # "#lolnub" top level namespace
-    ]
-    
-    if length(segments) > 0 do
-      args = Enum.concat(args, [domain: Enum.at(segments, 0)])
-    end
-    if length(segments) > 1 do
-      args = Enum.concat(args, [system: Enum.at(segments, 1)])
-    end
-    if length(segments) > 2 do
-      args = Enum.concat(args, [module: Enum.at(segments, 2)])
-    end
-    if length(segments) > 3 do
-      args = Enum.concat(args, [member: Enum.at(segments, 3)])
-    end
-    if length(segments) > 4 do
-      args = Enum.concat(args, [method: Enum.at(segments, 4)])
-    end
-    # todo: add cupcake storage
-    # if length segments > 7 do
-    #   #args = args[cupcake: elem segments, 7]
-    # end
-    
-    new(args)
-  end
+  # def from(nubspace) do
+  #   segments = nubspace |> String.split " "
+  #   
+  #   args = [
+  #     galaxy: Castle.galaxy,
+  #     castle: Castle.door,  # "#lolnub" top level namespace
+  #   ]
+  #   
+  #   if length(segments) > 0 do
+  #     args = Enum.concat(args, [domain: Enum.at(segments, 0)])
+  #   end
+  #   if length(segments) > 1 do
+  #     args = Enum.concat(args, [system: Enum.at(segments, 1)])
+  #   end
+  #   if length(segments) > 2 do
+  #     args = Enum.concat(args, [module: Enum.at(segments, 2)])
+  #   end
+  #   if length(segments) > 3 do
+  #     args = Enum.concat(args, [member: Enum.at(segments, 3)])
+  #   end
+  #   if length(segments) > 4 do
+  #     args = Enum.concat(args, [method: Enum.at(segments, 4)])
+  #   end
+  #   # todo: add cupcake storage
+  #   # if length segments > 7 do
+  #   #   #args = args[cupcake: elem segments, 7]
+  #   # end
+  #   
+  #   Nub.new(args)
+  # end
   
   @doc """
   """
   def frost(frosting) when is_binary frosting do
-    cupcake = Cupcake.new frosting: frosting
+    cupcake = Cupcake.w frosting: frosting
     
     cupcake = cupcake.commands(String.split(frosting, "\n") |> Enum.map fn cake -> 
       cmd = String.slice(String.lstrip(cake), 0..3)
@@ -141,5 +142,14 @@ defrecord Cupcake,
       i: "@(!)", x: false,
       i: "@elm", x: false,
     ]
+  end
+  
+  # Private
+  
+  @moduledoc """
+  Bots are actions/routes/requests. They much like Doge, sometimes cost more.
+  """
+  def w(args \\ []) do
+    apply __MODULE__, :new, [Enum.concat(args, [unique: ILM.uuid])]
   end
 end

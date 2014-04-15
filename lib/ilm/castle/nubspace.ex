@@ -64,9 +64,16 @@ defmodule ILM.Nubspace do
 
   @doc """
   Execute a `nubspace` with `cupcake`.
+  # todo: make this non-brute force
   """
-  def jump!(nubspace, cupcake) do
+  def jump!(bot, nubspace) do
+    nub = pull! nubspace
     
+    bot.results(nub.cupcakes |> Enum.map fn cake -> 
+      if is_function cake do
+        cake.(bot, bot.cupcake)
+      end
+    end)
   end
   
 
