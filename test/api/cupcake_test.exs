@@ -1,20 +1,18 @@
 defmodule CupcakeTest do
   use   ExUnit.Case
   
-  test "Frosting.from :path, path" do
-    assert "#ilm" == Frosting.from "/ilm" 
-  end
-  
-
-
-  test "Cupcake.frost" do
-    Test.assert_unique (Cupcake.frost """
-@set #me #jam
-    """
-    ).unique
-  end
+  # test "Cupcake.from :path, path" do
+  #   assert "#ilm" == Cupcake.from "/ilm" 
+  # end
 
 end
+
+  #   test "Cupcake.frost" do
+  #     Test.assert_unique (Cupcake.frost """
+  # @set #me #jam
+  #     """
+  #     ).unique
+  #   end
 
 
 # @set #me #jam

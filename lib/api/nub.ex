@@ -7,41 +7,12 @@ defrecord Nub,
   module: nil,    # :api  # module        "support"
   member: nil,    # :api  # function      "search"
   method: nil,    # :api  # etc           "advanced"
- cupcake: []   do # :data # args          "words"
+cupcakes: []   do # :data # args          "words"
 
+  @doc """
+  Shortcut to create a `Nub`.   
+  """
   def w(args \\ []) do
-    apply __MODULE__, :new, [List.flatten([args ++ [unique: ILM.uuid]])]
+    apply __MODULE__, :new, [args]
   end
-  
-  def from(cupcake) do
-    segments = cupcake |> String.split " "
-    
-    args = [
-      galaxy: Castle.galaxy,
-      castle: Castle.door,  # "#lolnub" top level namespace
-    ]
-    
-    if length(segments) > 0 do
-      args = Enum.concat(args, [domain: Enum.at(segments, 0)])
-    end
-    if length(segments) > 1 do
-      args = Enum.concat(args, [system: Enum.at(segments, 1)])
-    end
-    if length(segments) > 2 do
-      args = Enum.concat(args, [module: Enum.at(segments, 2)])
-    end
-    if length(segments) > 3 do
-      args = Enum.concat(args, [member: Enum.at(segments, 3)])
-    end
-    if length(segments) > 4 do
-      args = Enum.concat(args, [method: Enum.at(segments, 4)])
-    end
-    # todo: add cupcake storage
-    # if length segments > 7 do
-    #   #args = args[cupcake: elem segments, 7]
-    # end
-    
-    w(args)
-  end
-
 end

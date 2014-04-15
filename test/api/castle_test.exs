@@ -8,4 +8,11 @@ defmodule CastleTest do
   test "Castle.door" do
     assert "#lolnub" == Castle.door
   end
+  
+  # test "Castle.arrow!" do
+  #   Bot.set "#chat", "todo"
+  #   
+  #   assert ["todo"] == Castle.arrow! Bot.get "#chat"
+  # end
+  
 end

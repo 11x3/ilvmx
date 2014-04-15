@@ -16,22 +16,38 @@ defmodule Castle do
   """
   def door, do: "#lolnub"
 
-
-  @doc """  
-  Add a global Cupcake route to this Castle for Bots to take.
+  @doc """
+  Send a `Cupcake` carrying `Bot` into the Castle, return an Event back that
+  be captured and signaled or ignored.
+  # Spawn |> Event[unique: uuid] 
   """
-  defmacro let(cupcake, contents) do    
-    quote do
-      bender = fn bot, nub ->
-        case is_function unquote(contents) do
-          true -> unquote(contents).(bot, nub)
-          false -> unquote(contents)
-        end
-      end
-      
-      Bot.cmd(unquote(cupcake), bender)
-    end
+  def arrow!(bot = Bot[]) do
+    ILM.Wizard.deflect! bot
   end
+
+  # @doc """
+  # Send a Cupcake message into the Castle and wait for the results.
+  # Spawn |> Wait |> Bot
+  # """
+  # def dove!(bot) do
+  #   
+  # end
+  
+  # @doc """  
+  # Add a global Cupcake route to this Castle for Bots to take.
+  # """
+  # defmacro let(cupcake, contents) do
+  #   quote do
+  #     bender = fn bot, nub ->
+  #       case is_function unquote(contents) do
+  #         true -> unquote(contents).(bot, nub)
+  #         false -> unquote(contents)
+  #       end
+  #     end
+  #     
+  #     Bot.cmd(unquote(cupcake), bender)
+  #   end
+  # end
   
   # allow / deny / xray
 end

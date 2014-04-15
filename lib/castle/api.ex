@@ -8,3 +8,9 @@
 # @(~) ["#ilm #signals #players", @player]
 # @(!) ["#ilm #signals #players", @player]
 # @(!) ["#ilm #signals #players #filter #latest", @player]
+# set :commands and spawn
+# 
+# Bot.w(nubspace: "#lolnub", cupcake: fn bot, nub -> 
+#   ILM.Nubspace.cupcakes |> Dict.to_list
+# end)
+# |> ILM.BotLab.exe!

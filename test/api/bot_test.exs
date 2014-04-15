@@ -4,15 +4,11 @@ defmodule BotTest do
 
   import Bot
   alias ILM.Nubspace
-
+  
   test "Bot.set(cupcake, static_content)" do
     Bot.set "#chat", "todo"
     
-    nub = List.first Bot.get "#chat"
-    
-    assert ["todo"] == nub.cupcake
+    assert ["todo"] == (Bot.get "#chat").cupcakes
   end
-  
-  # test "Bot.set(cupcake, function)"
-  
+    
 end

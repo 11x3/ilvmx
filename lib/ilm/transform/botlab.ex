@@ -11,48 +11,19 @@ defmodule ILM.BotLab do
   When all Nubs have been executed (including scheduling future events etc),
   the Bot is passed from :transform to :emit where the individual :effects are
   forwarded to the various areas of the app/network.
-  
-  # Given this Bot request:
-  #
-  # Bot[
-  #   cupcake: "#chat",
-  #   effects: [],
-  #   problems: [],
-  #   accounts: [cash: [],
-  #   karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
-  #   unique: "50c2d34a-78b4-436c-a6ec-9891806e0e84",
-  #   command: fun]
-  # ]
-
-  # and this nub:
-  # Nub[
-  #   galaxy: :ilvmx, 
-  #   castle: "#lolnub", 
-  #   unique: "c7b36851-01e9-47df-8c40-7322c6404376", 
-  #   system: "#ilm", 
-  #   domain: "#chat", 
-  #   module: nil, 
-  #   member: nil, 
-  #   method: nil, 
-  #   cupcake: []]
-  # ]
   """
-
+  
   @doc """
-  Find, signal, and return a Nubspace.
-  # todo: add signal to nubs.
+  Dispatch or call the Bot + Nub pair.
   """
-  def exe!(bot) do
-    if is_function bot.cupcake do
-      results = [bot.cupcake.(bot, [ILM.Nubspace.pull!(bot.nubspace)])]
-      |> List.flatten
-    else
-      ILM.Nubspace.pull! bot.nubspace
+  def upload!(bot = Bot[]) do
+    # grab the nub from midair..
+    nub = ILM.Nubspace.pull! bot.nubspace
+    # are we a function?
+    case is_function bot.cupcake do
+      true  -> bot.cupcake.(bot, nub)
+      false -> nub
     end
-  end
-  
-  def sig!(bot) do
-    
   end
 
   # Private
