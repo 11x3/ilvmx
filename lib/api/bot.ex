@@ -15,6 +15,8 @@ defrecord Bot,
   def set(nubspace, cupcake) do
     Bot.w(nubspace: nubspace, cupcake: fn bot, nub -> 
       ILM.Nubspace.push! bot.nubspace, cupcake
+      
+      bot
     end)
     |> Castle.arrow!
   end
@@ -39,6 +41,8 @@ defrecord Bot,
       # Transform the bot in real-time, from this
       # fun to the fun originally passed into exe.
       ILM.Nubspace.jump! bot.cupcake(cupcake), nubspace
+      
+      bot
     end)
     |> Castle.arrow!
   end

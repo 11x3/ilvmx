@@ -15,6 +15,10 @@ defmodule ILM.Test do
     assert_get "http://localhost:4000/ilm"
   end
 
+  test "ilm (nubspace)" do
+    assert_get "http://localhost:4000/ilm"
+  end
+  
   defp get_body(path) do
     HTTPotion.get(path).body
   end

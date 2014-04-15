@@ -69,11 +69,14 @@ defmodule ILM.Nubspace do
   def jump!(bot, nubspace) do
     nub = pull! nubspace
     
-    bot.results(nub.cupcakes |> Enum.map fn cake -> 
-      if is_function cake do
-        cake.(bot, bot.cupcake)
+    results = nub.cupcakes |> Enum.map fn cake ->
+      case is_function cake do
+        true  -> [cake.(bot, bot.cupcake)]
+        false -> [cake]
       end
-    end)
+    end
+    
+    bot.results(List.flatten(Enum.concat(bot.results, results)))
   end
   
 
