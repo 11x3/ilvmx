@@ -44,10 +44,10 @@ defmodule ILM.WebServer do
   def call(conn, opts) do
     # drop an empty list so that the first tag in the nubspace will also
     # get picked up by the Enum.join
-    # event = Bot.get Cupcake.from(conn.path_info)
+    # event = Bot.get Frosting.from(conn.path_info)
     # # todo: capture the bot, and don't send until we get an event back 
     # send_resp(conn, 200, "[event: #{ event.unique }]")
-    result = inspect Bot.get(Cupcake.from(conn.path_info))
+    result = inspect Bot.get(Frosting.from(conn.path_info))
     
     send_resp(conn, 200, result)
   end

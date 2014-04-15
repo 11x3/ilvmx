@@ -3,8 +3,9 @@ defrecord Event,
    source: nil do
   
   @moduledoc """
-  Events package a `source` of the event and random content. Like Xmas for 
-  whoever codes these.
+  The basic news unit of ILM. (ie. 1 request = n events) Events package 
+  a `source` of the event and random content. Like Xmas for whoever 
+  codes these.  
   ```
   event = [
     content = Result[ 

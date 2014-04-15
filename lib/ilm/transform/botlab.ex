@@ -1,6 +1,6 @@
 defmodule ILM.BotLab do
   use GenServer.Behaviour
-      
+  
   @moduledoc """
   BotLab is our ILM Bot WHQ and takes a request from the client or :adapt 
   stage of ATE and submits them to our :transform pipeline.
@@ -34,7 +34,7 @@ defmodule ILM.BotLab do
   #   module: nil, 
   #   member: nil, 
   #   method: nil, 
-  #   bucket: []]
+  #   cupcake: []]
   # ]
   """
 
@@ -43,12 +43,16 @@ defmodule ILM.BotLab do
   # todo: add signal to nubs.
   """
   def exe!(bot) do
-    results = [bot.command.(bot, ILM.Nubspace.pull! bot.cupcake)]
+    if is_function bot.cupcake do
+      results = [bot.cupcake.(bot, [ILM.Nubspace.pull!(bot.nubspace)])]
+      |> List.flatten
+    else
+      ILM.Nubspace.pull! bot.nubspace
+    end
+  end
+  
+  def sig!(bot) do
     
-    results = results |> List.flatten
-    
-    # |> Enum.concat(bot.results, [results])
-    # |> bot.results(results)
   end
 
   # Private

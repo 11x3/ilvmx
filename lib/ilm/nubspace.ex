@@ -18,49 +18,63 @@ defmodule ILM.Nubspace do
   end
   
   @doc """
+  Return all Nubs in the Castle. (won't be here long)
+  """
+  def signals do
+    n = ConCache.get_or_store ILM.cache, @signals, fn -> 
+      []
+    end
+  end
+  
+  @doc """
+  Call all captured signals.
+  """
+  def signal!(nubspace, cupcake) do
+    
+  end
+  
+  @doc """
+  Beam or lift a Bot (in a reactive style), onto a Nubspace to produce an 
+  FRP-like signal. todo: add the :epoch support back in.
+  
+  Or.. beam a Bot up into the Nubspace where it may long live the rest of its 
+  days. Or at least until it discovers a tiny civilization has developed on 
+  the rear, and then God and friends save it. The End. 
+  """
+  def beam!(bot) when not nil? bot do
+    ConCache.put ILM.cache, @signals, Enum.concat(signals, [bot])
+    
+    bot
+  end
+  
+  @doc """
   Get a nub from the Castle.
   """
-  def pull!(cupcake) when is_binary cupcake and not nil? cupcake do
+  def pull!(nubspace) when is_binary nubspace and not nil? nubspace do
+    get nubspace
+  end
+  def pull!(cupcake) when is_record cupcake and not nil? cupcake do
     get cupcake
   end
   
   def push!(cupcake, contents) do
     nub = get cupcake
-    nub = nub.bucket(Enum.concat(nub.bucket, [contents]))
+    nub = nub.cupcake(Enum.concat(nub.cupcake, [contents]))
     
     # todo: explore nub storage options 
     ConCache.put ILM.cache, @nubspace, Dict.put(nubspace, cupcake, nub)
     
+    # push signals to update captures
+    # signals |> Enum.filter fn sig ->
+    #   cupcake == sig.cupcake
+    # end |> Enum.to_list |> Enum.each fn sig ->
+    #   if is_function sig.command do
+    #     sig.command.(cupcake, contents)
+    #   end
+    # end
+    
     nub
   end
-  
-  # @doc """
-  # Return all Nubs in the Castle. (won't be here long)
-  # """
-  # def signals do
-  #   n = ConCache.get_or_store ILM.cache, @signals, fn -> 
-  #     []
-  #   end
-  # end
-  
-  # @doc """
-  # Beam or lift a Bot (in a reactive style), onto a Nubspace to produce an 
-  # FRP-like signal. todo: add the :epoch support back in.
-  # 
-  # Or.. beam a Bot up into the Nubspace where it may long live the rest of its 
-  # days. Or at least until it discovers a tiny civilization has developed on 
-  # the rear, and then God and friends save it. The End. 
-  # """
-  # def capture!(bot) when not nil? bot do
-  #   ConCache.put ILM.cache, @signals, Enum.concat(signals, [bot])
-  #   
-  #   throw IO.inspect bot
-  #   throw IO.inspect signals
-  #       
-  #   bot
-  # end
-
-
   
   # Private
   

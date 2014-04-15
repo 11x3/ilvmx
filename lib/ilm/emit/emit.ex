@@ -21,7 +21,7 @@ defmodule ILM.Emit do
   Begin signaling on the Bot's properties.
   """
   def signal!(bot) do
-    ILM.EmitServer.signal! bot
+    #ILM.EmitServer.signal! bot
   end
   
   

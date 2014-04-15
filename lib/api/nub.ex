@@ -7,7 +7,7 @@ defrecord Nub,
   module: nil,    # :api  # module        "support"
   member: nil,    # :api  # function      "search"
   method: nil,    # :api  # etc           "advanced"
-  bucket: []   do # :data # args          "words"
+ cupcake: []   do # :data # args          "words"
 
   def w(args \\ []) do
     apply __MODULE__, :new, [List.flatten([args ++ [unique: ILM.uuid]])]
@@ -36,9 +36,9 @@ defrecord Nub,
     if length(segments) > 4 do
       args = Enum.concat(args, [method: Enum.at(segments, 4)])
     end
-    # todo: add bucket storage
+    # todo: add cupcake storage
     # if length segments > 7 do
-    #   #args = args[bucket: elem segments, 7]
+    #   #args = args[cupcake: elem segments, 7]
     # end
     
     w(args)
