@@ -1,44 +1,58 @@
 defmodule ILM.BotLab do
   use GenServer.Behaviour
-  use OtpDsl.Genserver
-  
-  alias ConCache
-  alias ILM.Nubspace
-  
+      
   @moduledoc """
   BotLab is our ILM Bot WHQ and takes a request from the client or :adapt 
   stage of ATE and submits them to our :transform pipeline.
   
-  Nubs stored in the Bots.script property are called in :transform and the
-  results mapped and forwarded together to the next Nub in :script.
+  Cupcake DSLs stored in the Bots.script property are called in the :transform 
+  and the effects mapped and forwarded together to the next cmd in :script.
   
   When all Nubs have been executed (including scheduling future events etc),
-  the Bot is passed from :transform to :emit where the individual :results are
-  forwarded to the various areas of the app/net.
+  the Bot is passed from :transform to :emit where the individual :effects are
+  forwarded to the various areas of the app/network.
+  
+  # Given this Bot request:
+  #
+  # Bot[
+  #   cupcake: "#chat",
+  #   effects: [],
+  #   problems: [],
+  #   accounts: [cash: [],
+  #   karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
+  #   unique: "50c2d34a-78b4-436c-a6ec-9891806e0e84",
+  #   command: fun]
+  # ]
+
+  # and this nub:
+  # Nub[
+  #   galaxy: :ilvmx, 
+  #   castle: "#lolnub", 
+  #   unique: "c7b36851-01e9-47df-8c40-7322c6404376", 
+  #   system: "#ilm", 
+  #   domain: "#chat", 
+  #   module: nil, 
+  #   member: nil, 
+  #   method: nil, 
+  #   bucket: []]
+  # ]
   """
-  
-  # API
-  
-  def exe(bot) do
-    transform bot, bot.script
-  end
 
   @doc """
-  Not public yet.
+  Find, signal, and return a Nubspace.
+  # todo: add signal to nubs.
   """
-  def transform(bot, nil) do
-    # todo: throw an Event that the Bot ran
-    bot
+  def exe!(bot) do
+    results = [bot.command.(bot, ILM.Nubspace.pull! bot.cupcake)]
+    
+    results = results |> List.flatten
+    
+    # |> Enum.concat(bot.results, [results])
+    # |> bot.results(results)
   end
-  def transform(bot, nubs) when is_list nubs do
-    # transform each nub in the script
-    transform(bot, hd nubs)
-  end
-  def transform(bot, nub) do    
-    # call the bucket with the entire bot as the arg
-    bot
-  end
-  
+
+  # Private
+
   # GenServer Callbacks
 
   def start_link do

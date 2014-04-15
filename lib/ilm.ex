@@ -25,10 +25,10 @@ defmodule ILM do
   # Native API
   
   @doc """
-  Return the ILM.app.
+  Return the ILM.castle.
   """
-  def app do
-    Process.whereis :ilm
+  def castle do
+    Process.whereis :castle
   end
 
   @doc """
@@ -75,6 +75,6 @@ defmodule ILM do
     
     # app
     ILM.cache
-    ILM.Supervisor.start_link
+    ILM.Castle.Supervisor.start_link
   end
 end

@@ -1,62 +1,77 @@
 defrecord Bot, 
-      plug: nil,
-    script: [],           # [nubs_to_hit]
-   results: [],           # effects[[updated: :nub]]
-  problems: [],           # [events]
-   account: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
-    unique: nil do   # callback
-  
-  alias ILM.Nubspace
-  
+   cupcake: nil,          # string    : "#some #app"
+   results: [],           
+  problems: [],           # [error_events]
+  accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
+    unique: nil,
+   command: nil do        # callback
+    
   @moduledoc """
-  Bots are Actions/Routes/Requests. They much like Doge, sometimes cost more.
-  
-  Nub[
-    method: :ilm,
-    unique: ILM.uuid,
-    galaxy: nil,
-    castle: nil,
-    system: nil,
-    domain: nil,
-    module: nil,
-    member: nil,
-    bucket: []
-  ]  
+  Bots are actions/routes/requests. They much like Doge, sometimes cost more.
   """
-  def w(args \\ []) do
-    apply __MODULE__, :new, [args ++ [unique: ILM.uuid]]
+  def w(args) do
+    apply __MODULE__, :new, [Enum.concat(args, [unique: ILM.uuid])]
   end
   
   @doc """  
-  Tell a Bot to get and exe a Nubspace.
+  Add a global Cupcake route to this Castle for Bots to take.
   """
-  def exe(nubspace) when is_binary nubspace do
-    exe Nubspace.get nubspace
+  # defmacro api(cupcake, contents) do    
+  #   quote do
+  #     bender = fn bot, nub ->
+  #       case is_function unquote(contents) do
+  #         true -> unquote(contents).(bot, nub)
+  #         false -> unquote(contents)
+  #       end
+  #     end
+  #     
+  #     Bot.cmd(unquote(cupcake), bender)
+  #   end
+  # end
+  
+  
+  @doc """
+  Tell a Bot to exe a Cupcake script. Returns an Event you may capture to 
+  be signaled of updates.
+  """
+  def set(cupcake, contents) do
+    # set :commands and spawn
+    Bot.w(cupcake: cupcake, command: fn bot, nub -> 
+      ILM.Nubspace.push! bot.cupcake, contents
+    end)
+    |> ILM.BotLab.exe!
   end
   
-  @doc """  
-  Tell a Bot to exe a Nub.
+  @doc """
+  Tell a Bot to exe a Cupcake script. Returns an Event you may capture to 
+  be signaled of updates.
   """
-  def exe(nub = Nub[]) do
-    ILM.BotLab.exe Bot.w script: [nub]
+  def get(cupcake) do
+    # set :commands and spawn
+    Bot.w(cupcake: cupcake, command: fn bot, nub ->
+      ILM.Nubspace.pull! cupcake
+    end)
+    |> ILM.BotLab.exe!
   end
   
-  @doc """  
-  Tell a Bot to exe against a Plug connection.
-  """
-  def plug(conn, opts) do
-    ILM.BotLab.exe Bot.w plug: [conn: conn, opts: opts]
-  end
+  # @doc """
+  # Tell a Bot to exe a Cupcake script. Returns an Event you may capture to 
+  # be signaled of updates.
+  # """
+  # def exe(cupcake) do
+  #   # set :commands and spawn
+  #   Bot.w(cupcake: cupcake) |> ILM.BotLab.get!
+  # end
   
-
-
-  @doc """  
-  Add a global route to this Castle for Bots to take.
+  @doc """
+  Easy method to check/return the first effect.
   """
-  defmacro cmd(nubspace, do: script) do
-    quote do
-      ILM.BotLab.exe Bot.w script: [unquote(script)]
-    end
-  end
+  # def result(bot) do
+  #   hd bot.results
+  # end
+  # 
+  # def effects do
+  #   # scan through results and "bring up" the Events
+  # end
   
 end
