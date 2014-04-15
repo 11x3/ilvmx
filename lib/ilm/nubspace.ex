@@ -42,7 +42,7 @@ defmodule ILM.Nubspace do
   #     []
   #   end
   # end
-  # 
+  
   # @doc """
   # Beam or lift a Bot (in a reactive style), onto a Nubspace to produce an 
   # FRP-like signal. todo: add the :epoch support back in.

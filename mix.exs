@@ -34,6 +34,7 @@ defmodule ILM.Mixfile do
       {:plug,                   github: "elixir-lang/plug"},
       {:httpotion,              github: "myfreeweb/httpotion"},
       {:otp_dsl,                github: "pragdave/otp_dsl"},
+      {:jsex,                   github: "talentdeficit/jsex"},
     ]
   end
 end

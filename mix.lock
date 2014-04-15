@@ -7,6 +7,8 @@
   "httpoison": {:git, "git://github.com/edgurgel/httpoison.git", "aacfb553a446bd2b67d88428481378e8a3c4f41e", []},
   "httpotion": {:git, "git://github.com/myfreeweb/httpotion.git", "94b0fdb7bb1f5322791e3a309f2e06d0b8ab9ef3", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "7871e2ebe8811efb64e1917e2de455fa87e8dfe3", [tag: "v4.1.0"]},
+  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "65aa6ae7c1543a0c4e83032c04626af7be7a7f3e", []},
+  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
   "mime": {:git, "git://github.com/dynamo/mime.git", "db84370c53a67a7e58a4d0cfb026f4edc64a9367", []},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [ref: "master"]},
   "ossp_uuid": {:git, "git://github.com/yrashk/erlang-ossp-uuid.git", "5839a91796349114375c9cb066ec4e1dfdb653ab", []},

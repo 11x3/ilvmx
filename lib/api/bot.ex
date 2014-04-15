@@ -13,23 +13,6 @@ defrecord Bot,
     apply __MODULE__, :new, [Enum.concat(args, [unique: ILM.uuid])]
   end
   
-  @doc """  
-  Add a global Cupcake route to this Castle for Bots to take.
-  """
-  # defmacro api(cupcake, contents) do    
-  #   quote do
-  #     bender = fn bot, nub ->
-  #       case is_function unquote(contents) do
-  #         true -> unquote(contents).(bot, nub)
-  #         false -> unquote(contents)
-  #       end
-  #     end
-  #     
-  #     Bot.cmd(unquote(cupcake), bender)
-  #   end
-  # end
-  
-  
   @doc """
   Tell a Bot to exe a Cupcake script. Returns an Event you may capture to 
   be signaled of updates.

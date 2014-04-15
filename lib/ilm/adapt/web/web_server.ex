@@ -1,3 +1,18 @@
+defimpl JSEX.Encoder, for: Nub do
+  def json(record) do
+    [:start_object, 
+      "galaxy", record.galaxy, 
+      "castle", record.castle, 
+      "unique", record.unique, 
+      "domain", record.domain, 
+      "system", record.system, 
+      "module", record.module, 
+      "member", record.member, 
+      "method", record.method, 
+      :end_object]
+  end
+end
+
 defmodule ILM.WebServer do
   import  Plug.Connection
   use     Plug.Router
@@ -29,10 +44,12 @@ defmodule ILM.WebServer do
   def call(conn, opts) do
     # drop an empty list so that the first tag in the nubspace will also
     # get picked up by the Enum.join
-    event = Bot.exe Cupcake.from(conn.path_info)
+    # event = Bot.get Cupcake.from(conn.path_info)
+    # # todo: capture the bot, and don't send until we get an event back 
+    # send_resp(conn, 200, "[event: #{ event.unique }]")
+    result = inspect Bot.get(Cupcake.from(conn.path_info))
     
-    # todo: capture the bot, and don't send until we get an event back 
-    send_resp(conn, 200, "[event: #{ event.unique }]")
+    send_resp(conn, 200, result)
   end
   
   @doc """
