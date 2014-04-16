@@ -56,7 +56,13 @@ defmodule ILM.Nubspace do
     
     results = nub.cupcakes |> Enum.map fn cake ->
       case is_function cake do
-        true  -> [cake.(bot.cupcake)]
+        true  -> 
+          try do
+            Effect.w cupcake: cake, result: cake.(bot.cupcake)
+          rescue 
+            x in [RuntimeError, ArgumentError, BadArityError] -> 
+              Effect.w error: x, cupcake: cake
+          end
         false -> [cake]
       end
     end
