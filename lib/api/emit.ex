@@ -1,4 +1,4 @@
-defmodule ILM.Emit do
+defmodule Emit do
   
   @moduledoc """
   Emit is where our apps produce most of their outside world side effects from 
@@ -21,7 +21,8 @@ defmodule ILM.Emit do
   @doc """
   Begin signaling on the Bot's properties.
   """
-  def signal!(unique, event) do
+  def signal!(channel, event) do
+    # todo
   end
   
   @doc """
@@ -34,7 +35,7 @@ defmodule ILM.Emit do
   Bot close or commit the Bot to the Galactic record.
   """
   def commit!(bot) do
-    ILM.EmitServer.commit! bot
+    bot |> ILM.EmitServer.commit!
   end
 
 end

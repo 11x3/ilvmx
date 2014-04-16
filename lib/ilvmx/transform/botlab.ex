@@ -13,20 +13,6 @@ defmodule ILM.BotLab do
   forwarded to the various areas of the app/network.
   """
   
-  @doc """
-  Dispatch or call the Bot + Nub pair.
-  """
-  def upload!(bot = Bot[]) do
-    # grab the nub from midair..
-    nub = ILM.Nubspace.pull! bot.nubspace
-
-    # are we a function?
-    case is_function bot.cupcake do
-      true  -> bot.cupcake.([bot: bot, nub: nub])
-      false -> nub
-    end
-  end
-
   # Private
 
   # GenServer Callbacks

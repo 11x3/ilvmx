@@ -1,9 +1,9 @@
-defmodule ILM.Wizard do
+defmodule Wizard do
   
   def deflect!(bot) do
     # todo: filter/enrich/track/intercept the bot/request/data via Spells
     
-    bot |> ILM.BotLab.upload!  
+    bot |> ILM.Nubspace.upload!  
   end
   
   def befriend!(bot) do
@@ -11,7 +11,7 @@ defmodule ILM.Wizard do
     # todo: ilm is all async baby, so we need to spawn the bot, then 
     # receive on it's `.unique` from Emit.capture... sleep... wakeup and 
     # attempt to respond.
-    bot |> ILM.BotLab.upload!  
+    bot |> ILM.Nubspace.upload!  
   end
   
   # @doc """  

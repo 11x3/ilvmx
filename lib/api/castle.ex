@@ -36,7 +36,7 @@ defmodule Castle do
   Spawn |> Event[unique: uuid] 
   """
   def arrow!(bot = Bot[]) do
-    ILM.Wizard.deflect! bot
+    Wizard.deflect! bot
   end
 
   @doc """
@@ -46,7 +46,7 @@ defmodule Castle do
   Spawn |> Wait |> Event[unique: uuid] |> End |> Bot
   """
   def dove!(bot = Bot[]) do
-    ILM.Wizard.befriend! bot
+    Wizard.befriend! bot
   end
   
   

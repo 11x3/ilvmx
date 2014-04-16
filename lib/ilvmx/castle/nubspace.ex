@@ -28,6 +28,9 @@ defmodule ILM.Nubspace do
     # todo: explore nub storage options 
     ConCache.put ILM.cache, @nubspace, Dict.put(cupcakes, nubspace, nub)
     
+    # unique / key / value
+    Emit.signal! nubspace, Event.w(nub.unique, cupcake)
+    
     # push signals to update captures
     # signals |> Enum.filter fn sig ->
     #   cupcake == sig.cupcake
@@ -70,8 +73,20 @@ defmodule ILM.Nubspace do
     bot.results(List.flatten(Enum.concat(bot.results, results)))
   end
   
-  
+  @doc """
+  Dispatch or call the Bot + Nub pair.
+  """
+  def upload!(bot = Bot[]) do
+    # grab the nub from midair..
+    nub = ILM.Nubspace.pull! bot.nubspace
 
+    # are we a function?
+    case is_function bot.cupcake do
+      true  -> bot.cupcake.([bot: bot, nub: nub])
+      false -> nub
+    end
+  end
+  
   # Private
   
   # Pull `nubspace` from cache or Db
