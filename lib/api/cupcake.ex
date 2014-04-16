@@ -1,3 +1,9 @@
+import EEx
+
+# EEx.eval_string(
+#  "Foo <%= inspect(dict) %>", 
+#  [dict: ListDict.new([{"a", [{"b", "test"}]}])])
+
 defrecord Cupcake,
  nubspace: nil,
  commands: [],
@@ -39,11 +45,11 @@ defrecord Cupcake,
   #   @exe ["#ilm #lolnub #players #validate", @player]
   #   @fps 1 #
   #   @(~) ["#ilm #signals #players", @player]
-  #   @elm "5x5", "/elm/app"
+  #   | @elm "5x5", "/elm/app"
   #   | @set :title, "Welcome to lolnub, #{ @player }"       
   #   | @pip ["#apps #chat nubspace"]           # @ picture in place, or unquote
   #   | @pip ["#apps #kb"]
-  #   | @pip ["#http #youtube |> #search", "a7x"]
+  #   | @pip ["#web #youtube |> #search", "a7x"]
   #   | @nub ["#apps #footer"]
   #   ]]
   #   ... @exe ["#ilm #filters #after #exitpoll", @player]
@@ -51,38 +57,7 @@ defrecord Cupcake,
   #   @(!) ["#ilm #signals #players", @player]
   #   @(!) ["#ilm #signals #players #filter #latest", @player]
   # """
-  
-  # def from(nubspace) do
-  #   segments = nubspace |> String.split " "
-  #   
-  #   args = [
-  #     galaxy: Castle.galaxy,
-  #     castle: Castle.door,  # "#lolnub" top level namespace
-  #   ]
-  #   
-  #   if length(segments) > 0 do
-  #     args = Enum.concat(args, [domain: Enum.at(segments, 0)])
-  #   end
-  #   if length(segments) > 1 do
-  #     args = Enum.concat(args, [system: Enum.at(segments, 1)])
-  #   end
-  #   if length(segments) > 2 do
-  #     args = Enum.concat(args, [module: Enum.at(segments, 2)])
-  #   end
-  #   if length(segments) > 3 do
-  #     args = Enum.concat(args, [member: Enum.at(segments, 3)])
-  #   end
-  #   if length(segments) > 4 do
-  #     args = Enum.concat(args, [method: Enum.at(segments, 4)])
-  #   end
-  #   # todo: add cupcake storage
-  #   # if length segments > 7 do
-  #   #   #args = args[cupcake: elem segments, 7]
-  #   # end
-  #   
-  #   Nub.new(args)
-  # end
-  
+    
   @doc """
   """
   def frost(frosting) when is_binary frosting do
@@ -112,7 +87,7 @@ defrecord Cupcake,
       "@fps" -> cake.fps(contents)
       "@(~)" -> cake.captures
       "@(!)" -> cake.emits
-      "@set" -> nil #bender.(cake, funcBot.set frosting, contents
+      "@set" -> nil #bender.([cake, funcBot.set frosting, contents])
       "@get" -> Bot.get frosting
       "@exe" -> Bot.exe frosting
       "@pip" -> nil
@@ -129,7 +104,6 @@ defrecord Cupcake,
     String.replace("##{ cake }", "/", "")
   end
 
-  
   def cmds(cmd, content) do
     [
       i: "@fps", x: false,

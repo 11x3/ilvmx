@@ -19,9 +19,10 @@ defmodule ILM.BotLab do
   def upload!(bot = Bot[]) do
     # grab the nub from midair..
     nub = ILM.Nubspace.pull! bot.nubspace
+
     # are we a function?
     case is_function bot.cupcake do
-      true  -> bot.cupcake.(bot, nub)
+      true  -> bot.cupcake.([bot: bot, nub: nub])
       false -> nub
     end
   end

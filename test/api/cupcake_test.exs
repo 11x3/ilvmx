@@ -8,7 +8,7 @@ defmodule CupcakeTest do
 end
 
   #   test "Cupcake.frost" do
-  #     Test.assert_unique (Cupcake.frost """
+  #     IT.assert_unique (Cupcake.frost """
   # @set #me #jam
   #     """
   #     ).unique

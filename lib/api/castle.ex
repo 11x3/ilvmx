@@ -1,10 +1,23 @@
 defmodule Castle do
+  use GenServer.Behaviour
 
-  @doc """
+  @moduledoc """
   ILM takes place in an unknown time, in an unknown `Castle` server in 
-  the great land of Nub. This is not scoped out very well (yet), but Castles 
-  are top-level ILM nodes and the `Galaxy` is simply the ILvMx exchange.
+  the great Kingdom of Nub. Castles are top-level ILM nodes and the 
+  `Galaxy` is simply the ILvMx exchange.
+  
+  Castle, Wizard, and Player are not ILM.namespaced because they are really
+  more a part of the API tools, i.e. you could take a vanilla ILM server
+  and edit one line in the Castle source or update it dynamically and it
+  would switch network protocols.
   """
+  
+  @doc """
+  Yo.
+  """
+  def uuid do
+    ILM.uuid
+  end
   
   @doc """
   ILvMx network exchange.
@@ -19,35 +32,27 @@ defmodule Castle do
   @doc """
   Send a `Cupcake` carrying `Bot` into the Castle, return an Event back that
   be captured and signaled or ignored.
-  # Spawn |> Event[unique: uuid] 
+  
+  Spawn |> Event[unique: uuid] 
   """
   def arrow!(bot = Bot[]) do
     ILM.Wizard.deflect! bot
   end
 
-  # @doc """
-  # Send a Cupcake message into the Castle and wait for the results.
-  # Spawn |> Wait |> Bot
-  # """
-  # def dove!(bot) do
-  #   
-  # end
+  @doc """
+  Send a Cupcake message into the Castle and stream results. Good for caps
+  and sigs.
   
-  # @doc """  
-  # Add a global Cupcake route to this Castle for Bots to take.
-  # """
-  # defmacro let(cupcake, contents) do
-  #   quote do
-  #     bender = fn bot, nub ->
-  #       case is_function unquote(contents) do
-  #         true -> unquote(contents).(bot, nub)
-  #         false -> unquote(contents)
-  #       end
-  #     end
-  #     
-  #     Bot.cmd(unquote(cupcake), bender)
-  #   end
-  # end
+  Spawn |> Wait |> Event[unique: uuid] |> End |> Bot
+  """
+  def dove!(bot = Bot[]) do
+    ILM.Wizard.befriend! bot
+  end
   
-  # allow / deny / xray
+  
+  # GenServer Callbacks
+
+  def start_link do
+    :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
+  end
 end

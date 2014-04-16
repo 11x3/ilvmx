@@ -52,7 +52,8 @@ defmodule ILM do
     store = Process.get @cache
     if !store do
       store = ConCache.start_link(
-        touch_on_read: true
+        touch_on_read: true,
+        ttl: :timer.seconds(0)
       )
       
       Process.put @cache, store
@@ -75,6 +76,6 @@ defmodule ILM do
     
     # app
     ILM.cache
-    ILM.Castle.Supervisor.start_link
+    Castle.Supervisor.start_link
   end
 end

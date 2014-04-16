@@ -1,4 +1,4 @@
-defmodule ILM.Castle.Supervisor do
+defmodule Castle.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -8,7 +8,7 @@ defmodule ILM.Castle.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Castle.Server,  []),
+      worker(Castle,  []),
       worker(ILM.NubspaceSupervisor,  []),
       worker(ILM.BotLabSupervisor,    []),
     ]
