@@ -56,7 +56,7 @@ defmodule ILM.Nubspace do
     
     results = nub.cupcakes |> Enum.map fn cake ->
       case is_function cake do
-        true  -> [cake.([bot: bot, cupcake: bot.cupcake])]
+        true  -> [cake.(bot.cupcake)]
         false -> [cake]
       end
     end

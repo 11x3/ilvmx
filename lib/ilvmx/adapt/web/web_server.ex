@@ -46,7 +46,7 @@ defmodule ILM.WebServer do
     # 
     # result = inspect
 
-    conn
+    send_resp conn, 200, inspect(Bot.get Cupcake.from(conn.path_info))
   end
   
   @doc """
