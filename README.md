@@ -40,9 +40,9 @@ doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
 - Storage + Code - globally routable hashtag graph of storage + code
 - Dynamic -100% bootstrap and dynamically program your app from the first function up
 - Open - code with Cupcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
-- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written and expand the galaxy.
 - Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front.
-  
+- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written and expand the galaxy.
+
 ## Example
 
 Only the core of the API is working as of today. But it is enough to get, set, and exe "Nubs" or: global address + data + function into your self-hosted local Castle's Nubspace.
@@ -97,35 +97,36 @@ Bot[nubspace: "#chat", cupcake: "hi",
  unique: "f0b7d860-6d81-49cc-8d8d-ca6e0ef20b18"]
 ```
 
-ATE or Adapt / Transform / Emit [PROPOSAL]
-Description of a functional development style for Cupcake cloud apps.
+## ATE or Adapt / Transform / Emit [PROPOSAL]
+
+Description of a reactive and functional development style for cloud apps.
 
 ATE stands for Adapt |> Transform |> Emit
 
-ATE is an attempt to document what many cloud apps are already doing or starting to do, and other development styles have done for years. ATE is entirely functional we always push state forward, and each modules concerns are theirs alone to compile. Do your job here then push forward.
+ATE is an attempt to document what many are already doing or starting to do, and other development styles have done for years. ATE is entirely functional we always push state forward, and each modules concerns are theirs alone to compile. Do your job here then push forward. Never look back.
 
 1. Adapt: protocol-specific adapters create abstract work requests 
 2. Transform: core app executes actor models and updates data
 3. Emit: generate objects and events to the outside world
 
-Thanks to our EEB foundations (Elixir/Erlang/beam), each stage of the request life cycle is highly concurrent, distributed, and isolated from the outside world. Following that idea is that there are three primary job states a cloud request may be in: adaptation, transformation, and side-effect emission.
+Thanks to our EEB foundations (Elixir/Erlang/BEAM), each stage of the request life cycle is highly concurrent, distributed, and isolated from the outside world. Following that idea is that there are three primary job states a cloud request may be in: adaptation, transformation, and side-effect emission.
 
 
-Adapt
+## Adapt
 
 So you take a request, abstract it from the protocol, for example given "GET /users/search/lol" it becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. HTTP to Cupcake) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally, subscribe to events and :emits for that UUID, otherwise the request is free from any other interaction by the requesting agent.
 
-Transform
+## Transform
 
 The transform servers take the request, dispatch, and execute the request, moving forward through a pipe of functional callbacks, passing the entire request and all effects, any errors, any transactions fees, or earnings, and pushes everything to the :emit pipeline. The transform servers should generally be considered a black box with no direct contact to adapters or emitters.
 
-Emit
+## Emit
 
 The Emitters now have the complete request, all events, all side effects (ie. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had subscribe via a (~) capture signal, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter subscribed to Events about the request, the events are obviously pushed forward to it, and/or then out to the Elixir-lang Plug pipeline, or another queue system you've already got deployed.
 
 Finally, an Event is :emitted to the entire lolnub network with any public network-wide data attached that the request should be committed to the network record.
 
-Requests
+## Requests
 
 Lets think about the modern request life cycle with an outlook for action over endpoint. Instead of:
 
