@@ -4,12 +4,12 @@ Prealpha. Functionally minded cloud app server and eventually exchange. Based on
 
 ## The Best Web 4 theme park and story attraction ever. 
 
-Castles (servers), 
-Wizards (castle guards)
-Bots (agents/requests), 
-Nubs (p2p global hashtag-based storage namespace),
-Cupcakes (a DSL to write apps)
-Players (users)
+- Castles (servers), 
+- Wizards (castle guards)
+- Bots (agents/requests), 
+- Nubs (p2p global hashtag-based storage namespace),
+- Cupcakes (a DSL to write apps)
+- Players (users)
 
 ILM/ILvMx or Cupcake apps are `Cloud Apps` in that they run in the cloud *and* service many protocols which really makes calling them "web apps" not feelerino.
 
@@ -36,15 +36,16 @@ doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
 
 ## Summary
 
-Fun - nailed it
-Storage + Code - globally routable hashtag graph of storage + code
-Dynamic -100% bootstrap and dynamically program your app from the first function up
-Open - code with Cupcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
-Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written and expand the galaxy.
-
+- Fun - nailed it
+- Storage + Code - globally routable hashtag graph of storage + code
+- Dynamic -100% bootstrap and dynamically program your app from the first function up
+- Open - code with Cupcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
+- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written and expand the galaxy.
+- Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front.
+  
 ## Example
 
-Only the core of the API is working as of today. But it is enough to get, set, and exe "Nubs" or: address + data + function into the local Castle's Nubspace.
+Only the core of the API is working as of today. But it is enough to get, set, and exe "Nubs" or: global address + data + function into your self-hosted local Castle's Nubspace.
 
 For now we will just publically host a stream of Events from the server and
 others will be welcome to consume the Nubspace event stream and that will be
