@@ -15,7 +15,7 @@ ILM/ILvMx or Cupcake apps are `Cloud Apps` in that they run in the cloud *and* s
 
 Cloud apps take protocol-facing requests (from clients, servers, and/or frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response.
 
-MVC frameworks are a good fit for noun and object oriented-based evironments but functional stacks and data flow event-based kits with their transform style of development may also be a natural fit for many other tasks.
+MVC frameworks are a good fit for noun and object oriented-based environments but functional stacks and data flow event-based kits with their transform style of development may also be a natural fit for many other tasks.
 
 Powered by the EEB stack, we hope to define and implement one such pattern of future development.
 
@@ -47,7 +47,7 @@ doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
 
 Only the core of the API is working as of today. But it is enough to get, set, and exe "Nubs" or: global address + data + function into your self-hosted local Castle's Nubspace.
 
-For now we will just publically host a stream of Events from the server and
+For now we will just publicly host a stream of Events from the server and
 others will be welcome to consume the Nubspace event stream and that will be
 our "p2p" network. It shouldn't take long to get a few ILM servers actually
 talking to each other and forming a real network.
@@ -122,7 +122,7 @@ The transform servers take the request, dispatch, and execute the request, movin
 
 ## Emit
 
-The Emitters now have the complete request, all events, all side effects (ie. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had subscribe via a (~) capture signal, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter subscribed to Events about the request, the events are obviously pushed forward to it, and/or then out to the Elixir-lang Plug pipeline, or another queue system you've already got deployed.
+The Emitters now have the complete request, all events, all side effects (i.e. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had subscribe via a (~) capture signal, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter subscribed to Events about the request, the events are obviously pushed forward to it, and/or then out to the Elixir-lang Plug pipeline, or another queue system you've already got deployed.
 
 Finally, an Event is :emitted to the entire lolnub network with any public network-wide data attached that the request should be committed to the network record.
 
