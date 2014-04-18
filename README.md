@@ -37,11 +37,13 @@ doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
 ## Summary
 
 - Fun - nailed it
+- Fun(ctional) - function-level clusters
+- Reactive - events and updates, push forward, time and frame-based exe
 - Storage + Code - globally routable hashtag graph of storage + code
 - Dynamic -100% bootstrap and dynamically program your app from the first function up
 - Open - code with Cupcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
-- Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front.
-- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written and expand the galaxy.
+- Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front. 
+- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written in native Elixir and expand the galaxy.
 
 ## Example
 
