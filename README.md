@@ -54,7 +54,8 @@ others will be welcome to consume the Nubspace event stream and that will be
 our "p2p" network. It shouldn't take long to get a few ILM servers actually
 talking to each other and forming a real network.
  
-SO in this example we use the basic request mechanism or `Bot`. 
+SO in this example we use the basic request mechanism or `Bot`.
+
 ```
 $ git clone http://github.com/lolnub/ilvmx && cd ilvmx && iex -S mix
 
@@ -98,7 +99,22 @@ Bot[nubspace: "#chat", cupcake: "hi",
  accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
  unique: "f0b7d860-6d81-49cc-8d8d-ca6e0ef20b18"]
 ```
+Signals
+```
+# Capture or subscribe interest in a nubspace.
+iex(1)> Bot.cap "#chat", fn e -> IO.inspect e end
+Event[content: "#chat", source: #PID<0.261.0>]
 
+# Looks like the #chat nubspace is about to change...
+iex(2)> Bot.set "#chat", "todo"                  
+Event[content: Nub[galaxy: :ilvmx, castle: "#lolnub", unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat",
+  system: nil, module: nil, member: nil, method: nil, cupcakes: ["todo", "todo"]],
+ source: "acf85c20-b980-44a1-a429-7460205ec642"]
+Nub[galaxy: :ilvmx, castle: "#lolnub",
+ unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat", system: nil,
+ module: nil, member: nil, method: nil, cupcakes: ["todo", "todo"]]
+iex(5)>
+```
 ## ATE or Adapt / Transform / Emit [PROPOSAL]
 
 Description of a reactive and functional development style for cloud apps.

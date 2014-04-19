@@ -9,8 +9,8 @@ defrecord Bot,
   # API
   
   @doc """
-  Store `cupcake` into the `nubspace`.
-  
+  Store `cupcake` into `nubspace`.
+
   Returns `bot`.
   """
   def set(nubspace, cupcake) do
@@ -21,9 +21,7 @@ defrecord Bot,
   end
   
   @doc """
-  Get a `Cupcake` from the `nubspace`.
-  
-  Returns `bot`.
+  Get a `Cupcake` from `nubspace`.
   """
   def get(nubspace) do
     # set :commands and spawn
@@ -34,12 +32,12 @@ defrecord Bot,
   end
   
   @doc """
-  Exe the `Cupcakes` at `nubspace`. Returns an Event you may Bot.cap to 
+  Jump the `Cupcakes` at `nubspace`. Returns an Event you may Bot.cap to 
   be signaled of updates.
   
   Returns `bot`.
   """
-  def exe(nubspace, cupcake \\ []) do
+  def jmp(nubspace, cupcake \\ []) do
     Bot.w(nubspace: nubspace, cupcake: fn args ->
       # Transform the bot in real-time, from this
       # fun to the fun originally passed into exe.
@@ -54,16 +52,10 @@ defrecord Bot,
   Returns `bot`.
   """
   def cap(nubspace, cupcake) do
-
-  end
-  
-  @doc """
-  Signal a `nubspace` with `cupcake`
-  
-  Returns `bot`.
-  """
-  def sig(nubspace, cupcake) do
-
+    Bot.w(nubspace: nubspace, cupcake: fn args ->
+      ILM.EmitServer.capture! nubspace, cupcake
+    end)
+    |> Castle.arrow!
   end
   
   

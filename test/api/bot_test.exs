@@ -4,6 +4,8 @@ defmodule BotTest do
 
   import Bot
   alias ILM.Nubspace
+
+  def hey, do: "hey"
   
   test "Bot.set" do
     bot = Bot.set "#chat", "todo"
@@ -15,19 +17,19 @@ defmodule BotTest do
     IT.assert_bot bot
   end
   
-  test "Bot.exe" do
-    bot = Bot.set "#chat", "todo"
-    IT.assert_bot bot 
+  test "Bot.get" do
+    bot = Bot.get "#chat"
   end
-  
+
   test "Bot.cap" do
-    bot = Bot.set "#chat", "todo"
-    IT.assert_bot bot
-  end
-  
-  test "Bot.sig" do
-    bot = Bot.set "#chat", "todo"
-    IT.assert_bot bot
+    # capture the signal
+    event  = Bot.cap "#chat", fn event -> send self, :hey end
+    result = Bot.set "#chat", "todo"
+
+    assert "#chat" == event.content
+    assert is_pid event.source
+      
+    assert_received :hey
   end
   
 end

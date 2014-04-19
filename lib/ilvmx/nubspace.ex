@@ -6,7 +6,6 @@ defmodule ILM.Nubspace do
   alias ConCache
 
   @nubspace :nubspace
-  @signals  :signals
 
   @doc """
   Return all `cupcakes` in the Castle.
@@ -27,19 +26,10 @@ defmodule ILM.Nubspace do
         
     # todo: explore nub storage options 
     ConCache.put ILM.cache, @nubspace, Dict.put(cupcakes, nubspace, nub)
-    
+        
     # unique / key / value
-    Emit.signal! nubspace, Event.w(nub.unique, cupcake)
-    
-    # push signals to update captures
-    # signals |> Enum.filter fn sig ->
-    #   cupcake == sig.cupcake
-    # end |> Enum.to_list |> Enum.each fn sig ->
-    #   if is_function sig.command do
-    #     sig.command.(cupcake, contents)
-    #   end
-    # end
-    
+    ILM.EmitServer.signal! nubspace, Event.w(nub.unique, nub)
+
     nub
   end
   
@@ -47,7 +37,7 @@ defmodule ILM.Nubspace do
   Get a nub from the Castle.
   """
   def pull!(nubspace) when is_binary nubspace do
-    get nubspace
+    get nubspace    
   end
 
   @doc """
@@ -86,6 +76,7 @@ defmodule ILM.Nubspace do
       false -> nub
     end
   end
+  
   
   # Private
   

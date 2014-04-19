@@ -9,7 +9,7 @@ defmodule Wizard do
   def befriend!(bot) do
     # todo: filter/enrich/track/intercept the bot/request/data via Spells
     # todo: ilm is all async baby, so we need to spawn the bot, then 
-    # receive on it's `.unique` from Emit.capture... sleep... wakeup and 
+    # receive on it's `.unique` from ILM.EmitServer.capture... sleep... wakeup and 
     # attempt to respond.
     bot |> ILM.Nubspace.upload!  
   end
