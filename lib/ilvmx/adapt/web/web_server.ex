@@ -1,9 +1,7 @@
 defmodule ILM.WebServer do
   import  Plug.Connection
   use     Plug.Router
-  
-  alias Cupcake
-  
+    
   plug :match
 
   @doc """
@@ -18,35 +16,12 @@ defmodule ILM.WebServer do
   
   # Example:
   "GET /lolnub/chat" -> "#lolnub #chat"
-
-  # Arrow:
-  event = [
-    content = Effect[ 
-      [:emit, :json, "/objects/1.json"]
-    ]
-    source  = Bot["#ilm #etc"]
-  ]
-  
-  # Dove:
-  bot = [
-    ...
-  ]
   """
-  def call(conn, opts) do    
-    # conn = conn.resp_content_type("text/event-stream")
-    # conn = conn.send_chunked(200)
-    # 
-    # iterator = File.iterator!("#{ conn.params[:story_name] }.txt")
-    # 
-    # 
-    # Enum.each iterator, fn(line) ->
-    #   { :ok, conn } = conn.chunk "data: #{ }\n"
-    #   await conn, 1000, on_wake_up(&1, &2), on_time_out(&1)
-    # end
-    # 
-    # result = inspect
-
-    send_resp conn, 200, inspect(Bot.get Cupcake.from(conn.path_info))
+  def call(conn, opts) do
+    result = inspect(Player.arrow! Cupcake.from(conn.path_info))
+    throw IO.inspect result
+    
+    send_resp conn, 200, "lol"
   end
   
   @doc """

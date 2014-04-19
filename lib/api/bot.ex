@@ -1,11 +1,15 @@
 defrecord Bot, 
-  nubspace: nil,          # string    : "#some #app"
    cupcake: nil,          # contents
+    player: nil,
    results: [],           
   problems: [],           # [error_events]
   accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
     unique: nil do        # callback
-
+  
+  @moduledoc """
+  Bots are actions/routes/requests. They much like Doge, sometimes cost more.
+  """
+    
   # API
   
   @doc """
@@ -14,10 +18,9 @@ defrecord Bot,
   Returns `bot`.
   """
   def set(nubspace, cupcake) do
-    Bot.w(nubspace: nubspace, cupcake: fn args -> 
-      ILM.Nubspace.push! args[:bot].nubspace, cupcake
-    end)
-    |> Castle.arrow!
+    Bot.exe nubspace, fn args -> 
+      ILM.Nubspace.push! nubspace, cupcake
+    end
   end
   
   @doc """
@@ -25,46 +28,47 @@ defrecord Bot,
   """
   def get(nubspace) do
     # set :commands and spawn
-    Bot.w(nubspace: nubspace, cupcake: fn args ->
+    Bot.exe nubspace, fn ->
       ILM.Nubspace.pull! nubspace
-    end)
-    |> Castle.arrow!
+    end
   end
   
   @doc """
-  Jump the `Cupcakes` at `nubspace`. Returns an Event you may Bot.cap to 
-  be signaled of updates.
+  Capture a `nubspace` and evaluate cupcake.
   
   Returns `bot`.
   """
-  def jmp(nubspace, cupcake \\ []) do
-    Bot.w(nubspace: nubspace, cupcake: fn args ->
-      # Transform the bot in real-time, from this
-      # fun to the fun originally passed into exe.
-      ILM.Nubspace.jump! args[:bot].cupcake(cupcake), nubspace
-    end)
-    |> Castle.arrow!
+  def cap(channel, cupcake) do
+    Bot.w channel, fn args ->
+      ILM.TowerServer.capture! channel, cupcake
+    end
+  end
+  
+  
+  @doc """
+  Basic do-something bot.
+  """
+  def exe(nubspace, cupcake) do
+    
+  end
+  
+  
+  @doc """
+  Shortcut to create a bot.
+  """
+  def w(nubspace \\ nil, cupcake \\ nil) do
+    apply __MODULE__, :new, [[
+      nubspace: nubspace,
+       cupcake: cupcake,
+        unique: Castle.uuid
+    ]]
   end
 
+
   @doc """
-  Capture a Cupcake and evaluate command.
-  
-  Returns `bot`.
+  Add an effect to `bot`'s results.
   """
-  def cap(nubspace, cupcake) do
-    Bot.w(nubspace: nubspace, cupcake: fn args ->
-      ILM.EmitServer.capture! nubspace, cupcake
-    end)
-    |> Castle.arrow!
-  end
-  
-  
-  # Private
-  
-  @moduledoc """
-  Bots are actions/routes/requests. They much like Doge, sometimes cost more.
-  """
-  def w(args) do
-    apply __MODULE__, :new, [Enum.concat(args, [unique: ILM.uuid])]
+  def effect(bot, effect) do
+    bot.results(Enum.concat(bot.results, [effect]))
   end
 end

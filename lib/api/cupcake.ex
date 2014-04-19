@@ -1,9 +1,3 @@
-import EEx
-
-# EEx.eval_string(
-#  "Foo <%= inspect(dict) %>", 
-#  [dict: ListDict.new([{"a", [{"b", "test"}]}])])
-
 defrecord Cupcake,
  nubspace: nil,
  commands: [],
@@ -38,17 +32,17 @@ defrecord Cupcake,
   So every :fps the Castle server will execute a `Spell` to run your `Cupcake`
   app, which may then update and recapture the entire world state, or only
   what it wants. Signals and emits.
-  
   """
+    
   # """
-  #   @set "#me #jam"
+  #   @app "#me #jam"
   #   @exe ["#ilm #lolnub #players #validate", @player]
   #   @fps 1 #
   #   @(~) ["#ilm #signals #players", @player]
   #   | @elm "5x5", "/elm/app"
   #   | @set :title, "Welcome to lolnub, #{ @player }"       
-  #   | @pip ["#apps #chat nubspace"]           # @ picture in place, or unquote
-  #   | @pip ["#apps #kb"]
+  #   | @cap ["#apps #chat"]           # @ picture in place, or unquote
+  #   | @pip ["#apps #friends"]
   #   | @pip ["#web #youtube |> #search", "a7x"]
   #   | @nub ["#apps #footer"]
   #   ]]
@@ -57,73 +51,24 @@ defrecord Cupcake,
   #   @(!) ["#ilm #signals #players", @player]
   #   @(!) ["#ilm #signals #players #filter #latest", @player]
   # """
-    
-  @doc """
-  """
-  def frost(frosting) when is_binary frosting do
-    cupcake = Cupcake.w frosting: frosting
-    
-    cupcake = cupcake.commands(String.split(frosting, "\n") |> Enum.map fn cake -> 
-      cmd = String.slice(String.lstrip(cake), 0..3)
-      cake = String.replace(cake, cmd <> " ", "")
 
-      Cupcake.from(cake, frosting, cmd, cake)
-    end)
-    
-    # set :commands and spawn
-    Bot.sig(frosting, cupcake)
-  end
-
-  @doc """
-  Create Cupcake from various commands. 
-  """
-  def from(cake, frosting, cmd, contents) do
-    bender = fn cake, command -> 
-      cake = cake.commands(Enum.concat cake.commands, [command])
-    end
-    
-    case cmd do
-      "@ilm" -> Bot.sig frosting, cake
-      "@fps" -> cake.fps(contents)
-      "@(~)" -> cake.captures
-      "@(!)" -> cake.emits
-      "@set" -> nil #bender.([cake, funcBot.set frosting, contents])
-      "@get" -> Bot.get frosting
-      "@exe" -> Bot.exe frosting
-      "@pip" -> nil
-      "@elm" -> nil
-      _      -> nil
-    end
-    cake
-  end
-  def from(cakes) when is_list cakes do
-    commands = cakes |> Enum.map fn s -> "##{ s }" end
-    list_to_bitstring commands
-  end
-  def from(cake) do
-    String.replace("##{ cake }", "/", "")
-  end
-
-  def cmds(cmd, content) do
-    [
-      i: "@fps", x: false,
-      i: "@(~)", x: false,
-      i: "@set", x: false,
-      i: "@get", x: false,
-      i: "@exe", x: false,
-      i: "@nub", x: false,
-      i: "@pip", x: false,
-      i: "@(!)", x: false,
-      i: "@elm", x: false,
-    ]
-  end
-  
-  # Private
-  
   @moduledoc """
   Bots are actions/routes/requests. They much like Doge, sometimes cost more.
   """
   def w(args \\ []) do
     apply __MODULE__, :new, [Enum.concat(args, [unique: ILM.uuid])]
+  end
+  
+  @doc """
+  Pair the cmd + arg.
+  """
+  def sugar(cmd, arg) do
+    case cmd do
+      "@get" -> fn -> Bot.get arg end
+    end
+  end
+  
+  def from(cake) do
+    String.replace("##{ cake }", "/", "")
   end
 end

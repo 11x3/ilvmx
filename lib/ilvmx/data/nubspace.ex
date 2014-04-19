@@ -6,16 +6,8 @@ defmodule ILM.Nubspace do
   alias ConCache
 
   @nubspace :nubspace
-
-  @doc """
-  Return all `cupcakes` in the Castle.
-  """
-  def cupcakes do
-    n = ConCache.get_or_store ILM.cache, @nubspace, fn -> 
-      HashDict.new
-    end
-  end
   
+  # Public
   
   @doc """
   Put `cupcake` into `nubspace`.
@@ -28,7 +20,7 @@ defmodule ILM.Nubspace do
     ConCache.put ILM.cache, @nubspace, Dict.put(cupcakes, nubspace, nub)
         
     # unique / key / value
-    ILM.EmitServer.signal! nubspace, Event.w(nub.unique, nub)
+    ILM.TowerServer.signal! nubspace, Event.w(nub.unique, nub)
 
     nub
   end
@@ -40,45 +32,17 @@ defmodule ILM.Nubspace do
     get nubspace    
   end
 
-  @doc """
-  Execute a `nubspace` with `cupcake`.
-  # todo: make this non-brute force
-  """
-  def jump!(bot, nubspace) do
-    nub = pull! nubspace
-    
-    results = nub.cupcakes |> Enum.map fn cake ->
-      case is_function cake do
-        true  -> 
-          try do
-            Effect.w cupcake: cake, result: cake.(bot.cupcake)
-          rescue 
-            x in [RuntimeError, ArgumentError, BadArityError] -> 
-              Effect.w error: x, cupcake: cake
-          end
-        false -> [cake]
-      end
-    end
-    
-    bot.results(List.flatten(Enum.concat(bot.results, results)))
-  end
-  
-  @doc """
-  Dispatch or call the Bot + Nub pair.
-  """
-  def upload!(bot = Bot[]) do
-    # grab the nub from midair..
-    nub = ILM.Nubspace.pull! bot.nubspace
 
-    # are we a function?
-    case is_function bot.cupcake do
-      true  -> bot.cupcake.([bot: bot, nub: nub])
-      false -> nub
+  # Private
+
+  @doc """
+  Return all `cupcakes` in the Castle.
+  """
+  def cupcakes do
+    n = ConCache.get_or_store ILM.cache, @nubspace, fn -> 
+      HashDict.new
     end
   end
-  
-  
-  # Private
   
   # Pull `nubspace` from cache or Db
   defp get(nubspace) when is_binary nubspace do

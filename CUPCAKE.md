@@ -80,7 +80,7 @@
 
 @app "#me #jam", @player
 # ping a nub that contains a before filter nub to verify the player. If
-# this nub sends a :break signal inside the app, this the Bot.exe which is
+# this nub sends a :break signal inside the app, this the Bot which is
 # runs this nub would be terminated, and the errors returned to the client.
 @exe, "#ilm #lolnub #players #validate", player
 # capture the players nub signal in real time (ie. push data about @player)

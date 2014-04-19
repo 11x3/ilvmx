@@ -1,6 +1,7 @@
 defrecord Event,
   content: nil,
-   source: nil do
+   source: nil,
+   unique: nil do
   
   @moduledoc """
   The basic news unit of ILM. (ie. 1 request = n events) Events package 
@@ -30,7 +31,8 @@ defrecord Event,
   def w(source, content) do
     apply __MODULE__, :new, [[
       content: content,
-       source: source
+       source: source,
+       unique: Castle.uuid
     ]]
   end
 end

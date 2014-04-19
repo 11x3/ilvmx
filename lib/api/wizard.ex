@@ -1,19 +1,19 @@
 defmodule Wizard do
   
-  def deflect!(bot) do
+  def react!(bot) do
     # todo: filter/enrich/track/intercept the bot/request/data via Spells
     
-    bot |> ILM.Nubspace.upload!  
+    bot
   end
-  
-  def befriend!(bot) do
-    # todo: filter/enrich/track/intercept the bot/request/data via Spells
-    # todo: ilm is all async baby, so we need to spawn the bot, then 
-    # receive on it's `.unique` from ILM.EmitServer.capture... sleep... wakeup and 
-    # attempt to respond.
-    bot |> ILM.Nubspace.upload!  
-  end
-  
+ 
+  # def befriend!(bot) do
+  #   # todo: filter/enrich/track/intercept the bot/request/data via Spells
+  #   # todo: ilm is all async baby, so we need to spawn the bot, then 
+  #   # receive on it's `.unique` from ILM.TowerServer.capture... sleep... wakeup and 
+  #   # attempt to respond.
+  #   bot |> ILM.Nubspace.upload!  
+  # end
+  # 
   # @doc """  
   # Add a global Cupcake route to this Castle for Bots to take.
   # allow / deny / xray

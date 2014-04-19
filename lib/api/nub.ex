@@ -7,7 +7,7 @@ defrecord Nub,
   module: nil,    # :api  # module        "support"
   member: nil,    # :api  # function      "search"
   method: nil,    # :api  # etc           "advanced"
-cupcakes: []   do # :data # args          "words"
+  things: []   do # :data # args          "words"
   
   @doc """
   Create and fill a Nub from a Nubspace.

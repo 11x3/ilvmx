@@ -1,4 +1,4 @@
-defmodule ILM.EmitServer do
+defmodule ILM.TowerServer do
   use GenServer.Behaviour
   
   @moduledoc """
@@ -14,8 +14,8 @@ defmodule ILM.EmitServer do
   # Script.results list, it's really like an unordered list, and our Emit
   # and Event methods just match through the list for map/reduce style events.
   
-  Emitters work in a two-step process. A lexical EmitServer.capture(channel) and
-  an EmitServer.results(channel) will send the given channel all of the events.
+  Emitters work in a two-step process. A lexical TowerServer.capture(channel) and
+  an TowerServer.results(channel) will send the given channel all of the events.
   
   # todo: store capture records for expiration purposes.
   """
@@ -25,8 +25,10 @@ defmodule ILM.EmitServer do
   
   @signals  :signals
   
+  # Public
+  
   @doc """
-  All signals in the Castle Nubspace.  
+  Return all signals in the Castle Nubspace.  
   """
   def signals do
     n = ConCache.get_or_store ILM.cache, @signals, fn -> 
@@ -37,7 +39,7 @@ defmodule ILM.EmitServer do
   @doc """
   Signal the Nubspace on `channel` with `event`.
   
-  Return an Effect.w number of signals
+  Return an Effect.w source: self, content: number of signals.
   """
   def signal!(channel, event) do
     signals |> Enum.each fn [channel: signal, callback: callback] ->
@@ -57,16 +59,10 @@ defmodule ILM.EmitServer do
   def capture!(channel, event_callback) when is_function event_callback do
     ConCache.put ILM.cache, @signals, Enum.concat(signals, [[channel: channel, callback: event_callback]])
     
-    Event.w self, channel
+    Event.w self, channel: channel
   end
     
-  # @doc """
-  # Commit the Bot to the Galactic record.
-  # """
-  # def commit!(bot) do
-  #   Event.w self, commit: bot.unique
-  # end
-
+  
   # GenServer Callbacks
   
   def start_link do

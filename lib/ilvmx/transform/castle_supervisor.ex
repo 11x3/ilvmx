@@ -1,4 +1,4 @@
-defmodule Castle.Supervisor do
+defmodule ILM.CastleSupervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -9,7 +9,6 @@ defmodule Castle.Supervisor do
     children = [
       # Define workers and child supervisors to be supervised
       worker(Castle,  []),
-      worker(ILM.NubspaceSupervisor,  []),
     ]
 
     # start our http server
