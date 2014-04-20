@@ -29,14 +29,7 @@ defmodule Castle do
   """
   def door, do: "#lolnub"
   
-  @doc """
-  Dispatch and return `bot`.  
-  """
-  def upload!(bot = Bot[]) do
-    bot |> ILM.Dungeon.execute!
-  end
-
-
+  
   # GenServer Callbacks
 
   def start_link do

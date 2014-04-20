@@ -24,7 +24,7 @@ defrecord Player,
     bot |> take |> arrow!
   end
   def arrow!(bot = Bot[]) do
-    bot |> take |> Castle.upload!
+    bot |> take |> Dungeon.execute!
   end
   
   defp take(bot) do

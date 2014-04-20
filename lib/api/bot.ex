@@ -1,12 +1,13 @@
 defrecord Bot, 
-   cupcake: nil,          # contents
+   cupcake: nil,
+       tmp: nil,
     player: nil,
    results: [],           
   problems: [],           # [error_events]
   accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
     unique: nil do        # callback
   
-  
+
   # API/Sugar
   
   @doc """
@@ -15,7 +16,8 @@ defrecord Bot,
   def w(cupcake \\ nil) do
     apply __MODULE__, :new, [[
        cupcake: cupcake,
-        unique: Castle.uuid
+        unique: Castle.uuid,
+           tmp: HashDict.new
     ]]
   end
   
@@ -23,7 +25,7 @@ defrecord Bot,
   "Oh you know, the usual.." create + cmd!
   """
   def cmd!(cupcake) do
-    Bot.w(cupcake) |> Castle.upload!
+    Bot.w(cupcake) |> ILM.Castle.Dungeon.execute!
   end
 
   @doc """
@@ -45,7 +47,16 @@ defrecord Bot,
       ILM.Nubspace.push! nubspace, cupcake
     end
   end
-    
+  
+  @doc """
+  Execute a `nubspace` and evaluate `cupcake`.
+  
+  Returns `bot`.
+  """
+  def exe(nubspace, cupcake) do
+    ILM.Castle.Dungeon.execute! Bot.w, cupcake, nubspace
+  end
+  
   @doc """
   Capture a `nubspace` and evaluate cupcake.
   

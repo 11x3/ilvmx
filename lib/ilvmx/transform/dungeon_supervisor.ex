@@ -1,4 +1,4 @@
-defmodule ILM.DungeonSupervisor do
+defmodule ILM.Castle.DungeonSupervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -8,7 +8,7 @@ defmodule ILM.DungeonSupervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Dungeon,  []),
+      worker(ILM.Castle.Dungeon,  []),
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html

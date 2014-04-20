@@ -22,6 +22,17 @@ defmodule BotTest do
     IT.assert_bot Bot.set "#chat", "todo"
   end
 
+  test "Bot.exe" do
+    # setup
+    Bot.cmd! "@set #chat todo"
+    
+    # test
+    bot = Bot.exe "#chat", "todo"
+    IT.assert_bot bot
+    
+    assert ["todo"] == bot.results
+  end
+  
   test "Bot.cap" do
     capbot = Bot.cap  "#chat", fn event -> send self, :hey end
     sigbot = Bot.cmd! "@set #chat todo"

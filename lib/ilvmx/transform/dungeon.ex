@@ -1,10 +1,10 @@
-defmodule ILM.Dungeon do
+defmodule ILM.Castle.Dungeon do
   use GenServer.Behaviour
   
   @doc """
   *Shh...*
   """
-  def execute!(bot = Bot[]) do    
+  def execute!(bot = Bot[]) do
     execute! bot, bot.cupcake
   end
   def execute!(bot, cupcake) when is_function(cupcake) do
@@ -30,6 +30,24 @@ defmodule ILM.Dungeon do
         execute!(cmd, nub, opt)
       end
     end
+  end
+  def execute!(bot = Bot[], cupcake, nubspace) do
+    nub = ILM.Nubspace.pull! nubspace
+    
+    results = nub.cupcakes |> Enum.map fn cake ->
+      case is_function cake do
+        true  -> 
+          try do
+            Effect.w cupcake: cake, result: cake.(bot.cupcake)
+          rescue 
+            x in [RuntimeError, ArgumentError, BadArityError] -> 
+              Effect.w error: x, cupcake: cake
+          end
+        false -> [cake]
+      end
+    end
+
+    bot.results(List.flatten(Enum.concat(bot.results, results)))
   end
   def execute!(cmd, nub, opt) do
     case cmd do
