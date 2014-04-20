@@ -1,4 +1,4 @@
-defmodule ILM.CastleSupervisor do
+defmodule ILM.Castle.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -13,7 +13,7 @@ defmodule ILM.CastleSupervisor do
 
     # start our http server
     # todo: check ILM.config before starting
-    Plug.Adapters.Cowboy.http ILM.WebServer, []
+    Plug.Adapters.Cowboy.http ILM.Adapt.WebServer, []
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
     # for other strategies and supported options

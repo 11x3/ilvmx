@@ -1,4 +1,4 @@
-defmodule ILM.NubspaceSupervisor do
+defmodule ILM.Nubspace.Supervisor do
   use Supervisor.Behaviour
   
   # gen_supervisor

@@ -1,4 +1,3 @@
-# Castle-level Nubs (owners/people).
 defrecord Player,
   nubspace: nil,   # exchange/home/mynub
    signals: [],         # custom pipes/scripts
@@ -9,6 +8,10 @@ defrecord Player,
   def p1 do
     new
   end
+  
+  @moduledoc """
+  Castle-level accounts.
+  """
 
   @doc """
   Send a Cupcake message into the Castle and ignore results.

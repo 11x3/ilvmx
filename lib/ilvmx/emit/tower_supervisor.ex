@@ -1,4 +1,4 @@
-defmodule ILM.TowerSupervisor do
+defmodule ILM.Tower.Supervisor do
   use Supervisor.Behaviour
 
   # gen_supervisor

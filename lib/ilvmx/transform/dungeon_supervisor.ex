@@ -1,4 +1,4 @@
-defmodule ILM.Castle.DungeonSupervisor do
+defmodule ILM.Castle.Dungeon.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do

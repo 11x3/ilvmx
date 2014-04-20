@@ -11,13 +11,9 @@ defmodule ILM.Test do
     assert true == Regex.match? ILM.uuid_regex, ILM.uuid
   end
   
-  # test "ilm (web)" do
-  #   assert_get "http://localhost:4000/chat"
-  # end
-  # 
-  # test "ilm (nubspace)" do
-  #   assert_get "http://localhost:4000/chat"
-  # end
+  test "ilm (web)" do
+    assert_get "http://localhost:4000/chat"
+  end
   
   defp get_body(path) do
     HTTPotion.get(path).body

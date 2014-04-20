@@ -83,6 +83,6 @@ defmodule ILM do
     
     # app
     ILM.cache
-    ILM.CastleSupervisor.start_link
+    ILM.Castle.Supervisor.start_link
   end
 end

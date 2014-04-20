@@ -1,4 +1,4 @@
-defmodule ILM.WebServer do
+defmodule ILM.Adapt.WebServer do
   import  Plug.Connection
   use     Plug.Router
     

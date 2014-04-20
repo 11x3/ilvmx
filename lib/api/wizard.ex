@@ -5,5 +5,4 @@ defmodule Wizard do
     
     bot
   end
-
 end
