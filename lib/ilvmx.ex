@@ -22,6 +22,13 @@ defmodule ILM do
   ILM is an Elixir cloud app server.
   """
   
+  # Sugar
+  
+  # def magic!(castle, bot, player) do
+  #   ILM.magic! Castle.find("#lolnub"), Bot.exe("#chat"), Player.p1 
+  # end
+  
+  
   # Native API
   
   @doc """

@@ -7,6 +7,7 @@ defmodule ILM.Nubspace do
 
   @nubspace :nubspace
   
+  
   # Public
   
   @doc """
@@ -20,7 +21,7 @@ defmodule ILM.Nubspace do
     ConCache.put ILM.cache, @nubspace, Dict.put(cupcakes, nubspace, nub)
         
     # unique / key / value
-    ILM.TowerServer.signal! nubspace, Event.w(nub.unique, nub)
+    ILM.Tower.signal! nubspace, Event.w(nub.unique, nub)
 
     nub
   end
@@ -29,7 +30,12 @@ defmodule ILM.Nubspace do
   Get a nub from the Castle.
   """
   def pull!(nubspace) when is_binary nubspace do
-    get nubspace    
+    nub = get nubspace
+    
+    # unique / key / value
+    ILM.Tower.signal! nubspace, Event.w(nub.unique, nub)
+    
+    nub
   end
 
 
@@ -48,11 +54,7 @@ defmodule ILM.Nubspace do
   defp get(nubspace) when is_binary nubspace do
     Dict.get cupcakes, hash(nubspace), Nub.w(nubspace)
   end
-  
-  defp cupcake(n = Nub[]) do
-    "##{ n.galaxy } ##{ n.castle } ##{ n.system } ##{ n.domain } ##{ n.module } ##{ n.member } ##{ n.method } "
-  end
-  
+
   defp hash(cupcake) do
     cupcake
   end

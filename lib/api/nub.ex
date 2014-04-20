@@ -7,7 +7,7 @@ defrecord Nub,
   module: nil,    # :api  # module        "support"
   member: nil,    # :api  # function      "search"
   method: nil,    # :api  # etc           "advanced"
-  things: []   do # :data # args          "words"
+cupcakes: []   do # :data # args          "words"
   
   @doc """
   Create and fill a Nub from a Nubspace.
@@ -36,10 +36,6 @@ defrecord Nub,
     if length(segments) > 4 do
       args = Enum.concat(args, [method: Enum.at(segments, 4)])
     end
-    # todo: add cupcake storage
-    # if length segments > 7 do
-    #   #args = args[cupcake: elem segments, 7]
-    # end
     
     Nub.new(args)
   end

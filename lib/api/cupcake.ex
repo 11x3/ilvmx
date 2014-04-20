@@ -33,42 +33,23 @@ defrecord Cupcake,
   app, which may then update and recapture the entire world state, or only
   what it wants. Signals and emits.
   """
-    
-  # """
-  #   @app "#me #jam"
-  #   @exe ["#ilm #lolnub #players #validate", @player]
-  #   @fps 1 #
-  #   @(~) ["#ilm #signals #players", @player]
-  #   | @elm "5x5", "/elm/app"
-  #   | @set :title, "Welcome to lolnub, #{ @player }"       
-  #   | @cap ["#apps #chat"]           # @ picture in place, or unquote
-  #   | @pip ["#apps #friends"]
-  #   | @pip ["#web #youtube |> #search", "a7x"]
-  #   | @nub ["#apps #footer"]
-  #   ]]
-  #   ... @exe ["#ilm #filters #after #exitpoll", @player]
-  #   |>
-  #   @(!) ["#ilm #signals #players", @player]
-  #   @(!) ["#ilm #signals #players #filter #latest", @player]
-  # """
+  
+  """
+  @set "#me #jam"
+  @exe "#ilm #lolnub #players #validate", @player
+  @fps 1
+  @(~) ["#ilm #signals #players", @player]
+  | @elm "5x5", "/elm/app"
+  | @set :title, "Welcome to lolnub!"       
+  | @cap ["#apps #chat"]           # @ picture in place, or unquote
+  | @pip ["#apps #friends"]
+  | @pip ["#web #youtube |> #search", "a7x"]
+  | @nub ["#apps #footer"]
+  ]]
+  ... @exe ["#ilm #filters #after #exitpoll", @player]
+  |>
+  @(!) ["#ilm #signals #players", @player]
+  @(!) ["#ilm #signals #players #filter #latest", @player]
+  """
 
-  @moduledoc """
-  Bots are actions/routes/requests. They much like Doge, sometimes cost more.
-  """
-  def w(args \\ []) do
-    apply __MODULE__, :new, [Enum.concat(args, [unique: ILM.uuid])]
-  end
-  
-  @doc """
-  Pair the cmd + arg.
-  """
-  def sugar(cmd, arg) do
-    case cmd do
-      "@get" -> fn -> Bot.get arg end
-    end
-  end
-  
-  def from(cake) do
-    String.replace("##{ cake }", "/", "")
-  end
 end

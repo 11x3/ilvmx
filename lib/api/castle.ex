@@ -17,9 +17,7 @@ defmodule Castle do
   @doc """
   Yo.
   """
-  def uuid do
-    ILM.uuid
-  end
+  def uuid, do: ILM.uuid
   
   @doc """
   ILvMx network exchange.
@@ -32,66 +30,13 @@ defmodule Castle do
   def door, do: "#lolnub"
   
   @doc """
-  Dispatch the bot.cupcake and return an Event.
-  
-  Spawn |> Event[unique: uuid]
+  Dispatch and return `bot`.  
   """
-  def exe!(bot) do
-    cake = bot.cupcake
-    
-    # todo: spawn here
-    if is_function cake do
-      cupcake_function bot
-    end
-    if is_binary cake do
-      cupcake_binary bot
-    end
-    
-    Event.w bot.unique, bot
+  def upload!(bot = Bot[]) do
+    bot |> ILM.Dungeon.execute!
   end
-  
-  @doc """
-  Dispatch the bot.cupcake and the wait for and return the completed bot.
-  """
-  def cmd(bot) do
-    event = bot |> exe!
-    bot = event.content
-    
-    bot
-  end
-  
-  
-  # Private
 
-  def cupcake_function(bot) do
-    # dispatch for the pull shortcut
-    try do
-      Bot.effect bot, Effect.w(bot, bot.cupcake())
-    rescue 
-      x in [RuntimeError, ArgumentError, BadArityError] -> 
-        Bot.effect bot, Effect.w error: x
-    end
-  end
-  
-  def cupcake_binary(bot) do
-    # dispatch for the pull shortcut
-    results = case String.slice(bot.cupcake, 0..0) do
-      # we have a simple
-      "#"   -> ILM.Nubspace.pull! bot.cupcake
-      "@"   -> String.split(bot.cupcake, "\n") |> Enum.map fn command ->  
-        cmd = String.slice(String.lstrip(command), 0..3)
-        arg = String.replace(cmd, cmd <> " ", "")
-  
-        try do
-          Bot.effect bot, Effect.w(bot, Cupcake.sugar(cmd, arg).())
-        rescue 
-          x in [RuntimeError, ArgumentError, BadArityError] -> 
-            Bot.effect bot, Effect.w error: x
-        end
-      end
-    end
-  end
-  
+
   # GenServer Callbacks
 
   def start_link do

@@ -21,59 +21,13 @@ defrecord Player,
     bot = Bot.w
     bot = bot.player(Player.new)
     bot = bot.cupcake(cupcake)
-    bot |> arrow!
+    bot |> take |> arrow!
   end
   def arrow!(bot = Bot[]) do
-    bot |> Castle.exe!
+    bot |> take |> Castle.upload!
   end
   
-  @doc """
-  Send a Cupcake message into the Castle and stream results. Good for caps
-  and sigs.
-  
-  Spawn |> Wait |> Event[unique: uuid] |> End
-  """
-  def dove(cupcake) do
-    bot = Bot.w
-    bot = bot.player(p1)
-    bot = bot.cupcake(cupcake)
-    bot |> Castle.cmd
+  defp take(bot) do
+    bot = bot.player(Player.new)
   end
-  def dove(bot = Bot[]) do
-    bot |> Castle.cmd
-  end
-  # 
-  # # 
-  # @doc """
-  # Dispatch or call the Bot as a long running app.
-  # 
-  # Spawn |> Event[unique: uuid] |> Loop
-  # """
-  # def spell!(bot = Bot[], castle = Castle) do
-  #   # # grab the nub from midair..
-  #   # 
-  #   # # are we a function?
-  #   # case is_function bot.cupcake do
-  #   #   true  -> bot.cupcake.([bot: bot, nub: nub])
-  #   #   false -> nub
-  #   # end
-  #   
-  #   # bender = fn cmd ->
-  #   #   cmd.()
-  #   # end
-  #   # 
-  #   # cake = Cupcake.new
-  #   # 
-  #   # cmds = String.split(cupake, "\n")
-  #   # |> Enum.map fn command -> 
-  #   #   cmd = String.slice(String.lstrip(command), 0..3)
-  #   #   arg = String.replace(cmd, cmd <> " ", "")
-  #   # 
-  #   #   sugar(cmd, arg).()
-  #   # end
-  #   # 
-  #   # Bot.w(cupcake: cake.commands(cmds))
-  #   # |> Castle.arrow!
-  # end  
-
 end

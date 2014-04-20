@@ -12,15 +12,9 @@ defmodule ILM.WebServer do
   end
 
   @doc """
-  Web Requests from a Cowboy/Plug.
-  
-  # Example:
-  "GET /lolnub/chat" -> "#lolnub #chat"
+  Web Requests from Cowboy/Plug.
   """
-  def call(conn, opts) do
-    result = inspect(Player.arrow! Cupcake.from(conn.path_info))
-    throw IO.inspect result
-    
+  def call(conn, opts) do    
     send_resp conn, 200, "lol"
   end
   

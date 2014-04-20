@@ -6,11 +6,34 @@ defrecord Bot,
   accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
     unique: nil do        # callback
   
-  @moduledoc """
-  Bots are actions/routes/requests. They much like Doge, sometimes cost more.
+  
+  # API/Sugar
+  
+  @doc """
+  Shortcut to create a bot.
   """
-    
-  # API
+  def w(cupcake \\ nil) do
+    apply __MODULE__, :new, [[
+       cupcake: cupcake,
+        unique: Castle.uuid
+    ]]
+  end
+  
+  @doc """
+  "Oh you know, the usual.." create + cmd!
+  """
+  def cmd!(cupcake) do
+    Bot.w(cupcake) |> Castle.upload!
+  end
+
+  @doc """
+  Get a `Cupcake` from `nubspace`.
+  """
+  def get(nubspace) do
+    Bot.cmd! fn ->
+      ILM.Nubspace.pull! nubspace
+    end
+  end
   
   @doc """
   Store `cupcake` into `nubspace`.
@@ -18,52 +41,22 @@ defrecord Bot,
   Returns `bot`.
   """
   def set(nubspace, cupcake) do
-    Bot.exe nubspace, fn args -> 
+    Bot.cmd! fn ->
       ILM.Nubspace.push! nubspace, cupcake
     end
   end
-  
-  @doc """
-  Get a `Cupcake` from `nubspace`.
-  """
-  def get(nubspace) do
-    # set :commands and spawn
-    Bot.exe nubspace, fn ->
-      ILM.Nubspace.pull! nubspace
-    end
-  end
-  
+    
   @doc """
   Capture a `nubspace` and evaluate cupcake.
   
   Returns `bot`.
   """
-  def cap(channel, cupcake) do
-    Bot.w channel, fn args ->
-      ILM.TowerServer.capture! channel, cupcake
+  def cap(nubspace, cupcake) do
+    Bot.cmd! fn ->
+      ILM.Tower.capture! nubspace, cupcake
     end
   end
   
-  
-  @doc """
-  Basic do-something bot.
-  """
-  def exe(nubspace, cupcake) do
-    
-  end
-  
-  
-  @doc """
-  Shortcut to create a bot.
-  """
-  def w(nubspace \\ nil, cupcake \\ nil) do
-    apply __MODULE__, :new, [[
-      nubspace: nubspace,
-       cupcake: cupcake,
-        unique: Castle.uuid
-    ]]
-  end
-
 
   @doc """
   Add an effect to `bot`'s results.

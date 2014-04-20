@@ -1,4 +1,4 @@
-defmodule ILM.TowerServer do
+defmodule ILM.Tower do
   use GenServer.Behaviour
   
   @moduledoc """
@@ -14,8 +14,8 @@ defmodule ILM.TowerServer do
   # Script.results list, it's really like an unordered list, and our Emit
   # and Event methods just match through the list for map/reduce style events.
   
-  Emitters work in a two-step process. A lexical TowerServer.capture(channel) and
-  an TowerServer.results(channel) will send the given channel all of the events.
+  Emitters work in a two-step process. A lexical Tower.capture(channel) and
+  an Tower.results(channel) will send the given channel all of the events.
   
   # todo: store capture records for expiration purposes.
   """

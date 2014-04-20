@@ -1,18 +1,14 @@
-defmodule ILM.TowerSupervisor do
+defmodule ILM.DungeonSupervisor do
   use Supervisor.Behaviour
 
-  # gen_supervisor
-  
   def start_link do
-    :supervisor.start_link(__MODULE__, [])
+    :supervisor.start_link({:local, :castle}, __MODULE__, [])
   end
 
   def init([]) do
-    # todo: add a poolboy of .Servers here
-    
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Tower, [])
+      worker(ILM.Dungeon,  []),
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
