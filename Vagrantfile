@@ -8,7 +8,13 @@ Vagrant.configure("2") do |config|
 
   # Box
   config.vm.box       = "hashicorp/precise64"
-
+  
+  # Hardware
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 2
+  end
+  
   # Shared folders
   config.vm.synced_folder ".", "/ilmvx"
   
