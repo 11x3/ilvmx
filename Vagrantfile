@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.box       = "hashicorp/precise64"
 
   # Shared folders
-  config.vm.synced_folder ".", "/srv"
+  config.vm.synced_folder ".", "/ilmvx"
   
   # Network
   config.vm.network "forwarded_port", guest: 8080, host: 8080
@@ -26,6 +26,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, :inline => "cd /home/vagrant/elixir && git checkout #{version}"
   config.vm.provision :shell, :inline => "cd /home/vagrant/elixir && make && make install"
   config.vm.provision :shell, :inline => "ln -s /home/vagrant/rebar/rebar /usr/local/bin/rebar"
+  
+  # Custom
+  config.vm.provision :shell, :inline => "cd /ilmvx && mix deps.get && mix compile && mix test"
 
   # Done
   config.vm.provision :shell, :inline => "cowsay \"Your development environment is ready!\""
