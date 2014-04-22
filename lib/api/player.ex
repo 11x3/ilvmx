@@ -3,7 +3,7 @@ defrecord Player,
    signals: [],         # custom pipes/scripts
       bots: [],         # real-time :demand route matchers
     maybes: [],         # # keyword list of okcupid-like data
-  cupcakes: [] do       
+  nubcakes: [] do       
    
   def p1 do
     new
@@ -14,16 +14,16 @@ defrecord Player,
   """
 
   @doc """
-  Send a Cupcake message into the Castle and ignore results.
+  Send a Nubcake message into the Castle and ignore results.
   
   Spawn |> Event[unique: uuid]
   
   todo: support galactic castles.
   """
-  def arrow!(cupcake) when is_binary(cupcake) do
+  def arrow!(nubcake) when is_binary(nubcake) do
     bot = Bot.w
     bot = bot.player(Player.new)
-    bot = bot.cupcake(cupcake)
+    bot = bot.nubcake(nubcake)
     bot |> take |> arrow!
   end
   def arrow!(bot = Bot[]) do

@@ -1,5 +1,5 @@
 ```
-# PROPOSAL: Cupcake - Endgame: Markdown for cloud apps.
+# PROPOSAL: Nubcake - Endgame: Markdown for cloud apps.
 #
 # ILM apps will offer native Elm-lang support on the front end. And we can 
 # also stuff anything else inside `/public/` so bases covered.
@@ -8,13 +8,13 @@
 # nextgen front end stuff, but as it stands, there's no way it's easy enough
 # for end users to learn. 
 #
-# Cupcake hopes that like Erlang |> Elixir we could be Elm |> Cupcake ;)
+# Nubcake hopes that like Erlang |> Elixir we could be Elm |> Nubcake ;)
 
 # We then have a visual but nearly plain text language. Something
 # easily editable and compilable to both Elixir and Elm native terms. Thanks 
 # to their functional designs, they are relatively close.
 
-# Cupcake's big top idea is to define an entire cloud app, in an easy enough 
+# Nubcake's big top idea is to define an entire cloud app, in an easy enough 
 # way to type and code inside a <textarea> or be sent via SMS or through any 
 # number of services. You should be able to develop an entire cloud app in 
 # an ASCII and humane-level language in less than a minute. Assume other roles 
@@ -43,7 +43,7 @@
 # http://github.com
 # http://dogecoin.com
 
-# Cupcake is based on ILM which features Nubs that live in a Nubspace which 
+# Nubcake is based on ILM which features Nubs that live in a Nubspace which 
 # is a simple hashtag based address + 1 x bucket of data. The address part
 # has six degrees of built-in separation, "#1".."#6" but Nubs are self 
 # referential which means the global p2p "Nubspace" maps to something of a 
@@ -54,7 +54,7 @@
 # many and what type of things live at the Nub with the hash tag 
 # "#ilm #lolnub #app" or whatever the final syntax is.
 
-# Cupcake v0.0 [PROPOSAL]
+# Nubcake v0.0 [PROPOSAL]
 
 # Define a cloud app that lives in the "#me #jam" Nub, and expects one
 # arg, which is the current user or @player. An ILvMx server would then
@@ -73,7 +73,7 @@
 # bot-local @variables (temporary nubs) and |> pipes move 
 @exe "#search vacations", @vacas
 
-# Get the current Player.age property, run a Cupcake command @greater 18?
+# Get the current Player.age property, run a Nubcake command @greater 18?
 @exe "#player!age", "#greater 18"
 
 # ILM here is an app, please execute it in the local #me Nubspace

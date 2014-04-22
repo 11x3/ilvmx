@@ -2,7 +2,7 @@ defmodule ILM.Nubspace do
   use GenServer.Behaviour
 
   # todo: :crypto.sha1 the nubspace
-  alias Cupcake
+  alias Nubcake
   alias ConCache
 
   @nubspace :nubspace
@@ -11,14 +11,14 @@ defmodule ILM.Nubspace do
   # Public
   
   @doc """
-  Put `cupcake` into `nubspace`.
+  Put `nubcake` into `nubspace`.
   """
-  def push!(nubspace, cupcake) do
+  def push!(nubspace, nubcake) do
     nub = get nubspace
-    nub = nub.cupcakes(Enum.concat(nub.cupcakes, [cupcake]))
+    nub = nub.nubcakes(Enum.concat(nub.nubcakes, [nubcake]))
         
     # todo: explore nub storage options 
-    ConCache.put ILM.cache, @nubspace, Dict.put(cupcakes, nubspace, nub)
+    ConCache.put ILM.cache, @nubspace, Dict.put(nubcakes, nubspace, nub)
         
     # unique / key / value
     ILM.Tower.signal! nubspace, Event.w(nub.unique, nub)
@@ -42,9 +42,9 @@ defmodule ILM.Nubspace do
   # Private
 
   @doc """
-  Return all `cupcakes` in the Castle.
+  Return all `nubcakes` in the Castle.
   """
-  def cupcakes do
+  def nubcakes do
     n = ConCache.get_or_store ILM.cache, @nubspace, fn -> 
       HashDict.new
     end
@@ -52,11 +52,11 @@ defmodule ILM.Nubspace do
   
   # Pull `nubspace` from cache or Db
   defp get(nubspace) when is_binary nubspace do
-    Dict.get cupcakes, hash(nubspace), Nub.w(nubspace)
+    Dict.get nubcakes, hash(nubspace), Nub.w(nubspace)
   end
 
-  defp hash(cupcake) do
-    cupcake
+  defp hash(nubcake) do
+    nubcake
   end
   
   # GenServer Callbacks

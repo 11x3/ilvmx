@@ -14,12 +14,5 @@ defmodule ILM.Test do
   test "ilm (web)" do
     assert_get "http://localhost:4000/chat"
   end
-  
-  defp get_body(path) do
-    HTTPotion.get(path).body
-  end
-  
-  defp assert_get(path) do
-    assert 200 == HTTPotion.get(path).status_code
-  end
+
 end

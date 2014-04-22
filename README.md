@@ -8,10 +8,10 @@ Prealpha. Functionally minded cloud app server and eventually exchange. Based on
 - Wizards (castle guards)
 - Bots (agents/requests), 
 - Nubs (p2p global hashtag-based storage namespace),
-- Cupcakes (a DSL to write apps)
+- Nubcakes (a DSL to write apps)
 - Players (users)
 
-ILM/ILvMx or Cupcake apps are `Cloud Apps` in that they run in the cloud *and* service many protocols which really makes calling them "web apps" not feelerino.
+ILM/ILvMx or Nubcake apps are `Cloud Apps` in that they run in the cloud *and* service many protocols which really makes calling them "web apps" not feelerino.
 
 Cloud apps take protocol-facing requests (from clients, servers, and/or frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response.
 
@@ -41,9 +41,9 @@ doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
 - Reactive - events and updates, push forward, time and frame-based exe
 - Storage + Code - globally routable hashtag graph of storage + code
 - Dynamic -100% bootstrap and dynamically program your app from the first function up
-- Open - code with Cupcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
+- Open - code with Nubcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
 - Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front. 
-- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Cupcakes to be written in native Elixir and expand the galaxy.
+- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Nubcakes to be written in native Elixir and expand the galaxy.
 
 ## Example
 
@@ -65,36 +65,36 @@ $ git clone http://github.com/lolnub/ilvmx && cd ilvmx && iex -S mix
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, cupcakes: ["todo"]]
+ module: nil, member: nil, method: nil, nubcakes: ["todo"]]
 
-# Read the value back out, and look in the `cupcakes` field because Cupcakes
-# are actually the storage mechanism. Galactic Nubspace holds Cupcakes and
+# Read the value back out, and look in the `nubcakes` field because Nubcakes
+# are actually the storage mechanism. Galactic Nubspace holds Nubcakes and
 # Castles that Bots operate on.
 iex> Bot.get "#chat"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, cupcakes: [“todo"]]
+ module: nil, member: nil, method: nil, nubcakes: [“todo"]]
  
 # In this example, we are going to store a function that others may globally
 # execute with arguments. One of the next few project steps is to finish the
-# Cupcake DSL so that entire apps may be stored in Cupcakes, and not just
+# Nubcake DSL so that entire apps may be stored in Nubcakes, and not just
 # simple funs.
 
 iex> Bot.set "#chat", fn word -> "lol @ your chat #{ word }" end
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "7192cc1b-6bb4-4f5e-90bb-f1a6ca709f3a", domain: "#chat", system: nil,
  module: nil, member: nil, method: nil,
- cupcakes: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
+ nubcakes: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
 
 # In this example, we have our executed results. Doge will be builtin at some
 # point in the future, so let's get people used to seeing the idea now. You
 # can also see that there were no problems with the request. Others, any
 # exceptions or manually created errors are also presented.
 iex> Bot.exe "#chat", "hi"
-Bot[nubspace: "#chat", cupcake: "hi",
+Bot[nubspace: "#chat", nubcake: "hi",
  results: ["todo",
   Effect[source: nil,
-   content: [cupcake: #Function<6.80484245/1 in :erl_eval.expr/5>,
+   content: [nubcake: #Function<6.80484245/1 in :erl_eval.expr/5>,
     result: "lol @ your chat hi"]]], problems: [],
  accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
  unique: "f0b7d860-6d81-49cc-8d8d-ca6e0ef20b18"]
@@ -108,11 +108,11 @@ Event[content: "#chat", source: #PID<0.261.0>]
 # Looks like the #chat nubspace is about to change...
 iex(2)> Bot.set "#chat", "todo"                  
 Event[content: Nub[galaxy: :ilvmx, castle: "#lolnub", unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat",
-  system: nil, module: nil, member: nil, method: nil, cupcakes: ["todo", "todo"]],
+  system: nil, module: nil, member: nil, method: nil, nubcakes: ["todo", "todo"]],
  source: "acf85c20-b980-44a1-a429-7460205ec642"]
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, cupcakes: ["todo", "todo"]]
+ module: nil, member: nil, method: nil, nubcakes: ["todo", "todo"]]
 iex(5)>
 ```
 ## ATE or Adapt / Transform / Emit [PROPOSAL]
@@ -132,7 +132,7 @@ Thanks to our EEB foundations (Elixir/Erlang/BEAM), each stage of the request li
 
 ## Adapt
 
-So you take a request, abstract it from the protocol, for example given "GET /users/search/lol" it becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. HTTP to Cupcake) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally, subscribe to events and :emits for that UUID, otherwise the request is free from any other interaction by the requesting agent.
+So you take a request, abstract it from the protocol, for example given "GET /users/search/lol" it becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. HTTP to Nubcake) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally, subscribe to events and :emits for that UUID, otherwise the request is free from any other interaction by the requesting agent.
 
 ## Transform
 

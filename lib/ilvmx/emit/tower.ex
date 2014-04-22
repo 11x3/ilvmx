@@ -20,7 +20,7 @@ defmodule ILM.Tower do
   # todo: store capture records for expiration purposes.
   """
   
-  alias Cupcake
+  alias Nubcake
   alias ConCache
   
   @signals  :signals
@@ -57,7 +57,7 @@ defmodule ILM.Tower do
   
   Return an Event.w source: self, content: channel
   
-  # todo: convert event_callback to support Cupcake.
+  # todo: convert event_callback to support Nubcake.
   """
   def capture!(channel, event_callback) when is_function event_callback do
     ConCache.put ILM.cache, @signals, Enum.concat(signals, [[channel: channel, callback: event_callback]])

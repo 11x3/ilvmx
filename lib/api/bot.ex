@@ -1,5 +1,5 @@
 defrecord Bot, 
-   cupcake: nil,
+   nubcake: nil,
        tmp: nil,
     player: nil,
    results: [],           
@@ -13,9 +13,9 @@ defrecord Bot,
   @doc """
   Shortcut to create a bot.
   """
-  def w(cupcake \\ nil) do
+  def w(nubcake \\ nil) do
     apply __MODULE__, :new, [[
-       cupcake: cupcake,
+       nubcake: nubcake,
         unique: Castle.uuid,
            tmp: HashDict.new
     ]]
@@ -24,12 +24,12 @@ defrecord Bot,
   @doc """
   "Oh you know, the usual.." create + cmd!
   """
-  def cmd!(cupcake) do
-    Bot.w(cupcake) |> ILM.Castle.Dungeon.execute!
+  def cmd!(nubcake) do
+    Bot.w(nubcake) |> ILM.Castle.Dungeon.execute!
   end
 
   @doc """
-  Get a `Cupcake` from `nubspace`.
+  Get a `Nubcake` from `nubspace`.
   """
   def get(nubspace) do
     Bot.cmd! fn ->
@@ -38,33 +38,33 @@ defrecord Bot,
   end
   
   @doc """
-  Store `cupcake` into `nubspace`.
+  Store `nubcake` into `nubspace`.
 
   Returns `bot`.
   """
-  def set(nubspace, cupcake) do
+  def set(nubspace, nubcake) do
     Bot.cmd! fn ->
-      ILM.Nubspace.push! nubspace, cupcake
+      ILM.Nubspace.push! nubspace, nubcake
     end
   end
   
   @doc """
-  Execute a `nubspace` and evaluate `cupcake`.
+  Execute a `nubspace` and evaluate `nubcake`.
   
   Returns `bot`.
   """
-  def exe(nubspace, cupcake) do
-    ILM.Castle.Dungeon.execute! Bot.w, cupcake, nubspace
+  def exe(nubspace, nubcake) do
+    ILM.Castle.Dungeon.execute! Bot.w, nubcake, nubspace
   end
   
   @doc """
-  Capture a `nubspace` and evaluate cupcake.
+  Capture a `nubspace` and evaluate nubcake.
   
   Returns `bot`.
   """
-  def cap(nubspace, cupcake) do
+  def cap(nubspace, nubcake) do
     Bot.cmd! fn ->
-      ILM.Tower.capture! nubspace, cupcake
+      ILM.Tower.capture! nubspace, nubcake
     end
   end
   
