@@ -1,6 +1,6 @@
 # ILvMx @ project lolnub
 
-Prealpha. Functionally minded cloud app server and eventually exchange. Based on Reactive Functional Programming running on the industrial strength Elixir-lang platform.
+Prealpha. Functionally minded cloud app server and eventually exchange. Based on Functional Reactive Programming running on the industrial strength Elixir-lang platform.
 
 ## The Best Web 4 theme park and story attraction ever. 
 
@@ -121,7 +121,7 @@ Description of a reactive and functional development style for cloud apps.
 
 ATE stands for Adapt |> Transform |> Emit
 
-ATE is an attempt to document what many are already doing or starting to do, and other development styles have done for years. ATE is entirely functional we always push state forward, and each modules concerns are theirs alone to compile. Do your job here then push forward. Never look back.
+ATE is an attempt to document what many are already doing or starting to do, and other development styles have done for years. With ATE we always push state forward and each modules concerns are theirs alone to compile. Do your job here then push forward. Never look back.
 
 1. Adapt: protocol-specific adapters create abstract work requests 
 2. Transform: core app executes actor models and updates data
