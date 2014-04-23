@@ -1,15 +1,15 @@
-defrecord Nubcake,
- nubspace: nil,
- commands: [],
- captures: [],
-    emits: [],
-     gets: [],
-     sets: [],
-     exes: [],
-     pips: [],
-     elms: [],
-   unique: nil,
-      fps: 1 do
+defmodule Nubcake do
+defstruct nubspace: nil,
+          commands:   [],
+          captures:   [],
+          emits:      [],
+          gets:       [],
+          sets:       [],
+          exes:       [],
+          pips:       [],
+          elms:       [],
+          unique:     nil,
+          fps:        1
 
   @moduledoc """
   `Nubcakes` are cloud apps that power `Castle` `Bots`. They are simple to

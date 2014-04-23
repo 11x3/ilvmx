@@ -15,7 +15,7 @@ defmodule ILM.Adapt.WebServer do
   Web Requests from Cowboy/Plug.
   """
   def call(conn, opts) do
-    throw IO.inspect conn.path_info
+    bot = Bot.cmd! conn.path_info
     
     send_resp conn, 200, "lol"
   end

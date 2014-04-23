@@ -16,7 +16,6 @@ defmodule ILM.Mixfile do
         :ossp_uuid,
         :cowboy,
         :plug,
-        :httpotion
       ]
     ]
   end
@@ -32,7 +31,6 @@ defmodule ILM.Mixfile do
       {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid"},
       {:cowboy,                 github: "extend/cowboy"},
       {:plug,                   github: "elixir-lang/plug"},
-      {:httpoison,              github: "edgurgel/httpoison"},
       {:otp_dsl,                github: "pragdave/otp_dsl"},
       {:jsex,                   github: "talentdeficit/jsex"},
     ]

@@ -1,9 +1,9 @@
-defrecord Player,
-  nubspace: nil,   # exchange/home/mynub
-   signals: [],         # custom pipes/scripts
-      bots: [],         # real-time :demand route matchers
-    maybes: [],         # # keyword list of okcupid-like data
-  nubcakes: [] do       
+defmodule Player do
+defstruct nubspace: nil,  # exchange/home
+          signals:  [],   # custom pipes/scripts
+          bots:     [],   # real-time :demand route matchers
+          maybes:   [],   # # keyword list of okcupid-like data
+          nubcakes: []     
    
   def p1 do
     new

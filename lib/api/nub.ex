@@ -1,13 +1,13 @@
-defrecord Nub,
-  galaxy: nil,    # [:ilvmx]
-  castle: nil,    # [:server, :cluster, :etc]
-  unique: nil,
-  domain: nil,    # :api  # system        "lolnub.com"
-  system: nil,    # :api  # subsys        :http
-  module: nil,    # :api  # module        "support"
-  member: nil,    # :api  # function      "search"
-  method: nil,    # :api  # etc           "advanced"
-nubcakes: []   do # :data # args          "words"
+defmodule Nub do
+defstruct galaxy: nil,    # [:ilvmx]
+          castle: nil,    # [:server, :cluster, :etc]
+          unique: nil,
+          domain: nil,    # :api  # system        "lolnub.com"
+          system: nil,    # :api  # subsys        :http
+          module: nil,    # :api  # module        "support"
+          member: nil,    # :api  # function      "search"
+          method: nil,    # :api  # etc           "advanced"
+          nubcakes: []    # :data # args          "words"
   
   @doc """
   Create and fill a Nub from a Nubspace.

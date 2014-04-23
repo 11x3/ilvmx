@@ -2,7 +2,7 @@ defmodule Prop do
   @moduledoc """
   A helper module to take objects from The World.
   """
-  
+
   @doc """
   Read a file from the file system.
   # todo: secure the path, yes yes yes
@@ -16,14 +16,7 @@ defmodule Prop do
   # # todo: secure the path, yes yes yes
   # """  
   def web(uri, method, opts) do
-    # 
-    # defp get_body(path) do
     #   HTTPotion.get(path).body
-    # end
-    # 
-    # defp assert_get(path) do
-    #   assert 200 == HTTPotion.get(path).status_code
-    # end
   end
     
   # def email(address, subject, message, opts) do

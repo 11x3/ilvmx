@@ -1,6 +1,6 @@
-defrecord Effect,
-  source: nil,
- content: nil do
+defmodule Effect do
+  defstruct source:   nil,
+            content:  nil
 
   @moduledoc """
   Effect are side effects of Bots and other things happening. They are 

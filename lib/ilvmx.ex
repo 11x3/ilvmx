@@ -79,7 +79,7 @@ defmodule ILM do
     :application.start(:crypto)
     
     # start our http agent
-    HTTPotion.start
+    #HTTPotion.start
     
     # app
     ILM.cache

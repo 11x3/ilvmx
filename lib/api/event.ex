@@ -1,7 +1,7 @@
-defrecord Event,
-  content: nil,
-   source: nil,
-   unique: nil do
+defmodule Event do
+  defstruct content:  nil,
+            source:   nil,
+            unique:   nil
   
   @moduledoc """
   The basic news unit of ILM. (ie. 1 request = n events) Events package 

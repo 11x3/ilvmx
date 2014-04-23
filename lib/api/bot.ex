@@ -1,14 +1,13 @@
-defrecord Bot, 
-   nubcake: nil,
-       tmp: nil,
-    player: nil,
-   results: [],           
-  problems: [],           # [error_events]
-  accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
-    unique: nil do        # callback
+defmodule Bot do
+  defstruct nubcake:  nil,
+            tmp:      nil,
+            player:   nil,
+            results:  [],           
+            problems: [],
+            accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
+            unique:   nil
   
-
-  # API/Sugar
+  # Sugar
   
   @doc """
   Shortcut to create a bot.
@@ -28,6 +27,9 @@ defrecord Bot,
     Bot.w(nubcake) |> ILM.Castle.Dungeon.execute!
   end
 
+
+  # API
+  
   @doc """
   Get a `Nubcake` from `nubspace`.
   """
