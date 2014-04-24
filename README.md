@@ -1,29 +1,29 @@
 # ILvMx @ project lolnub
 
-Prealpha. Functionally minded cloud app server and eventually exchange. Based on Functional Reactive Programming running on the industrial strength Elixir-lang platform.
+[alpha] Functionally minded cloud app server and exchange.
 
-## The Best Web 4 theme park and story attraction ever. 
+## Help build the *best* Web 4 theme park and story attraction ever. 
 
 - Castles (servers), 
 - Wizards (castle guards)
-- Bots (agents/requests), 
-- Nubs (p2p global hashtag-based storage namespace),
+- Bots (requests/agents), 
+- Nubs (get/set/exe+cap(ture)/sig(nal) to hashtag based namespace),
 - Nubcakes (a DSL to write apps)
 - Players (users)
 
-ILM/ILvMx or Nubcake apps are `Cloud Apps` in that they run in the cloud *and* service many protocols which really makes calling them "web apps" not feelerino.
+Nubcake apps are `Cloud Apps` that run on ILvMx servers, in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for Nubcake app development in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
 
-Cloud apps take protocol-facing requests (from clients, servers, and/or frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response.
+The basic event flow is, Nubcake apps take requests from protocols like HTTP, SMS, SMTP (from clients, servers, and/or other frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response stages.
 
-MVC frameworks are a good fit for noun and object oriented-based environments but functional stacks and data flow event-based kits with their transform style of development may also be a natural fit for many other tasks.
+MVC frameworks are a good fit for noun and object oriented-based environments but functional stacks and reactive data flow-based setups with their transform style of development may also be a natural fit for many other tasks.
 
-Powered by the EEB stack, we hope to define and implement one such pattern of future development.
+We hope to define and implement one such pattern of future development.
 
-Welcome to Internet Land of Magic (Internet Load virtual Module exchange).
+Welcome to ILM, or the Internet Land of Magic (also possible: Internet Load virtual Module exchange).
 
 ## Contact
 
-Join me, code, help the Kickstarter? (l2code?)
+Want to learn to code? Or are you a (coming soon) Kickstarter pro? Anything would help.
 
 ILvMx
 http://ilvmx.org/
@@ -132,7 +132,7 @@ Thanks to our EEB foundations (Elixir/Erlang/BEAM), each stage of the request li
 
 ## Adapt
 
-So you take a request, abstract it from the protocol, for example given "GET /users/search/lol" it becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. HTTP to Nubcake) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally, subscribe to events and :emits for that UUID, otherwise the request is free from any other interaction by the requesting agent.
+So we take a request, abstract it from the protocol, for example given "GET /users/search/lol" it becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. HTTP to Nubcake) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally, subscribe to events and :emits for that UUID, otherwise the request is free from any other interaction by the requesting agent.
 
 ## Transform
 
@@ -160,6 +160,6 @@ Having a complete web app inside/outside our adapter makes all of our favorite f
 
 > note: Every successful request returns a UUID that our adapter may ignore or subscribe for events and updates on.
 
-In essence, other existing frameworks and apps may be used entirely inside and outside the adapt and other of Ilvmx.
+In essence, other existing frameworks and apps may be used entirely inside and outside the adapt and other stages of ILvMx – this makes it dead simple to setup and intergrate which should help increase adoption and ease potential future migratiions.
 
 > tl;dr #adapt - transform web/twitter/irc requests into abstract work requests
