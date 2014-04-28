@@ -4,7 +4,7 @@ defmodule ILM.Mixfile do
   def project do
     [ app: :ilvmx,
       version: "0.0.1",
-      elixir: "~> 0.12.5",
+      elixir: "~> 0.13.0",
       deps: deps ]
   end
 
@@ -31,7 +31,6 @@ defmodule ILM.Mixfile do
       {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid"},
       {:cowboy,                 github: "extend/cowboy"},
       {:plug,                   github: "elixir-lang/plug"},
-      {:otp_dsl,                github: "pragdave/otp_dsl"},
       {:jsex,                   github: "talentdeficit/jsex"},
     ]
   end

@@ -10,14 +10,15 @@ apt-get install -q -y erlang
 cd /home/vagrant
 git clone git://github.com/elixir-lang/elixir.git
 git clone git://github.com/rebar/rebar.git
-cd /home/vagrant/rebar && make
-cd /home/vagrant/elixir && git checkout #{version} && make && make install
+cd /home/vagrant/rebar && make 
+cd /home/vagrant/elixir && git checkout v0.13.0 && make && make install 
+mix clean --all && mix deps.get && mix compile
+
+chown -R vagrant:vagrant elixir rebar /ilvmx
 
 ln -s /home/vagrant/rebar/rebar /usr/local/bin/rebar
 
-# cd /ilmvx && mix deps.get && mix compile && mix test
-
-# Setup Elm-lang env for front-end dev.
+# Install Elm-lang env for front-end dev.
 apt-get install -q -y ghc cabal-install haskell-platform haskell-platform-doc haskell-platform-prof
 
 cabal update
@@ -25,3 +26,6 @@ cabal install elm
 cabal install elm-server   # Highly-Recommended
 cabal install elm-repl     # Optional
 cabal install elm-get      # Optional
+
+# Config the app.
+cd /ilvmx && mix deps.get && mix compile && mix test

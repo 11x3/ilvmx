@@ -2,6 +2,17 @@
 
 [alpha] Functionally minded cloud app server and exchange.
 
+Nubcake apps are `cloud apps` that run on ILvMx servers, in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
+
+- Fun(ctional) - function-level partitioning
+- Reactive - events and updates, push forward, time and frame-based exe
+- Storage + Code - globally routable hashtag graph of storage + code
+- Dynamic -100% bootstrap and dynamically program your app from the first function up
+- Open - code with Nubcake, Elixir/Mix, Elm-lang, Rails/JS and/or dynamically
+- Fast - static caching object graph
+- Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front. 
+- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Nubcakes to be written in native Elixir and expand the galaxy.
+
 ## Help build the *best* Web 4 theme park and story attraction ever. 
 
 - Castles (servers), 
@@ -11,53 +22,30 @@
 - Nubcakes (a DSL to write apps)
 - Players (users)
 
-Nubcake apps are `Cloud Apps` that run on ILvMx servers, in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for Nubcake app development in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
-
-The basic event flow is, Nubcake apps take requests from protocols like HTTP, SMS, SMTP (from clients, servers, and/or other frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response stages.
+The basic event flow is: apps take requests from protocols like HTTP, SMS, SMTP (from clients, servers, and/or other frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response stages.
 
 MVC frameworks are a good fit for noun and object oriented-based environments but functional stacks and reactive data flow-based setups with their transform style of development may also be a natural fit for many other tasks.
 
 We hope to define and implement one such pattern of future development.
 
-Welcome to ILM, or the Internet Land of Magic (also possible: Internet Load virtual Module exchange).
-
-## Contact
-
-Want to learn to code? Or are you a (coming soon) Kickstarter pro? Anything would help.
-
-ILvMx
-http://ilvmx.org/
-
-a lolnub project
-http://lolnub.com/
-heh@lolnub.com
-
-doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
-
-## Summary
-
-- Fun - nailed it
-- Fun(ctional) - function-level clusters
-- Reactive - events and updates, push forward, time and frame-based exe
-- Storage + Code - globally routable hashtag graph of storage + code
-- Dynamic -100% bootstrap and dynamically program your app from the first function up
-- Open - code with Nubcake, Elm, Elixir/Mix, Rails/JS and/or dynamically Fast - static caching object graph
-- Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front. 
-- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Nubcakes to be written in native Elixir and expand the galaxy.
+Welcome to the Internet Land of Magic.
 
 ## Example
 
-Only the core of the API is working as of today. But it is enough to get, set, and exe "Nubs" or: global address + data + function into your self-hosted local Castle's Nubspace.
+Only the core of the API is working but it is enough to get, set, and exe "Nubs" or: a global address + (data | function) into your self-hosted local Castle's Nubspace.
 
-For now we will just publicly host a stream of Events from the server and
-others will be welcome to consume the Nubspace event stream and that will be
-our "p2p" network. It shouldn't take long to get a few ILM servers actually
-talking to each other and forming a real network.
+We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. It won't take long to get a few ILM servers actually talking to each other and forming a real network.
  
-SO in this example we use the basic request mechanism or `Bot`.
+SO.. in this example we use the basic request mechanism or `Bot`.
 
 ```
-$ git clone http://github.com/lolnub/ilvmx && cd ilvmx && iex -S mix
+host $ git clone http://github.com/lolnub/ilvmx && cd ilvmx
+host $ vagrant up && vagrant ssh 
+vagrant $ iex -S mix
+
+```
+GET/SET/EXE
+```
 
 # Here we add something (the text "todo") to the global Nubspace "#chat". Now
 # anyone on the ILvMx network that had an up-to-date copy of the Galaxy 
@@ -98,9 +86,11 @@ Bot[nubspace: "#chat", nubcake: "hi",
     result: "lol @ your chat hi"]]], problems: [],
  accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
  unique: "f0b7d860-6d81-49cc-8d8d-ca6e0ef20b18"]
+ 
 ```
-Signals
+CAP(TURE)/SIG(NAL)
 ```
+
 # Capture or subscribe interest in a nubspace.
 iex(1)> Bot.cap "#chat", fn e -> IO.inspect e end
 Event[content: "#chat", source: #PID<0.261.0>]
@@ -114,7 +104,9 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat", system: nil,
  module: nil, member: nil, method: nil, nubcakes: ["todo", "todo"]]
 iex(5)>
+
 ```
+
 ## ATE or Adapt / Transform / Emit [PROPOSAL]
 
 Description of a reactive and functional development style for cloud apps.
@@ -163,3 +155,17 @@ Having a complete web app inside/outside our adapter makes all of our favorite f
 In essence, other existing frameworks and apps may be used entirely inside and outside the adapt and other stages of ILvMx – this makes it dead simple to setup and intergrate which should help increase adoption and ease potential future migratiions.
 
 > tl;dr #adapt - transform web/twitter/irc requests into abstract work requests
+
+
+## Contact
+
+Want to learn to code? Or are you a (coming soon) Kickstarter pro? Anything would help.
+
+ILvMx
+http://ilvmx.org/
+
+a lolnub project
+http://lolnub.com/
+heh@lolnub.com
+
+doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG

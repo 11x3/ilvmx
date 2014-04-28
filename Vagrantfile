@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   end
   
   # Shared folders
-  config.vm.synced_folder ".", "/ilmvx"
+  config.vm.synced_folder ".", "/ilvmx"
   
   # Network
   config.vm.network "forwarded_port", guest: 8080, host: 8888
