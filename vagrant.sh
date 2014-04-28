@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Install Erlang/Elixir kit for server.
+# Install Erlang/Elixir
 apt-get update --fix-missing
-apt-get install -q -y cowsay python-software-properties python g++ make git curl
+apt-get install -q -y cowsay python-software-properties python g++ make git curl libncurses5-dev
 wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
 dpkg -i erlang-solutions_1.0_all.deb
-apt-get install -q -y erlang
+apt-get update && apt-get install -q -y erlang
 
 cd /home/vagrant
 git clone git://github.com/elixir-lang/elixir.git
@@ -28,4 +28,4 @@ cabal install elm-repl     # Optional
 cabal install elm-get      # Optional
 
 # Config the app.
-cd /ilvmx && mix deps.get && mix compile && mix test
+#cd /ilvmx && mix deps.get && mix compile && mix test
