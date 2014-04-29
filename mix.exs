@@ -37,6 +37,7 @@ defmodule ILM.Mixfile do
       {:plug,                   github: "elixir-lang/plug", tag: "v0.4.1"},
       {:jsex,                   github: "talentdeficit/jsex"},
       {:httpotion,              github: "myfreeweb/httpotion"},
+      {:amnesia,                github: "meh/amnesia" },
     ]
   end
 end
