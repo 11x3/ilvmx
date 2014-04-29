@@ -16,8 +16,8 @@ defmodule Prop do
   # Read a file from the file system.
   # # todo: secure the path, yes yes yes
   # """
-  def web(uri, method \\ "GET", opts \\ nil) do
-    #   HTTPotion.get(path).body
+  def web(path) do
+    HTTPotion.get(path).body
   end
     
   # def email(address, subject, message, opts) do

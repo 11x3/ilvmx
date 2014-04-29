@@ -13,7 +13,7 @@ defmodule ILM.Castle.Supervisor do
 
     # start our http server
     # todo: check ILM.config before starting
-    Plug.Adapters.Cowboy.http ILM.Adapt.WebServer, []
+    Plug.Adapters.Cowboy.http ILM.Adapt.WebServer, [], port: 8080
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
     # for other strategies and supported options

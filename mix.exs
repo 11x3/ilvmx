@@ -16,6 +16,7 @@ defmodule ILM.Mixfile do
         :ossp_uuid,
         :cowboy,
         :plug,
+        :httpotion,
       ]
     ]
   end
@@ -35,6 +36,7 @@ defmodule ILM.Mixfile do
       {:cowboy,                 github: "extend/cowboy"},
       {:plug,                   github: "elixir-lang/plug", tag: "v0.4.1"},
       {:jsex,                   github: "talentdeficit/jsex"},
+      {:httpotion,              github: "myfreeweb/httpotion"},
     ]
   end
 end

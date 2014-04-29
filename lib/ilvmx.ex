@@ -77,11 +77,7 @@ defmodule ILM do
   end
   def start(_type, _args) do
     :application.start(:crypto)
-    
-    # start our http agent
-    #HTTPotion.start
-    
-    # app
+
     ILM.cache
     
     ILM.Castle.Supervisor.start_link

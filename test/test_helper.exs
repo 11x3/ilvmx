@@ -1,8 +1,10 @@
-
+# server
 ILM.start
 
+# tests
 ExUnit.start
 
+# helpers
 defmodule IT do
   use ExUnit.Case
   alias Script
