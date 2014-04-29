@@ -1,4 +1,5 @@
 defmodule Prop do
+  
   @moduledoc """
   A helper module to take objects from The World.
   """
@@ -14,8 +15,8 @@ defmodule Prop do
   # @doc """
   # Read a file from the file system.
   # # todo: secure the path, yes yes yes
-  # """  
-  def web(uri, method, opts) do
+  # """
+  def web(uri, method \\ "GET", opts \\ nil) do
     #   HTTPotion.get(path).body
   end
     

@@ -3,12 +3,8 @@ defstruct nubspace: nil,  # exchange/home
           signals:  [],   # custom pipes/scripts
           bots:     [],   # real-time :demand route matchers
           maybes:   [],   # # keyword list of okcupid-like data
-          nubcakes: []     
-   
-  def p1 do
-    new
-  end
-  
+          nubcakes: []
+          
   @moduledoc """
   Castle-level accounts.
   """
@@ -26,7 +22,7 @@ defstruct nubspace: nil,  # exchange/home
     bot = bot.nubcake(nubcake)
     bot |> take |> arrow!
   end
-  def arrow!(bot = Bot[]) do
+  def arrow!(bot = Bot) do
     bot |> take |> Dungeon.execute!
   end
   

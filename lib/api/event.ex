@@ -29,10 +29,10 @@ defmodule Event do
     w(nil, content)
   end
   def w(source, content) do
-    apply __MODULE__, :new, [[
+    %Event{
       content: content,
        source: source,
        unique: Castle.uuid
-    ]]
+    }
   end
 end

@@ -14,6 +14,9 @@ defmodule Effect do
   """
   def w(content), do: w(nil, content)
   def w(source, content) do
-    apply __MODULE__, :new, [[source: source, content: content]]
+    %Effect{
+       source: source,
+       content: content
+    }
   end
 end

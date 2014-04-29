@@ -58,11 +58,7 @@ defmodule ILM do
   def cache do
     store = Process.get @cache
     if !store do
-      store = ConCache.start_link(
-        touch_on_read: true,
-        ttl: :timer.seconds(0)
-      )
-      
+      store = %{}
       Process.put @cache, store
     end
     store

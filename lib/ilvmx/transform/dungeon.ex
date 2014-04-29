@@ -4,7 +4,7 @@ defmodule ILM.Castle.Dungeon do
   @doc """
   *Shh...*
   """
-  def execute!(bot = Bot[]) do
+  def execute!(bot) do
     execute! bot, bot.nubcake
   end
   def execute!(bot, nubcake) when is_function(nubcake) do
@@ -31,7 +31,7 @@ defmodule ILM.Castle.Dungeon do
       end
     end
   end
-  def execute!(bot = Bot[], nubcake, nubspace) do
+  def execute!(bot = Bot, nubcake, nubspace) do
     nub = ILM.Nubspace.pull! nubspace
     
     results = nub.nubcakes |> Enum.map fn cake ->
@@ -47,7 +47,7 @@ defmodule ILM.Castle.Dungeon do
       end
     end
 
-    bot.results(List.flatten(Enum.concat(bot.results, results)))
+    bot = %{ bot | results: List.flatten(Enum.concat(bot.results, results)) }
   end
   def execute!(cmd, nub, opt) do
     case cmd do

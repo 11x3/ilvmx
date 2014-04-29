@@ -28,4 +28,4 @@ cabal install elm-repl     # Optional
 cabal install elm-get      # Optional
 
 # Config the app.
-#cd /ilvmx && mix deps.get && mix compile && mix test
+cd /ilvmx && mix deps.get && mix compile && mix test

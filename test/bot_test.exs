@@ -9,34 +9,39 @@ defmodule BotTest do
   def hey, do: "hey"
   
   # API
-  
-  test "Bot.cmd!" do
-    IT.assert_bot Bot.cmd! "#chat"
+  test "Bot.set" do
+    nub = Bot.set "#chat", "todo"
+    IT.assert_nub nub
+    
+    assert ["todo"] = nub.nubcakes
   end
   
   test "Bot.get" do
-    IT.assert_bot Bot.get "#chat"
+    nub = Bot.get "#chat"
+    IT.assert_nub nub
+    
+    assert [] = nub.nubcakes
   end
   
-  test "Bot.set" do
-    IT.assert_bot Bot.set "#chat", "todo"
-  end
+  # test "Bot.cap" do
+  #   capbot = Bot.cap "#chat", fn event -> send self, :hey end
+  #   throw IO.inspect capbot
+  #   
+  #   sigbot = Bot.exe "#chat"
+  #   
+  #   assert_received :hey
+  # end
+  
+  # test "Bot.exe" do
+  #   # setup
+  #   Bot.exe "@set #chat todo"
+  #   
+  #   # test
+  #   bot = Bot.exe "#chat"
+  #   IT.assert_bot bot
+  #   
+  #   throw IO.inspect bot
+  # end
 
-  test "Bot.exe" do
-    # setup
-    Bot.cmd! "@set #chat todo"
-    
-    # test
-    bot = Bot.exe "#chat", "todo"
-    IT.assert_bot bot
-    
-    assert ["todo"] == bot.results
-  end
-  
-  test "Bot.cap" do
-    capbot = Bot.cap  "#chat", fn event -> send self, :hey end
-    sigbot = Bot.cmd! "@set #chat todo"
-    
-    assert_received :hey
-  end
+
 end

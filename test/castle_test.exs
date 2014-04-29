@@ -14,8 +14,4 @@ defmodule CastleTest do
   test "Castle.door" do
     assert "#lolnub" == Castle.door
   end
-  
-  test "Dungeon.execute!" do
-    IT.assert_bot Dungeon.execute! Bot.cmd! "#chat"
-  end
 end
