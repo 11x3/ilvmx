@@ -21,6 +21,17 @@ defmodule BotTest do
     assert ["todo"] = nub.nubcakes
   end
   
+  test "Bot.exe" do
+    Bot.set "#chat", fn m -> "lol @ #{ m }" end
+    
+    bot = Bot.exe "#chat", "hi"
+    IT.assert_bot bot
+    
+    nub = List.first(bot.results).content
+    
+    assert "lol @ hi" = nub[:result]
+  end
+  
   test "Bot.cap" do
     Bot.cap "#chat", fn event -> send self, :hey end    
     Bot.exe "#chat"

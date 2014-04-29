@@ -31,7 +31,12 @@ defmodule ILM.Castle.Dungeon do
       end
     end
   end
-  def execute!(bot = Bot, nubcake, nubspace) do
+  def execute!(cmd, nub, opt) when is_binary(cmd) do
+    case cmd do
+      "@set" -> Bot.set nub, opt
+    end
+  end
+  def execute!(bot, nubcake, nubspace) do
     nub = ILM.Nubspace.pull! nubspace
     
     results = nub.nubcakes |> Enum.map fn cake ->
@@ -49,13 +54,8 @@ defmodule ILM.Castle.Dungeon do
 
     bot = %{ bot | results: List.flatten(Enum.concat(bot.results, results)) }
   end
-  def execute!(cmd, nub, opt) do
-    case cmd do
-      "@set" -> Bot.set nub, opt
-    end
-  end
 
-  
+
   # GenServer Callbacks
   
   def start_link do
