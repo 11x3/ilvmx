@@ -29,9 +29,9 @@ defmodule ILM.Nubspace do
     
     nub = %{ nub | nubcakes: Enum.concat(nub.nubcakes, [nubcake]) }
     
-    # todo: explore nub storage options 
-    Dict.put nubcakes, hash(nubspace), nub
-
+    # todo: explore nub storage options
+    ConCache.put ILM.cache, @nubspace, Dict.put(nubcakes, hash(nubspace), nub)
+    
     # unique / key / value
     ILM.Tower.signal! nubspace, Event.w(nub.unique, nub)
 
@@ -44,7 +44,9 @@ defmodule ILM.Nubspace do
   Return all `nubcakes` in the Castle.
   """
   def nubcakes do
-    HashDict.new
+    n = ConCache.get_or_store ILM.cache, @nubspace, fn -> 
+      HashDict.new
+    end
   end
 
   defp hash(nubcake) do
