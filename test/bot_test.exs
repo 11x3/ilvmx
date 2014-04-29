@@ -2,10 +2,6 @@ defmodule BotTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
-  import Player
-  
-  alias ILM.Nubspace
-
   def hey, do: "hey"
   
   # API
@@ -23,14 +19,12 @@ defmodule BotTest do
     assert [] = nub.nubcakes
   end
   
-  # test "Bot.cap" do
-  #   capbot = Bot.cap "#chat", fn event -> send self, :hey end
-  #   throw IO.inspect capbot
-  #   
-  #   sigbot = Bot.exe "#chat"
-  #   
-  #   assert_received :hey
-  # end
+  test "Bot.cap" do
+    Bot.cap "#chat", fn event -> send self, :hey end    
+    Bot.exe "#chat"
+    
+    assert_received :hey
+  end
   
   # test "Bot.exe" do
   #   # setup
@@ -42,6 +36,5 @@ defmodule BotTest do
   #   
   #   throw IO.inspect bot
   # end
-
-
+  
 end

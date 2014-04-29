@@ -26,9 +26,11 @@ defmodule ILM.Mixfile do
   # To specify particular versions, regardless of the tag, do:
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
   
-  # 4/28/14: [fix] grab "v0.4.1" version of Plug to work with current v0.13.0.
+  # hack: 4/28/14 grab "v0.4.1" tag of Plug to work with current v0.13.0.
   defp deps do
     [
+      {:exactor,                github: "sasa1977/exactor"},
+      {:con_cache,              github: "sasa1977/con_cache"},
       {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid"},
       {:cowboy,                 github: "extend/cowboy"},
       {:plug,                   github: "elixir-lang/plug", tag: "v0.4.1"},

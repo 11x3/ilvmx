@@ -17,7 +17,6 @@ defmodule IT do
   
   def assert_bot(suspect) do
     assert_unique suspect.unique
-    assert true 
   end
 end
 

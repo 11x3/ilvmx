@@ -1,8 +1,6 @@
 defmodule CastleTest do
   use   ExUnit.Case
-  
-  alias ILM.Castle.Dungeon
-  
+    
   test "Castle.uuid" do
     assert true == IT.assert_unique Castle.uuid 
   end
