@@ -1,8 +1,8 @@
-# ILvMx @ project lolnub
+# ILvMx: functionally minded cloud app server and exchange.
 
-[alpha] Functionally minded cloud app server and exchange.
+[alpha] 
 
-Nubcake apps are `cloud apps` that run on ILvMx servers, in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
+ILvMx apps are `cloud apps` that run in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
 
 - Fun(ctional) - function-level partitioning
 - Reactive - events and updates, push forward, time and frame-based exe
