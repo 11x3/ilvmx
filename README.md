@@ -1,29 +1,25 @@
-# Welcome to the Internet Land of Magic
+# Internet Land of Magic
 
-## ILvMx: Internet Load virtual Module exchange
+ILvMx is an `internet load virtual module exchange` or functionally minded cloud app server and with function-level exchange.
 
-Functionally minded cloud app server and network exchange.
+The server is written in Elixir-lang but the project distributable runs in the  cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang and other support in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
 
-ILvMx is an Elixir-lang `cloud app` server which is run in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
+## Features
 
+- Storage + Code - global hashtag-based namespace of storage + code
+- Reactive - completely async event, time, and frame-based execution
 - Fun(ctional) - function-level partitioning
-- Reactive - events and updates, push forward, time and frame-based exe
-- Storage + Code - globally routable hashtag graph of storage + code
-- Dynamic -100% bootstrap and dynamically program your app from the first function up
-- Open - code with Nubcake, Elixir/Mix, Elm-lang, Rails/JS and/or dynamically
-- Fast - static caching object graph
-- Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front. 
-- Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Nubcakes to be written in native Elixir and expand the galaxy.
+- Fast - low overhead `Bots` and default static object graphs
+- Open Source - server/apps/dsl are completely open source
 
 ## Setup
 
-1. Install VirtualBox
+1. Install VirtualBox (virtualbox.org)
 2. Install Vagrant (vagrantup.com)
 3. Clone repo `git clone git://github.com/lolnub/ilvmx.git`
-4. Build box `cd ilvmx`
-7. Fire up your box `vagrant up`
+4. Build box `cd ilvmx` && `vagrant up`
 
-## Let's build the *best* Web 4 theme park and story attraction ever.
+## Playing with the *best* Web 4 theme park and story attraction ever.
 
 - Players (users)
 - Castles (servers)
@@ -40,7 +36,7 @@ We hope to define and implement one such pattern of future development.
 
 ## Example
 
-Only the core of the API is working but it is enough to get, set, and exe "Nubs" or: a global address + (data | function) into your self-hosted local Castle's Nubspace.
+Only the core of the API is working but it is enough to get/set/cap/sig/exe against our Nubspace (or hashtag namespace of data + code) into your self-hosted local Castle's Nubspace.
 
 We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. If other ILvMx servers pop up and start talking to each other, we will form a real network and start adding the p2p.
  
@@ -126,7 +122,7 @@ iex(5)>
 
 ```
 
-## [PROPOSAL] Adapt |> Transform |> Emit (OOP=MVC, RFP=ATE)
+## [PROPOSAL] Adapt |> Transform |> Emit
 
 Description of a reactive and functional development style for cloud apps.
 
