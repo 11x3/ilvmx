@@ -1,3 +1,6 @@
+use Amnesia
+use Db
+
 defmodule ILM.Tower do
   use GenServer.Behaviour
   
@@ -41,11 +44,20 @@ defmodule ILM.Tower do
   
   Return an Effect.w source: self, content: number of signals.
   """
-  def signal!(channel, event) do
+  def signal!(event, channel \\ nil) do
     signals |> Enum.each fn [channel: signal, callback: callback] ->
       if signal == channel do        
         callback.(event)
       end
+    end
+        
+    # save to db
+    Amnesia.transaction do
+      EventDb[
+        content: inspect(event.content), 
+         source: inspect(event.source), 
+         unique: inspect(event.unique)
+      ].write
     end
     
     Effect.w self, signals: signals

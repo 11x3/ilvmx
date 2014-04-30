@@ -12,4 +12,5 @@
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "507fa4c41db33c81e925ab53f4d789d234aaff2f", [tag: "v2.0.1"]},
   "ossp_uuid": {:git, "git://github.com/yrashk/erlang-ossp-uuid.git", "5839a91796349114375c9cb066ec4e1dfdb653ab", []},
   "plug": {:git, "git://github.com/elixir-lang/plug.git", "d5230adfc32010aec8533834f9f92fd3c14b684f", [tag: "v0.4.1"]},
-  "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]}}
+  "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]},
+  "timex": {:git, "git://github.com/bitwalker/timex.git", "ebedd215a3b47f7b131a50304eca0d46d16f76ab", []}}

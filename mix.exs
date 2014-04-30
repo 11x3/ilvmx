@@ -38,6 +38,7 @@ defmodule ILM.Mixfile do
       {:jsex,                   github: "talentdeficit/jsex"},
       {:httpotion,              github: "myfreeweb/httpotion"},
       {:amnesia,                github: "meh/amnesia" },
+      {:timex,                  github: "bitwalker/timex"},
     ]
   end
 end

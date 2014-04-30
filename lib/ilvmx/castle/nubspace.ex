@@ -16,7 +16,7 @@ defmodule ILM.Nubspace do
     nub = Dict.get nubcakes, hash(nubspace), Nub.w(nubspace)
     
     # unique / key / value
-    ILM.Tower.signal! nubspace, Event.w(nub.unique, nub)
+    ILM.Tower.signal! Event.w(nub.unique, nub), nubspace
     
     nub
   end
@@ -33,10 +33,11 @@ defmodule ILM.Nubspace do
     ConCache.put ILM.cache, @nubspace, Dict.put(nubcakes, hash(nubspace), nub)
     
     # unique / key / value
-    ILM.Tower.signal! nubspace, Event.w(nub.unique, nub)
+    ILM.Tower.signal! Event.w(nub.unique, nub), nubspace
 
     nub
   end
+  
   
   # Private
 
@@ -52,6 +53,7 @@ defmodule ILM.Nubspace do
   defp hash(nubcake) do
     nubcake
   end
+  
   
   # GenServer Callbacks
 

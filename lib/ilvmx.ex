@@ -17,7 +17,8 @@ defmodule ILM do
   use Application.Behaviour
 
   @cache :cache
-  
+  @epoch :epoch
+
   @moduledoc """
   ILM is an Elixir cloud app server.
   """
@@ -76,10 +77,18 @@ defmodule ILM do
     start(nil, nil)
   end
   def start(_type, _args) do
-    :application.start(:crypto)
-
+    # Private
     ILM.cache
     
-    ILM.Castle.Supervisor.start_link
+    # Database
+    Amnesia.Schema.create
+    Amnesia.start    
+    Db.create(disk: [node])
+    Db.wait
+
+    # UUID/crypto
+    :application.start(:crypto)
+    
+    ILM.Supervisor.start_link
   end
 end
