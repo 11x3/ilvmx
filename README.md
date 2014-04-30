@@ -1,8 +1,10 @@
-# ILvMx: functionally minded cloud app server and exchange.
+# Welcome to the Internet Land of Magic
 
-[alpha] 
+## ILvMx: Internet Load virtual Module exchange
 
-ILvMx apps are `cloud apps` that run in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
+Functionally minded cloud app server and network exchange.
+
+ILvMx is an Elixir-lang `cloud app` server which is run in the cloud or self-hosted. We support native Elixir and HTTP APIs now and will add Elm-lang support and other support for in the near future. Like the direction shared by many new frameworks, we think calling them "web apps" doesn't feelerino.
 
 - Fun(ctional) - function-level partitioning
 - Reactive - events and updates, push forward, time and frame-based exe
@@ -13,14 +15,22 @@ ILvMx apps are `cloud apps` that run in the cloud or self-hosted. We support nat
 - Powerful - Elixir/Erlang on the server + Elm-lang (or anything else!) on the front. 
 - Potential - it won’t take long for more Plugs, Adapters, Emitters, and more Nubcakes to be written in native Elixir and expand the galaxy.
 
-## Help build the *best* Web 4 theme park and story attraction ever. 
+## Setup
 
-- Castles (servers), 
-- Wizards (castle guards)
-- Bots (requests/agents), 
-- Nubs (get/set/exe+cap(ture)/sig(nal) to hashtag based namespace),
-- Nubcakes (a DSL to write apps)
+1. Install VirtualBox
+2. Install Vagrant (vagrantup.com)
+3. Clone repo `git clone git://github.com/lolnub/ilvmx.git`
+4. Build box `cd ilvmx`
+7. Fire up your box `vagrant up`
+
+## Let's build the *best* Web 4 theme park and story attraction ever.
+
 - Players (users)
+- Castles (servers)
+- Wizards (agents)
+- Bots (requests)
+- Nubs + Nubspace (hashtag based namespace of code + data)
+- Nubcakes (a DSL to write apps)
 
 The basic event flow is: apps take requests from protocols like HTTP, SMS, SMTP (from clients, servers, and/or other frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response stages.
 
@@ -28,36 +38,37 @@ MVC frameworks are a good fit for noun and object oriented-based environments bu
 
 We hope to define and implement one such pattern of future development.
 
-Welcome to the Internet Land of Magic.
-
 ## Example
 
 Only the core of the API is working but it is enough to get, set, and exe "Nubs" or: a global address + (data | function) into your self-hosted local Castle's Nubspace.
 
-We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. It won't take long to get a few ILM servers actually talking to each other and forming a real network.
+We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. If other ILvMx servers pop up and start talking to each other, we will form a real network and start adding the p2p.
  
-SO.. in this example we use the basic request mechanism or `Bot`.
-
 ```
-host $ git clone http://github.com/lolnub/ilvmx && cd ilvmx
-host $ vagrant up && vagrant ssh 
+# See `Setup` above.. then `vagrant ssh && cd /ilvmx`
+
 vagrant $ iex -S mix
-
-```
-GET/SET/EXE
 ```
 
-# Here we add something (the text "todo") to the global Nubspace "#chat". Now
+## GET/SET/EXE to interact with our hashtag data+code store.
+
+With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `Nubspace`.
+
+```
+
+# Here we add something (the text "todo") to the castle Nubspace "#chat". Now
 # anyone on the ILvMx network that had an up-to-date copy of the Galaxy 
-# Nubspace would eventually be able to see/sort/filter/exe/download this Nub.
+# Nubspace would be able to get/set/exe/sort/filter/render this Nub.
+
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
  module: nil, member: nil, method: nil, nubcakes: ["todo"]]
 
-# Read the value back out, and look in the `nubcakes` field because Nubcakes
-# are actually the storage mechanism. Galactic Nubspace holds Nubcakes and
-# Castles that Bots operate on.
+# Here we read Nub back out and look in the `nubcakes` field to see
+# what the Nubspace holds, at which point the client would interact and
+# develop the Nub.
+
 iex> Bot.get "#chat"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
@@ -74,10 +85,11 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  module: nil, member: nil, method: nil,
  nubcakes: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
 
-# In this example, we have our executed results. Doge will be builtin at some
-# point in the future, so let's get people used to seeing the idea now. You
-# can also see that there were no problems with the request. Others, any
-# exceptions or manually created errors are also presented.
+# In this example, we will show our executed results. Doge will be builtin
+# at some point in the future, so let's get people used to seeing the 
+# idea now. You can also see that there were no problems with the request.
+# Other notes/erros/exceptions are also presented.
+
 iex> Bot.exe "#chat", "hi"
 Bot[nubspace: "#chat", nubcake: "hi",
  results: ["todo",
@@ -88,43 +100,51 @@ Bot[nubspace: "#chat", nubcake: "hi",
  unique: "f0b7d860-6d81-49cc-8d8d-ca6e0ef20b18"]
  
 ```
-CAP(TURE)/SIG(NAL)
+
+## CAP(TURE)/SIG(NAL) for reactive updates.
+
+Example of `capping` a nubspace to receive reactive `signal` updates.
+
 ```
 
-# Capture or subscribe interest in a nubspace.
+# Capture a nubspace to be alerted when events happen.
+
 iex(1)> Bot.cap "#chat", fn e -> IO.inspect e end
 Event[content: "#chat", source: #PID<0.261.0>]
 
 # Looks like the #chat nubspace is about to change...
-iex(2)> Bot.set "#chat", "todo"                  
+
+iex(2)> Bot.set "#chat", "other"                  
 Event[content: Nub[galaxy: :ilvmx, castle: "#lolnub", unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat",
   system: nil, module: nil, member: nil, method: nil, nubcakes: ["todo", "todo"]],
  source: "acf85c20-b980-44a1-a429-7460205ec642"]
+ 
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, nubcakes: ["todo", "todo"]]
+ module: nil, member: nil, method: nil, nubcakes: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>, "other"]]
 iex(5)>
 
 ```
 
-## ATE or Adapt / Transform / Emit [PROPOSAL]
+## [PROPOSAL] Adapt |> Transform |> Emit (OOP=MVC, RFP=ATE)
 
 Description of a reactive and functional development style for cloud apps.
 
 ATE stands for Adapt |> Transform |> Emit
 
-ATE is an attempt to document what many are already doing or starting to do, and other development styles have done for years. With ATE we always push state forward and each modules concerns are theirs alone to compile. Do your job here then push forward. Never look back.
+ATE is an attempt to document a reactive functional development style where data is always pushed forward and each stage or module is only has a single concern that it alone handles. 
+
+Do your job here, push forward – never look back.
 
 1. Adapt: protocol-specific adapters create abstract work requests 
 2. Transform: core app executes actor models and updates data
 3. Emit: generate objects and events to the outside world
 
-Thanks to our EEB foundations (Elixir/Erlang/BEAM), each stage of the request life cycle is highly concurrent, distributed, and isolated from the outside world. Following that idea is that there are three primary job states a cloud request may be in: adaptation, transformation, and side-effect emission.
-
+Each stage of the request life cycle is highly concurrent, distributed, and isolated from the outside world.
 
 ## Adapt
 
-So we take a request, abstract it from the protocol, for example given "GET /users/search/lol" it becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. HTTP to Nubcake) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally, subscribe to events and :emits for that UUID, otherwise the request is free from any other interaction by the requesting agent.
+Take a request, abstract it from the protocol – for example given "GET /users/search/lol" the request becomes "#users #search lol" during :adapt, and any and all request data the adapter (ie. Web+HTTP) passes along is forwarded to the :transform servers. A UUID is returned and the adapter may then optionally cap to be signaled of events for that UUID, otherwise the request is free from any and all other interaction by the requesting agent.
 
 ## Transform
 
@@ -132,34 +152,11 @@ The transform servers take the request, dispatch, and execute the request, movin
 
 ## Emit
 
-The Emitters now have the complete request, all events, all side effects (i.e. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had subscribe via a (~) capture signal, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter subscribed to Events about the request, the events are obviously pushed forward to it, and/or then out to the Elixir-lang Plug pipeline, or another queue system you've already got deployed.
+The Emitters now have the complete request, all events, all side effects (i.e. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had capped a nub, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter all capped the request, the events are obviously pushed forward to it and all other Elixir-lang Plug pipelines, queues, etc. that you've likely already got deployed.
 
-Finally, an Event is :emitted to the entire lolnub network with any public network-wide data attached that the request should be committed to the network record.
-
-## Requests
-
-Lets think about the modern request life cycle with an outlook for action over endpoint. Instead of:
-
-> Request -> Controller -> Model -> View
-
-We might question the major steps must a request must take from the asking, to the unit of work, to the result:
-
-> Request -> Adapt request -> Transform and dispatch -> Emit events/results
-
-The outside world potentially includes our protocol adapters too. The adapt phase is the first stage of our app where we take a protocol-level request (HTTP, SMTP, IRC, TwitterBot, etc) and create an abstract or generic term-based request, called a work request. Using the default WWW/HTTP adapter as an example, the adapter itself may be an entire EEB or external sub project and in this case we import WWW-related stuff from the Cowboy project (could easily be from an external app on Phoenix, Dynamo, Rails, Twisted, MQ, etc).
-
-Having a complete web app inside/outside our adapter makes all of our favorite features of whichever environment we choose (public/js, controllers, models, routes, search, legacy, etc) available, except instead of generating our specific results inside the web controller's actions and model methods, we only use the other framework to submit work requests into the inner transform core and listen for their event results.
-
-> note: Every successful request returns a UUID that our adapter may ignore or subscribe for events and updates on.
-
-In essence, other existing frameworks and apps may be used entirely inside and outside the adapt and other stages of ILvMx – this makes it dead simple to setup and intergrate which should help increase adoption and ease potential future migratiions.
-
-> tl;dr #adapt - transform web/twitter/irc requests into abstract work requests
-
+Finally, an Event is :emitted to the entire `:ilvmx` network with any public network-wide data attached that the request should be committed to the network record.
 
 ## Contact
-
-Want to learn to code? Or are you a (coming soon) Kickstarter pro? Anything would help.
 
 ILvMx
 http://ilvmx.org/
