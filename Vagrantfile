@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
     v.memory = 1024
     v.cpus = 2
   end
-  
+
   # Shared folders
   config.vm.synced_folder ".", "/ilvmx"
   

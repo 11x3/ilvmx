@@ -26,15 +26,20 @@ defmodule Castle do
   @doc """
   Only the mightiest of Nub Doors in the land protect `Castle` "#lolnub".
   """
-  def door, do: "#lolnub"
+  def door do
+    "#lolnub"
+  end
+  def door(castle) do
+    # todo: support network requests
+  end
   
   @doc """
   `Castle` epoch scheduler.
   """
-  def epoch do    
+  def epoch do
     IO.inspect "epoch: #{ Time.now }"
   end
-  
+    
   # GenServer Callbacks
 
   def start_link do

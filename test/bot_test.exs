@@ -1,6 +1,5 @@
 defmodule BotTest do
-  use ExUnit.Case, async: true
-  use Plug.Test
+  use ExUnit.Case
 
   def hey, do: "hey"
   

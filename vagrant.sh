@@ -28,4 +28,8 @@ cabal install elm-repl     # Optional
 cabal install elm-get      # Optional
 
 # Config the app.
-cd /ilvmx && mix deps.get && mix compile && mix test
+cd /ilvmx && mix clean --all
+
+# todo: fix con_cache/exactor deps
+
+mix deps.get && mix compile && mix test

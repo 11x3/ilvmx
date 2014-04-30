@@ -20,18 +20,17 @@ defmodule ILM do
   @epoch :epoch
 
   @moduledoc """
-  ILM is an Elixir cloud app server.
+  ILM: functionally minded cloud app server and exchange.
   """
+  # API/Sugar
   
-  # Sugar
-  
-  # def magic!(castle, bot, player) do
-  #   ILM.magic! Castle.find("#lolnub"), Bot.exe("#chat"), Player.p1 
-  # end
-  
-  
-  # Native API
-  
+  @doc """
+  #lolnub #mike what's up?
+  """
+  def magic!(castle, player, bot) do
+    Player.p1(player).arrow!(bot) |> Castle.door("#lolnub")
+  end
+
   @doc """
   Return the ILM.castle.
   """
