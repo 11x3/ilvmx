@@ -16,5 +16,5 @@ Back to vagrant and our ilvmx server should boot, compile, and test.
 
 ```
 local$ vagrant ssh
-guest$ mix do compile, test
+guest$ cd /ilvmx && mix compile && mix test
 ```
