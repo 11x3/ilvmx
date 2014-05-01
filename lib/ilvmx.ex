@@ -24,12 +24,12 @@ defmodule ILM do
   """
   # API/Sugar
   
-  @doc """
-  #lolnub #mike what's up?
-  """
-  def magic!(castle, player, bot) do
-    Player.p1(player).arrow!(bot) |> Castle.door("#lolnub")
-  end
+  # @doc """
+  # #lolnub #mike what's up?
+  # """
+  # def magic!(castle, player, bot) do
+  #   Player.p1(player).arrow!(bot) |> Castle.door("#lolnub")
+  # end
 
   @doc """
   Return the ILM.castle.

@@ -9,7 +9,12 @@ defmodule CastleTest do
     assert :ilvmx == Castle.galaxy
   end
   
-  test "Castle.door" do
-    assert "#lolnub" == Castle.door
+  test "Castle.name" do
+    assert "#lolnub" == Castle.name
   end
+  
+  test "Castle.door" do
+    assert true == is_binary Castle.door
+  end
+  
 end

@@ -2,7 +2,7 @@
 
 ILvMx is an `internet load virtual module exchange` or functionally minded cloud app server and function-level exchange.
 
-The server is written in Elixir-lang but we also support `Vagrant` which of course means we run in the  cloud or self-host. Current support for native Elixir and HTTP APIs are in the works, with Elm-lang and other support in the coming soon.
+The server is written in Elixir-lang but we use `Vagrant` which of course means ILvMx is cloud or self-hostable. Current support for native Elixir and HTTP APIs are in the works, with Elm-lang and other support coming soon.
 
 ## Features
 
@@ -17,7 +17,22 @@ The server is written in Elixir-lang but we also support `Vagrant` which of cour
 1. Install VirtualBox (virtualbox.org)
 2. Install Vagrant (vagrantup.com)
 3. Clone repo `git clone git://github.com/lolnub/ilvmx.git`
-4. Build box `cd ilvmx` && `vagrant up`
+4. Edit: `deps/con_cache/mix.exs` to change the :exactor dep to pull from github.
+
+```
+# ilvmx/deps/con_cache/mix.exs change `defp deps do` to:
+
+defp deps do
+  [{:exactor, github: "sasa1977/exactor"}]
+end
+```
+
+5. Back to vagrant and our ilvmx server should boot, compile, and test.
+
+```
+local$ vagrant ssh
+guest$ cd /ilvmx && mix compile && mix test
+```
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.
 
@@ -152,13 +167,12 @@ The Emitters now have the complete request, all events, all side effects (i.e. "
 
 Finally, an Event is :emitted to the entire `:ilvmx` network with any public network-wide data attached that the request should be committed to the network record.
 
-## Contact
+## Support
 
-ILvMx
-http://ilvmx.org/
+ILvMx: http://ilvmx.org/
 
-a lolnub project
-http://lolnub.com/
-heh@lolnub.com
+## #lolnub
 
-doge:DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG
+- http://lolnub.com/
+- heh@lolnub.com
+- doge: DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG

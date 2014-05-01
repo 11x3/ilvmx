@@ -34,22 +34,29 @@ defstruct nubspace: nil,
   what it wants. Signals and emits.
   """
   
-  """
-  @set "#me #jam"
-  @exe "#ilm #lolnub #players #validate", @player
-  @fps 1
-  @(~) ["#ilm #signals #players", @player]
-  | @elm "5x5", "/elm/app"
-  | @set :title, "Welcome to lolnub!"       
-  | @cap ["#apps #chat"]           # @ picture in place, or unquote
-  | @pip ["#apps #friends"]
-  | @pip ["#web #youtube |> #search", "a7x"]
-  | @nub ["#apps #footer"]
-  ]]
-  ... @exe ["#ilm #filters #after #exitpoll", @player]
-  |>
-  @(!) ["#ilm #signals #players", @player]
-  @(!) ["#ilm #signals #players #filter #latest", @player]
-  """
+  def example_app do
+"""
+@app #me #jam
+@app @tick 10
+
+@exe #lolnub #players #ping 
+
+@set #me #debug @do fn p -> IO.inspect p end
+
+@cap #ilm #signals #players @do
+| @elm "5x5", "/elm/app"
+| @set :title, "Welcome to lolnub!"       
+| @cap ["#apps #chat"]           # @ picture in place, or unquote
+| @pip ["#apps #friends"]
+| @pip ["#web #youtube |> #search", "a7x"]
+| @nub ["#apps #footer"]
+@end
+
+@exe #ilm #filters #after #exitpoll @with #me
+
+@sig #ilm #signals #players @with #me
+@sig #ilm #signals #players #filter #latest @with #me
+"""
+  end
 
 end

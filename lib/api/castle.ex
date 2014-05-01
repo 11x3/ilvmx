@@ -26,11 +26,12 @@ defmodule Castle do
   @doc """
   Only the mightiest of Nub Doors in the land protect `Castle` "#lolnub".
   """
-  def door do
+  def name do
     "#lolnub"
   end
-  def door(castle) do
-    # todo: support network requests
+  
+  def door do
+    Prop.static "priv/static/html/index.html"
   end
   
   @doc """

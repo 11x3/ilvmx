@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="copyright" content="(c) 2014 #lolnub.com">
+  <meta name="description" content="Functionally minded cloud app server and exchange.">
+  <meta name="keywords" content="lolnub, ilm, ilvmx, modern, web 4, web 4.0, fun, adventurama, cloud, apps, nubcake, nubspace">
+  
+  <title>ILvMx</title>
+  
+  <link rel="icon" 
+    type="image/png" href="/static/img/favicon.png">
+    
+  <link rel="stylesheet" 
+    href="/static/css/default.css" 
+    type="text/css" 
+    media="screen" 
+    charset="utf-8">
+</head>
+<body id="" class="">
+<section id="page" class="">
+  
+  <header class="">
+    <h1>Internet Land of Magic</h1>
+    <ul class="">
+      <li><a class="nav-link" href="https://github.com/lolnub/lolnub">#about</a></li>
+      <li><a class="nav-link" href="https://github.com/lolnub/ilvmx">#source</a></li>
+      <li><a class="nav-link" href="https://github.com/lolnub/ilvmx">#support</a></li>
+    </ul>
+  </header>
+  
+  <section id="player" class="row">
+    <aside>Nubspace</aside>
+    <input type="text" name="form-control" placeholder="Nubspace" id="nubspace" length="42">
+  </section>
+  
+  <div id="container"></div>
+  
+  <script id='template' type='text/ractive'>
+    <p>#events: {{events}}</p>
+  </script>
+  <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+  <script>
+    var ractive = new Ractive({
+      // The `el` option can be a node, an ID, or a CSS selector.
+      el: 'container',
+
+      // We could pass in a string, but for the sake of convenience
+      // we're passing the ID of the <script> tag above.
+      template: '#template',
+
+      // Here, we're passing in some initial data
+      data: { events: '9000' }
+    });
+  </script>
+  
+  <section id="content" class="row">
+    
+     <ol class="breadcrumb">
+       <li class="active"><a href="#">#console</a></li>
+     </ol>
+     
+     <img src="/static/img/patches.png">
+  </section>
+  
+  <footer class="row">
+    <p id="copyright">
+      <a id="" title="(c) 2014 #lolnub.com" href="http://lolnub.com/">
+        2014 &copy; #lolnub</a></p>
+  </footer>
+  
+</section>
+</body>
+</html>

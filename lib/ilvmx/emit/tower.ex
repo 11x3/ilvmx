@@ -4,6 +4,10 @@ use Db
 defmodule ILM.Tower do
   use GenServer.Behaviour
   
+  alias Nubcake
+  
+  @signals  :signals
+  
   @moduledoc """
   Emit is where our apps produce most of their outside world side effects from 
   events generated during the :transform stage.
@@ -22,12 +26,7 @@ defmodule ILM.Tower do
   
   # todo: store capture records for expiration purposes.
   """
-  
-  alias Nubcake
-  
-  @signals  :signals
-  
-  
+
   # Public
   
   @doc """

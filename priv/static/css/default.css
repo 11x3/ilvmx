@@ -1,0 +1,55 @@
+@import "bootflat.css";
+html {
+  font-size: 150%;
+  background-color: #090909;
+}
+header h1 {
+  color: #234422;
+}
+.row {
+  background-color: #191919;
+}
+#content img {
+  *zoom: 1;
+  float: left;
+  display: inline;
+  clear: none;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: inherit;
+  width: 50%;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+#content img:before,
+#content img:after {
+  content: '';
+  display: table;
+}
+#content img:after {
+  clear: both;
+}
+#player {
+  *zoom: 1;
+  width: auto;
+  max-width: 1410px;
+  float: none;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+#player:before,
+#player:after {
+  content: '';
+  display: table;
+}
+#player:after {
+  clear: both;
+}
+#player #nubspace {
+  background-color: #000;
+border
+  font-size: 42px;
+}

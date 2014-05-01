@@ -4,7 +4,7 @@ defmodule ILM.Epoch do
   # API
   
   def tick(_) do
-    :timer.sleep(10)
+    :timer.sleep(100)
     
     ILM.Tower.signal! Event.w "tick"
     
