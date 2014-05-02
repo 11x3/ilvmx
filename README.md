@@ -17,21 +17,11 @@ The server is written in Elixir-lang but we use `Vagrant` which of course means 
 1. Install VirtualBox (virtualbox.org)
 2. Install Vagrant (vagrantup.com)
 3. Clone repo `git clone git://github.com/lolnub/ilvmx.git`
-4. Edit: `deps/con_cache/mix.exs` to change the :exactor dep to pull from github.
+4. Back to vagrant and our ilvmx server should boot, compile, and test.
 
 ```
-# ilvmx/deps/con_cache/mix.exs change `defp deps do` to:
-
-defp deps do
-  [{:exactor, github: "sasa1977/exactor"}]
-end
-```
-
-5. Back to vagrant and our ilvmx server should boot, compile, and test.
-
-```
-local$ vagrant ssh
-guest$ cd /ilvmx && mix compile && mix test
+local$ vagrant up && vagrant ssh
+guest$ cd /ilvmx && echo "welcome to ilvmx." && iex -S mix 
 ```
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.
