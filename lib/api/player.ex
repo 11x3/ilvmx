@@ -2,8 +2,7 @@ defmodule Player do
 defstruct nubspace: nil,  # exchange/home
           signals:  [],   # custom pipes/scripts
           bots:     [],   # real-time :demand route matchers
-          maybes:   [],   # # keyword list of okcupid-like data
-          nubcakes: []
+          maybes:   []   # # keyword list of okcupid-like data
           
   @moduledoc """
   Castle-level accounts.
@@ -16,10 +15,10 @@ defstruct nubspace: nil,  # exchange/home
   
   todo: support galactic castles.
   """
-  def arrow!(nubcake) when is_binary(nubcake) do
+  def arrow!(program) when is_binary(program) do
     bot = Bot.w
     bot = bot.player(Player.new)
-    bot = bot.nubcake(nubcake)
+    bot = bot.program(program)
     bot |> take |> arrow!
   end
   def arrow!(bot = Bot) do

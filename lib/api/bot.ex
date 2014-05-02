@@ -1,5 +1,5 @@
 defmodule Bot do
-  defstruct nubcake: nil,
+  defstruct program: nil,
             storage: nil,
             results: [],           
              errors: [],
@@ -19,37 +19,37 @@ defmodule Bot do
   end
   
   @doc """
-  Store `nubcake` into `nubspace`.
+  Store `program` at `nubspace`.
 
   Returns `bot`.
   """
-  def set(nubspace, nubcake) do
+  def set(nubspace, program) do
     Bot.cmd fn ->
-      ILM.Nubspace.push! nubspace, nubcake
+      ILM.Nubspace.push! nubspace, program
     end
   end
     
   @doc """
-  Capture a `nubspace` and evaluate nubcake when signaled.
+  Capture a `nubspace` and evaluate `program` when signaled.
   
   Returns `bot`.
   """
-  def cap(nubspace, nubcake) do
+  def cap(nubspace, program) do
     Bot.cmd fn ->
-      ILM.Tower.capture! nubspace, nubcake
+      ILM.Tower.capture! nubspace, program
     end
   end
   
   @doc """
-  Execute `nubspace` with `nubcake`. 
+  Execute `nubspace` with `program`. 
   """
-  def exe(nubspace, nubcake \\ nil) do
+  def exe(nubspace, program \\ nil) do
     bot = %Bot{
-       nubcake: nubcake,
+       program: program,
+       storage: HashDict.new,
         unique: Castle.uuid,
-       storage: HashDict.new
     } 
-    bot |> ILM.Castle.Dungeon.execute! bot.nubcake, nubspace
+    bot |> ILM.Castle.Dungeon.execute! bot.program, nubspace
   end
   
   @doc """
@@ -57,11 +57,11 @@ defmodule Bot do
   
   "Oh you know, the usual.."
   """
-  def cmd(nubcake) do
+  def cmd(program) do
     bot = %Bot{
-       nubcake: nubcake,
+       program: program,
+       storage: HashDict.new,
         unique: Castle.uuid,
-       storage: HashDict.new
     }
     bot |> ILM.Castle.Dungeon.execute!
   end

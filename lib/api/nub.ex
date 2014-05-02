@@ -7,7 +7,7 @@ defstruct galaxy: nil,    # [:ilvmx]
           module: nil,    # :api  # module        "support"
           member: nil,    # :api  # function      "search"
           method: nil,    # :api  # etc           "advanced"
-          nubcakes: []    # :data # args          "words"
+        programs: []    # :data # args          "words"
   
   @doc """
   Create and fill a Nub from a Nubspace.

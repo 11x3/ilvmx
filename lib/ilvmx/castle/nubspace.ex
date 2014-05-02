@@ -13,7 +13,7 @@ defmodule ILM.Nubspace do
   Get a `nubspace` from the local Castle.
   """
   def pull!(nubspace) when is_binary nubspace do
-    nub = Dict.get nubcakes, hash(nubspace), Nub.w(nubspace)
+    nub = Dict.get programs, hash(nubspace), Nub.w(nubspace)
     
     # unique / key / value
     ILM.Tower.signal! Event.w(nub.unique, nub), nubspace
@@ -22,15 +22,15 @@ defmodule ILM.Nubspace do
   end
 
   @doc """
-  Put `nubcake` into `nubspace`.
+  Put `program` into `nubspace`.
   """
-  def push!(nubspace, nubcake \\ nil) do
+  def push!(nubspace, program \\ nil) do
     nub = pull! nubspace
     
-    nub = %{ nub | nubcakes: Enum.concat(nub.nubcakes, [nubcake]) }
+    nub = %{ nub | programs: Enum.concat(nub.programs, [program]) }
     
     # todo: explore nub storage options
-    ConCache.put ILM.cache, @nubspace, Dict.put(nubcakes, hash(nubspace), nub)
+    ConCache.put ILM.cache, @nubspace, Dict.put(programs, hash(nubspace), nub)
     
     # unique / key / value
     ILM.Tower.signal! Event.w(nub.unique, nub), nubspace
@@ -42,16 +42,16 @@ defmodule ILM.Nubspace do
   # Private
 
   @doc """
-  Return all `nubcakes` in the Castle.
+  Return all `programs` in the Castle.
   """
-  def nubcakes do
+  def programs do
     n = ConCache.get_or_store ILM.cache, @nubspace, fn -> 
       HashDict.new
     end
   end
 
-  defp hash(nubcake) do
-    nubcake
+  defp hash(nubspace) do
+    nubspace
   end
   
   

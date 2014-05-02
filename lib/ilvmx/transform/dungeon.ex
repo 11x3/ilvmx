@@ -5,50 +5,50 @@ defmodule ILM.Castle.Dungeon do
   *Shh...*
   """
   def execute!(bot) do
-    execute! bot, bot.nubcake
+    execute! bot, bot.program
   end
-  def execute!(bot, nubcake) when is_function(nubcake) do
+  def execute!(bot, program) when is_function(program) do
     # dispatch for the pull shortcut
     try do
-      bot.nubcake().()
+      bot.program().()
     rescue 
       x in [RuntimeError, ArgumentError, BadArityError] -> 
         Bot.effect bot, Effect.w error: x
     end
   end
-  def execute!(bot, nubcake) when is_binary(nubcake) do
-    # get the first character of the nubcake
-    hint = String.slice(nubcake, 0..0)
+  def execute!(bot, program) when is_binary(program) do
+    # get the first character of the program
+    hint = String.slice(program, 0..0)
     
     case hint do
-      "#"   -> Bot.effect bot, ILM.Nubspace.pull! nubcake
-      "@"   -> String.split(bot.nubcake, "\n") |> Enum.map fn cmd ->
-        # nubcake = "@set #chat todo"
-        cmd = String.slice(String.lstrip(nubcake), 0..3)
-        [nub, opt] = String.split String.replace(nubcake, "#{ cmd } ", "")
+      "#"   -> Bot.effect bot, ILM.Nubspace.pull! program
+      "@"   -> String.split(bot.program, "\n") |> Enum.map fn cmd ->
+        # program = "@set #chat todo"
+        cmd = String.slice(String.lstrip(program), 0..3)
+        [nub, pro] = String.split String.replace(program, "#{ cmd } ", "")
 
-        execute!(cmd, nub, opt)
+        execute!(cmd, nub, pro)
       end
     end
   end
-  def execute!(cmd, nub, opt) when is_binary(cmd) do
+  def execute!(cmd, nub, pro) when is_binary(cmd) do
     case cmd do
-      "@set" -> Bot.set nub, opt
+      "@set" -> Bot.set nub, pro
     end
   end
-  def execute!(bot, nubcake, nubspace) do
+  def execute!(bot, program, nubspace) do
     nub = ILM.Nubspace.pull! nubspace
     
-    results = nub.nubcakes |> Enum.map fn cake ->
-      case is_function cake do
+    results = nub.programs |> Enum.map fn pro ->
+      case is_function pro do
         true  -> 
           try do
-            Effect.w nubcake: cake, result: cake.(bot.nubcake)
+            Effect.w program: pro, result: pro.(bot.program)
           rescue 
             x in [RuntimeError, ArgumentError, BadArityError] -> 
-              Effect.w error: x, nubcake: cake
+              Effect.w error: x, program: pro
           end
-        false -> [cake]
+        false -> [pro]
       end
     end
 

@@ -74,16 +74,16 @@ With this example we use the basic request mechanism or `Bot` to interact with o
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, nubcakes: ["todo"]]
+ module: nil, member: nil, method: nil, programs: ["todo"]]
 
-# Here we read Nub back out and look in the `nubcakes` field to see
+# Here we read Nub back out and look in the `programs` field to see
 # what the Nubspace holds, at which point the client would interact and
 # develop the Nub.
 
 iex> Bot.get "#chat"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, nubcakes: [“todo"]]
+ module: nil, member: nil, method: nil, programs: [“todo"]]
  
 # In this example, we are going to store a function that others may globally
 # execute with arguments. One of the next few project steps is to finish the
@@ -94,7 +94,7 @@ iex> Bot.set "#chat", fn word -> "lol @ your chat #{ word }" end
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "7192cc1b-6bb4-4f5e-90bb-f1a6ca709f3a", domain: "#chat", system: nil,
  module: nil, member: nil, method: nil,
- nubcakes: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
+ programs: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
 
 # In this example, we will show our executed results. Doge will be builtin
 # at some point in the future, so let's get people used to seeing the 
@@ -102,10 +102,10 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
 # Other notes/erros/exceptions are also presented.
 
 iex> Bot.exe "#chat", "hi"
-Bot[nubspace: "#chat", nubcake: "hi",
+Bot[nubspace: "#chat", program: "hi",
  results: ["todo",
   Effect[source: nil,
-   content: [nubcake: #Function<6.80484245/1 in :erl_eval.expr/5>,
+   content: [program: #Function<6.80484245/1 in :erl_eval.expr/5>,
     result: "lol @ your chat hi"]]], problems: [],
  accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
  unique: "f0b7d860-6d81-49cc-8d8d-ca6e0ef20b18"]
@@ -127,12 +127,12 @@ Event[content: "#chat", source: #PID<0.261.0>]
 
 iex(2)> Bot.set "#chat", "other"                  
 Event[content: Nub[galaxy: :ilvmx, castle: "#lolnub", unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat",
-  system: nil, module: nil, member: nil, method: nil, nubcakes: ["todo", "todo"]],
+  system: nil, module: nil, member: nil, method: nil, programs: ["todo", "todo"]],
  source: "acf85c20-b980-44a1-a429-7460205ec642"]
  
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, nubcakes: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>, "other"]]
+ module: nil, member: nil, method: nil, programs: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>, "other"]]
 iex(5)>
 
 ```

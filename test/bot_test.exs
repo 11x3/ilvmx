@@ -8,7 +8,7 @@ defmodule BotTest do
     nub = Bot.set "#chat", "todo"
     IT.assert_nub nub
     
-    assert ["todo"] = nub.nubcakes
+    assert ["todo"] = nub.programs
   end
   
   test "Bot.get" do
@@ -17,7 +17,7 @@ defmodule BotTest do
     nub = Bot.get "#chat"
     IT.assert_nub nub
     
-    assert ["todo"] = nub.nubcakes
+    assert ["todo"] = nub.programs
   end
   
   test "Bot.exe" do
