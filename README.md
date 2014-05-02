@@ -188,13 +188,15 @@ iex(5)>
 
 ```
 
-## [PROPOSAL] Adapt |> Transform |> Emit
+## Adapt > Transform > Emit
+
+[PROPOSAL]
 
 Description of a reactive and functional development style for cloud apps.
 
-ATE stands for Adapt |> Transform |> Emit
+ATE stands for Adapt > Transform > Emit
 
-ATE is an attempt to document a reactive functional development style where data is always pushed forward and each stage or module is only has a single concern that it alone handles. 
+ATE is an attempt to document a reactive functional development style where data is always pushed forward and each stage or module only has a single concern that it alone handles. 
 
 Do your job here, push forward – never look back.
 
