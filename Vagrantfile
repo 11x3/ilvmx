@@ -4,18 +4,21 @@
 Vagrant.configure("2") do |config|
   VAGRANTFILE_API_VERSION = "2"
   
+  #config.ssh.insert_key = false
+  
   # Securing Vagrant as found:
   # http://stackoverflow.com/questions/14715678/vagrant-insecure-by-default
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'" # avoids 'stdin: is not a tty' error.
-  config.ssh.private_key_path = ["#{ENV['HOME']}/.ssh/id_rsa","#{ENV['HOME']}/.vagrant.d/insecure_private_key"]
-  config.vm.provision "shell", inline: <<-SCRIPT
-    printf "%s\n" "#{File.read("#{ENV['HOME']}/.ssh/id_rsa.pub")}" > /home/vagrant/.ssh/authorized_keys
-    chown -R vagrant:vagrant /home/vagrant/.ssh
-  SCRIPT
+  
+  # config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'" # avoids 'stdin: is not a tty' error.
+  # config.ssh.private_key_path = ["#{ENV['HOME']}/.ssh/id_rsa","#{ENV['HOME']}/.vagrant.d/insecure_private_key"]
+  # config.vm.provision "shell", inline: <<-SCRIPT
+  #   printf "%s\n" "#{File.read("#{ENV['HOME']}/.ssh/id_rsa.pub")}" > /root/.ssh/authorized_keys
+  #   chown -R vagrant:vagrant /home/vagrant/.ssh
+  # SCRIPT
   
   # Box
-  config.vm.box       = "hashicorp/precise64"
-  
+  config.vm.box       = "trusty64"
+
   # Providers
   config.vm.provider "virtualbox" do |v|
     v.memory = 1024

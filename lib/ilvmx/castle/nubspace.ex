@@ -2,7 +2,7 @@ defmodule ILM.Nubspace do
   use GenServer.Behaviour
 
   # todo: :crypto.sha1 the nubspace
-  alias Nubcake
+  alias Program
 
   @nubspace :nubspace
   

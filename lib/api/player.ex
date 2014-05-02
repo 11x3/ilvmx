@@ -1,15 +1,15 @@
 defmodule Player do
-defstruct nubspace: nil,  # exchange/home
-          signals:  [],   # custom pipes/scripts
-          bots:     [],   # real-time :demand route matchers
-          maybes:   []   # # keyword list of okcupid-like data
+defstruct nubspace: nil, # "home" castle (ie. connection to :ilvmx galaxy)
+           wizards: [],  # custom pipes/scripts
+              bots: [],  # programs (see: bot.ex)
+             polls: []   # keyword list of okcupid-like data
           
   @moduledoc """
   Castle-level accounts.
   """
 
   @doc """
-  Send a Nubcake message into the Castle and ignore results.
+  Send a Program message into the Castle and ignore results.
   
   Spawn |> Event[unique: uuid]
   

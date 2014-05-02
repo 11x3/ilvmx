@@ -27,11 +27,72 @@ guest$ cd /ilvmx && echo "welcome to ilvmx." && iex -S mix
 ## Playing with the *best* Web 4 theme park and story attraction ever.
 
 - Players (users)
+```
+defmodule Player do
+defstruct nubspace: nil, # "home" castle (ie. connection to :ilvmx galaxy)
+           wizards: [],  # custom pipes/scripts
+              bots: [],  # programs (see: bot.ex)
+             polls: []   # keyword list of okcupid-like data
+```
 - Castles (servers)
+```
+defmodule Castle do
+  use GenServer.Behaviour
+```
 - Wizards (agents)
+```
+defmodule Wizard do
+  # todo: filter/enrich/track/intercept the bot/request/data via Spells
+```
 - Bots (requests)
+```
+defmodule Bot do
+  defstruct program: nil,
+            storage: nil,
+            results: [],           
+             errors: [],
+             player: nil,
+           accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
+             unique: nil
+```
 - Nubs + Nubspace (hashtag based namespace of code + data)
-- Nubcakes (a DSL to write apps)
+```
+defmodule Nub do
+defstruct galaxy: nil,  # [:ilvmx]
+          castle: nil,  # [:server, :cluster, :etc]
+          unique: nil,  
+          domain: nil,  # :api  # system        "lolnub.com"
+          system: nil,  # :api  # subsys        :http
+          module: nil,  # :api  # module        "support"
+          member: nil,  # :api  # function      "search"
+          method: nil,  # :api  # etc           "advanced"
+        programs: []    # :data # args          "words"
+```
+- Program (a DSL to write apps)
+```
+"""
+@app #me #jam
+@app @tick 10
+
+@exe #lolnub #players #ping 
+
+@set #me #debug @do fn p -> IO.inspect p end
+
+@cap #ilm #signals #players @do
+| @elm "5x5", "/elm/app"
+| @set :title, "Welcome to lolnub!"       
+| @cap ["#apps #chat"]           # @ picture in place, or unquote
+| @pip ["#apps #friends"]
+| @pip ["#web #youtube |> #search", "a7x"]
+| @nub ["#apps #footer"]
+@end
+
+@exe #ilm #filters #after #exitpoll @with #me
+
+@sig #ilm #signals #players @with #me
+@sig #ilm #signals #players #filter #latest @with #me
+"""
+```
 
 The basic event flow is: apps take requests from protocols like HTTP, SMS, SMTP (from clients, servers, and/or other frameworks) and adapt them into abstract work requests which are then submitted into the core app for processing, distribution, and eventually, the outcome or response stages.
 
@@ -77,7 +138,7 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  
 # In this example, we are going to store a function that others may globally
 # execute with arguments. One of the next few project steps is to finish the
-# Nubcake DSL so that entire apps may be stored in Nubcakes, and not just
+# Program DSL so that entire apps may be stored in Programs, and not just
 # simple funs.
 
 iex> Bot.set "#chat", fn word -> "lol @ your chat #{ word }" end

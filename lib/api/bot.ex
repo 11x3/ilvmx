@@ -10,7 +10,7 @@ defmodule Bot do
   # Sugar/API
 
   @doc """
-  Get a `Nubcake` from `nubspace`.
+  Get a `Program` from `nubspace`.
   """
   def get(nubspace) do
     Bot.cmd fn ->
@@ -53,7 +53,7 @@ defmodule Bot do
   end
   
   @doc """
-  Execute Nubcake. 
+  Execute Program. 
   
   "Oh you know, the usual.."
   """

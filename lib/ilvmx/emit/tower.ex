@@ -4,7 +4,7 @@ use Db
 defmodule ILM.Tower do
   use GenServer.Behaviour
   
-  alias Nubcake
+  alias Program
   
   @signals  :signals
   
@@ -67,7 +67,7 @@ defmodule ILM.Tower do
   
   Return an Event.w source: self, content: channel
   
-  # todo: convert event_callback to support Nubcake.
+  # todo: convert event_callback to support Program.
   """
   def capture!(channel, event_callback) when is_function event_callback do
     ConCache.put ILM.cache, @signals, Enum.concat(signals, [[channel: channel, callback: event_callback]])

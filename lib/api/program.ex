@@ -1,4 +1,4 @@
-defmodule Nubcake do
+defmodule Program do
 defstruct nubspace: nil,
           commands:   [],
           captures:   [],
@@ -12,11 +12,11 @@ defstruct nubspace: nil,
           fps:        1
 
   @moduledoc """
-  `Nubcakes` are cloud apps that power `Castle` `Bots`. They are simple to
-  write and easy to understand. As you can see above, the Nubcake and Castle 
+  `Programs` are cloud apps that power `Castle` `Bots`. They are simple to
+  write and easy to understand. As you can see above, the Program and Castle 
   server track the exact type of commands the app will be issuing. 
 
-  Nubcake's big top idea is to define an entire cloud app, in an easy enough 
+  Program's big top idea is to define an entire cloud app, in an easy enough 
   way to type and code inside a <textarea> or be sent via SMS or through any 
   number of services. You should be able to develop an entire cloud app in 
   an ASCII and humane-level language in less than a minute. Assume other roles 
@@ -29,7 +29,7 @@ defstruct nubspace: nil,
   every :fps (haha, yeah ask for 500fps, not on my server punk!) or whatever 
   the Castle server chooses to give you.
   
-  So every :fps the Castle server will execute a `Spell` to run your `Nubcake`
+  So every :fps the Castle server will execute a `Spell` to run your `Program`
   app, which may then update and recapture the entire world state, or only
   what it wants. Signals and emits.
   """
