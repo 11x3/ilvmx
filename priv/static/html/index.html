@@ -18,24 +18,26 @@
     media="screen" 
     charset="utf-8">
 </head>
-<body id="" class="">
+<body id="" class="container">
 <section id="page" class="">
   
   <header class="">
+    <p>Nubspace</p>
+    <form class="navbar-form navbar-right" role="search">
+    <input type="text" name="form-control" placeholder="Nubspace" id="nubspace" length="42">
+    </form>
+  </header>
+  
+  <section id="meta" class="row">
     <h1>Internet Land of Magic</h1>
     <ul class="">
       <li><a class="nav-link" href="https://github.com/lolnub/lolnub">#about</a></li>
       <li><a class="nav-link" href="https://github.com/lolnub/ilvmx">#source</a></li>
       <li><a class="nav-link" href="https://github.com/lolnub/ilvmx">#support</a></li>
     </ul>
-  </header>
-  
-  <section id="player" class="row">
-    <aside>Nubspace</aside>
-    <input type="text" name="form-control" placeholder="Nubspace" id="nubspace" length="42">
   </section>
   
-  <div id="container"></div>
+  <section id="ractive" class="row"></section>
   
   <script id='template' type='text/ractive'>
     <p>#events: {{events}}</p>
@@ -44,7 +46,7 @@
   <script>
     var ractive = new Ractive({
       // The `el` option can be a node, an ID, or a CSS selector.
-      el: 'container',
+      el: 'ractive',
 
       // We could pass in a string, but for the sake of convenience
       // we're passing the ID of the <script> tag above.
@@ -54,17 +56,9 @@
       data: { events: '9000' }
     });
   </script>
-  
-  <section id="content" class="row">
-    
-     <ol class="breadcrumb">
-       <li class="active"><a href="#">#console</a></li>
-     </ol>
-     
-     <img src="/static/img/patches.png">
-  </section>
-  
+
   <footer class="row">
+    <img src="/static/img/patches.png">
     <p id="copyright">
       <a id="" title="(c) 2014 #lolnub.com" href="http://lolnub.com/">
         2014 &copy; #lolnub</a></p>

@@ -1,6 +1,4 @@
 defmodule ILM.Config do
-  use Phoenix.Config.App
-
   config :router, port: System.get_env("ILVMX_PORT") || 8080
   config :plugs, code_reload: false, consider_all_requests_local: false
 end

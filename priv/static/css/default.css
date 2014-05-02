@@ -1,15 +1,52 @@
 @import "bootflat.css";
 html {
+  font: sans;
+  color: #fff;
   font-size: 150%;
-  background-color: #090909;
+  background-color: #212121;
 }
-header h1 {
-  color: #234422;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #080808;
+}
+#nubspace {
+  color: #423321;
+  background-color: #000;
+  font-size: 42px;
+  border-radius: 3px;
+  border: #212188 1px solid;
+  padding: 20px;
 }
 .row {
-  background-color: #191919;
+  *zoom: 1;
+  float: left;
+  display: inline;
+  clear: none;
+  text-align: inherit;
+  padding-left: 0;
+  padding-right: 0;
+  width: 17.6%;
+  margin-left: 0%;
+  margin-right: 3%;
+  margin-left: -1px;
+  margin-right: 0;
+  padding: 20px;
+  border: #131313 1px solid;
+  background-color: #080808;
 }
-#content img {
+.row:before,
+.row:after {
+  content: '';
+  display: table;
+}
+.row:after {
+  clear: both;
+}
+.row:last-child {
+  margin-right: 0%;
+}
+img {
   *zoom: 1;
   float: left;
   display: inline;
@@ -21,35 +58,11 @@ header h1 {
   margin-left: 0%;
   margin-right: 0%;
 }
-#content img:before,
-#content img:after {
+img:before,
+img:after {
   content: '';
   display: table;
 }
-#content img:after {
+img:after {
   clear: both;
-}
-#player {
-  *zoom: 1;
-  width: auto;
-  max-width: 1410px;
-  float: none;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 0;
-  padding-right: 0;
-}
-#player:before,
-#player:after {
-  content: '';
-  display: table;
-}
-#player:after {
-  clear: both;
-}
-#player #nubspace {
-  background-color: #000;
-border
-  font-size: 42px;
 }

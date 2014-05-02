@@ -64,8 +64,8 @@ cd /elixir && git checkout master && make && make install
 ln -s /rebar/rebar /usr/local/bin/rebar
 
 # # Install Elm-lang env for front-end dev.
-# apt-get install -q -y ghc cabal-install haskell-platform haskell-platform-doc haskell-platform-prof
-# 
+apt-get install -q -y ghc cabal-install haskell-platform haskell-platform-doc haskell-platform-prof
+ 
 # cabal update
 # cabal install elm
 # cabal install elm-server   # Highly-Recommended
