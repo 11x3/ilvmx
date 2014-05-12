@@ -20,5 +20,9 @@ defmodule IT do
   def assert_bot(suspect) do
     assert_unique suspect.unique
   end
+  
+  def assert_player(suspect) do
+    assert_unique suspect.unique
+  end
 end
 

@@ -5,8 +5,7 @@ defmodule PropTest do
     assert true == Regex.match? ~r/Apache/, Prop.static("LICENSE")
   end
   
-  # test "Prop.web(path, opts = [])" do
-  #   throw IO.inspect Prop.web("http://localhost:8080/")
-  # end
-  
+  test "Prop.web(path, opts = [])" do
+    assert Regex.match? ~r/html/, Prop.web("http://localhost:8080/ilvmx")
+  end
 end

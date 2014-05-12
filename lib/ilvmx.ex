@@ -28,7 +28,7 @@ defmodule ILM do
   # #lolnub #mike what's up?
   # """
   # def magic!(castle, player, bot) do
-  #   Player.p1(player).arrow!(bot) |> Castle.door("#lolnub")
+  #   Player.p1(player).arrow!(bot) |> Castle.name("#lolnub")
   # end
 
   @doc """
@@ -62,7 +62,6 @@ defmodule ILM do
         touch_on_read: true,
         ttl: :timer.seconds(0)
       )
-      
       Process.put @cache, store
     end
     store
@@ -81,13 +80,13 @@ defmodule ILM do
     
     # Database
     Amnesia.Schema.create
-    Amnesia.start    
+    Amnesia.start
     Db.create(disk: [node])
     Db.wait
 
     # UUID/crypto
     :application.start(:crypto)
     
-    ILM.Supervisor.start_link
+    ILM.Castle.Supervisor.start_link
   end
 end

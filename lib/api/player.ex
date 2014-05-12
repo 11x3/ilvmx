@@ -1,31 +1,23 @@
 defmodule Player do
-defstruct nubspace: nil, # "home" castle (ie. connection to :ilvmx galaxy)
-           wizards: [],  # custom pipes/scripts
-              bots: [],  # programs (see: bot.ex)
-             polls: []   # keyword list of okcupid-like data
-          
+defstruct castle: nil, # "home" castle (ie. connection to :ilvmx galaxy)
+            home: nil, # "nubspace" (ie. user/nick)
+         wizards: [],  # custom pipes/scripts
+            bots: [],  # programs (see: bot.ex)
+           polls: [],  # keyword list of okcupid-like data
+          unique: nil
+  
   @moduledoc """
-  Castle-level accounts.
+  Us. Them. You. Me.
   """
-
+  
+  # Bot.cmd "#player #polls" do
+  #   # todo: support APIs.
+  # end
+  
   @doc """
-  Send a Program message into the Castle and ignore results.
-  
-  Spawn |> Event[unique: uuid]
-  
-  todo: support galactic castles.
+  Forever anon.
   """
-  def arrow!(program) when is_binary(program) do
-    bot = Bot.w
-    bot = bot.player(Player.new)
-    bot = bot.program(program)
-    bot |> take |> arrow!
-  end
-  def arrow!(bot = Bot) do
-    bot |> take |> Dungeon.execute!
-  end
-  
-  defp take(bot) do
-    bot = bot.player(Player.new)
+  def anon do
+    %Player{unique: Castle.uuid}
   end
 end

@@ -1,69 +1,64 @@
 defmodule Bot do
   defstruct program: nil,
-            storage: nil,
             results: [],           
              errors: [],
              player: nil,
            accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
              unique: nil
-  
-  # Sugar/API
 
+  # API
+  
   @doc """
-  Get a `Program` from `nubspace`.
+  Store `prop` at `nubspace`.
+  """
+  def set(nubspace, prop) do
+    Nubspace.push! nubspace, prop
+  end
+  
+  @doc """
+  Get a `nub` from `nubspace`.
   """
   def get(nubspace) do
-    Bot.cmd fn ->
-      ILM.Nubspace.pull! nubspace
-    end
+    Nubspace.pull! nubspace
   end
-  
-  @doc """
-  Store `program` at `nubspace`.
+  def get(:static, path) do
+    Prop.static path
+  end
+  def get(:web, path) do
+    Prop.web path
+  end
 
-  Returns `bot`.
-  """
-  def set(nubspace, program) do
-    Bot.cmd fn ->
-      ILM.Nubspace.push! nubspace, program
-    end
-  end
-    
   @doc """
   Capture a `nubspace` and evaluate `program` when signaled.
-  
-  Returns `bot`.
   """
   def cap(nubspace, program) do
-    Bot.cmd fn ->
-      ILM.Tower.capture! nubspace, program
-    end
+    ILM.Castle.Tower.capture! nubspace, program
   end
   
   @doc """
-  Execute `nubspace` with `program`. 
+  Execute `program`.
   """
-  def exe(nubspace, program \\ nil) do
+  def exe(program) when is_binary(program) do
     bot = %Bot{
-       program: program,
-       storage: HashDict.new,
-        unique: Castle.uuid,
-    } 
-    bot |> ILM.Castle.Dungeon.execute! bot.program, nubspace
+      program: program,
+       unique: Castle.uuid
+    } |> ILM.Castle.Dungeon.execute!
   end
-  
-  @doc """
-  Execute Program. 
-  
-  "Oh you know, the usual.."
-  """
-  def cmd(program) do
+  def exe(commands) when is_list(commands) do
     bot = %Bot{
-       program: program,
-       storage: HashDict.new,
-        unique: Castle.uuid,
-    }
-    bot |> ILM.Castle.Dungeon.execute!
+      program: Program.cmp(commands),
+       unique: Castle.uuid
+    } |> ILM.Castle.Dungeon.execute!
+  end
+
+  @doc """
+  Schedule `program` to run at `nubspace`.
+  """
+  def api(nubspace, program) when is_binary(program) do
+    
+  end
+  def api(nubspace, function) when is_function(function) do
+    
   end
   
   @doc """
@@ -72,5 +67,4 @@ defmodule Bot do
   def effect(bot, effect) do
     %{ bot | results: Enum.concat(bot.results, [effect]) }
   end
-
 end

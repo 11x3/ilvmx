@@ -31,7 +31,7 @@ guest$ cd /ilvmx && echo "welcome to ilvmx." && iex -S mix
 defmodule Player do
 defstruct nubspace: nil, # "home" castle (ie. connection to :ilvmx galaxy)
            wizards: [],  # custom pipes/scripts
-              bots: [],  # programs (see: bot.ex)
+              bots: [],  # effects (see: bot.ex)
              polls: []   # keyword list of okcupid-like data
 ```
 - Castles (servers)
@@ -66,7 +66,7 @@ defstruct galaxy: nil,  # [:ilvmx]
           module: nil,  # :api  # module        "support"
           member: nil,  # :api  # function      "search"
           method: nil,  # :api  # etc           "advanced"
-        programs: []    # :data # args          "words"
+        effects: []    # :data # args          "words"
 ```
 - Program (a DSL to write apps)
 ```
@@ -125,16 +125,16 @@ With this example we use the basic request mechanism or `Bot` to interact with o
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, programs: ["todo"]]
+ module: nil, member: nil, method: nil, effects: ["todo"]]
 
-# Here we read Nub back out and look in the `programs` field to see
+# Here we read Nub back out and look in the `effects` field to see
 # what the Nubspace holds, at which point the client would interact and
 # develop the Nub.
 
 iex> Bot.get "#chat"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "b4a9b1aa-f63f-416b-b7de-d8c06b86d856", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, programs: [“todo"]]
+ module: nil, member: nil, method: nil, effects: [“todo"]]
  
 # In this example, we are going to store a function that others may globally
 # execute with arguments. One of the next few project steps is to finish the
@@ -145,14 +145,14 @@ iex> Bot.set "#chat", fn word -> "lol @ your chat #{ word }" end
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "7192cc1b-6bb4-4f5e-90bb-f1a6ca709f3a", domain: "#chat", system: nil,
  module: nil, member: nil, method: nil,
- programs: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
+ effects: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
 
 # In this example, we will show our executed results. Doge will be builtin
 # at some point in the future, so let's get people used to seeing the 
 # idea now. You can also see that there were no problems with the request.
 # Other notes/erros/exceptions are also presented.
 
-iex> Bot.exe "#chat", "hi"
+iex> Bot.exe "#chat hi"
 Bot[nubspace: "#chat", program: "hi",
  results: ["todo",
   Effect[source: nil,
@@ -178,12 +178,12 @@ Event[content: "#chat", source: #PID<0.261.0>]
 
 iex(2)> Bot.set "#chat", "other"                  
 Event[content: Nub[galaxy: :ilvmx, castle: "#lolnub", unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat",
-  system: nil, module: nil, member: nil, method: nil, programs: ["todo", "todo"]],
+  system: nil, module: nil, member: nil, method: nil, effects: ["todo", "todo"]],
  source: "acf85c20-b980-44a1-a429-7460205ec642"]
  
 Nub[galaxy: :ilvmx, castle: "#lolnub",
  unique: "acf85c20-b980-44a1-a429-7460205ec642", domain: "#chat", system: nil,
- module: nil, member: nil, method: nil, programs: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>, "other"]]
+ module: nil, member: nil, method: nil, effects: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>, "other"]]
 iex(5)>
 
 ```
@@ -219,6 +219,10 @@ The transform servers take the request, dispatch, and execute the request, movin
 The Emitters now have the complete request, all events, all side effects (i.e. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had capped a nub, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter all capped the request, the events are obviously pushed forward to it and all other Elixir-lang Plug pipelines, queues, etc. that you've likely already got deployed.
 
 Finally, an Event is :emitted to the entire `:ilvmx` network with any public network-wide data attached that the request should be committed to the network record.
+
+## Tech
+- Elixir-lang + deps
+- Ember.js
 
 ## Support
 

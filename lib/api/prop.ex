@@ -1,7 +1,10 @@
 defmodule Prop do
   
   @moduledoc """
-  A helper module to take objects from The World.
+  Take objects from The World, oh our dear World.
+  """
+  @moduledoc """
+  Place objects into The World, oh our dear World.
   """
 
   @doc """
@@ -11,6 +14,9 @@ defmodule Prop do
   def static(path) do
     File.read!(path)
   end
+  def drop(:static, content) do
+    # todo: write binary to public static objects
+  end
   
   # @doc """
   # Read a file from the file system.
@@ -19,16 +25,6 @@ defmodule Prop do
   def web(path) do
     HTTPotion.get(path).body
   end
-    
-  # def email(address, subject, message, opts) do
-    
-  # def tweet(query) do
-  # def tweet(account, auth, message)
-  
-  # def crawl(uris) do
-  
-  # def join(rooms) do
-    
-  # def imgur(path) do  
-  
+  # todo: add web REST support
+
 end

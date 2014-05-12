@@ -10,9 +10,9 @@ defmodule ILM.Test do
   test "has uuids" do
     assert true == Regex.match? ILM.uuid_regex, ILM.uuid
   end
-  # 
-  # test "ilm (web)" do
-  #   assert_get "http://localhost:4000/chat"
-  # end
+  
+  test "web: /console" do
+    #assert_get "http://localhost:4000/console"
+  end
 
 end

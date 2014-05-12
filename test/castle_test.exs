@@ -10,11 +10,6 @@ defmodule CastleTest do
   end
   
   test "Castle.name" do
-    assert "#lolnub" == Castle.name
+    assert "#ilvmx" == Castle.name
   end
-  
-  test "Castle.door" do
-    assert true == is_binary Castle.door
-  end
-  
 end

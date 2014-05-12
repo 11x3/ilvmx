@@ -64,7 +64,7 @@ cd /elixir && git checkout master && make && make install
 ln -s /rebar/rebar /usr/local/bin/rebar
 
 # # Install Elm-lang env for front-end dev.
-apt-get install -q -y ghc cabal-install haskell-platform haskell-platform-doc haskell-platform-prof
+#apt-get install -q -y ghc cabal-install haskell-platform haskell-platform-doc haskell-platform-prof
  
 # cabal update
 # cabal install elm
@@ -81,4 +81,4 @@ apt-get install -q -y ghc cabal-install haskell-platform haskell-platform-doc ha
 # chsh -s /usr/bin/fish
 
 # # Config the app.
-cd /ilvmx && mix deps.get && mix compile && mix test && mix server
+#cd /ilvmx && mix deps.get && mix compile && mix test && mix server

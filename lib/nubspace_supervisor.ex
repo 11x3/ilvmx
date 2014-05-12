@@ -1,20 +1,19 @@
-defmodule ILM.Supervisor do
+defmodule Nubspace.Supervisor do
   use Supervisor.Behaviour
-
+  
+  # gen_supervisor
+  
   def start_link do
-    :supervisor.start_link({:local, :castle}, __MODULE__, [])
+    :supervisor.start_link(__MODULE__, [])
   end
 
-  def init([]) do
+  def init(_) do
+    # todo: add a poolboy here
+    
     children = [
       # Define workers and child supervisors to be supervised
-      worker(Castle,  []),
-      worker(ILM.Epoch,  []),
+      worker(Nubspace, [])
     ]
-
-    # start our http server
-    # todo: check ILM.config before starting
-    Plug.Adapters.Cowboy.http ILM.Adapt.Web, [], port: 8080
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
     # for other strategies and supported options

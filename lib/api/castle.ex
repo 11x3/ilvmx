@@ -1,6 +1,6 @@
 defmodule Castle do
   use GenServer.Behaviour
-
+    
   @moduledoc """
   ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
   are top-level ILM nodes and the `Galaxy` is simply the ILvMx exchange.
@@ -12,35 +12,30 @@ defmodule Castle do
   """
   
   # Public
-  
-  @doc """
-  Yo.
-  """
-  def uuid, do: ILM.uuid
-  
+
   @doc """
   ILvMx network exchange.
   """
-  def galaxy, do: :ilvmx
+  def galaxy do
+    :ilvmx
+  end
   
   @doc """
-  Only the mightiest of Nub Doors in the land protect `Castle` "#lolnub".
+  `Castle` "#lolnub"
+  
+  # todo: support p2p between castles
   """
   def name do
-    "#lolnub"
+    "#ilvmx"
   end
-  
-  def door do
-    Prop.static "priv/static/html/index.html"
-  end
-  
+
   @doc """
-  `Castle` epoch scheduler.
+  Yo.
   """
-  def epoch do
-    IO.inspect "epoch: #{ Time.now }"
+  def uuid do
+    ILM.uuid
   end
-    
+
   # GenServer Callbacks
 
   def start_link do

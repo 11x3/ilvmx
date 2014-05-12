@@ -1,13 +1,13 @@
 defmodule Nub do
-defstruct galaxy: nil,  # [:ilvmx]
-          castle: nil,  # [:server, :cluster, :etc]
-          unique: nil,  
-          domain: nil,  # :api  # system        "lolnub.com"
-          system: nil,  # :api  # subsys        :http
-          module: nil,  # :api  # module        "support"
-          member: nil,  # :api  # function      "search"
-          method: nil,  # :api  # etc           "advanced"
-        programs: []    # :data # args          "words"
+  defstruct galaxy: nil,  # [:ilvmx]
+            castle: nil,  # [:server, :cluster, :etc]
+            unique: nil,  
+            domain: nil,  # :api  # system        "lolnub.com"
+            system: nil,  # :api  # subsys        :http
+            module: nil,  # :api  # module        "support"
+            member: nil,  # :api  # function      "search"
+            method: nil,  # :api  # etc           "advanced"
+           effects: []    # :data # args          "words"
   
   @doc """
   Create and fill a Nub from a Nubspace.
@@ -16,9 +16,9 @@ defstruct galaxy: nil,  # [:ilvmx]
     segments = nubspace |> String.split " "
     
     nub = %Nub{
-      unique: Castle.uuid,
+      unique: ILM.uuid,
       galaxy: Castle.galaxy,
-      castle: Castle.door,  # "#lolnub" top level namespace
+      castle: Castle.name,  # "#lolnub" top level namespace
     }
     
     if length(segments) > 0 do

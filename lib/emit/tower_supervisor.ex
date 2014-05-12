@@ -1,4 +1,4 @@
-defmodule ILM.Tower.Supervisor do
+defmodule ILM.Castle.Tower.Supervisor do
   use Supervisor.Behaviour
 
   # gen_supervisor
@@ -12,7 +12,7 @@ defmodule ILM.Tower.Supervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Tower, [])
+      worker(ILM.Castle.Tower, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html

@@ -1,7 +1,7 @@
 use Amnesia
 use Db
 
-defmodule ILM.Tower do
+defmodule ILM.Castle.Tower do
   use GenServer.Behaviour
   
   alias Program
@@ -52,7 +52,7 @@ defmodule ILM.Tower do
         
     # save to db
     Amnesia.transaction do
-      EventDb[
+      Events[
         content: inspect(event.content), 
          source: inspect(event.source), 
          unique: inspect(event.unique)
@@ -74,12 +74,23 @@ defmodule ILM.Tower do
     
     Event.w self, channel: channel
   end
+  
+  # Private
     
+  def tick(_) do
+    :timer.sleep(1000)
+    
+    signal! Event.w "tick"
+    
+    tick(nil)
+  end
   
   # GenServer Callbacks
   
   def start_link do
     ConCache.put ILM.cache, @signals, []
+    
+    spawn __MODULE__, :tick, [[]]
     
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
   end

@@ -2,7 +2,7 @@
 # PROPOSAL: Program - Endgame: Markdown for cloud apps.
 #
 # ILM apps will offer native Elm-lang support on the front end. And we can 
-# also stuff anything else inside `/public/` so bases covered.
+# also stuff anything else inside `/priv/static` so bases covered.
 #
 # Elixir + ILM + Elm should be pretty compelling kit. And Elm looks great for 
 # nextgen front end stuff, but as it stands, there's no way it's easy enough
