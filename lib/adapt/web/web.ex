@@ -3,7 +3,6 @@ defmodule ILM.Adapt.Web do
   use     Plug.Router
   use     Plug.Builder
   
-  plug Plugs.HotCodeReload
   plug Plug.Static, at: "/static", from: :ilvmx
   
   plug :match
@@ -23,17 +22,20 @@ defmodule ILM.Adapt.Web do
   Catch all.
   """
   def call(conn, opts) do
-    adapt(conn, conn.path_info)
+    send_resp(conn, 200, adapt(conn, conn.path_info))
   end
 
   @doc """
   Web Requests from Cowboy/Plug.
   """
   def adapt(conn, ["ilvmx"]) do    
-    send_resp(conn, 200, (@header <> Prop.static("priv/static/html/app.html") <> @footer))
+    (@header <> Prop.static("priv/static/html/app.html") <> @footer)
+  end
+  def adapt(conn, ["static"|path_components]) do
+    Prop.static Path.join(["priv/static"|path_components])
   end
   def adapt(conn, commands) do
-    send_resp(conn, 200, Bot.exe(commands))
+    Bot.exe(commands)
   end
   
   @doc """
