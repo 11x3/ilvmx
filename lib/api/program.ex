@@ -4,7 +4,6 @@ defstruct    setup: %{},
               data: %{},
             unique: nil
 
-  # 
   # get "example"
   # set "@example args"
   # exe "#example args"
