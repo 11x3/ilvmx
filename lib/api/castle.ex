@@ -2,16 +2,16 @@ defmodule Castle do
   use GenServer.Behaviour
     
   @moduledoc """
-  ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
-  are top-level ILM nodes and the `Galaxy` is simply the ILvMx exchange.
+  ILvMx takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
+  are top-level ILvMx nodes and the `Galaxy` is simply the ILvMx exchange.
   
-  Castle, Wizard, and Player are not ILM.namespaced because they are a part 
-  of the core API, i.e. you could take a vanilla ILM server and edit one 
+  Castle, Wizard, and Player are not ILvMx.namespaced because they are a part 
+  of the core API, i.e. you could take a vanilla ILvMx server and edit one 
   line in the Castle source or update it dynamically and it would switch 
   networks.
   """
-  
-  # Public
+
+  # Native
 
   @doc """
   ILvMx network exchange.
@@ -23,6 +23,7 @@ defmodule Castle do
   @doc """
   `Castle` "#lolnub"
   
+  # todo: add Castle.config[:name]
   # todo: support p2p between castles
   """
   def name do
@@ -33,7 +34,7 @@ defmodule Castle do
   Yo.
   """
   def uuid do
-    ILM.uuid
+    ILvMx.uuid
   end
 
   # GenServer Callbacks

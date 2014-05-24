@@ -1,49 +1,30 @@
-# Ember App Kit [![Build Status](https://travis-ci.org/stefanpenner/ember-app-kit.png?branch=master)](https://travis-ci.org/stefanpenner/ember-app-kit)
+Rock & Roll with Ember.js
+=========================
 
-Ember App Kit aims to be the foundation for ambitious web applications built with Ember. It will soon be replaced by an executable [ember-cli](https://github.com/stefanpenner/ember-cli) which dramatically improves buildtimes (via broccoli) and provides sane-upgrade paths, feel free to check that project out. We intend to provide a sensible upgrade path.
+The Ember.js app I build during the introductory screencast series to my mailing list.
 
-This project has been extracted out of several real world applications and is actively used. Currently it covers the basics fairly well, but much still needs to be done. As we learn and as more contributors join in it continues to evolve. If you encounter any bugs, clunky features or missing documentation, just submit an issue and we'll respond ASAP.
+The code for the backend server in the last episode lives at [balinterdi/rock-and-roll-api](https://github.com/balinterdi/rock-and-roll-api).
 
-At the very least, it helps setup your Ember.js applications directory structure.
+### Want more Ember stuff?
 
-We welcome ideas and experiments.
+If you would like to learn more about Ember.js and receive valuable content regularly, you can [sign up here](http://emberjs.balinterdi.com).
 
-## Getting Started
+### Tips on working along
 
-* [Project Documentation Site](http://stefanpenner.github.io/ember-app-kit/)
-* [Getting Started Guide](http://stefanpenner.github.io/ember-app-kit/guides/getting-started.html)
-* [ember-app-kit-todos](https://github.com/stefanpenner/ember-app-kit-todos) - the Emberjs [todos](http://emberjs.com/guides/getting-started/) using Ember App Kit 
-* [ember-app-kit-bloggr](https://github.com/pixelhandler/ember-app-kit-example-with-bloggr-client) - bloggr demo
-* *Safari Books Online Blog* - [Introduction to Ember App Kit](http://blog.safaribooksonline.com/2013/09/18/ember-app-kit/) for more experienced Ember developers by @mixonic
-* *Ember Sherpa* - [Introduction to Ember App Kit](http://embersherpa.com/articles/introduction-to-ember-app-kit/) for those who are new to the Grunt workflow by @taras 
+My goal with releasing the code for the screencast is to help you work along as you watch the episodes. Let me share a few tips that can also help.
 
+#### Git tags
 
-## Features
+The repository is properly tagged for each episode. If you want to jump directly to the end of Episode 3 (which happens to also be the beginning of Episode 4), just do `git checkout episode-3`.
 
-- Sane project structure
-- ES6 module transpiler support (easy, future-proof modules)
-- Module system-aware resolver (see [Referencing views](https://github.com/stefanpenner/ember-app-kit/wiki/Referencing-Views) and [Using Ember loaders](https://github.com/stefanpenner/ember-app-kit/wiki/Using-Ember-loaders))
-- Transparent project compilation & minification for easy deploys via [Grunt](http://gruntjs.com/)
-- Package management via [Bower](https://github.com/bower/bower)
-- Optional support for CoffeeScript, SASS, LESS or Stylus
-- Testing via QUnit, Ember Testing and Testem (with examples)
-- Linting via JSHint (including module syntax)
-- Catch-all `index.html` for easy reloading of pushState router apps
-- Generators via [Loom](https://github.com/cavneb/loom-generators-ember-appkit) (to generate routes, controllers, etc.)
+#### App server
 
-## Future Goals
+There is a very simple application server implemented in config.ru. It implements a simple file server and adds a convenience for `index.html` files so that they can be served without having to append `index.html` to the end of the URL. To run it, just do `rackup` in the root of the repository. This is going to launch the app server on port 9292 so you can then load the application on `http://localhost:9292`.
 
-- Source maps for transpiled modules
-- Easier to install 3rd party packages
-- Faster, more intelligent builds
+### Licensing
 
-Think anything else is missing? Feel free to open an issue (or, even better, a PR)! Discussion and feedback is always appreciated.
+I would like you to do anything you wish with this code as long as you don't sell it, or anything that uses it (e.g a screencast). To that end, I chose the GPL v2 License which you find here in the repository and which is nicely summarized on [choosealicense.com](http://choosealicense.com/licenses/).
 
-## Special Thanks
+Feel free to fork it, play with it, share it with friends or use some code snippets in a presentation while you keep the license and the copyright notice in the repository.
 
-Some ideas in ember-app-kit originated in work by Yapp Labs (@yapplabs) with McGraw-Hill Education Labs (@mhelabs) on [yapplabs/glazier](https://github.com/yapplabs/glazier). Thanks to Yapp and MHE for supporting the Ember ecosystem!
-
-## License
-
-Copyright 2013 by Stefan Penner and Ember App Kit Contributors, and licensed under the MIT License. See included
-[LICENSE](/stefanpenner/ember-app-kit/blob/master/LICENSE) file for details.
+Copyright (c) 2013 [Balint Erdi](http://balinterdi.com)

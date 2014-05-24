@@ -1,14 +1,14 @@
-defmodule ILM.Test do
+defmodule ILvMx.Test do
   use ExUnit.Case
 
   Source
 
   test "app" do
-    assert true == is_pid ILM.castle
+    assert true == is_pid ILvMx.castle
   end
   
   test "has uuids" do
-    assert true == Regex.match? ILM.uuid_regex, ILM.uuid
+    assert true == Regex.match? ILvMx.uuid_regex, ILvMx.uuid
   end
   
   test "web: /console" do

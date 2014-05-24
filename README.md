@@ -55,7 +55,7 @@ defmodule Bot do
            accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
              unique: nil
 ```
-- Nubs + Nubspace (hashtag based namespace of code + data)
+- Nubs + ILvMx.Nubspace (hashtag based namespace of code + data)
 ```
 defmodule Nub do
 defstruct galaxy: nil,  # [:ilvmx]
@@ -102,7 +102,7 @@ We hope to define and implement one such pattern of future development.
 
 ## Example
 
-Only the core of the API is working but it is enough to get/set/cap/sig/exe against our Nubspace (or hashtag namespace of data + code) into your self-hosted local Castle's Nubspace.
+Only the core of the API is working but it is enough to get/set/cap/sig/exe against our ILvMx.Nubspace (or hashtag namespace of data + code) into your self-hosted local Castle's ILvMx.Nubspace.
 
 We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. If other ILvMx servers pop up and start talking to each other, we will form a real network and start adding the p2p.
  
@@ -114,13 +114,13 @@ vagrant $ iex -S mix
 
 ## GET/SET/EXE to interact with our hashtag data+code store.
 
-With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `Nubspace`.
+With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `ILvMx.Nubspace`.
 
 ```
 
-# Here we add something (the text "todo") to the castle Nubspace "#chat". Now
+# Here we add something (the text "todo") to the castle ILvMx.Nubspace "#chat". Now
 # anyone on the ILvMx network that had an up-to-date copy of the Galaxy 
-# Nubspace would be able to get/set/exe/sort/filter/render this Nub.
+# ILvMx.Nubspace would be able to get/set/exe/sort/filter/render this Nub.
 
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
@@ -128,7 +128,7 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  module: nil, member: nil, method: nil, effects: ["todo"]]
 
 # Here we read Nub back out and look in the `effects` field to see
-# what the Nubspace holds, at which point the client would interact and
+# what the ILvMx.Nubspace holds, at which point the client would interact and
 # develop the Nub.
 
 iex> Bot.get "#chat"

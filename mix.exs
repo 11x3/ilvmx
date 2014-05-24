@@ -1,6 +1,6 @@
 Code.ensure_loaded?(Hex) and Hex.start
 
-defmodule ILM.Mixfile do
+defmodule ILvMx.Mixfile do
   use Mix.Project
 
   def project do
@@ -14,7 +14,7 @@ defmodule ILM.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [
-      mod: { ILM, [] },
+      mod: { ILvMx, [] },
       applications: [
         :ossp_uuid,
         :httpotion,
@@ -38,6 +38,7 @@ defmodule ILM.Mixfile do
       {:amnesia,                github: "meh/amnesia" },
       {:timex,                  github: "bitwalker/timex"},
       {:httpotion,              github: "myfreeweb/httpotion"},
+      {:jsex,                   "~> 2.0.0"},
     ]
   end
 end

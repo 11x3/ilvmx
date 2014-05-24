@@ -1,4 +1,4 @@
-defmodule ILM.Adapt.Web do
+defmodule ILvMx.Adapt.Web do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
@@ -17,22 +17,26 @@ defmodule ILM.Adapt.Web do
   (*/*)
   Catch all.
   """
-  def call(conn, opts) do    
+  def call(conn, opts) do
     send_resp(conn, 200, adapt(conn, conn.path_info))
   end
 
   @doc """
   Web Requests from Cowboy/Plug.
   """
-  def adapt(conn, []) do    
-    Prop.static("priv/static/app/index.html")
+  def adapt(conn, []) do
+    Bot.get "#splash"
   end
   def adapt(conn, commands) do
+    # try to load static first
     static = Path.join ["priv/static"|commands]
-    IO.inspect("static: #{ static }")
+    
+    # debug
+    IO.inspect("exists: #{ File.exists?(static) } static: #{ static }")
+    
     case File.exists? static do
       true  -> Prop.static static
-      false -> inspect(Bot.exe(commands))
+      false -> Bot.exe(commands)
     end
   end
 
