@@ -31,13 +31,13 @@ defmodule ILM.Mixfile do
   
   defp deps do
     [
-      {:cowboy,                 github: "extend/cowboy"},
-      {:plug,                   github: "elixir-lang/plug"},
-      {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid"},
-      {:con_cache,              github: "sasa1977/con_cache"},
-      {:amnesia,                github: "meh/amnesia" },
-      {:timex,                  github: "bitwalker/timex"},
-      {:httpotion,              github: "myfreeweb/httpotion"},
+      {:cowboy,                 github: "extend/cowboy", overide: false},
+      {:plug,                   github: "elixir-lang/plug", overide: false},
+      {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid", overide: false},
+      {:con_cache,              github: "sasa1977/con_cache", overide: false},
+      {:amnesia,                github: "meh/amnesia", overide: false},
+      {:timex,                  github: "bitwalker/timex", overide: false},
+      {:httpotion,              github: "myfreeweb/httpotion", overide: false},
     ]
   end
 end
