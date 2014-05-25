@@ -32,7 +32,7 @@ defmodule ILM.Mixfile do
   defp deps do
     [
       {:cowboy,                 github: "extend/cowboy", overide: false},
-      {:plug,                   github: "elixir-lang/plug", overide: false},
+      {:plug, nil, [hex_app: :plug]},
       {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid", overide: false},
       {:con_cache,              github: "sasa1977/con_cache", overide: false},
       {:amnesia,                github: "meh/amnesia", overide: false},

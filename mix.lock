@@ -13,7 +13,7 @@
   "lager": {:git, "https://github.com/basho/lager.git", "4d8291edb72a25ac0efde907e2ecaa115108ff90", []},
   "mime": {:git, "git://github.com/dynamo/mime.git", "db84370c53a67a7e58a4d0cfb026f4edc64a9367", []},
   "ossp_uuid": {:git, "git://github.com/yrashk/erlang-ossp-uuid.git", "5839a91796349114375c9cb066ec4e1dfdb653ab", []},
-  "plug": {:git, "git://github.com/elixir-lang/plug.git", "53b1632939e7e8b1638db867facd512f71bce7e7", []},
+  "plug": {:package, "0.4.4"},
   "plugs": {:git, "git://github.com/sugar-framework/plugs.git", "9159823000f5a908ee692356e0b1e1ad463e5e7f", []},
   "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]},
   "timex": {:git, "git://github.com/bitwalker/timex.git", "df5de4adf10c17e1623d1907bbbf72b73075e12b", []}}
