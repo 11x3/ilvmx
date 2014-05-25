@@ -1,7 +1,7 @@
 use Amnesia
 use Db
 
-defmodule ILvMx.Castle.Tower do
+defmodule ILVMX.Castle.Tower.Server do
   use GenServer.Behaviour
   
   alias Program
@@ -30,16 +30,16 @@ defmodule ILvMx.Castle.Tower do
   # Public
   
   @doc """
-  Return all signals in the Castle ILvMx.Nubspace.  
+  Return all signals in the Castle ILVMX.Nubspace.Server.  
   """
   def signals do
-    n = ConCache.get_or_store ILvMx.cache, @signals, fn -> 
+    n = ConCache.get_or_store ILVMX.Castle.Server.cache, @signals, fn -> 
       []
     end
   end
 
   @doc """
-  Signal the ILvMx.Nubspace on `channel` with `event`.
+  Signal the ILVMX.Nubspace.Server on `channel` with `event`.
   
   Return an Effect.w source: self, content: number of signals.
   """
@@ -70,7 +70,7 @@ defmodule ILvMx.Castle.Tower do
   # todo: convert event_callback to support Program.
   """
   def capture!(channel, function) when is_function function do
-    ConCache.put ILvMx.cache, @signals, Enum.concat(signals, [[channel: channel, callback: function]])
+    ConCache.put ILVMX.Castle.Server.cache, @signals, Enum.concat(signals, [[channel: channel, callback: function]])
     
     Event.w self, channel: channel
   end
@@ -88,7 +88,7 @@ defmodule ILvMx.Castle.Tower do
   # GenServer Callbacks
   
   def start_link do
-    ConCache.put ILvMx.cache, @signals, []
+    ConCache.put ILVMX.Castle.Server.cache, @signals, []
     
     spawn __MODULE__, :tick, [[]]
     

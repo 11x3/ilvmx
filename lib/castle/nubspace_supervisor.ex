@@ -1,4 +1,4 @@
-defmodule ILvMx.Nubspace.Supervisor do
+defmodule ILVMX.Nubspace.Server.Supervisor do
   use Supervisor.Behaviour
   
   # gen_supervisor
@@ -12,7 +12,7 @@ defmodule ILvMx.Nubspace.Supervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILvMx.Nubspace, [])
+      worker(ILVMX.Nubspace.Server, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html

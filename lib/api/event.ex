@@ -4,7 +4,7 @@ defmodule Event do
             unique:   nil
   
   @moduledoc """
-  The basic news unit of ILvMx. (ie. 1 request = n events).
+  The basic news unit of ILVMX. (ie. 1 request = n events).
   
   Events package a `source` of the event and unspecified `content`. Like Xmas 
   for whoever codes these.  
@@ -37,7 +37,7 @@ defmodule Event do
     %Event{
       content: content,
        source: source,
-       unique: Castle.uuid
+       unique: ILVMX.Castle.Server.uuid
     }
   end
   

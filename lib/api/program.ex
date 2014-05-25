@@ -4,19 +4,21 @@ defstruct    setup: %{},
               data: %{},
             unique: nil
 
+  @doc """
+  Run commands of a `program`.
+  """
+  def run(program) do    
+    IO.inspect program
+    
+    program
+  end
+
   # get "#example"
   # set "@example args"
   # sig "![#example] args"
   # cap "![#example] args"
   # exe "#example args"
   # pip "#results |> #take 5"
-  
-  @doc """
-  Compile commands into a program.
-  """
-  def run(bot) do    
-    bot
-  end
 
   # Program.cmds do
   #   !me @jams

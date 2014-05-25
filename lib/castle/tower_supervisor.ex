@@ -1,4 +1,4 @@
-defmodule ILvMx.Castle.Tower.Supervisor do
+defmodule ILVMX.Castle.Tower.Supervisor do
   use Supervisor.Behaviour
 
   # gen_supervisor
@@ -12,7 +12,7 @@ defmodule ILvMx.Castle.Tower.Supervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILvMx.Castle.Tower, [])
+      worker(ILVMX.Castle.Tower.Server,     [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html

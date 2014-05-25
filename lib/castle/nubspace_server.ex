@@ -1,6 +1,6 @@
-defmodule ILvMx.Nubspace do
+defmodule ILVMX.Nubspace.Server do
   use GenServer.Behaviour
-
+    
   @nubspace :nubspace
   
   
@@ -13,7 +13,7 @@ defmodule ILvMx.Nubspace do
     nub = Dict.get effects, hash(nubspace), Nub.w(nubspace)
     
     # unique / key / value
-    ILvMx.Castle.Tower.signal! Event.w(nub.unique, nub), nubspace
+    ILVMX.Castle.Tower.Server.signal! Event.w(nub.unique, nub), nubspace
     
     nub
   end
@@ -21,18 +21,18 @@ defmodule ILvMx.Nubspace do
   @doc """
   Put `program` into `nubspace`.
   """
-  def push!(nubspace, prop) when is_binary(nubspace) and is_binary(prop) do
+  def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
     # get the nub
     nub = pull! nubspace
     
     # add the new source
-    nub = %{ nub | effects: Enum.concat(nub.effects, [prop]) }
+    nub = %{ nub | effects: Enum.concat(nub.effects, [item]) }
     
     # store the new nub
-    ConCache.put ILvMx.cache, @nubspace, Dict.put(effects, hash(nubspace), nub)
+    ConCache.put ILVMX.Castle.Server.cache, @nubspace, Dict.put(effects, hash(nubspace), nub)
     
     # signal on   unique / key / value
-    ILvMx.Castle.Tower.signal! Event.w(nub.unique, nub), nubspace
+    ILVMX.Castle.Tower.Server.signal! Event.w(nub.unique, nub), nubspace
 
     nub
   end
@@ -44,7 +44,7 @@ defmodule ILvMx.Nubspace do
   Return all `effects` in the Castle.
   """
   defp effects do
-    n = ConCache.get_or_store ILvMx.cache, @nubspace, fn -> 
+    n = ConCache.get_or_store ILVMX.Castle.Server.cache, @nubspace, fn -> 
       HashDict.new
     end
   end

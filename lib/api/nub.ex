@@ -10,15 +10,15 @@ defmodule Nub do
            effects: []    # :data # args          "words"
   
   @doc """
-  Create and fill a Nub from a ILvMx.Nubspace.
+  Create and fill a Nub from a ILVMX.Nubspace.Server.
   """
   def w(nubspace) do
     segments = nubspace |> String.split " "
     
     nub = %Nub{
-      unique: ILvMx.uuid,
-      galaxy: Castle.galaxy,
-      castle: Castle.name,  # "#lolnub" top level namespace
+      unique: ILVMX.Castle.Server.uuid,
+      galaxy: ILVMX.Castle.Server.galaxy,
+      castle: ILVMX.Castle.Server.name,  # "#lolnub" top level namespace
     }
     
     if length(segments) > 0 do

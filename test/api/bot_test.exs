@@ -3,6 +3,4 @@ defmodule BotTest do
     
   def hey, do: "hey"
   
-  # API
-
 end

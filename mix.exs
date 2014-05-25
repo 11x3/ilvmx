@@ -1,6 +1,6 @@
 Code.ensure_loaded?(Hex) and Hex.start
 
-defmodule ILvMx.Mixfile do
+defmodule ILVMX.Mixfile do
   use Mix.Project
 
   def project do
@@ -14,8 +14,9 @@ defmodule ILvMx.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [
-      mod: { ILvMx, [] },
+      mod: { ILVMX, [] },
       applications: [
+        :crypto,
         :ossp_uuid,
         :httpotion,
         :cowboy,

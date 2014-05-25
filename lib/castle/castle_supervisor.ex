@@ -1,4 +1,4 @@
-defmodule ILvMx.Castle.Supervisor do
+defmodule ILVMX.Castle.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -8,13 +8,9 @@ defmodule ILvMx.Castle.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(Castle,  []),
-      worker(ILvMx.Castle.Tower,  []),
+      worker(ILVMX.Castle.Server,         []),
+      worker(ILVMX.Castle.Tower.Server,   []),
     ]
-
-    # start our http server
-    # todo: check ILvMx.config before starting
-    Plug.Adapters.Cowboy.http ILvMx.Adapt.Web, [], port: 8080
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
     # for other strategies and supported options

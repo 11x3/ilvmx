@@ -1,4 +1,4 @@
-defmodule ILvMx.Castle.CPU do
+defmodule ILVMX.Castle.CPU.Server do
   use GenServer.Behaviour
   
   @doc """
