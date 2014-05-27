@@ -16,9 +16,4 @@ defmodule CastleTest do
   test "Castle.uuid" do
     assert true == Regex.match? ILVMX.Castle.Server.uuid_regex, ILVMX.Castle.Server.uuid
   end
-  
-  test "web: /console" do
-    #assert_get "http://localhost:4000/console"
-  end
-  
 end

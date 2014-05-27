@@ -12,9 +12,16 @@ defmodule ILVMX.Castle.Server do
   of the core API, i.e. you could take a vanilla ILVMX server and edit one 
   line in the Castle source or update it dynamically and it would switch 
   networks.
+  
+  # todo: add Castle.config[:name]
+  # todo: support p2p between castles
   """
 
   # Native
+  
+  def arrow!(event) do
+    event |> ILVMX.Castle.Wizard.Server.please?
+  end
   
   @doc """
   ILVMX network exchange.
@@ -24,10 +31,7 @@ defmodule ILVMX.Castle.Server do
   end
   
   @doc """
-  `Castle` "#lolnub"
-  
-  # todo: add Castle.config[:name]
-  # todo: support p2p between castles
+  Castle name.
   """
   def name do
     "#ilvmx"

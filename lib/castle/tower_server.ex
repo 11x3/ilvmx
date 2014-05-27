@@ -30,6 +30,14 @@ defmodule ILVMX.Castle.Tower.Server do
   # Public
   
   @doc """
+  Commit the Event to global state.
+  """
+  def commit!(bot) do
+    
+    bot
+  end
+  
+  @doc """
   Return all signals in the Castle ILVMX.Nubspace.Server.  
   """
   def signals do

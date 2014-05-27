@@ -21,7 +21,7 @@ defmodule ILVMX.Nubspace.Server do
   @doc """
   Put `program` into `nubspace`.
   """
-  def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
+  def push!(nubspace, item) when is_binary(nubspace) do
     # get the nub
     nub = pull! nubspace
     

@@ -1,6 +1,6 @@
 # Internet Land of Magic
 
-ILVMX is an `internet load virtual module exchange` or functionally minded cloud app server and function-level exchange.
+ILVMX is an `internet load virtual module exchange` or functionally minded cloud app server with function-level exchange.
 
 The server is written in Elixir-lang but we use `Vagrant` which of course means ILVMX is cloud or self-hostable. Current support for native Elixir and HTTP APIs are in the works, with Elm-lang and other support coming soon.
 
