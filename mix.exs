@@ -1,6 +1,6 @@
 Code.ensure_loaded?(Hex) and Hex.start
 
-defmodule ILM.Mixfile do
+defmodule ILVMX.Mixfile do
   use Mix.Project
 
   def project do
@@ -14,8 +14,9 @@ defmodule ILM.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [
-      mod: { ILM, [] },
+      mod: { ILVMX, [] },
       applications: [
+        :crypto,
         :ossp_uuid,
         :httpotion,
         :cowboy,
@@ -32,7 +33,6 @@ defmodule ILM.Mixfile do
   defp deps do
     [
       {:cowboy,                 github: "extend/cowboy", overide: false},
-      {:plug, nil, [hex_app: :plug]},
       {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid", overide: false},
       {:con_cache,              github: "sasa1977/con_cache", overide: false},
       {:amnesia,                github: "meh/amnesia", overide: false},

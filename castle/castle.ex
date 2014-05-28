@@ -1,19 +1,12 @@
-# Customize this Castle here.
+@doc """
+Customize this Castle here. ILM takes place in `Castle` servers in the 
+Great Kingdom of Nub. Castles are top-level ILM nodes and the `Galaxy` is 
+simply the ILVMX exchange.
 
-# Program
-# -------
-# get "example"
-# set "@example args"
-# exe "#example args"
-# jmp "!example #results"
-# pip "#results |> #take 5"
+Castle, Wizard, and Player are not ILM.namespaced because they are a part 
+of the core API, i.e. you could take a vanilla ILM server and edit one 
+line in the Castle source or update it dynamically and it would switch 
+networks.
+"""
 
-Bot.set "#events", fn player ->
-  Amnesia.transaction do
-    Db.Events.keys! |> Stream.each |> Enum.take 100
-  end
-end
-
-Bot.set "#chat", fn nick, chat ->
-  Bot.set "chat", "#{ nick }: #{ chat }"
-end
+# API
