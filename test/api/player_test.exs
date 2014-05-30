@@ -4,5 +4,5 @@ defmodule PlayerTest do
   test "Player.anon" do
     IT.assert_player Player.anon
   end
-  
+
 end

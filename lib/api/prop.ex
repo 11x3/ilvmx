@@ -14,14 +14,15 @@ defmodule Prop do
   def static(path) do
     File.read!(path)
   end
-  def drop(:static, content) do
-    # todo: write binary to public static objects
-  end
   
-  # @doc """
-  # Read a file from the file system.
-  # # todo: secure the path, yes yes yes
-  # """
+  # def drop(:static, content) do
+  #   # todo: write binary to public static objects
+  # end
+  
+  @doc """
+  Read a file from the file system.
+  # todo: secure the path, yes yes yes
+  """
   def web(path) do
     HTTPotion.get(path).body
   end

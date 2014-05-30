@@ -36,10 +36,10 @@ defmodule ILVMX do
   end
   def start(_type, _args) do
     # Database
-    Amnesia.Schema.create
-    Amnesia.start
-    Db.create(disk: [node])
-    Db.wait
+    # # Amnesia.Schema.create
+    # # Amnesia.start
+    # Db.create(disk: [node])
+    # Db.wait
 
     ILVMX.Castle.Supervisor.start_link
   end

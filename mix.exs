@@ -6,7 +6,7 @@ defmodule ILVMX.Mixfile do
   def project do
     [ app: :ilvmx,
       version: "0.0.1",
-      elixir: "~> 0.13.0",
+      elixir: "~> 0.13.3",
       deps: deps ]
   end
 
@@ -20,6 +20,7 @@ defmodule ILVMX.Mixfile do
         :ossp_uuid,
         :httpotion,
         :cowboy,
+        :plug,
       ]
     ]
   end
@@ -32,12 +33,12 @@ defmodule ILVMX.Mixfile do
   
   defp deps do
     [
-      {:cowboy,                 github: "extend/cowboy", overide: false},
-      {:ossp_uuid,              github: "yrashk/erlang-ossp-uuid", overide: false},
+      {:cowboy,     github: "extend/cowboy"},
+      {:plug,       "~> 0.4.2"},
+      {:ossp_uuid,  github: "yrashk/erlang-ossp-uuid", overide: false},
       {:con_cache,              github: "sasa1977/con_cache", overide: false},
-      {:amnesia,                github: "meh/amnesia", overide: false},
-      {:timex,                  github: "bitwalker/timex", overide: false},
       {:httpotion,              github: "myfreeweb/httpotion", overide: false},
     ]
   end
 end
+

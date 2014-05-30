@@ -1,5 +1,5 @@
-use Amnesia
-use Db
+#use Amnesia
+#use Db
 
 defmodule ILVMX.Castle.Tower.Server do
   use GenServer.Behaviour
@@ -59,13 +59,13 @@ defmodule ILVMX.Castle.Tower.Server do
     end
         
     # save to db
-    Amnesia.transaction do
-      Events[
-        content: inspect(event.content), 
-         source: inspect(event.source), 
-         unique: inspect(event.unique)
-      ].write
-    end
+    # Amnesia.transaction do
+    #   Events[
+    #     content: inspect(event.content), 
+    #      source: inspect(event.source), 
+    #      unique: inspect(event.unique)
+    #   ].write
+    # end
     
     Effect.w self, signals: signals
   end
