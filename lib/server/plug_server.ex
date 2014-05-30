@@ -24,9 +24,9 @@ defmodule ILVMX.Plug.Server do
   @doc """
   Web Requests from Cowboy/Plug.
   """
-  # def adapt(conn, []) do    
-  #   Prop.static("priv/static/app/index.html")
-  # end
+  def adapt(conn, []) do
+    Prop.static("priv/static/index.html")
+  end
   def adapt(conn, commands) do
     # todo: secure path
     static = Path.join ["priv/static"|commands]
