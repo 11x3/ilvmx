@@ -17,7 +17,7 @@ defmodule ILVMX.Plug.Server do
   (*/*)
   Catch all.
   """
-  def call(conn, opts) do    
+  def call(conn, opts) do
     send_resp(conn, 200, adapt(conn, conn.path_info))
   end
 

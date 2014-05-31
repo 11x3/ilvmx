@@ -87,7 +87,7 @@ defstruct galaxy: nil,  # [:ilvmx]
 | @nub ["#apps #footer"]
 @end
 
-@exe #ilm #filters #after #exitpoll @with #me
+@exe #ilm.#filters.#after.#exitpoll @with #me
 
 @sig #ilm #signals #players @with #me
 @sig #ilm #signals #players #filter #latest @with #me

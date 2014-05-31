@@ -29,3 +29,8 @@ defmodule Event do
     }
   end
 end
+
+
+Castle |> Arrow |> Program
+Wizard |> Arrow |> Program
+Player |> Arrow |> Program
