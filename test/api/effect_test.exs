@@ -2,6 +2,6 @@ defmodule EffectTest do
   use   ExUnit.Case
   
   test :w do
-    assert "idk" == Event.w("idk").content
+    assert "idk" == Effect.w("idk").content
   end
 end

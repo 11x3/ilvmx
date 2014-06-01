@@ -19,13 +19,6 @@ defmodule ILVMX do
   @moduledoc """
   ILVMX: functionally minded cloud app server and exchange.
   """
-  
-  @doc """
-  Return the ILVMX.castle.
-  """
-  def castle do
-    Process.whereis :castle
-  end
 
   # GenSupervisor
   
@@ -35,12 +28,6 @@ defmodule ILVMX do
     start(nil, nil)
   end
   def start(_type, _args) do
-    # Database
-    # # Amnesia.Schema.create
-    # # Amnesia.start
-    # Db.create(disk: [node])
-    # Db.wait
-
     ILVMX.Castle.Supervisor.start_link
   end
 end

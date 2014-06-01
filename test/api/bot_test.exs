@@ -3,33 +3,36 @@ defmodule BotTest do
     
   def hey, do: "hey"
   
+  ## NubTests
+  
   test "Bot.set(nubspace, program)" do
-    nub = Bot.set "#chat", "todo"
-    IT.assert_nub nub
-    
-    assert ["todo"] = nub.effects
+    effect = Bot.set "#chat", "todo"
+    IT.assert_effect effect
   end
   
   test "Bot.get(nubspace)" do
     Bot.set "#chat", "todo"
     
-    nub = Bot.get "#chat"
-    IT.assert_nub nub
-    
-    assert ["todo"] = nub.effects
+    effect = Bot.get "#chat"
+    IT.assert_effect effect
   end
-  
+
   test "Bot.cap(nubspace, program)" do
-    Bot.cap "#chat", fn event -> send self, :hey end    
-    Bot.exe "#chat"
+    Bot.cap "#chat", fn event -> send self, :hey end
     
+    Bot.set "#chat", "todo"
+
     assert_received :hey
   end
   
-  test "Bot.exe(program)" do
-    Bot.set "#chat", fn m -> "lol @ #{ m }" end
-    
-    bot = Bot.exe "#chat hi"
-    IT.assert_bot bot
+  ## PropTests
+  
+  test "Bot.prop(path)" do
+    assert true == Regex.match? ~r/html/, Bot.prop("index.html")
   end
+  
+  test "Bot.web(path, opts = [])" do
+    assert Regex.match? ~r/html/, Bot.web("http://elixir-lang.org/")
+  end
+  
 end

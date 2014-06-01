@@ -36,8 +36,9 @@ defmodule ILVMX.Mixfile do
       {:cowboy,     github: "extend/cowboy"},
       {:plug,       "~> 0.4.2"},
       {:ossp_uuid,  github: "yrashk/erlang-ossp-uuid", overide: false},
-      {:con_cache,              github: "sasa1977/con_cache", overide: false},
-      {:httpotion,              github: "myfreeweb/httpotion", overide: false},
+      {:con_cache,  github: "sasa1977/con_cache", overide: false},
+      {:httpotion,  github: "myfreeweb/httpotion", overide: false},
+      {:jazz,       github: "meh/jazz"},
     ]
   end
 end

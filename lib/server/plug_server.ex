@@ -25,17 +25,11 @@ defmodule ILVMX.Plug.Server do
   Web Requests from Cowboy/Plug.
   """
   def adapt(conn, []) do
-    Prop.static("priv/static/index.html")
+    Bot.prop("index.html")
   end
   def adapt(conn, commands) do
-    # todo: secure path
-    static = Path.join ["priv/static"|commands]
-    IO.inspect("Plug.static: #{ static }")
-    
-    case File.exists? static do
-      true  -> Prop.static static
-      false -> inspect(Bot.exe(commands))
-    end
+    # todo: secure commands
+    Bot.prop(Path.join(commands))
   end
 
   @doc """

@@ -1,36 +1,19 @@
 defmodule Event do
-  defstruct content:  nil,
-            source:   nil,
-            unique:   nil
+  defstruct  castle: nil,
+            program: nil,
+             player: nil,
+            effects: [],
+             unique: nil
   
   @moduledoc """
-  The basic news unit of ILVMX.
+  The basic news unit of our ILVMX kingdom.
   """
-  
-  @doc """
-  Submit an `Event` to be exe immediately.
-  """
-  
-  @doc """
-  Create an "anonymous event".
-  """
-  def w(content) do
-    w(nil, content)
-  end
-  
-  @doc """
-  Create a "source event".
-  """
-  def w(source, content) do
+  def w(program, player \\ nil) do
     %Event{
-      content: content,
-       source: source,
+       castle: ILVMX.Castle.Server.name,
+      program: program,
+       player: player,
        unique: ILVMX.Castle.Server.uuid
     }
   end
 end
-
-
-Castle |> Arrow |> Program
-Wizard |> Arrow |> Program
-Player |> Arrow |> Program

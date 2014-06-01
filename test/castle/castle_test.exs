@@ -2,7 +2,8 @@ defmodule CastleTest do
   use   ExUnit.Case
     
   test "ILVMX.Castle.Server.uuid" do
-    assert true == IT.assert_unique ILVMX.Castle.Server.uuid 
+    assert true == IT.assert_unique ILVMX.Castle.Server.uuid
+    assert true == Regex.match? ILVMX.Castle.Server.uuid_regex, ILVMX.Castle.Server.uuid
   end
   
   test "ILVMX.Castle.Server.galaxy" do
@@ -12,8 +13,5 @@ defmodule CastleTest do
   test "ILVMX.Castle.Server.name" do
     assert "#ilvmx" == ILVMX.Castle.Server.name
   end
-  
-  test "Castle.uuid" do
-    assert true == Regex.match? ILVMX.Castle.Server.uuid_regex, ILVMX.Castle.Server.uuid
-  end
+
 end

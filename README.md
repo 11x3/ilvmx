@@ -49,13 +49,13 @@ defmodule Wizard do
 defmodule Bot do
   defstruct program: nil,
             storage: nil,
-            results: [],           
+            effects: [],           
              errors: [],
              player: nil,
            accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
              unique: nil
 ```
-- Nubs + ILVMX.Nubspace.Server (hashtag based namespace of code + data)
+- Nubs + ILVMX.Nub.Server (hashtag based namespace of code + data)
 ```
 defmodule Nub do
 defstruct galaxy: nil,  # [:ilvmx]
@@ -102,7 +102,7 @@ We hope to define and implement one such pattern of future development.
 
 ## Example
 
-Only the core of the API is working but it is enough to get/set/cap/sig/exe against our ILVMX.Nubspace.Server (or hashtag namespace of data + code) into your self-hosted local Castle's ILVMX.Nubspace.Server.
+Only the core of the API is working but it is enough to get/set/cap/sig/exe against our ILVMX.Nub.Server (or hashtag namespace of data + code) into your self-hosted local Castle's ILVMX.Nub.Server.
 
 We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. If other ILVMX servers pop up and start talking to each other, we will form a real network and start adding the p2p.
  
@@ -114,13 +114,13 @@ vagrant $ iex -S mix
 
 ## GET/SET/EXE to interact with our hashtag data+code store.
 
-With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `ILVMX.Nubspace.Server`.
+With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `ILVMX.Nub.Server`.
 
 ```
 
-# Here we add something (the text "todo") to the castle ILVMX.Nubspace.Server "#chat". Now
+# Here we add something (the text "todo") to the castle ILVMX.Nub.Server "#chat". Now
 # anyone on the ILVMX network that had an up-to-date copy of the Galaxy 
-# ILVMX.Nubspace.Server would be able to get/set/exe/sort/filter/render this Nub.
+# ILVMX.Nub.Server would be able to get/set/exe/sort/filter/render this Nub.
 
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
@@ -128,7 +128,7 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  module: nil, member: nil, method: nil, effects: ["todo"]]
 
 # Here we read Nub back out and look in the `effects` field to see
-# what the ILVMX.Nubspace.Server holds, at which point the client would interact and
+# what the ILVMX.Nub.Server holds, at which point the client would interact and
 # develop the Nub.
 
 iex> Bot.get "#chat"
@@ -147,14 +147,14 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  module: nil, member: nil, method: nil,
  effects: ["todo", #Function<6.80484245/1 in :erl_eval.expr/5>]]
 
-# In this example, we will show our executed results. Doge will be builtin
+# In this example, we will show our executed effects. Doge will be builtin
 # at some point in the future, so let's get people used to seeing the 
 # idea now. You can also see that there were no problems with the request.
 # Other notes/erros/exceptions are also presented.
 
 iex> Bot.exe "#chat hi"
 Bot[nubspace: "#chat", program: "hi",
- results: ["todo",
+ effects: ["todo",
   Effect[source: nil,
    content: [program: #Function<6.80484245/1 in :erl_eval.expr/5>,
     result: "lol @ your chat hi"]]], problems: [],
@@ -216,7 +216,7 @@ The transform servers take the request, dispatch, and execute the request, movin
 
 ## Emit
 
-The Emitters now have the complete request, all events, all side effects (i.e. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had capped a nub, it would immediately take the :emit results. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter all capped the request, the events are obviously pushed forward to it and all other Elixir-lang Plug pipelines, queues, etc. that you've likely already got deployed.
+The Emitters now have the complete request, all events, all side effects (i.e. "emit a file to this path", but not necessarily the file contents itself) all errors, every bit of data about the request since it entered the framework is now present in your current state. Emitters just send the request forward to the various protocols you support. So if an :adapter had capped a nub, it would immediately take the :emit effects. Another :emitter could log the effects to a DB in the background. Another could make GitHub commits, or msg a channel, and of course if the original adapter all capped the request, the events are obviously pushed forward to it and all other Elixir-lang Plug pipelines, queues, etc. that you've likely already got deployed.
 
 Finally, an Event is :emitted to the entire `:ilvmx` network with any public network-wide data attached that the request should be committed to the network record.
 

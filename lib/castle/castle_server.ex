@@ -7,22 +7,13 @@ defmodule ILVMX.Castle.Server do
   @moduledoc """
   ILVMX takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
   are top-level ILVMX nodes and the `Galaxy` is simply the ILVMX exchange.
-  
-  Castle, Wizard, and Player are not ILVMX.namespaced because they are a part 
-  of the core API, i.e. you could take a vanilla ILVMX server and edit one 
-  line in the Castle source or update it dynamically and it would switch 
-  networks.
-  
+
   # todo: add Castle.config[:name]
   # todo: support p2p between castles
   """
 
   # Native
-  
-  def arrow!(event) do
-    event |> ILVMX.Castle.Wizard.Server.please?
-  end
-  
+    
   @doc """
   ILVMX network exchange.
   """
@@ -36,7 +27,7 @@ defmodule ILVMX.Castle.Server do
   def name do
     "#ilvmx"
   end
-
+  
   @doc """
   Return an UUID.
   """

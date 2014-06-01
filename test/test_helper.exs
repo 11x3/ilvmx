@@ -17,9 +17,18 @@ defmodule IT do
     assert_unique suspect.unique
   end
 
+  def assert_event(suspect) do
+    assert %Event{} = suspect
+  end
+  
   def assert_player(suspect) do
     assert_unique suspect.unique
   end
+  
+  def assert_effect(suspect) do
+    assert %Effect{} = suspect
+  end
+  
 end
 
 

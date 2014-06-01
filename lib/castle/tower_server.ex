@@ -1,44 +1,18 @@
-#use Amnesia
-#use Db
-
 defmodule ILVMX.Castle.Tower.Server do
   use GenServer.Behaviour
-  
-  alias Program
-  
+    
   @signals  :signals
   
   @moduledoc """
-  Emit is where our apps produce most of their outside world side effects from 
-  events generated during the :transform stage.
-  
-  Examples events would include:
-  - update :mesh adapters, inner ring, and signals
-  - the file system with :json
-  - web hooks with :hook
-
-  # todo: since every Request.callback invocation produces results into
-  # Script.results list, it's really like an unordered list, and our Emit
-  # and Event methods just match through the list for map/reduce style events.
-  
-  Emitters work in a two-step process. A lexical Tower.capture(channel) and
-  an Tower.results(channel) will send the given channel all of the events.
-  
-  # todo: store capture records for expiration purposes.
+  Our ILVMX.Castle.Tower.Server (or :emit stage) is where our apps produce 
+  most of their outside world side effects, which come from events that are 
+  generated during the :adapt, and :transform stage of the app.
   """
-
-  # Public
+  
+  ## CAP/SIG
   
   @doc """
-  Commit the Event to global state.
-  """
-  def commit!(bot) do
-    
-    bot
-  end
-  
-  @doc """
-  Return all signals in the Castle ILVMX.Nubspace.Server.  
+  Return all signals in the Castle ILVMX.Nub.Server.  
   """
   def signals do
     n = ConCache.get_or_store ILVMX.Castle.Server.cache, @signals, fn -> 
@@ -47,53 +21,62 @@ defmodule ILVMX.Castle.Tower.Server do
   end
 
   @doc """
-  Signal the ILVMX.Nubspace.Server on `channel` with `event`.
-  
-  Return an Effect.w source: self, content: number of signals.
+  Signal an `Effect` to the world.
   """
-  def signal!(event, channel \\ nil) do
-    signals |> Enum.each fn [channel: signal, callback: callback] ->
-      if signal == channel do        
-        callback.(event)
+  def signal!(effect) do
+    signals |> Enum.each fn [signal: signal, program: program] ->
+      if signal == effect.source do        
+        program.(effect)
       end
     end
-        
-    # save to db
-    # Amnesia.transaction do
-    #   Events[
-    #     content: inspect(event.content), 
-    #      source: inspect(event.source), 
-    #      unique: inspect(event.unique)
-    #   ].write
-    # end
-    
-    Effect.w self, signals: signals
+
+    effect
   end
   
   @doc """
-  Capture on `channel` and exe `event_callback`.
-  
-  Return an Event.w source: self, content: channel
-  
-  # todo: convert event_callback to support Program.
+  Capture on `signal` and exe `program`.
   """
-  def capture!(channel, function) when is_function function do
-    ConCache.put ILVMX.Castle.Server.cache, @signals, Enum.concat(signals, [[channel: channel, callback: function]])
+  def capture!(signal, program) when is_function(program) do
+    ConCache.put ILVMX.Castle.Server.cache, @signals, Enum.concat(signals, [[signal: signal, program: program]])
     
-    Event.w self, channel: channel
+    Effect.w self, signal: signal
   end
   
-  # Private
+  
+  ## Events
+  
+  @doc """
+  Commit the Event to galaxy state.
+  """
+  def commit!(event) do
+    #todo: drop effect to disk
+    
+    pipe!(event)
+    
+    event
+  end
+
+  @doc """
+  Send the event to external pipelines.
+  """
+  def pipe!(event) do
+  
+    event
+  end
+  
+  
+  ## Private
     
   def tick(_) do
     :timer.sleep(1000)
     
-    signal! Event.w "tick"
+    signal! Effect.w "tick"
     
     tick(nil)
   end
   
-  # GenServer Callbacks
+  
+  ## GenServer Callbacks
   
   def start_link do
     ConCache.put ILVMX.Castle.Server.cache, @signals, []

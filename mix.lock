@@ -8,6 +8,7 @@
   "exquisite": {:git, "git://github.com/meh/exquisite.git", "8b1420260178fdf50a21a9b020253719b0b373ff", []},
   "httpotion": {:git, "git://github.com/myfreeweb/httpotion.git", "e482c4fa0016049c7738dec7261b7b3b6659b3cc", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "7871e2ebe8811efb64e1917e2de455fa87e8dfe3", [tag: "v4.1.0"]},
+  "jazz": {:git, "git://github.com/meh/jazz.git", "7af3b74e58eb1a3fc6b9874a2077efa420f6dfcc", []},
   "ossp_uuid": {:git, "git://github.com/yrashk/erlang-ossp-uuid.git", "5839a91796349114375c9cb066ec4e1dfdb653ab", []},
   "plug": {:package, "0.4.4"},
   "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]}}

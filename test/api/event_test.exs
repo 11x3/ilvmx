@@ -1,7 +1,11 @@
 defmodule EventTest do
   use   ExUnit.Case
   
-  test :w do
-    assert "idk" == Event.w("idk").content
+  # def w(program, player \\ nil) do
+  
+  test "w" do
+    Event.w("#console")
+    |> IT.assert_event
   end
+  
 end
