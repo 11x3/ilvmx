@@ -6,8 +6,11 @@ defmodule BotTest do
   ## NubTests
   
   test "Bot.set(nubspace, program)" do
-    effect = Bot.set "#chat", "todo"
+    effect = Bot.set "#chat", "todo"    
     IT.assert_effect effect
+    
+    # we get a static link
+    assert Regex.match? ~r/api/, Dict.get(effect.content, :static)
   end
   
   test "Bot.get(nubspace)" do

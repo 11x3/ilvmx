@@ -36,8 +36,8 @@ defmodule ILVMX.Nub.Server do
     File.write!(meta, JSON.encode!(
       List.flatten([items|["item", file]]
     )))
-        
-    ILVMX.Castle.Tower.Server.signal! Effect.w nubspace, item: item
+    
+    ILVMX.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: file]
   end
   
   @doc """
