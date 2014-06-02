@@ -15,7 +15,7 @@ defmodule ILVMX.Nub.Server do
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
     # create nub + meta directory
-    nub = Path.join("priv/static", String.lstrip(nubspace, ?#))
+    nub = Path.join("priv/static/api", String.lstrip(nubspace, ?#))
     unless File.exists? nub do
       File.mkdir! nub
     end
@@ -45,7 +45,7 @@ defmodule ILVMX.Nub.Server do
   """
   def pull!(nubspace) when is_binary(nubspace) do
     # create nub + meta directory
-    nub = Path.join("priv/static", String.lstrip(nubspace, ?#))
+    nub = Path.join("priv/static/api", String.lstrip(nubspace, ?#))
     unless File.exists? nub do
       Effect.w nubspace, "404"
     else

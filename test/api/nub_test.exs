@@ -6,10 +6,10 @@ defmodule NubTest do
   end
 
   test "push!" do
-    assert %Effect{} = ILVMX.Nub.Server.push! "#chat", "todo"
+    assert %Effect{} = Nub.push! "#chat", "todo"
   end
 
   test "pull!" do
-    assert %Effect{} = ILVMX.Nub.Server.pull! "#chat"
+    assert %Effect{} = Nub.pull! "#chat"
   end
 end

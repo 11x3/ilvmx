@@ -9,4 +9,4 @@ line in the Castle source or update it dynamically and it would switch
 networks.
 """
 
-Bot.set "#console", Bot.prop "img/patches.png"
+Bot.set "#console", Bot.prop("index.html")

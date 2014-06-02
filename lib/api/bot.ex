@@ -38,12 +38,8 @@ defmodule Bot do
   end
   
   @doc """
-  Get a `nub` from `nubspace`.
-  
-  > Program.run "#example!" => {link: "/nub/1/item", meta: "/nub/1/meta"}
+  Get a `nub` from `nubspace`.  
   """
-  def get!(nubspace) do
-  end
   def get(nubspace) do
     ILVMX.Nub.Server.pull!(nubspace)
   end

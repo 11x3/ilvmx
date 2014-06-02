@@ -39,5 +39,13 @@ defmodule Nub do
     
     nub
   end
+  
+  def push!(nubspace, item) do
+    ILVMX.Nub.Server.push!(nubspace, item)
+  end
+  
+  def pull!(nubspace) do
+    ILVMX.Nub.Server.pull!(nubspace)
+  end
 
 end
