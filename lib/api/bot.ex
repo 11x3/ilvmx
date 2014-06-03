@@ -23,9 +23,9 @@ defmodule Bot do
   #   } 
   #   bot |> ILVMX.Castle.CPU.Server.execute!
   # end
-  # def exe(program) when is_function(program) do
-  #   throw IO.inspect program
-  # end
+  defmacro exe(nubspace, program) when is_function(program) do
+    throw IO.inspect program
+  end
   
   
   # Nubspace API
@@ -69,9 +69,10 @@ defmodule Bot do
   Place objects into The World, oh our dear World.
   """
   def drop(nubspace, item) do
-    # set the meta
-    #set(nubspace, item)
-
+    # todo: secure path
+    File.write! Path.join("priv/static", nubspace), item
+    
+    item
   end
   
   @doc """

@@ -7,11 +7,14 @@ defmodule CastleTest do
   end
   
   test "ILVMX.Castle.Server.galaxy" do
-    assert :ilvmx == ILVMX.Castle.Server.galaxy
+    assert "#ilvmx" == ILVMX.Castle.Server.galaxy
   end
   
   test "ILVMX.Castle.Server.name" do
     assert "#ilvmx" == ILVMX.Castle.Server.name
   end
 
+  test "#ilvmx #static #kit #html" do
+    assert Regex.match? ~r/html/, Bot.get("#ilvmx #static #kit #html").content
+  end
 end

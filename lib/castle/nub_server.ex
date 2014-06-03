@@ -13,6 +13,9 @@ defmodule ILVMX.Nub.Server do
   def push!(nubspace, item) when is_list(nubspace) and is_binary(item) do
     nubspace |> Enum.each |> push! item
   end
+  def push!(nubspace, item) when is_binary(nubspace) and is_function(item) do
+    
+  end
   def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
     # create nub + meta directory
     nub = Path.join("priv/static/api", String.lstrip(nubspace, ?#))
@@ -49,8 +52,9 @@ defmodule ILVMX.Nub.Server do
     unless File.exists? nub do
       Effect.w nubspace, "404"
     else
-      meta = Path.join(nub, @metanub)
-      Effect.w nubspace, JSON.decode!(File.read!(meta))
+      # todo: return something better than the first item
+      meta = Path.join(nub, "1")
+      Effect.w nubspace, File.read!(meta)
     end
   end
   

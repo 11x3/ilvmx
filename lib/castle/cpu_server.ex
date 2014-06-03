@@ -7,20 +7,14 @@ defmodule ILVMX.Castle.CPU.Server do
   # todo: add event to eventdrive
   """
   def schedule!(event) do
-    
     event
+    |> execute!
+    |> ILVMX.Castle.Tower.Server.commit!
   end
 
-  # def execute!(event, program) when is_binary(program) do
-  #   # get the first character of the program
-  #   hint = String.slice(program, 0..0)
-  #   
-  #   # case hint do
-  #   #   "#"   -> Bot.get(program)
-  #   # end
-  #   
-  #   event
-  # end
+  def execute!(event) do
+    Program.run(event, event.program)
+  end
    
   # try do
   #   event

@@ -18,7 +18,7 @@ defmodule ILVMX.Castle.Server do
   ILVMX network exchange.
   """
   def galaxy do
-    :ilvmx
+    "#ilvmx"
   end
   
   @doc """

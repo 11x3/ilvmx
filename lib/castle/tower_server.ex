@@ -1,3 +1,5 @@
+use Jazz
+
 defmodule ILVMX.Castle.Tower.Server do
   use GenServer.Behaviour
     
@@ -9,29 +11,25 @@ defmodule ILVMX.Castle.Tower.Server do
   generated during the :adapt, and :transform stage of the app.
   """
   
-  ## CAP/SIG
+  ## Effects
   
   @doc """
-  Return all signals in the Castle ILVMX.Nub.Server.  
+  Signal an `Event` or `Effect` to the world.
   """
-  def signals do
-    n = ConCache.get_or_store ILVMX.Castle.Server.cache, @signals, fn -> 
-      []
-    end
+  def signal!(event = %Event{}) do
+    event.effects |> Enum.each &signal!/1
   end
-
-  @doc """
-  Signal an `Effect` to the world.
-  """
   def signal!(effect) do
     signals |> Enum.each fn [signal: signal, program: program] ->
       if signal == effect.source do        
         program.(effect)
       end
     end
-
+    
     effect
   end
+  
+  ## Signals
   
   @doc """
   Capture on `signal` and exe `program`.
@@ -42,31 +40,63 @@ defmodule ILVMX.Castle.Tower.Server do
     Effect.w self, signal: signal
   end
   
-  
   ## Events
   
   @doc """
   Commit the Event to galaxy state.
   """
   def commit!(event) do
-    #todo: drop effect to disk
+    event
+    |> pipe!
+    |> archive!
+    |> galaxy!
+  end
+  
+  @doc """
+  Send the event to external pipelines.
+  """
+  def pipe!(event) do
+    event
+  end
+  
+  @doc """
+  Save to disk.
+  """
+  def archive!(event) do
+    # create nub + meta directory
+    events = "priv/static/api/events"
+    unless File.exists? events do
+      File.mkdir! events
+    end
+
+    # check/create the metanub
+    file = Path.join(events, event.unique)
     
-    pipe!(event)
+    # todo: add/update commit times of event
+
+    File.write!(file, JSON.encode!(event))
     
     event
   end
 
   @doc """
-  Send the event to external pipelines.
+  Share "important" events with the galaxy.
   """
-  def pipe!(event) do
-  
+  def galaxy!(event) do
     event
   end
   
-  
   ## Private
-    
+  
+  @doc """
+  Return all signals in the Castle ILVMX.Nub.Server.  
+  """
+  def signals do
+    n = ConCache.get_or_store ILVMX.Castle.Server.cache, @signals, fn -> 
+      []
+    end
+  end
+
   def tick(_) do
     :timer.sleep(1000)
     

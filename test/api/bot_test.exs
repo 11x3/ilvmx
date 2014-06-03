@@ -22,7 +22,7 @@ defmodule BotTest do
         
     effect = Bot.get "#chat"
     IT.assert_effect effect
-    assert static in effect.content
+    assert "todo" == effect.content
   end
 
   test "Bot.cap(nubspace, program)" do
@@ -36,6 +36,10 @@ defmodule BotTest do
   
   test "Bot.prop(path)" do
     assert true == Regex.match? ~r/html/, Bot.prop("index.html")
+  end
+  
+  test "Bot.drop(path)" do
+    assert Bot.drop("test.html", "<html/>") == Bot.prop("test.html")
   end
   
   test "Bot.web(path, opts = [])" do
