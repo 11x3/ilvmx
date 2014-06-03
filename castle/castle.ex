@@ -10,7 +10,3 @@ networks.
 """
 
 Bot.set "#console", Bot.prop("index.html")
-
-# Bot.exe "#start" do
-#   
-# end

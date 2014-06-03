@@ -1,7 +1,7 @@
 defmodule BotTest do
   use ExUnit.Case
     
-  def hey, do: "hey"
+  def signal, do: "signal"
   
   ## NubTests
   
@@ -10,22 +10,26 @@ defmodule BotTest do
     IT.assert_effect effect
     
     # we get a static link
-    assert Regex.match? ~r/api/, Dict.get(effect.content, :static)
+    static = Dict.get(effect.content, :static)
+    
+    assert Regex.match? ~r/api/, static
+    assert File.exists?(static)
   end
   
   test "Bot.get(nubspace)" do
-    Bot.set "#chat", "todo"
-    
+    result = Bot.set "#chat", "todo"
+    static = Dict.get(result.content, :static)
+        
     effect = Bot.get "#chat"
     IT.assert_effect effect
+    assert static in effect.content
   end
 
   test "Bot.cap(nubspace, program)" do
-    Bot.cap "#chat", fn event -> send self, :hey end
-    
+    Bot.cap "#chat", fn event -> send self, :signal end
     Bot.set "#chat", "todo"
 
-    assert_received :hey
+    assert_received :signal
   end
   
   ## PropTests

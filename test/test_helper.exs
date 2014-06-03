@@ -31,6 +31,8 @@ defmodule IT do
   
 end
 
+# clear the test API
+File.rm_rf("priv/static/api/*")
 
 # server
 ILVMX.start
