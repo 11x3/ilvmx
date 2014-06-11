@@ -6,13 +6,13 @@ The server is written in Elixir-lang but we use `Vagrant` which of course means 
 
 ## Events
 
-# Event
-# |> Player 
-# |> Wizard
-# |> Castle/Program
-# |> Castle/CPU
-# |> Castle/Bots
-# |> Effects
+Event
+|> Player 
+|> Wizard
+|> Castle/Program
+|> Castle/CPU
+|> Castle/Bots
+|> Effects
 
 ## Features
 
