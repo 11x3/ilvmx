@@ -1,66 +1,16 @@
 defmodule ILVMX.Castle.CPU.Server do
   use GenServer.Behaviour
-  
+
   @doc """
-  *Shh...*
-  
-  # todo: add event to eventdrive
+  Submit an Event to be processed.
   """
-  def schedule!(event) do
-    event
-    |> execute!
-    |> ILVMX.Castle.Tower.Server.commit!
-  end
-
-  def execute!(event) do
-    Program.run(event, event.program)
-  end
-   
-  # try do
-  #   event
-  # rescue 
-  #   x in [BadFunctionError, RuntimeError, ArgumentError, BadArityError] -> 
-  #    #Effect.w error: x
-  # end
   
-  # "@"   -> String.split(bot.program, "\n") |> Enum.map fn cmd ->
-  #   # program = "@set #chat todo"
-  #   cmd = String.slice(String.lstrip(program), 0..3)
-  #   [nub, opt] = String.split String.replace(program, "#{ cmd } ", "")
-  # 
-  #   execute!(cmd, nub, opt)
-
-  # try do
-  #   program.()
-  # rescue 
-  #   x in [RuntimeError, ArgumentError, BadArityError] -> 
-  #     Effect.w error: x
-  # end
-  # 
+  def submit!(event) do
+    # todo: exe the event.program
+      
+    %{ event | effects: [event.effects| Bot.get(event.program) ]}
+  end
   
-  #   def execute!(cmd, nub, opt) when is_binary(cmd) do
-  #     case cmd do
-  #       "@set" -> Bot.set nub, opt
-  #     end
-  #   end
-  #   def execute!(bot, program, nubspace) do
-  #     nub = ILVMX.Nub.Server.pull!(nubspace)
-  # 
-  #     effects = nub.programs |> Enum.map fn cake ->
-  #       case is_function cake do
-  #         true  -> 
-  #           try do
-  #             Effect.w program: cake, result: cake.(bot.program)
-  #           rescue 
-  #             x in [RuntimeError, ArgumentError, BadArityError] -> 
-  #               Effect.w error: x, program: cake
-  #           end
-  #         false -> [cake]
-  #       end
-  #     end
-  # 
-  #     bot = %{ bot | effects: List.flatten(Enum.concat(bot.effects, effects)) }
-  #   end
   
   # GenServer Callbacks
   

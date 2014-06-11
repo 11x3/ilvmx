@@ -1,11 +1,7 @@
 defmodule EventTest do
-  use   ExUnit.Case
-  
-  # def w(program, player \\ nil) do
-  
+  use   ExUnit.Case, async: true
+    
   test "w" do
-    Event.w("#console")
-    |> IT.assert_event
+    IT.assert_event Event.w("#console")
   end
-  
 end

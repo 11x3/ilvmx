@@ -1,5 +1,6 @@
 defmodule Event do
-  defstruct  castle: nil,
+  defstruct  galaxy: nil,
+             castle: nil,
             program: nil,
              player: nil,
             effects: [],
@@ -10,6 +11,7 @@ defmodule Event do
   """
   def w(program, player \\ nil) do
     %Event{
+       galaxy: ILVMX.Castle.Server.galaxy,
        castle: ILVMX.Castle.Server.name,
       program: program,
        player: player,

@@ -1,11 +1,11 @@
 defmodule BotTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
     
   def signal, do: "signal"
   
   ## NubTests
   
-  test "Bot.set(nubspace, program)" do
+  test "Bot.set(nubspace, item)" do
     effect = Bot.set "#chat", "todo"    
     IT.assert_effect effect
     
@@ -35,15 +35,14 @@ defmodule BotTest do
   ## PropTests
   
   test "Bot.prop(path)" do
-    assert true == Regex.match? ~r/html/, Bot.prop("index.html")
+    assert true == Regex.match? ~r/html/, Bot.prop("app.html")
   end
   
-  test "Bot.drop(path)" do
+  test "Bot.drop(path, item)" do
     assert Bot.drop("test.html", "<html/>") == Bot.prop("test.html")
   end
   
   test "Bot.web(path, opts = [])" do
     assert Regex.match? ~r/html/, Bot.web("http://elixir-lang.org/")
   end
-  
 end

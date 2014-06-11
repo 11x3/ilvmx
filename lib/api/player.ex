@@ -3,8 +3,9 @@ defstruct castle: nil, # "home" castle (ie. connection to :ilvmx galaxy)
             home: nil, # "nubspace" (ie. user/nick)
         programs: [],  # custom pipes/scripts
             bots: [],  # active bots (see: bot.ex)
-           polls: [],  # keyword list of okcupid-like data
-           clans: [],
+           polls: nil,  # keyword list of okcupid-like data
+           clans: nil,
+           banks: %{cash: nil, karma: nil, dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"},
           unique: nil
   
   @moduledoc """
@@ -23,9 +24,17 @@ defstruct castle: nil, # "home" castle (ie. connection to :ilvmx galaxy)
   end
   
   @doc """
-  Send a one-way message to the `Castle`.
+  Send a one-way `Event` to the `Castle`.
   """
   def arrow!(program) do
-    Event.w(program, anon!) |> Wizard.please? 
+    Event.w(program, anon!) |> Wizard.please?
   end
+  
+  @doc """
+  Send an `Event` and wait for the `Castle` to respond.
+  """
+  def dove!(program) do
+    Event.w(program, anon!) |> Wizard.please?
+  end
+  
 end

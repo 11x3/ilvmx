@@ -1,33 +1,8 @@
 defmodule Bot do
   defstruct program: nil,
-            effects: [],           
-             errors: [],
-            storage: nil,
-             player: nil,
-           accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
              unique: nil
 
-  # Native API
 
-  @doc """
-  Execute `nubspace` with `program`. 
-  """
-  # def exe(program) do
-  #   throw IO.inspect program
-  # end
-  # def exe(program) when is_binary(program) do
-  #   bot = %Bot{
-  #      program: program,
-  #       unique: ILVMX.Castle.Server.uuid,
-  #      storage: HashDict.new
-  #   } 
-  #   bot |> ILVMX.Castle.CPU.Server.execute!
-  # end
-  defmacro exe(nubspace, program) when is_function(program) do
-    throw IO.inspect program
-  end
-  
-  
   # Nubspace API
   
   @doc """

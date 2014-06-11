@@ -1,7 +1,7 @@
 defmodule EffectTest do
-  use   ExUnit.Case
+  use   ExUnit.Case, async: true
   
-  test :w do
+  test "w" do
     assert "idk" == Effect.w("idk").content
   end
 end

@@ -1,7 +1,7 @@
 defmodule PlugTest do
-  use   ExUnit.Case
+  use   ExUnit.Case, async: true
 
-  test "Prop.web(path, opts = [])" do
-    assert Regex.match? ~r/html/, Bot.web("http://localhost:8080/index.html")
+  test "Bot.web(localhost)" do
+    assert Regex.match? ~r/html/, Bot.web("http://localhost:8080/")
   end
 end

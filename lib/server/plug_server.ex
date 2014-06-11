@@ -2,12 +2,11 @@ defmodule ILVMX.Plug.Server do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
-  
-  plug Plug.Static, at: "/static", from: :ilvmx
-  
-  plug :match
-  plug :dispatch
 
+  plug Plug.Static, at: "/static", from: :ilvmx
+  plug :dispatch
+  plug :match
+  
   @doc """
   Initialize options
   """
@@ -18,24 +17,24 @@ defmodule ILVMX.Plug.Server do
   Catch all.
   """
   def call(conn, opts) do
-    send_resp(conn, 200, adapt(conn, conn.path_info))
+    conn |> adapt conn.path_info
   end
 
   @doc """
   Web Requests from Cowboy/Plug.
   """
-  def adapt(conn, []) do
-    Bot.prop("index.html")
+  def adapt(conn, []) do    
+    send_resp conn, 200, inspect(Player.dove!("#html.app"))
   end
-  def adapt(conn, commands) do
-    # todo: secure commands
-    Bot.prop(Path.join(commands))
+  def adapt(conn, commands) do    
+    send_resp conn, 200, inspect(commands)
   end
-
+  
   @doc """
-  Props to http://stanislavs.org/helppc/dos_error_codes.html for the DOS codes
+  Errors. Props to http://stanislavs.org/helppc/dos_error_codes.html for the DOS codes
+  #todo: forward errors to the Wizard for defensive purposes.
   """
-  match _ do
-    send_resp conn, 404, "5A Required system component not installed (ILvMx 4.04)"
+  match(_) do
+    send_resp(conn, 500, "5A Required system component not installed (ILvMx 4.04)")
   end
 end

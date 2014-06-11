@@ -4,6 +4,16 @@ ILVMX is an `internet load virtual module exchange` or functionally minded cloud
 
 The server is written in Elixir-lang but we use `Vagrant` which of course means ILVMX is cloud or self-hostable. Current support for native Elixir and HTTP APIs are in the works, with Elm-lang and other support coming soon.
 
+## Events
+
+# Event
+# |> Player 
+# |> Wizard
+# |> Castle/Program
+# |> Castle/CPU
+# |> Castle/Bots
+# |> Effects
+
 ## Features
 
 - Storage + Code - global hashtag-based namespace of storage + code

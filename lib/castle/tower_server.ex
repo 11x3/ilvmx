@@ -71,9 +71,8 @@ defmodule ILVMX.Castle.Tower.Server do
 
     # check/create the metanub
     file = Path.join(events, event.unique)
-    
+        
     # todo: add/update commit times of event
-
     File.write!(file, JSON.encode!(event))
     
     event

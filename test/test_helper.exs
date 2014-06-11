@@ -1,6 +1,10 @@
+# clear the test API
+File.rm_rf("priv/static/api/*")
+
+Bot.set "#console", Bot.prop "app.html"
+
 # tests
 ExUnit.start
-
 
 defmodule IT do
   use ExUnit.Case
@@ -31,8 +35,6 @@ defmodule IT do
   
 end
 
-# clear the test API
-File.rm_rf("priv/static/api/*")
-
 # server
 ILVMX.start
+

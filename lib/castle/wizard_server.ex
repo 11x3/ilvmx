@@ -8,8 +8,8 @@ defmodule ILVMX.Castle.Wizard.Server do
     event 
     |> filter! 
     |> enrich! 
-    |> shape! 
-    |> ILVMX.Castle.CPU.Server.schedule!
+    |> shape!
+    |> ILVMX.Castle.CPU.Server.submit!
   end
   
   @doc """
