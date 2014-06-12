@@ -1,5 +1,3 @@
-Code.ensure_loaded?(Hex) and Hex.start
-
 defmodule ILVMX.Mixfile do
   use Mix.Project
 
