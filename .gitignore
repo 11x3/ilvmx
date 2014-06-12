@@ -6,4 +6,5 @@ erl_crash.dump
 Mnesia*
 .sass-cache
 node_modules
-.vagrantpriv/static/api/*
+.vagrant
+priv/static/api/*
