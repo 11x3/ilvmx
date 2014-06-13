@@ -1,7 +1,7 @@
 use Jazz
 
 defmodule ILVMX.Castle.Tower.Server do
-  use GenServer.Behaviour
+  use GenServer
     
   @signals  :signals
   
@@ -64,7 +64,7 @@ defmodule ILVMX.Castle.Tower.Server do
   """
   def archive!(event) do
     # create nub + meta directory
-    events = "priv/static/api/events"
+    events = "priv/static/obj/events"
     unless File.exists? events do
       File.mkdir! events
     end

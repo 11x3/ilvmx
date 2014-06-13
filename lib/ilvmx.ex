@@ -14,7 +14,7 @@
 # limitations under the License.
 
 defmodule ILVMX do
-  use Application.Behaviour
+  use Application
   
   @moduledoc """
   ILVMX: functionally minded cloud app server and exchange.
@@ -22,7 +22,7 @@ defmodule ILVMX do
 
   # GenSupervisor
   
-  # See http://elixir-lang.org/docs/stable/Application.Behaviour.html
+  # See http://elixir-lang.org/docs/stable/Application.html
   # for more information on OTP Applications
   def start do
     start(nil, nil)

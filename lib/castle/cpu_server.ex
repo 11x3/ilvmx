@@ -1,5 +1,5 @@
 defmodule ILVMX.Castle.CPU.Server do
-  use GenServer.Behaviour
+  use GenServer
 
   @doc """
   Submit an Event to be processed.

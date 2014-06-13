@@ -12,7 +12,7 @@ defmodule BotTest do
     # we get a static link
     static = Dict.get(effect.content, :static)
     
-    assert Regex.match? ~r/api/, static
+    assert Regex.match? ~r/obj/, static
     assert File.exists?(static)
   end
   
@@ -22,7 +22,6 @@ defmodule BotTest do
         
     effect = Bot.get "#chat"
     IT.assert_effect effect
-    assert "todo" == effect.content
   end
 
   test "Bot.cap(nubspace, program)" do

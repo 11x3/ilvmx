@@ -1,4 +1,4 @@
-# Internet Land of Magic
+# Internet Land of #virtual Magic and #excitement.
 
 ILVMX is an `internet load virtual module exchange` or functionally minded cloud app server with function-level exchange.
 
@@ -47,7 +47,7 @@ defstruct nubspace: nil, # "home" castle (ie. connection to :ilvmx galaxy)
 - Castles (servers)
 ```
 defmodule Castle do
-  use GenServer.Behaviour
+  use GenServer
 ```
 - Wizards (agents)
 ```

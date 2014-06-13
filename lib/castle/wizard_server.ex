@@ -1,5 +1,5 @@
 defmodule ILVMX.Castle.Wizard.Server do
-  use GenServer.Behaviour
+  use GenServer
   
   @doc """
   Submit an Event to the inner Castle.

@@ -1,6 +1,7 @@
 # clear the test API
-File.rm_rf("priv/static/api/*")
+#File.rm_rf("priv/static/api/*")
 
+# stubs
 Bot.set "#console", Bot.prop "app.html"
 
 # tests
@@ -32,9 +33,10 @@ defmodule IT do
   def assert_effect(suspect) do
     assert %Effect{} = suspect
   end
-  
 end
 
 # server
 ILVMX.start
+
+
 

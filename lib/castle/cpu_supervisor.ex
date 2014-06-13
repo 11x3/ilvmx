@@ -1,5 +1,5 @@
 defmodule ILVMX.Castle.CPU.Server.Supervisor do
-  use Supervisor.Behaviour
+  use Supervisor
 
   def start_link do
     :supervisor.start_link({:local, :castle}, __MODULE__, [])
@@ -11,7 +11,7 @@ defmodule ILVMX.Castle.CPU.Server.Supervisor do
       worker(ILVMX.Castle.CPU.Server,  []),
     ]
 
-    # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
+    # See http://elixir-lang.org/docs/stable/Supervisor.html
     # for other strategies and supported options
     supervise(children, strategy: :one_for_one)
   end

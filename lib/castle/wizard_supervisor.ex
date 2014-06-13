@@ -1,5 +1,5 @@
 defmodule ILVMX.Castle.Wizard.Supervisor do
-  use Supervisor.Behaviour
+  use Supervisor
   
   # gen_supervisor
   
@@ -15,7 +15,7 @@ defmodule ILVMX.Castle.Wizard.Supervisor do
       worker(ILVMX.Castle.Wizard.Server, [])
     ]
 
-    # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
+    # See http://elixir-lang.org/docs/stable/Supervisor.html
     # for other strategies and supported options
     supervise(children, strategy: :one_for_one)
   end

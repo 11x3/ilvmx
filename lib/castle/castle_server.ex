@@ -1,5 +1,5 @@
 defmodule ILVMX.Castle.Server do
-  use GenServer.Behaviour
+  use GenServer
   
   @cache :cache
   @epoch :epoch
@@ -12,7 +12,7 @@ defmodule ILVMX.Castle.Server do
   # todo: support p2p between castles
   """
 
-  # Native
+  ## Native
     
   @doc """
   ILVMX network exchange.
@@ -57,11 +57,41 @@ defmodule ILVMX.Castle.Server do
     store
   end
 
-  # GenServer Callbacks
+
+  ## Private
+  
+  defp castle_setup do
+    # Load our custom Castles here.
+    project   = File.cwd!
+  
+    # Check and load custom castle scripts.
+    castledir = Path.join(project, "castle")
+      
+    if File.exists?(castledir) do
+      castles = File.ls!(castledir) |> Enum.each fn file ->
+        castlefile = Path.join(castledir, file)
+      
+        if Path.extname(castlefile) == ".exs" do
+          IO.inspect "@@@ castle: #{ Path.basename(castlefile) }"
+          
+          Code.eval_file castlefile
+        end
+      end
+    end
+  end
+  
+  ## GenServer
 
   def start_link do
-    # Private
+    # castle-wide cache
     cache
+    
+    # eval castle scripts
+    spawn __MODULE__, :castle_setup, [[]]
+    
+    # setup plug adapters
+    Plug.Adapters.Cowboy.http ILVMX.Plug.Server, [], port: 8080
+    #todo: support ILM.config for starting options
     
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
   end

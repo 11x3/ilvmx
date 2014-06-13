@@ -1,11 +1,11 @@
 use Jazz
 
 defmodule ILVMX.Nub.Server do
-  use GenServer.Behaviour
+  use GenServer
   
   @metanub "meta"
   
-  # Public
+  ## Public
   
   @doc """
   Put `item` into `nubspace`.
@@ -14,28 +14,27 @@ defmodule ILVMX.Nub.Server do
     nubspace |> Enum.each |> push! item
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_function(item) do
-    
+    #todo: store to the function to our local cache
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
     # create nub + meta directory
-    nub = Path.join("priv/static/api", String.lstrip(nubspace, ?#))
+    nub = nub_path(nubspace)
     unless File.exists? nub do
       File.mkdir! nub
     end
     
     # check/create the metanub
-    meta = Path.join(nub, @metanub)
+    meta = meta_path(nubspace)
     unless File.exists? meta do
       File.write!(meta, JSON.encode!([]))
     end
     
     # set the static item into the nub
-    {:ok, count} = File.ls(nub)
-    file = Path.join(nub, "#{ length(count) }")
+    file = Path.join(nub, "#{ ILVMX.Castle.Server.uuid }")
     File.write(file, item)
     
+    # update our nubspace meta file to add the link to the new item
     items = JSON.decode!(File.read!(meta))
-  
     File.write!(meta, JSON.encode!(
       List.flatten([items|["item", file]]
     )))
@@ -44,21 +43,23 @@ defmodule ILVMX.Nub.Server do
   end
   
   @doc """
-  Get a `nubspace` from the local Castle.
+  Get a `nubspace` (meta file) from the local Castle.
   """
   def pull!(nubspace) when is_binary(nubspace) do
     # create nub + meta directory
-    nub = Path.join("priv/static/api", String.lstrip(nubspace, ?#))
-    unless File.exists? nub do
+    unless File.exists? nub_path(nubspace) do
       Effect.w nubspace, "404"
     else
-      # todo: return something better than the first item
-      meta = Path.join(nub, "1")
-      Effect.w nubspace, File.read!(meta)
+      Effect.w nubspace, File.read!(meta_path(nubspace))
     end
   end
   
-  # GenServer Callbacks
+  ## Private
+  
+  def nub_path(nubspace),  do: Path.join("priv/static/obj", String.lstrip(nubspace, ?#))
+  def meta_path(nubspace), do: nubspace |> nub_path |> Path.join @metanub
+  
+  ## GenServer
 
   def start_link do
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
