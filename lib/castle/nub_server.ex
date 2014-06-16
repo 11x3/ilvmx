@@ -35,10 +35,9 @@ defmodule ILVMX.Nub.Server do
     
     # update our nubspace meta file to add the link to the new item
     items = JSON.decode!(File.read!(meta))
-    File.write!(meta, JSON.encode!(
-      List.flatten([items|["item", file]]
-    )))
-    
+    json  = JSON.encode!([items, %{item: file}], keys: :atoms)
+    File.write!(meta, json)
+        
     ILVMX.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: file]
   end
   
@@ -57,7 +56,7 @@ defmodule ILVMX.Nub.Server do
   ## Private
   
   def nub_path(nubspace),  do: Path.join("priv/static/obj", String.lstrip(nubspace, ?#))
-  def meta_path(nubspace), do: nubspace |> nub_path |> Path.join @metanub
+  def meta_path(nubspace), do: Path.join("priv/static/nub", String.lstrip(nubspace, ?#))
   
   ## GenServer
 

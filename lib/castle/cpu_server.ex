@@ -4,7 +4,6 @@ defmodule ILVMX.Castle.CPU.Server do
   @doc """
   Submit an Event to be processed.
   """
-  
   def submit!(event) do
     # todo: exe the event.program
       
@@ -12,7 +11,7 @@ defmodule ILVMX.Castle.CPU.Server do
   end
   
   
-  # GenServer Callbacks
+  ## GenServer Callbacks
   
   def start_link do
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])

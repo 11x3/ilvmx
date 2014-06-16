@@ -60,7 +60,7 @@ defmodule ILVMX.Castle.Server do
 
   ## Private
   
-  defp castle_setup do
+  def castle_setup do
     # Load our custom Castles here.
     project   = File.cwd!
   
@@ -85,6 +85,8 @@ defmodule ILVMX.Castle.Server do
   def start_link do
     # castle-wide cache
     cache
+
+    link = :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
     
     # eval castle scripts
     spawn __MODULE__, :castle_setup, [[]]
@@ -93,6 +95,6 @@ defmodule ILVMX.Castle.Server do
     Plug.Adapters.Cowboy.http ILVMX.Plug.Server, [], port: 8080
     #todo: support ILM.config for starting options
     
-    :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
+    link
   end
 end

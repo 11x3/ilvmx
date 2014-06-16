@@ -1,3 +1,5 @@
+use Jazz
+
 defmodule BotTest do
   use ExUnit.Case, async: true
     
@@ -29,6 +31,14 @@ defmodule BotTest do
     Bot.set "#chat", "todo"
 
     assert_received :signal
+  end
+  
+  test "Bot.obj(id)" do
+    effect = Bot.get "#console"
+    
+    throw IO.inspect JSON.decode!(effect.content, keys: :atoms)
+    
+    assert "" == Bot.obj Dict.get(effect.content, :static)
   end
   
   ## PropTests

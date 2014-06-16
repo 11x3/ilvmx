@@ -9,14 +9,14 @@ defmodule Bot do
   Store `prop` at `nubspace`.
   """
   def set(nubspace, item) do
-    ILVMX.Nub.Server.push!(nubspace, item)
+    Nub.push!(nubspace, item)
   end
   
   @doc """
   Get a `nub` from `nubspace`.  
   """
   def get(nubspace) do
-    ILVMX.Nub.Server.pull!(nubspace)
+    Nub.pull!(nubspace)
   end
   
   @doc """
@@ -28,6 +28,13 @@ defmodule Bot do
     ILVMX.Castle.Tower.Server.capture!(nubspace, program)
   end
   
+  @doc """
+  Returns an `obj` of this Castle.
+  """
+  def obj(id) do
+    #todo: secure id
+    Bot.prop(Path.join "obj", id)
+  end
   
   # Prop API
   

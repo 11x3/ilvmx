@@ -23,10 +23,10 @@ defmodule ILVMX.Plug.Server do
   @doc """
   Web Requests from Cowboy/Plug.
   """
-  def adapt(conn, []) do    
-    send_resp conn, 200, inspect(Player.dove!("#html.app"))
+  def adapt(conn, []) do
+    send_resp conn, 200, Bot.get "#html.app"
   end
-  def adapt(conn, commands) do    
+  def adapt(conn, commands) do
     send_resp conn, 200, inspect(commands)
   end
   

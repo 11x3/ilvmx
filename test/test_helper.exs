@@ -1,8 +1,6 @@
 # clear the test API
-#File.rm_rf("priv/static/api/*")
-
-# stubs
-Bot.set "#console", Bot.prop "app.html"
+["priv/static/obj/*", "priv/static/nub/*"]
+|> Enum.map(&File.rm_rf/1)
 
 # tests
 ExUnit.start
