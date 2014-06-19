@@ -24,7 +24,7 @@ defmodule ILVMX.Plug.Server do
   Web Requests from Cowboy/Plug.
   """
   def adapt(conn, []) do
-    send_resp conn, 200, Bot.get "#html.app"
+    send_resp conn, 200, inspect(Bot.get "#html.app")
   end
   def adapt(conn, commands) do
     send_resp conn, 200, inspect(commands)

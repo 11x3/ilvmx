@@ -35,20 +35,16 @@ defmodule BotTest do
   
   test "Bot.obj(id)" do
     effect = Bot.get "#console"
-    
-    throw IO.inspect JSON.decode!(effect.content, keys: :atoms)
-    
-    assert "" == Bot.obj Dict.get(effect.content, :static)
   end
   
   ## PropTests
   
   test "Bot.prop(path)" do
-    assert true == Regex.match? ~r/html/, Bot.prop("app.html")
+    assert true == Regex.match? ~r/html/, Bot.prop("html/app.html")
   end
   
   test "Bot.drop(path, item)" do
-    assert Bot.drop("test.html", "<html/>") == Bot.prop("test.html")
+    assert Bot.drop("test.html", "<html/>") == Bot.prop("html/test.html")
   end
   
   test "Bot.web(path, opts = [])" do

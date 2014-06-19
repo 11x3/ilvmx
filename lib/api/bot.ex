@@ -2,8 +2,7 @@ defmodule Bot do
   defstruct program: nil,
              unique: nil
 
-
-  # Nubspace API
+  ## Nubspace API
   
   @doc """
   Store `prop` at `nubspace`.
@@ -19,8 +18,18 @@ defmodule Bot do
     Nub.pull!(nubspace)
   end
   
+  
+  ## Cap/Sig (in memory variables)
+  
   @doc """
-  Capture a `nubspace` and evaluate nubcake when signaled.
+  Store `prop` at `nubspace`.
+  """
+  def sig(nubspace, item) do
+    ILVMX.Castle.Tower.Server.signal!(Event.w nubspace, item)
+  end
+  
+  @doc """
+  Capture a `nubspace` and evaluate `program` when signaled.
   
   Returns `bot`.
   """
@@ -28,15 +37,16 @@ defmodule Bot do
     ILVMX.Castle.Tower.Server.capture!(nubspace, program)
   end
   
-  @doc """
-  Returns an `obj` of this Castle.
-  """
-  def obj(id) do
-    #todo: secure id
-    Bot.prop(Path.join "obj", id)
-  end
+  # @doc """
+  # Returns an `obj` of this Castle.
+  # """
+  # def obj(id) do
+  #   #todo: secure id
+  #   Bot.prop(Path.join "api/obj", id)
+  # end
   
-  # Prop API
+  
+  ## Prop API
   
   @doc """
   Take objects from The World, oh our dear World.
@@ -52,7 +62,7 @@ defmodule Bot do
   """
   def drop(nubspace, item) do
     # todo: secure path
-    File.write! Path.join("priv/static", nubspace), item
+    File.write! Path.join("priv/static/api", nubspace), item
     
     item
   end

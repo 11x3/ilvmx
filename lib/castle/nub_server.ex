@@ -15,6 +15,8 @@ defmodule ILVMX.Nub.Server do
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_function(item) do
     #todo: store to the function to our local cache
+    
+    throw IO.inspect "push!(nubspace, item) is_function(item)"
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
     # create nub + meta directory
@@ -52,11 +54,16 @@ defmodule ILVMX.Nub.Server do
       Effect.w nubspace, File.read!(meta_path(nubspace))
     end
   end
+  def pull!(nubspace, item_id) when is_binary(nubspace) do
+    #todo: grab the item specifically from the nubspace
+    
+    throw IO.inspect "pull!(nubspace, item_id)"
+  end
   
   ## Private
   
-  def nub_path(nubspace),  do: Path.join("priv/static/obj", String.lstrip(nubspace, ?#))
-  def meta_path(nubspace), do: Path.join("priv/static/nub", String.lstrip(nubspace, ?#))
+  def nub_path(nubspace),  do: Path.join("priv/static/api/obj", String.lstrip(nubspace, ?#))
+  def meta_path(nubspace), do: Path.join("priv/static/api/nub", String.lstrip(nubspace, ?#))
   
   ## GenServer
 
