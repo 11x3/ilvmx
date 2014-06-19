@@ -17,6 +17,11 @@ defmodule Bot do
   def get(nubspace) do
     Nub.pull!(nubspace)
   end
+  def get!(nubspace) do
+    %Effect{:content => content} = get(nubspace)
+    
+    throw IO.inspect content
+  end
   
   
   ## Cap/Sig (in memory variables)
