@@ -21,7 +21,7 @@ defmodule BotTest do
   test "Bot.get(nubspace)" do
     result = Bot.set "#chat", "todo"
     static = Dict.get(result.content, :static)
-        
+
     effect = Bot.get "#chat"
     IT.assert_effect effect
   end
@@ -32,11 +32,7 @@ defmodule BotTest do
 
     assert_received :signal
   end
-  
-  test "Bot.obj(id)" do
-    effect = Bot.get "#console"
-  end
-  
+    
   ## PropTests
   
   test "Bot.prop(path)" do
