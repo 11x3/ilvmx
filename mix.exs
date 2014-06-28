@@ -16,9 +16,9 @@ defmodule ILVMX.Mixfile do
       applications: [
         :crypto,
         :ossp_uuid,
-        :httpotion,
         :cowboy,
         :plug,
+        :httpotion,
       ]
     ]
   end
@@ -32,7 +32,7 @@ defmodule ILVMX.Mixfile do
   defp deps do
     [
       {:cowboy,     github: "extend/cowboy"},
-      {:plug,       "~> 0.4.2"},
+      {:plug,       github: "elixir-lang/plug"},
       {:ossp_uuid,  github: "yrashk/erlang-ossp-uuid", overide: false},
       {:con_cache,  github: "sasa1977/con_cache", overide: false},
       {:httpotion,  github: "myfreeweb/httpotion", overide: false},

@@ -89,7 +89,7 @@ defmodule ILVMX.Castle.Server do
     link = :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
     
     # eval castle scripts
-    spawn __MODULE__, :castle_setup, [[]]
+    castle_setup
     
     # setup plug adapters
     Plug.Adapters.Cowboy.http ILVMX.Plug.Server, [], port: 8080

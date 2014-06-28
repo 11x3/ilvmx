@@ -2,7 +2,12 @@ defmodule Bot do
   defstruct program: nil,
              unique: nil
 
-  ## Nubspace API
+  @moduledoc """
+  Bots are the basic workers of the ILvMx universe.
+  """
+  
+  
+  ## Nubspace API (disk items) 
   
   @doc """
   Store `prop` at `nubspace`.
@@ -17,14 +22,9 @@ defmodule Bot do
   def get(nubspace) do
     Nub.pull!(nubspace)
   end
-  def get!(nubspace) do
-    %Effect{:content => content} = get(nubspace)
-    
-    throw IO.inspect content
-  end
-  
-  
-  ## Cap/Sig (in memory variables)
+
+
+  ## Signal API (memory items)
   
   @doc """
   Store `prop` at `nubspace`.
@@ -35,23 +35,13 @@ defmodule Bot do
   
   @doc """
   Capture a `nubspace` and evaluate `program` when signaled.
-  
-  Returns `bot`.
   """
   def cap(nubspace, program) do
     ILVMX.Castle.Tower.Server.capture!(nubspace, program)
   end
   
-  # @doc """
-  # Returns an `obj` of this Castle.
-  # """
-  # def obj(id) do
-  #   #todo: secure id
-  #   Bot.prop(Path.join "api/obj", id)
-  # end
   
-  
-  ## Prop API
+  ## Prop API (castle items)
   
   @doc """
   Take objects from The World, oh our dear World.
@@ -71,6 +61,9 @@ defmodule Bot do
     
     item
   end
+  
+  
+  ## World API (external items)
   
   @doc """
   Read a file from the internet.

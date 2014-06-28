@@ -40,7 +40,7 @@ defmodule BotTest do
   end
   
   test "Bot.drop(path, item)" do
-    assert Bot.drop("test.html", "<html/>") == Bot.prop("html/test.html")
+    assert Bot.drop("test.html", "<html/>") == Bot.prop("api/test.html")
   end
   
   test "Bot.web(path, opts = [])" do
