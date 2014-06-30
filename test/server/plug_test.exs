@@ -16,4 +16,9 @@ defmodule PlugTest do
     # # /get => /(nub)
     # assert "" == Bot.web("#{ @ilvmx }/(nub)/(nub)/(nub)/(nub)/(nub)/(nub)")
   end
+  
+  test "Bot.web with invalid paths" do
+    assert Regex.match? ~r/404/, Bot.web @ilvmx <> "../something"
+  end
+   
 end

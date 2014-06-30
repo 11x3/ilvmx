@@ -36,7 +36,7 @@ defmodule BotTest do
   ## PropTests
   
   test "Bot.prop(path)" do
-    assert true == Regex.match? ~r/html/, Bot.prop("html/app.html")
+    assert true == Regex.match? ~r/html/, Bot.prop("html/header.html")
   end
   
   test "Bot.drop(path, item)" do
