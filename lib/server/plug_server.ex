@@ -6,6 +6,22 @@ defmodule ILVMX.Plug.Server do
   plug Plug.Static, at: "/static", from: :ilvmx
   plug :match
   plug :dispatch
+
+
+  @doc """
+  Web Requests from Cowboy/Plug.
+  """
+  def adapt(conn, []) do
+    send_resp conn, 200, Bot.prop "app/index.html"
+  end
+  def adapt(conn, ["api", commands]) do
+    send_resp conn, 200, inspect(commands)
+  end
+  def adapt(conn, commands) do
+    # todo: secure commands
+    send_resp conn, 200, Bot.prop(Path.join(commands))
+  end
+  
     
   @doc """
   Initialize options
@@ -18,20 +34,6 @@ defmodule ILVMX.Plug.Server do
   """
   def call(conn, opts) do
     adapt conn, conn.path_info
-  end
-
-  @doc """
-  Web Requests from Cowboy/Plug.
-  """
-  def adapt(conn, []) do
-    send_resp conn, 200, Bot.prop "html/app.html"
-  end
-  def adapt(conn, ["api", commands]) do
-    send_resp conn, 200, inspect(commands)
-  end
-  def adapt(conn, commands) do
-    # todo: secure commands
-    send_resp conn, 200, Bot.prop(Path.join(commands))
   end
   
   @doc """
