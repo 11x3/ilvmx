@@ -15,7 +15,7 @@ defmodule BotTest do
     static = Dict.get(effect.content, :static)
     
     assert Regex.match? ~r/obj/, static
-    assert File.exists?(static)
+    assert File.exists?(Path.join("priv/static", static))
   end
   
   test "Bot.get(nubspace)" do

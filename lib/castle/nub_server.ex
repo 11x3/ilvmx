@@ -20,30 +20,31 @@ defmodule ILVMX.Nub.Server do
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
     # create nub directory
-    nub = nub_path(nubspace)
-    unless File.exists? nub do
-      File.mkdir! nub
+    nub_path = Path.join("priv/static", nub_path(nubspace))
+    unless File.exists? nub_path do
+      File.mkdir! nub_path
     end
 
     # set the static item into the nub
-    nub_id = "#{ ILVMX.Castle.Server.uuid }"
+    sub_id = "#{ ILVMX.Castle.Server.uuid }"
     
-    file = Path.join(nub, nub_id)
-    File.write(file, item)
+    sub_path = Path.join(nub_path(nubspace), sub_id)
+    file_path = Path.join("priv/static", sub_path)
+    File.write(file_path, item)
     
     # check/create the metanub
-    meta = Path.join(nub, ".meta")
-    if File.exists? meta do
+    meta_path = Path.join(nub_path, "meta")
+    if File.exists? meta_path do
       # update our nubspace meta file to add the link to the new item
-      items = JSON.decode!(File.read!(meta))
-      items = [file|items]
+      items = JSON.decode!(File.read!(meta_path))
+      items = [sub_path|items]
       json  = JSON.encode!(items)
-      File.write!(meta, json)
+      File.write!(meta_path, json)
     else
-      File.write!(meta, JSON.encode!([file]))
+      File.write!(meta_path, JSON.encode!([sub_path]))
     end
           
-    ILVMX.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: file]
+    ILVMX.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: sub_path]
   end
   
   @doc """
@@ -51,10 +52,10 @@ defmodule ILVMX.Nub.Server do
   """
   def pull!(nubspace) when is_binary(nubspace) do
     # create nub + meta directory
-    unless File.exists? nub_path(nubspace) do
+    unless File.exists? Path.join("priv/static", nub_path(nubspace)) do
       Effect.w nubspace, "404"
     else
-      Effect.w nubspace, File.read!(Path.join(nub_path(nubspace), ".meta"))
+      Effect.w nubspace, File.read!(Path.join("priv/static", "#{ nub_path(nubspace) }/meta"))
     end
   end
   def pull!(nubspace, item_id) when is_binary(nubspace) do
@@ -65,8 +66,8 @@ defmodule ILVMX.Nub.Server do
   
   ## Private
   
-  def nub_path(nubspace),  do: Path.join("priv/static/api/obj", String.lstrip(nubspace, ?#))
-  
+  def nub_path(nubspace),  do: Path.join("/api/obj", String.lstrip(nubspace, ?#))
+    
   ## GenServer
 
   def start_link do

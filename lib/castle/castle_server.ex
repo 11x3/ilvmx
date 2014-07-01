@@ -73,7 +73,7 @@ defmodule ILVMX.Castle.Server do
       
         if Path.extname(castlefile) == ".exs" do
           IO.inspect "@@@ castle: #{ Path.basename(castlefile) }"
-          
+          IO.inspect File.read! castlefile
           Code.eval_file castlefile
         end
       end

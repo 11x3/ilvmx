@@ -1,0 +1,1 @@
+Bot.set "#castle", "todo"

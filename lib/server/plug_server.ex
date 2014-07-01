@@ -1,12 +1,14 @@
+use Jazz
+
 defmodule ILVMX.Plug.Server do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
 
   plug Plug.Static, at: "/static", from: :ilvmx
-  plug :match
   plug :dispatch
-
+  plug :match
+  plug Plug.Parsers, parsers: [:urlencoded, :multipart]
 
   @doc """
   Web Requests from Cowboy/Plug.
@@ -14,10 +16,19 @@ defmodule ILVMX.Plug.Server do
   def adapt(conn, []) do
     send_resp(conn, 200, Bot.prop("html/header.html") <> Bot.prop("html/footer.html"))
   end
+  def adapt(conn, ["api", "get", nubspace]) do
+     case IT.valid_path? nubspace do
+      false -> send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
+      true  -> 
+        effect = Bot.get("##{ nubspace }")
+        {:ok, json} = JSON.encode(effect.content)
+        send_resp conn, 200, json
+    end
+  end
   def adapt(conn, commands) do
-    case invalid_path? commands do
-      true  -> send_resp(conn, 404, "404: 02 File not found (ILvMx 4.x)")
-      false -> send_resp conn, 200, Bot.prop(Path.join(commands))
+    case IT.valid_path? commands do
+      false -> send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
+      true  -> send_resp conn, 200, Bot.prop(Path.join(commands))
     end
   end
 
@@ -31,7 +42,7 @@ defmodule ILVMX.Plug.Server do
   Catch all.
   """
   def call(conn, opts) do
-    adapt conn, conn.path_info
+    adapt(fetch_params(conn), conn.path_info)
   end
   
   @doc """
@@ -41,18 +52,5 @@ defmodule ILVMX.Plug.Server do
   match(_) do
     send_resp(conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)")
   end
-  
-  @doc """
-  Imported from Plug.
-  https://raw.githubusercontent.com/elixir-lang/plug/master/lib/plug/static.ex
-  """
-  defp invalid_path?([h|_]) when h in [".", "..", ""], do: true
-  defp invalid_path?([h|t]) do
-    case :binary.match(h, ["/", "\\", ":"]) do
-      {_, _} -> true
-      :nomatch -> invalid_path?(t)
-    end
-  end
-  defp invalid_path?([]), do: false
-    
+      
 end
