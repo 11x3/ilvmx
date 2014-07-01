@@ -9,7 +9,7 @@ defmodule BotTest do
   
   test "Bot.set(nubspace, item)" do
     effect = Bot.set "#chat", "todo"    
-    IT.assert_effect effect
+    ITIT.assert_effect effect
     
     # we get a static link
     static = Dict.get(effect.content, :static)
@@ -23,7 +23,7 @@ defmodule BotTest do
     static = Dict.get(result.content, :static)
 
     effect = Bot.get "#chat"
-    IT.assert_effect effect
+    ITIT.assert_effect effect
   end
 
   test "Bot.cap(nubspace, program)" do

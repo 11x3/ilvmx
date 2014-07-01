@@ -2,7 +2,7 @@ defmodule CastleTest do
   use   ExUnit.Case, async: true
     
   test "ILVMX.Castle.Server.uuid" do
-    assert true == IT.assert_unique ILVMX.Castle.Server.uuid
+    assert true == ITIT.assert_unique ILVMX.Castle.Server.uuid
     assert true == Regex.match? ILVMX.Castle.Server.uuid_regex, ILVMX.Castle.Server.uuid
   end
   

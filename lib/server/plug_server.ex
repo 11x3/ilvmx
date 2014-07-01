@@ -1,4 +1,5 @@
 use Jazz
+import IT
 
 defmodule ILVMX.Plug.Server do
   import  Plug.Conn
@@ -17,18 +18,17 @@ defmodule ILVMX.Plug.Server do
     send_resp(conn, 200, Bot.prop("html/header.html") <> Bot.prop("html/footer.html"))
   end
   def adapt(conn, ["api", "get", nubspace]) do
-     case IT.valid_path? nubspace do
-      false -> send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
-      true  -> 
-        effect = Bot.get("##{ nubspace }")
+    case effect = Bot.get("##{ nubspace }") do
+      nil -> send_resp conn, 404, "404: 01 File not found (ILvMx 4.x)"
+      _   -> 
         {:ok, json} = JSON.encode(effect.content)
         send_resp conn, 200, json
     end
   end
   def adapt(conn, commands) do
-    case IT.valid_path? commands do
-      false -> send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
-      true  -> send_resp conn, 200, Bot.prop(Path.join(commands))
+    case item = Bot.prop(Path.join(commands)) do
+      nil -> send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
+      _   -> send_resp conn, 200, item
     end
   end
 

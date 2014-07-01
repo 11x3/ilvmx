@@ -51,6 +51,7 @@ defmodule ILVMX.Nub.Server do
   Get a `nubspace` (meta file) from the local Castle.
   """
   def pull!(nubspace) when is_binary(nubspace) do
+    # todo: IT.valid_path?(nubspace)
     # create nub + meta directory
     unless File.exists? Path.join("priv/static", nub_path(nubspace)) do
       Effect.w nubspace, "404"

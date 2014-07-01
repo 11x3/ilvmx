@@ -5,7 +5,7 @@
 # tests
 ExUnit.start
 
-defmodule IT do
+defmodule ITIT do
   use ExUnit.Case
   
   def assert_unique(uuid) do  

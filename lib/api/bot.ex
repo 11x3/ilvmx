@@ -1,7 +1,9 @@
+import IT
+
 defmodule Bot do
   defstruct program: nil,
              unique: nil
-
+               
   @moduledoc """
   Bots are the basic workers of the ILvMx universe.
   """
@@ -48,8 +50,11 @@ defmodule Bot do
   # todo: secure the path, yes yes yes
   """
   def prop(nubspace) do
-    # todo: secure path
-    File.read! Path.join("priv/static", nubspace)
+    item_path = Path.join("priv/static", nubspace)
+    case IT.valid_path?(item_path) and File.exists?(item_path) do
+      false -> nil
+      true  -> File.read! item_path
+    end
   end
   
   @doc """
