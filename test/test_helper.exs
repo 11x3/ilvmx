@@ -9,11 +9,11 @@ defmodule ITIT do
   use ExUnit.Case
   
   def assert_unique(uuid) do  
-    assert Regex.match? ILVMX.Castle.Server.uuid_regex, uuid
+    assert Regex.match? ILM.Castle.Server.uuid_regex, uuid
   end
 
   def assert_nub(suspect) do  
-    assert Regex.match? ILVMX.Castle.Server.uuid_regex, suspect.unique
+    assert Regex.match? ILM.Castle.Server.uuid_regex, suspect.unique
   end
 
   def assert_bot(suspect) do
@@ -34,7 +34,7 @@ defmodule ITIT do
 end
 
 # server
-ILVMX.start
+ILM.start
 
 
 

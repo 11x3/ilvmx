@@ -9,6 +9,6 @@ defmodule Wizard do
   Ask the Wizard (nicely) to process an event.
   """
   def please?(event) do
-    event |> ILVMX.Castle.Wizard.Server.please?
+    event |> ILM.Castle.Wizard.Server.please?
   end
 end

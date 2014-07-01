@@ -1,6 +1,6 @@
 use Jazz
 
-defmodule ILVMX.Nub.Server do
+defmodule ILM.Nub.Server do
   use GenServer
   
   @metanub "meta"
@@ -26,7 +26,7 @@ defmodule ILVMX.Nub.Server do
     end
 
     # set the static item into the nub
-    sub_id = "#{ ILVMX.Castle.Server.uuid }"
+    sub_id = "#{ ILM.Castle.Server.uuid }"
     
     sub_path = Path.join(nub_path(nubspace), sub_id)
     file_path = Path.join("priv/static", sub_path)
@@ -44,7 +44,7 @@ defmodule ILVMX.Nub.Server do
       File.write!(meta_path, JSON.encode!([sub_path]))
     end
           
-    ILVMX.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: sub_path]
+    ILM.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: sub_path]
   end
   
   @doc """

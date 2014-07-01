@@ -16,9 +16,9 @@ defmodule Nub do
     segments = nubspace |> String.split " "
     
     nub = %Nub{
-      unique: ILVMX.Castle.Server.uuid,
-      galaxy: ILVMX.Castle.Server.galaxy,
-      castle: ILVMX.Castle.Server.name,  # "#lolnub" top level namespace
+      unique: ILM.Castle.Server.uuid,
+      galaxy: ILM.Castle.Server.galaxy,
+      castle: ILM.Castle.Server.name,  # "#lolnub" top level namespace
     }
     
     if length(segments) > 0 do
@@ -41,11 +41,11 @@ defmodule Nub do
   end
   
   def push!(nubspace, item) do
-    ILVMX.Nub.Server.push!(nubspace, item)
+    ILM.Nub.Server.push!(nubspace, item)
   end
   
   def pull!(nubspace) do
-    ILVMX.Nub.Server.pull!(nubspace)
+    ILM.Nub.Server.pull!(nubspace)
   end
 
 end

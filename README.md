@@ -1,8 +1,8 @@
 # Internet Land of #virtual Magic and #excitement.
 
-ILVMX is an `internet load virtual module exchange` or functionally minded cloud app server with function-level exchange.
+ILM is an `internet load virtual module exchange` or functionally minded cloud app server with function-level exchange.
 
-The server is written in Elixir-lang but we use `Vagrant` which of course means ILVMX is cloud or self-hostable. Current support for native Elixir and HTTP APIs are in the works, with Elm-lang and other support coming soon.
+The server is written in Elixir-lang but we use `Vagrant` which of course means ILM is cloud or self-hostable. Current support for native Elixir and HTTP APIs are in the works, with Elm-lang and other support coming soon.
 
 ## Events
 
@@ -65,7 +65,7 @@ defmodule Bot do
            accounts: [cash: [], karma: [dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"]],
              unique: nil
 ```
-- Nubs + ILVMX.Nub.Server (hashtag based namespace of code + data)
+- Nubs + ILM.Nub.Server (hashtag based namespace of code + data)
 ```
 defmodule Nub do
 defstruct galaxy: nil,  # [:ilvmx]
@@ -112,9 +112,9 @@ We hope to define and implement one such pattern of future development.
 
 ## Example
 
-Only the core of the API is working but it is enough to get/set/cap/sig/exe against our ILVMX.Nub.Server (or hashtag namespace of data + code) into your self-hosted local Castle's ILVMX.Nub.Server.
+Only the core of the API is working but it is enough to get/set/cap/sig/exe against our ILM.Nub.Server (or hashtag namespace of data + code) into your self-hosted local Castle's ILM.Nub.Server.
 
-We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. If other ILVMX servers pop up and start talking to each other, we will form a real network and start adding the p2p.
+We will soon begin hosting a stream of Galaxy-wide Events from the ilvmx.org server that others will be welcome to consume and append to that stream and that will be our "p2p" network. If other ILM servers pop up and start talking to each other, we will form a real network and start adding the p2p.
  
 ```
 # See `Setup` above.. then `vagrant ssh && cd /ilvmx`
@@ -124,13 +124,13 @@ vagrant $ iex -S mix
 
 ## GET/SET/EXE to interact with our hashtag data+code store.
 
-With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `ILVMX.Nub.Server`.
+With this example we use the basic request mechanism or `Bot` to interact with our local `Castle` and its `ILM.Nub.Server`.
 
 ```
 
-# Here we add something (the text "todo") to the castle ILVMX.Nub.Server "#chat". Now
-# anyone on the ILVMX network that had an up-to-date copy of the Galaxy 
-# ILVMX.Nub.Server would be able to get/set/exe/sort/filter/render this Nub.
+# Here we add something (the text "todo") to the castle ILM.Nub.Server "#chat". Now
+# anyone on the ILM network that had an up-to-date copy of the Galaxy 
+# ILM.Nub.Server would be able to get/set/exe/sort/filter/render this Nub.
 
 iex> Bot.set "#chat", "todo"
 Nub[galaxy: :ilvmx, castle: "#lolnub",
@@ -138,7 +138,7 @@ Nub[galaxy: :ilvmx, castle: "#lolnub",
  module: nil, member: nil, method: nil, effects: ["todo"]]
 
 # Here we read Nub back out and look in the `effects` field to see
-# what the ILVMX.Nub.Server holds, at which point the client would interact and
+# what the ILM.Nub.Server holds, at which point the client would interact and
 # develop the Nub.
 
 iex> Bot.get "#chat"
@@ -236,7 +236,7 @@ Finally, an Event is :emitted to the entire `:ilvmx` network with any public net
 
 ## Support
 
-ILVMX: http://ilvmx.org/
+ILM: http://ilvmx.org/
 
 ## #lolnub
 

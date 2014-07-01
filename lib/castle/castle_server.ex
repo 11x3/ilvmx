@@ -1,12 +1,12 @@
-defmodule ILVMX.Castle.Server do
+defmodule ILM.Castle.Server do
   use GenServer
   
   @cache :cache
   @epoch :epoch
 
   @moduledoc """
-  ILVMX takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
-  are top-level ILVMX nodes and the `Galaxy` is simply the ILVMX exchange.
+  ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
+  are top-level ILM nodes and the `Galaxy` is simply the ILM exchange.
 
   # todo: add Castle.config[:name]
   # todo: support p2p between castles
@@ -15,7 +15,7 @@ defmodule ILVMX.Castle.Server do
   ## Native
     
   @doc """
-  ILVMX network exchange.
+  ILM network exchange.
   """
   def galaxy do
     "#ilvmx"
@@ -36,7 +36,7 @@ defmodule ILVMX.Castle.Server do
   end
   
   @doc """
-  Return the regex that matches ILVMX.Castle.Server.uuids
+  Return the regex that matches ILM.Castle.Server.uuids
   """
   def uuid_regex do
     ~r/[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}/i
@@ -92,7 +92,7 @@ defmodule ILVMX.Castle.Server do
     castle_setup
     
     # setup plug adapters
-    Plug.Adapters.Cowboy.http ILVMX.Plug.Server, [], port: 8080
+    Plug.Adapters.Cowboy.http ILM.Plug.Server, [], port: 8080
     #todo: support ILM.config for starting options
     
     link

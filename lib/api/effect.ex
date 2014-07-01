@@ -18,7 +18,7 @@ defmodule Effect do
    %Effect{
        source: source,
       content: content,
-       unique: ILVMX.Castle.Server.uuid
+       unique: ILM.Castle.Server.uuid
    }
   end 
 end

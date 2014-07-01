@@ -1,4 +1,4 @@
-defmodule ILVMX.Castle.CPU.Server do
+defmodule ILM.Castle.CPU.Server do
   use GenServer
 
   @doc """

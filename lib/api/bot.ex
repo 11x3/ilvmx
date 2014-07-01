@@ -32,14 +32,14 @@ defmodule Bot do
   Store `prop` at `nubspace`.
   """
   def sig(nubspace, item) do
-    ILVMX.Castle.Tower.Server.signal!(Event.w nubspace, item)
+    ILM.Castle.Tower.Server.signal!(Event.w nubspace, item)
   end
   
   @doc """
   Capture a `nubspace` and evaluate `program` when signaled.
   """
   def cap(nubspace, program) do
-    ILVMX.Castle.Tower.Server.capture!(nubspace, program)
+    ILM.Castle.Tower.Server.capture!(nubspace, program)
   end
   
   

@@ -1,16 +1,16 @@
 defmodule CastleTest do
   use   ExUnit.Case, async: true
     
-  test "ILVMX.Castle.Server.uuid" do
-    assert true == ITIT.assert_unique ILVMX.Castle.Server.uuid
-    assert true == Regex.match? ILVMX.Castle.Server.uuid_regex, ILVMX.Castle.Server.uuid
+  test "ILM.Castle.Server.uuid" do
+    assert true == ITIT.assert_unique ILM.Castle.Server.uuid
+    assert true == Regex.match? ILM.Castle.Server.uuid_regex, ILM.Castle.Server.uuid
   end
   
-  test "ILVMX.Castle.Server.galaxy" do
-    assert "#ilvmx" == ILVMX.Castle.Server.galaxy
+  test "ILM.Castle.Server.galaxy" do
+    assert "#ilvmx" == ILM.Castle.Server.galaxy
   end
   
-  test "ILVMX.Castle.Server.name" do
-    assert "#ilvmx" == ILVMX.Castle.Server.name
+  test "ILM.Castle.Server.name" do
+    assert "#ilvmx" == ILM.Castle.Server.name
   end
 end

@@ -1,12 +1,12 @@
 use Jazz
 
-defmodule ILVMX.Castle.Tower.Server do
+defmodule ILM.Castle.Tower.Server do
   use GenServer
     
   @signals  :signals
   
   @moduledoc """
-  Our ILVMX.Castle.Tower.Server (or :emit stage) is where our apps produce 
+  Our ILM.Castle.Tower.Server (or :emit stage) is where our apps produce 
   most of their outside world side effects, which come from events that are 
   generated during the :adapt, and :transform stage of the app.
   """
@@ -35,7 +35,7 @@ defmodule ILVMX.Castle.Tower.Server do
   Capture on `signal` and exe `program`.
   """
   def capture!(signal, program) when is_function(program) do
-    ConCache.put ILVMX.Castle.Server.cache, @signals, Enum.concat(signals, [[signal: signal, program: program]])
+    ConCache.put ILM.Castle.Server.cache, @signals, Enum.concat(signals, [[signal: signal, program: program]])
     
     Effect.w self, signal: signal
   end
@@ -88,10 +88,10 @@ defmodule ILVMX.Castle.Tower.Server do
   ## Private
   
   @doc """
-  Return all signals in the Castle ILVMX.Nub.Server.  
+  Return all signals in the Castle ILM.Nub.Server.  
   """
   def signals do
-    n = ConCache.get_or_store ILVMX.Castle.Server.cache, @signals, fn -> 
+    n = ConCache.get_or_store ILM.Castle.Server.cache, @signals, fn -> 
       []
     end
   end
@@ -108,7 +108,7 @@ defmodule ILVMX.Castle.Tower.Server do
   ## GenServer Callbacks
   
   def start_link do
-    ConCache.put ILVMX.Castle.Server.cache, @signals, []
+    ConCache.put ILM.Castle.Server.cache, @signals, []
     
     spawn __MODULE__, :tick, [[]]
     

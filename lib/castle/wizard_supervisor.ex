@@ -1,4 +1,4 @@
-defmodule ILVMX.Castle.Wizard.Supervisor do
+defmodule ILM.Castle.Wizard.Supervisor do
   use Supervisor
   
   # gen_supervisor
@@ -12,7 +12,7 @@ defmodule ILVMX.Castle.Wizard.Supervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILVMX.Castle.Wizard.Server, [])
+      worker(ILM.Castle.Wizard.Server, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

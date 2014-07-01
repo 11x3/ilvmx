@@ -1,4 +1,4 @@
-defmodule ILVMX.Castle.Wizard.Server do
+defmodule ILM.Castle.Wizard.Server do
   use GenServer
   
   @doc """
@@ -9,7 +9,7 @@ defmodule ILVMX.Castle.Wizard.Server do
     |> filter! 
     |> enrich! 
     |> shape!
-    |> ILVMX.Castle.CPU.Server.submit!
+    |> ILM.Castle.CPU.Server.submit!
   end
   
   @doc """

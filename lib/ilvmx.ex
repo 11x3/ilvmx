@@ -1,4 +1,4 @@
-# ILVMX project and all related sub directories and source code are 
+# ILM project and all related sub directories and source code are 
 # Copyright 2014 lolnub.com developers AND licensed as open source:
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
   
-defmodule ILVMX do
+defmodule ILM do
   use Application
   
   @moduledoc """
-  ILVMX: functionally minded cloud app server and exchange.
+  ILM: functionally minded cloud app server and exchange.
   """
 
   # GenSupervisor
@@ -28,7 +28,7 @@ defmodule ILVMX do
     start(nil, nil)
   end
   def start(_type, _args) do
-    ILVMX.Castle.Supervisor.start_link
+    ILM.Castle.Supervisor.start_link
   end
   
 end

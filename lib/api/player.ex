@@ -17,9 +17,9 @@ defstruct castle: nil, # "home" castle (ie. connection to :ilvmx galaxy)
   """
   def anon! do
     %Player{
-      castle: ILVMX.Castle.Server.name,
+      castle: ILM.Castle.Server.name,
         home: "#anon",
-      unique: ILVMX.Castle.Server.uuid
+      unique: ILM.Castle.Server.uuid
     }
   end
   

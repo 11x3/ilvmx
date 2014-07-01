@@ -1,7 +1,7 @@
 use Jazz
 import IT
 
-defmodule ILVMX.Plug.Server do
+defmodule ILM.Plug.Server do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
