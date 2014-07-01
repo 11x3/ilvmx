@@ -19,6 +19,7 @@ defmodule PlugTest do
   
   test "Bot.web with invalid paths" do
     assert Regex.match? ~r/404/, Bot.web @ilvmx <> "../something"
+    assert Regex.match? ~r/404/, Bot.web @ilvmx <> "../something"
   end
    
 end

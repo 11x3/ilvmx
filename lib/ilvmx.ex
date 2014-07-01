@@ -1,4 +1,4 @@
-# ILM project and all related sub directories and source code are 
+# ILvMx/ILM project and all related sub directories and source code are 
 # Copyright 2014 lolnub.com developers AND licensed as open source:
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@ defmodule ILM do
   use Application
   
   @moduledoc """
-  ILM: functionally minded cloud app server and exchange.
+  ILM a functionally minded cloud app server and #virtual module exchange.
   """
 
   # GenSupervisor

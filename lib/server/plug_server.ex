@@ -9,26 +9,38 @@ defmodule ILM.Plug.Server do
   plug Plug.Static, at: "/static", from: :ilvmx
   plug :dispatch
   plug :match
-  plug Plug.Parsers, parsers: [:urlencoded, :multipart]
 
   @doc """
   Web Requests from Cowboy/Plug.
   """
   def adapt(conn, []) do
-    send_resp(conn, 200, Bot.prop("html/header.html") <> Bot.prop("html/footer.html"))
+    send_resp(conn, 200, Bot.prop("html/app.html"))
+  end
+  def adapt(conn, ["api", "set"]) do
+    conn = Plug.Parsers.call(conn, parsers: [Plug.Parsers.MULTIPART], limit: 8_000_000)
+      
+    item = conn.params["item"]
+    nub  = conn.params["nubspace"]
+    
+    data = File.read! item.path
+
+    effect = Bot.set nub, data
+    
+    send_resp conn, 200, inspect(effect)
   end
   def adapt(conn, ["api", "get", nubspace]) do
-    case effect = Bot.get("##{ nubspace }") do
-      nil -> send_resp conn, 404, "404: 01 File not found (ILvMx 4.x)"
-      _   -> 
-        {:ok, json} = JSON.encode(effect.content)
-        send_resp conn, 200, json
+    unless effect = Bot.get("##{ nubspace }") do
+      send_resp conn, 404, "404: 01 File not found (ILvMx 4.x)"
+    else 
+      {:ok, json} = JSON.encode(effect.content)
+      send_resp conn, 200, json
     end
   end
   def adapt(conn, commands) do
-    case item = Bot.prop(Path.join(commands)) do
-      nil -> send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
-      _   -> send_resp conn, 200, item
+    unless item = Bot.prop(Path.join(commands)) do
+      send_resp conn, 404, "404: 02 File not found (ILvMx 4.x)"
+    else
+      send_resp conn, 200, item
     end
   end
 

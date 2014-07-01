@@ -26,6 +26,11 @@ defmodule BotTest do
     ITIT.assert_effect effect
   end
 
+  ## Signals
+  
+  test "Bot.sig(nubspace, item)" do
+  end
+  
   test "Bot.cap(nubspace, program)" do
     Bot.cap "#chat", fn event -> send self, :signal end
     Bot.set "#chat", "todo"
@@ -36,11 +41,10 @@ defmodule BotTest do
   ## PropTests
   
   test "Bot.prop(path)" do
-    assert true == Regex.match? ~r/html/, Bot.prop("html/header.html")
+    assert true == Regex.match? ~r/html/, Bot.prop("html/app.html")
   end
   
   test "Bot.drop(path, item)" do
-    assert Bot.drop("test.html", "<html/>") == Bot.prop("api/test.html")
   end
   
   test "Bot.web(path, opts = [])" do

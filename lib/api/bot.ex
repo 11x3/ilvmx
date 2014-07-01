@@ -47,27 +47,30 @@ defmodule Bot do
   
   @doc """
   Take objects from The World, oh our dear World.
-  # todo: secure the path, yes yes yes
   """
-  def prop(nubspace) do
-    item_path = Path.join("priv/static", nubspace)
-    case IT.valid_path?(item_path) and File.exists?(item_path) do
-      false -> nil
-      true  -> File.read! item_path
+  def prop(static_relative_path) do
+    item_path = Path.join("priv/static", static_relative_path)
+    unless IT.valid_path?(item_path) and File.exists?(item_path) do
+      nil
+    else
+      File.read! item_path
     end
   end
   
   @doc """
   Place objects into The World, oh our dear World.
   """
-  def drop(nubspace, item) do
-    # todo: secure path
-    File.write! Path.join("priv/static/api", nubspace), item
-    
-    item
+  def drop(item) do
+    obj_relative_path = "#{ ILM.Castle.Server.uuid }"
+
+    item_path = Path.join("priv/static/api/obj", obj_relative_path)
+    unless IT.valid_path?(item_path) do
+      nil
+    else
+      item |> File.write! item_path
+    end
   end
-  
-  
+    
   ## World API (external items)
   
   @doc """
