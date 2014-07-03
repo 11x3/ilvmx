@@ -1,1 +1,1 @@
-Bot.set "#castle", "todo"
+#Bot.set "#castle", "todo"

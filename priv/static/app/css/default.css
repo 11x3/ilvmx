@@ -1,31 +1,32 @@
 @import "bootflat.css";
+
 html,
 body {
+	padding: 0;
+	margin: -15px 0 0;
   font: sans;
   color: #fff;
   font-size: 150%;
-  margin: 0;
   background-color: #212121;
 }
+html {
+	background: url("/img/nubspace.jpg") repeat #131313;
+}
+body {
+}
 header {
-  padding: 20px;
 }
 footer {
-  padding: 20px;
 }
 #page {
+	padding: 20px;
   min-height: 740px;
-  padding: 20px;
-  background: url("/img/footer.png") 20% 100% no-repeat #131313;
 }
 #nubspace {
   font-size: 28px;
 }
-input {
+label, input {
   font-size: 16px;
 }
 .row {
-  padding: 10px;
-  background-color: #131313;
-	
 }

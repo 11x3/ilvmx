@@ -70,7 +70,14 @@ defmodule Bot do
       item |> File.write! item_path
     end
   end
+  
+  @doc """
+  List the objects of `nubspace`.
+  """
+  def list(api_relative_path) do
     
+  end
+  
   ## World API (external items)
   
   @doc """

@@ -22,11 +22,11 @@ defmodule ILM.Plug.Server do
     item = conn.params["item"]
     nub  = conn.params["nubspace"]
     
-    data = File.read! item.path
-
-    effect = Bot.set nub, data
-    
-    send_resp conn, 200, inspect(effect)
+    unless IT.valid_path?(nub) do
+      send_resp conn, 404, "404: 03 File not found (ILvMx 4.x)"
+    else
+      send_resp conn, 200, inspect(Bot.set(nub, File.read!(item.path)))
+    end
   end
   def adapt(conn, ["api", "get", nubspace]) do
     unless effect = Bot.get("##{ nubspace }") do
@@ -54,7 +54,9 @@ defmodule ILM.Plug.Server do
   Catch all.
   """
   def call(conn, opts) do
-    adapt(fetch_params(conn), conn.path_info)
+    Player.arrow! do
+      adapt(fetch_params(conn), conn.path_info)
+    end
   end
   
   @doc """
