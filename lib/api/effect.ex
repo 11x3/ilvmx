@@ -4,12 +4,12 @@ defmodule Effect do
              unique: nil
 
   @moduledoc """
-  Effect are side effects of Bots and other things happening. They are 
-  abstract recordings that something has, should, might, or will happen 
+  Effect are side effects of Bots and other things happening. They are
+  abstract recordings that something has, should, might, or will happen
   somewhere in the Castle.
 
-  When Nubs are dispatched `Events` and `Effects` are generated inside the 
-  :transform stage of our pipeline, as that's where primary compute lives. 
+  When `Signals` are dispatched the `Effects` are generated inside the
+  :transform stage of our pipeline, as that's where primary compute lives.
   They are then broadcast to the Castle and Galaxy (along with other data)
   during the :emit stage pipeline.
   """
@@ -18,7 +18,7 @@ defmodule Effect do
    %Effect{
        source: source,
       content: content,
-       unique: ILM.Castle.Server.uuid
+       unique: ILM.Castle.uuid
    }
-  end 
+  end
 end

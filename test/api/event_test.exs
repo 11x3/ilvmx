@@ -1,7 +1,7 @@
-defmodule EventTest do
+defmodule SignalTest do
   use   ExUnit.Case, async: true
-    
+
   test "w" do
-    ITIT.assert_event Event.w("#console")
+    assert %Signal{} = Signal.w(self, "#console")
   end
 end

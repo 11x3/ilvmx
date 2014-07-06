@@ -1,15 +1,24 @@
 defmodule Program do
-defstruct    setup: %{},
+  defstruct  setup: %{},
               code: [],
               data: %{},
             errors: [],
-            player: nil,  
+            player: nil,
             unique: nil
-  
-  def run(event, program) do
-    IO.inspect "@@@ program: #{ program }" 
-  
-    event
+
+  def boost!(signal) do
+    IO.inspect "@@@ signal: #{ signal }"
+
+
+
+
+    
+
+
+
+
+
+    signal
   end
 
 end

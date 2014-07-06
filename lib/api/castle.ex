@@ -1,4 +1,4 @@
-defmodule ILM.Castle.Server do
+defmodule ILM.Castle do
   use GenServer
   
   @cache :cache
@@ -25,7 +25,7 @@ defmodule ILM.Castle.Server do
   Castle name.
   """
   def name do
-    "#ilvmx"
+    "#lolnub"
   end
   
   @doc """
@@ -36,11 +36,20 @@ defmodule ILM.Castle.Server do
   end
   
   @doc """
-  Return the regex that matches ILM.Castle.Server.uuids
+  Return the regex that matches ILM.Castle.uuids
   """
   def uuid_regex do
     ~r/[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}/i
   end
+
+  @doc """
+  Return the general max size of an upload.
+  """
+  def upload_limit do
+    8_000_000
+  end
+  
+  ## Private
 
   @doc """
   Return the app cache.
@@ -56,9 +65,6 @@ defmodule ILM.Castle.Server do
     end
     store
   end
-
-
-  ## Private
   
   def castle_setup do
     # Load our custom Castles here.
@@ -73,7 +79,7 @@ defmodule ILM.Castle.Server do
       
         if Path.extname(castlefile) == ".exs" do
           IO.inspect "@@@ castle: #{ Path.basename(castlefile) }"
-          IO.inspect File.read! castlefile
+          #IO.inspect File.read! castlefile
           Code.eval_file castlefile
         end
       end

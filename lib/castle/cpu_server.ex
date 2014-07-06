@@ -2,12 +2,10 @@ defmodule ILM.Castle.CPU.Server do
   use GenServer
 
   @doc """
-  Submit an Event to be processed.
+  Submit an Signal to be processed.
   """
-  def submit!(event) do
+  def process!(signal) do
     # todo: exe the event.program
-      
-    %{ event | effects: [event.effects| Bot.get(event.program) ]}
   end
   
   

@@ -1,45 +1,33 @@
 defmodule ILM.Castle.Wizard.Server do
   use GenServer
-  
+
   @doc """
-  Submit an Event to the inner Castle.
+  Submit a `Signal` to the Castle.
   """
-  def please?(event) do
-    event 
-    |> filter! 
-    |> enrich! 
-    |> shape!
-    |> ILM.Castle.CPU.Server.submit!
+  def please?(signal) do
+    signal
+    |> enrich!
+    |> ILM.Castle.CPU.Server.process!
   end
-  
+
   @doc """
-  Stub event filters.
+  Stub :before `Signal` traffic flow control.
   """
-  def filter!(event) do
+  def enrich!(signal) do
     # todo: add callbacks api
-    
-    event
+
+    signal
   end
   
-  @doc """
-  Stub event enrichment.
-  """
-  def enrich!(event) do
-    # todo: add callbacks api
-    
-    event
-  end
-  
-  @doc """
-  Stub event traffic flow.
-  """
-  def shape!(event) do
-    # todo: add callbacks api
-    
-    event
-  end
-  
-  
+  # @doc """
+  # Stub :after `Signal` traffic filters.
+  # """
+  # def filter!(signal) do
+  #   # todo: add callbacks api
+  #
+  #   signal
+  # end
+
   # GenServer Callbacks
 
   def start_link do

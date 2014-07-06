@@ -201,8 +201,8 @@ if (!Ember.testing) {
   var isFirefox = typeof InstallTrigger !== 'undefined';
   var isChrome = !!window.chrome && !window.opera;
 
-  if (typeof window !== 'undefined' && (isFirefox || isChrome) && window.addEventListener) {
-    window.addEventListener("load", function() {
+  if (typeof window !== 'undefined' && (isFirefox || isChrome) && window.addSignalListener) {
+    window.addSignalListener("load", function() {
       if (document.documentElement && document.documentElement.dataset && !document.documentElement.dataset.emberExtension) {
         var downloadURL;
 
@@ -1711,7 +1711,7 @@ Ember.inspect = function(obj) {
   }, binding);
   ```
 
-  Event names passed to `Ember.instrument` are namespaced
+  Signal names passed to `Ember.instrument` are namespaced
   by periods, from more general to more specific. Subscribers
   can listen for events by whatever level of granularity they
   are interested in.
@@ -2544,11 +2544,11 @@ function suspendListeners(obj, eventNames, target, method, callback) {
   Return a list of currently watched events
 
   @private
-  @method watchedEvents
+  @method watchedSignals
   @for Ember
   @param obj
 */
-function watchedEvents(obj) {
+function watchedSignals(obj) {
   var listeners = obj[META_KEY].listeners, ret = [];
 
   if (listeners) {
@@ -2565,7 +2565,7 @@ function watchedEvents(obj) {
   a target is executed on the passed object. If an array of actions
   is not passed, the actions stored on the passed object are invoked.
 
-  @method sendEvent
+  @method sendSignal
   @for Ember
   @param obj
   @param {String} eventName
@@ -2573,10 +2573,10 @@ function watchedEvents(obj) {
   @param {Array} actions Optional array of actions (listeners).
   @return true
 */
-function sendEvent(obj, eventName, params, actions) {
+function sendSignal(obj, eventName, params, actions) {
   // first give object a chance to handle it
-  if (obj !== Ember && 'function' === typeof obj.sendEvent) {
-    obj.sendEvent(eventName, params);
+  if (obj !== Ember && 'function' === typeof obj.sendSignal) {
+    obj.sendSignal(eventName, params);
   }
 
   if (!actions) {
@@ -2651,7 +2651,7 @@ function listenersFor(obj, eventName) {
     })
   });
   var job = Job.create();
-  Ember.sendEvent(job, 'completed'); // Logs "Job completed!"
+  Ember.sendSignal(job, 'completed'); // Logs "Job completed!"
  ```
 
   @method on
@@ -2671,9 +2671,9 @@ Ember.addListener = addListener;
 Ember.removeListener = removeListener;
 Ember._suspendListener = suspendListener;
 Ember._suspendListeners = suspendListeners;
-Ember.sendEvent = sendEvent;
+Ember.sendSignal = sendSignal;
 Ember.hasListeners = hasListeners;
-Ember.watchedEvents = watchedEvents;
+Ember.watchedSignals = watchedSignals;
 Ember.listenersFor = listenersFor;
 Ember.listenersDiff = actionsDiff;
 Ember.listenersUnion = actionsUnion;
@@ -2684,7 +2684,7 @@ Ember.listenersUnion = actionsUnion;
 
 (function() {
 var guidFor = Ember.guidFor,
-    sendEvent = Ember.sendEvent;
+    sendSignal = Ember.sendSignal;
 
 /*
   this.observerSet = {
@@ -2738,7 +2738,7 @@ ObserverSet.prototype.flush = function() {
     observer = observers[i];
     sender = observer.sender;
     if (sender.isDestroying || sender.isDestroyed) { continue; }
-    sendEvent(sender, observer.eventName, [sender, observer.keyName], observer.listeners);
+    sendSignal(sender, observer.eventName, [sender, observer.keyName], observer.listeners);
   }
 };
 
@@ -2754,7 +2754,7 @@ ObserverSet.prototype.clear = function() {
 var META_KEY = Ember.META_KEY,
     guidFor = Ember.guidFor,
     tryFinally = Ember.tryFinally,
-    sendEvent = Ember.sendEvent,
+    sendSignal = Ember.sendSignal,
     listenersUnion = Ember.listenersUnion,
     listenersDiff = Ember.listenersDiff,
     ObserverSet = Ember._ObserverSet,
@@ -2887,21 +2887,21 @@ function chainsWillChange(obj, keyName, m) {
   }
 }
 
-function chainsDidChange(obj, keyName, m, suppressEvents) {
+function chainsDidChange(obj, keyName, m, suppressSignals) {
   if (!(m && m.hasOwnProperty('chainWatchers') &&
         m.chainWatchers[keyName])) {
     return;
   }
 
   var nodes = m.chainWatchers[keyName],
-      events = suppressEvents ? null : [],
+      events = suppressSignals ? null : [],
       i, l;
 
   for(i = 0, l = nodes.length; i < l; i++) {
     nodes[i].didChange(events);
   }
 
-  if (suppressEvents) {
+  if (suppressSignals) {
     return;
   }
 
@@ -2966,9 +2966,9 @@ function notifyBeforeObservers(obj, keyName) {
   if (deferred) {
     listeners = beforeObserverSet.add(obj, keyName, eventName);
     diff = listenersDiff(obj, eventName, listeners);
-    sendEvent(obj, eventName, [obj, keyName], diff);
+    sendSignal(obj, eventName, [obj, keyName], diff);
   } else {
-    sendEvent(obj, eventName, [obj, keyName]);
+    sendSignal(obj, eventName, [obj, keyName]);
   }
 }
 
@@ -2980,7 +2980,7 @@ function notifyObservers(obj, keyName) {
     listeners = observerSet.add(obj, keyName, eventName);
     listenersUnion(obj, eventName, listeners);
   } else {
-    sendEvent(obj, eventName, [obj, keyName]);
+    sendSignal(obj, eventName, [obj, keyName]);
   }
 }
 
@@ -5841,11 +5841,11 @@ Ember.computed.defaultTo = function(defaultPath) {
 var AFTER_OBSERVERS = ':change',
     BEFORE_OBSERVERS = ':before';
 
-function changeEvent(keyName) {
+function changeSignal(keyName) {
   return keyName+AFTER_OBSERVERS;
 }
 
-function beforeEvent(keyName) {
+function beforeSignal(keyName) {
   return keyName+BEFORE_OBSERVERS;
 }
 
@@ -5858,14 +5858,14 @@ function beforeEvent(keyName) {
   @param {Function|String} [method]
 */
 Ember.addObserver = function(obj, _path, target, method) {
-  Ember.addListener(obj, changeEvent(_path), target, method);
+  Ember.addListener(obj, changeSignal(_path), target, method);
   Ember.watch(obj, _path);
 
   return this;
 };
 
 Ember.observersFor = function(obj, path) {
-  return Ember.listenersFor(obj, changeEvent(path));
+  return Ember.listenersFor(obj, changeSignal(path));
 };
 
 /**
@@ -5878,7 +5878,7 @@ Ember.observersFor = function(obj, path) {
 */
 Ember.removeObserver = function(obj, _path, target, method) {
   Ember.unwatch(obj, _path);
-  Ember.removeListener(obj, changeEvent(_path), target, method);
+  Ember.removeListener(obj, changeSignal(_path), target, method);
 
   return this;
 };
@@ -5892,7 +5892,7 @@ Ember.removeObserver = function(obj, _path, target, method) {
   @param {Function|String} [method]
 */
 Ember.addBeforeObserver = function(obj, _path, target, method) {
-  Ember.addListener(obj, beforeEvent(_path), target, method);
+  Ember.addListener(obj, beforeSignal(_path), target, method);
   Ember.watch(obj, _path);
 
   return this;
@@ -5903,27 +5903,27 @@ Ember.addBeforeObserver = function(obj, _path, target, method) {
 // This should only be used by the target of the observer
 // while it is setting the observed path.
 Ember._suspendBeforeObserver = function(obj, path, target, method, callback) {
-  return Ember._suspendListener(obj, beforeEvent(path), target, method, callback);
+  return Ember._suspendListener(obj, beforeSignal(path), target, method, callback);
 };
 
 Ember._suspendObserver = function(obj, path, target, method, callback) {
-  return Ember._suspendListener(obj, changeEvent(path), target, method, callback);
+  return Ember._suspendListener(obj, changeSignal(path), target, method, callback);
 };
 
 var map = Ember.ArrayPolyfills.map;
 
 Ember._suspendBeforeObservers = function(obj, paths, target, method, callback) {
-  var events = map.call(paths, beforeEvent);
+  var events = map.call(paths, beforeSignal);
   return Ember._suspendListeners(obj, events, target, method, callback);
 };
 
 Ember._suspendObservers = function(obj, paths, target, method, callback) {
-  var events = map.call(paths, changeEvent);
+  var events = map.call(paths, changeSignal);
   return Ember._suspendListeners(obj, events, target, method, callback);
 };
 
 Ember.beforeObserversFor = function(obj, path) {
-  return Ember.listenersFor(obj, beforeEvent(path));
+  return Ember.listenersFor(obj, beforeSignal(path));
 };
 
 /**
@@ -5936,7 +5936,7 @@ Ember.beforeObserversFor = function(obj, path) {
 */
 Ember.removeBeforeObserver = function(obj, _path, target, method) {
   Ember.unwatch(obj, _path);
-  Ember.removeListener(obj, beforeEvent(_path), target, method);
+  Ember.removeListener(obj, beforeSignal(_path), target, method);
 
   return this;
 };
@@ -8700,13 +8700,13 @@ define("rsvp/config",
   ["./events","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
-    var EventTarget = __dependency1__["default"];
+    var SignalTarget = __dependency1__["default"];
 
     var config = {
       instrument: false
     };
 
-    EventTarget.mixin(config);
+    SignalTarget.mixin(config);
 
     function configure(name, value) {
       if (name === 'onerror') {
@@ -8799,18 +8799,18 @@ define("rsvp/events",
     };
 
     /**
-      @class RSVP.EventTarget
+      @class RSVP.SignalTarget
     */
     __exports__["default"] = {
 
       /**
-        `RSVP.EventTarget.mixin` extends an object with EventTarget methods. For
+        `RSVP.SignalTarget.mixin` extends an object with SignalTarget methods. For
         Example:
 
         ```javascript
         var object = {};
 
-        RSVP.EventTarget.mixin(object);
+        RSVP.SignalTarget.mixin(object);
 
         object.on("finished", function(event) {
           // handle event
@@ -8819,11 +8819,11 @@ define("rsvp/events",
         object.trigger("finished", { detail: value });
         ```
 
-        `EventTarget.mixin` also works with prototypes:
+        `SignalTarget.mixin` also works with prototypes:
 
         ```javascript
         var Person = function() {};
-        RSVP.EventTarget.mixin(Person.prototype);
+        RSVP.SignalTarget.mixin(Person.prototype);
 
         var yehuda = new Person();
         var tom = new Person();
@@ -8841,7 +8841,7 @@ define("rsvp/events",
         ```
 
         @method mixin
-        @param {Object} object object to extend with EventTarget methods
+        @param {Object} object object to extend with SignalTarget methods
         @private
       */
       mixin: function(object) {
@@ -9487,7 +9487,7 @@ define("rsvp/promise",
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __exports__) {
     "use strict";
     var config = __dependency1__.config;
-    var EventTarget = __dependency2__["default"];
+    var SignalTarget = __dependency2__["default"];
     var instrument = __dependency3__["default"];
     var objectOrFunction = __dependency4__.objectOrFunction;
     var isFunction = __dependency4__.isFunction;
@@ -10644,7 +10644,7 @@ define("rsvp",
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __exports__) {
     "use strict";
     var Promise = __dependency1__["default"];
-    var EventTarget = __dependency2__["default"];
+    var SignalTarget = __dependency2__["default"];
     var denodeify = __dependency3__["default"];
     var all = __dependency4__["default"];
     var allSettled = __dependency5__["default"];
@@ -10683,7 +10683,7 @@ define("rsvp",
     }
 
     __exports__.Promise = Promise;
-    __exports__.EventTarget = EventTarget;
+    __exports__.SignalTarget = SignalTarget;
     __exports__.all = all;
     __exports__.allSettled = allSettled;
     __exports__.race = race;
@@ -12819,7 +12819,7 @@ var set = Ember.set, get = Ember.get,
     META_KEY = Ember.META_KEY,
     rewatch = Ember.rewatch,
     finishChains = Ember.finishChains,
-    sendEvent = Ember.sendEvent,
+    sendSignal = Ember.sendSignal,
     destroy = Ember.destroy,
     schedule = Ember.run.schedule,
     Mixin = Ember.Mixin,
@@ -12942,7 +12942,7 @@ function makeCtor() {
     this.init.apply(this, arguments);
     m.proto = proto;
     finishChains(this);
-    sendEvent(this, "init");
+    sendSignal(this, "init");
   };
 
   Class.toString = Mixin.prototype.toString;
@@ -14899,7 +14899,7 @@ Ember.Enumerable = Ember.Mixin.create({
 
     Ember.propertyWillChange(this, '[]');
     if (hasDelta) Ember.propertyWillChange(this, 'length');
-    Ember.sendEvent(this, '@enumerable:before', [this, removing, adding]);
+    Ember.sendSignal(this, '@enumerable:before', [this, removing, adding]);
 
     return this;
   },
@@ -14934,7 +14934,7 @@ Ember.Enumerable = Ember.Mixin.create({
     if (removing === -1) removing = null;
     if (adding   === -1) adding   = null;
 
-    Ember.sendEvent(this, '@enumerable:change', [this, removing, adding]);
+    Ember.sendSignal(this, '@enumerable:change', [this, removing, adding]);
     if (hasDelta) Ember.propertyDidChange(this, 'length');
     Ember.propertyDidChange(this, '[]');
 
@@ -15311,7 +15311,7 @@ Ember.Array = Ember.Mixin.create(Ember.Enumerable, {
     // Make sure the @each proxy is set up if anyone is observing @each
     if (Ember.isWatching(this, '@each')) { get(this, '@each'); }
 
-    Ember.sendEvent(this, '@array:before', [this, startIdx, removeAmt, addAmt]);
+    Ember.sendSignal(this, '@array:before', [this, startIdx, removeAmt, addAmt]);
 
     var removing, lim;
     if (startIdx>=0 && removeAmt>=0 && get(this, 'hasEnumerableObservers')) {
@@ -15362,7 +15362,7 @@ Ember.Array = Ember.Mixin.create(Ember.Enumerable, {
     }
 
     this.enumerableContentDidChange(removeAmt, adding);
-    Ember.sendEvent(this, '@array:change', [this, startIdx, removeAmt, addAmt]);
+    Ember.sendSignal(this, '@array:change', [this, startIdx, removeAmt, addAmt]);
 
     var length      = get(this, 'length'),
         cachedFirst = cacheFor(this, 'firstObject'),
@@ -18208,7 +18208,7 @@ Ember.TargetActionSupport = Ember.Mixin.create({
   This mixin allows for Ember objects to subscribe to and emit events.
 
   ```javascript
-  App.Person = Ember.Object.extend(Ember.Evented, {
+  App.Person = Ember.Object.extend(Ember.Signaled, {
     greet: function() {
       // ...
       this.trigger('greet');
@@ -18236,10 +18236,10 @@ Ember.TargetActionSupport = Ember.Mixin.create({
   }).off('event', this, forgetThis);
   ```
 
-  @class Evented
+  @class Signaled
   @namespace Ember
  */
-Ember.Evented = Ember.Mixin.create({
+Ember.Signaled = Ember.Mixin.create({
 
   /**
    Subscribes to a named event with given function.
@@ -18314,7 +18314,7 @@ Ember.Evented = Ember.Mixin.create({
     for (i = 1, l = arguments.length; i < l; i++) {
       args.push(arguments[i]);
     }
-    Ember.sendEvent(this, name, args);
+    Ember.sendSignal(this, name, args);
   },
 
   /**
@@ -19866,7 +19866,7 @@ Ember.EachProxy = Ember.Object.extend({
 
     // in case someone is already observing some keys make sure they are
     // added
-    forEach(Ember.watchedEvents(this), function(eventName) {
+    forEach(Ember.watchedSignals(this), function(eventName) {
       this.didAddListener(eventName);
     }, this);
   },
@@ -20647,7 +20647,7 @@ Ember.Deferred = Deferred;
 
 
 (function() {
-/*globals CustomEvent */
+/*globals CustomSignal */
 
 var forEach = Ember.ArrayPolyfills.forEach;
 
@@ -20700,9 +20700,9 @@ Ember.onLoad = function(name, callback) {
 Ember.runLoadHooks = function(name, object) {
   loaded[name] = object;
 
-  if (typeof window === 'object' && typeof window.dispatchEvent === 'function' && typeof CustomEvent === "function") {
-    var event = new CustomEvent(name, {detail: object, name: name});
-    window.dispatchEvent(event);
+  if (typeof window === 'object' && typeof window.dispatchSignal === 'function' && typeof CustomSignal === "function") {
+    var event = new CustomSignal(name, {detail: object, name: name});
+    window.dispatchSignal(event);
   }
 
   if (loadHooks[name]) {
@@ -21390,11 +21390,11 @@ Ember.$ = jQuery;
 */
 if (Ember.$) {
   // http://www.whatwg.org/specs/web-apps/current-work/multipage/dnd.html#dndevents
-  var dragEvents = Ember.String.w('dragstart drag dragenter dragleave dragover drop dragend');
+  var dragSignals = Ember.String.w('dragstart drag dragenter dragleave dragover drop dragend');
 
   // Copies the `dataTransfer` property from a browser event object onto the
   // jQuery event object for the specified events
-  Ember.EnumerableUtils.forEach(dragEvents, function(eventName) {
+  Ember.EnumerableUtils.forEach(dragSignals, function(eventName) {
     Ember.$.event.fixHooks[eventName] = { props: ['dataTransfer'] };
   });
 }
@@ -22099,23 +22099,23 @@ Ember._RenderBuffer.prototype = {
 var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
 /**
-  `Ember.EventDispatcher` handles delegating browser events to their
+  `Ember.SignalDispatcher` handles delegating browser events to their
   corresponding `Ember.Views.` For example, when you click on a view,
-  `Ember.EventDispatcher` ensures that that view's `mouseDown` method gets
+  `Ember.SignalDispatcher` ensures that that view's `mouseDown` method gets
   called.
 
-  @class EventDispatcher
+  @class SignalDispatcher
   @namespace Ember
   @private
   @extends Ember.Object
 */
-Ember.EventDispatcher = Ember.Object.extend({
+Ember.SignalDispatcher = Ember.Object.extend({
 
   /**
     The set of events names (and associated handler function names) to be setup
-    and dispatched by the `EventDispatcher`. Custom events can added to this list at setup
-    time, generally via the `Ember.Application.customEvents` hash. Only override this
-    default set to prevent the EventDispatcher from listening on some events all together.
+    and dispatched by the `SignalDispatcher`. Custom events can added to this list at setup
+    time, generally via the `Ember.Application.customSignals` hash. Only override this
+    default set to prevent the SignalDispatcher from listening on some events all together.
 
     This set will be modified by `setup` to also include any events added at that time.
 
@@ -22153,7 +22153,7 @@ Ember.EventDispatcher = Ember.Object.extend({
   },
 
   /**
-    The root DOM element to which event listeners should be attached. Event
+    The root DOM element to which event listeners should be attached. Signal
     listeners will be attached to the document unless this is overridden.
 
     Can be specified as a DOMElement or a selector string.
@@ -22178,12 +22178,12 @@ Ember.EventDispatcher = Ember.Object.extend({
 
     @private
     @method setup
-    @param addedEvents {Hash}
+    @param addedSignals {Hash}
   */
-  setup: function(addedEvents, rootElement) {
+  setup: function(addedSignals, rootElement) {
     var event, events = get(this, 'events');
 
-    Ember.$.extend(events, addedEvents || {});
+    Ember.$.extend(events, addedSignals || {});
 
 
     if (!Ember.isNone(rootElement)) {
@@ -22235,12 +22235,12 @@ Ember.EventDispatcher = Ember.Object.extend({
       var view = Ember.View.views[this.id],
           result = true, manager = null;
 
-      manager = self._findNearestEventManager(view, eventName);
+      manager = self._findNearestSignalManager(view, eventName);
 
       if (manager && manager !== triggeringManager) {
-        result = self._dispatchEvent(manager, evt, eventName, view);
+        result = self._dispatchSignal(manager, evt, eventName, view);
       } else if (view) {
-        result = self._bubbleEvent(view, evt, eventName);
+        result = self._bubbleSignal(view, evt, eventName);
       } else {
         evt.stopPropagation();
       }
@@ -22261,7 +22261,7 @@ Ember.EventDispatcher = Ember.Object.extend({
     });
   },
 
-  _findNearestEventManager: function(view, eventName) {
+  _findNearestSignalManager: function(view, eventName) {
     var manager = null;
 
     while (view) {
@@ -22274,7 +22274,7 @@ Ember.EventDispatcher = Ember.Object.extend({
     return manager;
   },
 
-  _dispatchEvent: function(object, evt, eventName, view) {
+  _dispatchSignal: function(object, evt, eventName, view) {
     var result = true;
 
     var handler = object[eventName];
@@ -22284,14 +22284,14 @@ Ember.EventDispatcher = Ember.Object.extend({
       evt.stopPropagation();
     }
     else {
-      result = this._bubbleEvent(view, evt, eventName);
+      result = this._bubbleSignal(view, evt, eventName);
     }
 
     return result;
   },
 
-  _bubbleEvent: function(view, evt, eventName) {
-    return Ember.run(view, view.handleEvent, eventName, evt);
+  _bubbleSignal: function(view, evt, eventName) {
+    return Ember.run(view, view.handleSignal, eventName, evt);
   },
 
   destroy: function() {
@@ -22397,11 +22397,11 @@ Ember.TEMPLATES = {};
   @class CoreView
   @namespace Ember
   @extends Ember.Object
-  @uses Ember.Evented
+  @uses Ember.Signaled
   @uses Ember.ActionHandler
 */
 
-Ember.CoreView = Ember.Object.extend(Ember.Evented, Ember.ActionHandler, {
+Ember.CoreView = Ember.Object.extend(Ember.Signaled, Ember.ActionHandler, {
   isView: true,
 
   states: states,
@@ -22496,7 +22496,7 @@ Ember.CoreView = Ember.Object.extend(Ember.Evented, Ember.ActionHandler, {
   },
 
   /**
-    Override the default event firing from `Ember.Evented` to
+    Override the default event firing from `Ember.Signaled` to
     also call methods with the given name.
 
     @method trigger
@@ -23030,7 +23030,7 @@ var EMPTY_ARRAY = [];
   See [Ember.Handlebars.helpers.yield](/api/classes/Ember.Handlebars.helpers.html#method_yield)
   for more information.
 
-  ## Responding to Browser Events
+  ## Responding to Browser Signals
 
   Views can respond to user-initiated events in one of three ways: method
   implementation, through an event manager, and through `{{action}}` helper use
@@ -23039,7 +23039,7 @@ var EMPTY_ARRAY = [];
   ### Method Implementation
 
   Views can respond to user-initiated events by implementing a method that
-  matches the event name. A `jQuery.Event` object will be passed as the
+  matches the event name. A `jQuery.Signal` object will be passed as the
   argument to this method.
 
   ```javascript
@@ -23051,12 +23051,12 @@ var EMPTY_ARRAY = [];
   });
   ```
 
-  ### Event Managers
+  ### Signal Managers
 
   Views can define an object as their `eventManager` property. This object can
   then implement methods that match the desired event names. Matching events
   that occur on the view's rendered HTML or the rendered HTML of any of its DOM
-  descendants will trigger this method. A `jQuery.Event` object will be passed
+  descendants will trigger this method. A `jQuery.Signal` object will be passed
   as the first argument to the method and an  `Ember.View` object as the
   second. The `Ember.View` will be the view whose rendered HTML was interacted
   with. This may be the view with the `eventManager` property or one of its
@@ -23095,7 +23095,7 @@ var EMPTY_ARRAY = [];
   rendered as a descendent. A method name that matches an event name will not
   be called if the view instance was rendered inside the HTML representation of
   a view that has an `eventManager` property defined that handles events of the
-  name. Events not handled by the event manager will still trigger method calls
+  name. Signals not handled by the event manager will still trigger method calls
   on the descendent.
 
   ```javascript
@@ -23127,12 +23127,12 @@ var EMPTY_ARRAY = [];
 
   See [Handlebars.helpers.action](/api/classes/Ember.Handlebars.helpers.html#method_action).
 
-  ### Event Names
+  ### Signal Names
 
   All of the event handling approaches described above respond to the same set
   of events. The names of the built-in events are listed below. (The hash of
-  built-in events exists in `Ember.EventDispatcher`.) Additional, custom events
-  can be registered by using `Ember.Application.customEvents`.
+  built-in events exists in `Ember.SignalDispatcher`.) Additional, custom events
+  can be registered by using `Ember.Application.customSignals`.
 
   Touch events:
 
@@ -24607,15 +24607,15 @@ Ember.View = Ember.CoreView.extend({
   //
 
   /**
-    Handle events from `Ember.EventDispatcher`
+    Handle events from `Ember.SignalDispatcher`
 
-    @method handleEvent
+    @method handleSignal
     @param eventName {String}
-    @param evt {Event}
+    @param evt {Signal}
     @private
   */
-  handleEvent: function(eventName, evt) {
-    return this.currentState.handleEvent(this, eventName, evt);
+  handleSignal: function(eventName, evt) {
+    return this.currentState.handleSignal(this, eventName, evt);
   },
 
   registerObserver: function(root, path, target, observer) {
@@ -24823,7 +24823,7 @@ Ember.View.reopenClass({
   }
 });
 
-var mutation = Ember.Object.extend(Ember.Evented).create();
+var mutation = Ember.Object.extend(Ember.Signaled).create();
 
 Ember.View.addMutationListener = function(callback) {
   mutation.on('change', callback);
@@ -24903,8 +24903,8 @@ Ember.View.states._default = {
     return null;
   },
 
-  // Handle events from `Ember.EventDispatcher`
-  handleEvent: function() {
+  // Handle events from `Ember.SignalDispatcher`
+  handleSignal: function() {
     return true; // continue event propagation
   },
 
@@ -25137,8 +25137,8 @@ Ember.merge(hasElement, {
     view.domManager.empty(view);
   },
 
-  // Handle events from `Ember.EventDispatcher`
-  handleEvent: function(view, eventName, evt) {
+  // Handle events from `Ember.SignalDispatcher`
+  handleSignal: function(view, eventName, evt) {
     if (view.has(eventName)) {
       // Handler should be able to re-dispatch events, so we don't
       // preventDefault or stopPropagation.
@@ -25168,7 +25168,7 @@ var inDOM = Ember.View.states.inDOM = Ember.create(hasElement);
 Ember.merge(inDOM, {
   enter: function(view) {
     // Register the view for event handling. This hash is used by
-    // Ember.EventDispatcher to dispatch incoming events.
+    // Ember.SignalDispatcher to dispatch incoming events.
     if (!view.isVirtual) {
       Ember.assert("Attempted to register a view with an id already in use: "+view.elementId, !Ember.View.views[view.elementId]);
       Ember.View.views[view.elementId] = view;
@@ -30797,7 +30797,7 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
     this.on("paste", this, this._elementValueDidChange);
     this.on("cut", this, this._elementValueDidChange);
     this.on("input", this, this._elementValueDidChange);
-    this.on("keyUp", this, this.interpretKeyEvents);
+    this.on("keyUp", this, this.interpretKeySignals);
   },
 
   /**
@@ -30821,11 +30821,11 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
     * `enter`: the user pressed enter
     * `keyPress`: the user pressed a key
 
-    @property onEvent
+    @property onSignal
     @type String
     @default enter
   */
-  onEvent: 'enter',
+  onSignal: 'enter',
 
   /**
     Whether they `keyUp` event that triggers an `action` to be sent continues
@@ -30844,7 +30844,7 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
   */
   bubbles: false,
 
-  interpretKeyEvents: function(event) {
+  interpretKeySignals: function(event) {
     var map = Ember.TextSupport.KEY_EVENTS;
     var method = map[event.keyCode];
 
@@ -30863,7 +30863,7 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
     Uses sendAction to send the `enter` action to the controller.
 
     @method insertNewline
-    @param {Event} event
+    @param {Signal} event
   */
   insertNewline: function(event) {
     sendAction('enter', this, event);
@@ -30877,7 +30877,7 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
     Uses sendAction to send the `escape-press` action to the controller.
 
     @method cancel
-    @param {Event} event
+    @param {Signal} event
   */
   cancel: function(event) {
     sendAction('escape-press', this, event);
@@ -30887,7 +30887,7 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
     Called when the text area is focused.
 
     @method focusIn
-    @param {Event} event
+    @param {Signal} event
   */
   focusIn: function(event) {
     sendAction('focus-in', this, event);
@@ -30897,7 +30897,7 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
     Called when the text area is blurred.
 
     @method focusOut
-    @param {Event} event
+    @param {Signal} event
   */
   focusOut: function(event) {
     sendAction('focus-out', this, event);
@@ -30905,12 +30905,12 @@ Ember.TextSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
 
   /**
     The action to be sent when the user presses a key. Enabled by setting
-    the `onEvent` property to `keyPress`.
+    the `onSignal` property to `keyPress`.
 
     Uses sendAction to send the `keyPress` action to the controller.
 
     @method keyPress
-    @param {Event} event
+    @param {Signal} event
   */
   keyPress: function(event) {
     sendAction('key-press', this, event);
@@ -30928,7 +30928,7 @@ Ember.TextSupport.KEY_EVENTS = {
 // the component semantics so this method normalizes them.
 function sendAction(eventName, view, event) {
   var action = get(view, eventName),
-      on = get(view, 'onEvent'),
+      on = get(view, 'onSignal'),
       value = get(view, 'value');
 
   // back-compat support for keyPress as an event name even though
@@ -31927,7 +31927,7 @@ Ember.Handlebars.registerHelper('input', function(options) {
   var hash = options.hash,
       types = options.hashTypes,
       inputType = hash.type,
-      onEvent = hash.on;
+      onSignal = hash.on;
 
   delete hash.type;
   delete hash.on;
@@ -31937,7 +31937,7 @@ Ember.Handlebars.registerHelper('input', function(options) {
     return Ember.Handlebars.helpers.view.call(this, Ember.Checkbox, options);
   } else {
     if (inputType) { hash.type = inputType; }
-    hash.onEvent = onEvent || 'enter';
+    hash.onSignal = onSignal || 'enter';
     return Ember.Handlebars.helpers.view.call(this, Ember.TextField, options);
   }
 });
@@ -34614,8 +34614,8 @@ define("router/utils",
     }
 
     function trigger(router, handlerInfos, ignoreFailure, args) {
-      if (router.triggerEvent) {
-        router.triggerEvent(handlerInfos, ignoreFailure, args);
+      if (router.triggerSignal) {
+        router.triggerSignal(handlerInfos, ignoreFailure, args);
         return;
       }
 
@@ -34939,7 +34939,7 @@ var DefaultView = Ember._MetamorphView;
   @namespace Ember
   @extends Ember.Object
 */
-Ember.Router = Ember.Object.extend(Ember.Evented, {
+Ember.Router = Ember.Object.extend(Ember.Signaled, {
   /**
     The `location` property determines the type of URL's that your
     application will use.
@@ -35040,7 +35040,7 @@ Ember.Router = Ember.Object.extend(Ember.Evented, {
   didTransition: function(infos) {
     updatePaths(this);
 
-    this._cancelLoadingEvent();
+    this._cancelLoadingSignal();
 
     this.notifyPropertyChange('url');
 
@@ -35286,12 +35286,12 @@ Ember.Router = Ember.Object.extend(Ember.Evented, {
     return transitionPromise;
   },
 
-  _scheduleLoadingEvent: function(transition, originRoute) {
-    this._cancelLoadingEvent();
-    this._loadingStateTimer = Ember.run.scheduleOnce('routerTransitions', this, '_fireLoadingEvent', transition, originRoute);
+  _scheduleLoadingSignal: function(transition, originRoute) {
+    this._cancelLoadingSignal();
+    this._loadingStateTimer = Ember.run.scheduleOnce('routerTransitions', this, '_fireLoadingSignal', transition, originRoute);
   },
 
-  _fireLoadingEvent: function(transition, originRoute) {
+  _fireLoadingSignal: function(transition, originRoute) {
     if (!this.router.activeTransition) {
       // Don't fire an event if we've since moved on from
       // the transition that put us in a loading state.
@@ -35301,7 +35301,7 @@ Ember.Router = Ember.Object.extend(Ember.Evented, {
     transition.trigger(true, 'loading', transition, originRoute);
   },
 
-  _cancelLoadingEvent: function () {
+  _cancelLoadingSignal: function () {
     if (this._loadingStateTimer) {
       Ember.run.cancel(this._loadingStateTimer);
     }
@@ -35483,7 +35483,7 @@ function forEachRouteAbove(originRoute, transition, callback) {
 var defaultActionHandlers = {
 
   willResolveModel: function(transition, originRoute) {
-    originRoute.router._scheduleLoadingEvent(transition, originRoute);
+    originRoute.router._scheduleLoadingSignal(transition, originRoute);
   },
 
   error: function(error, transition, originRoute) {
@@ -35561,7 +35561,7 @@ function routeHasBeenDefined(router, name) {
          (container.has('template:' + name) || container.has('route:' + name));
 }
 
-function triggerEvent(handlerInfos, ignoreFailure, args) {
+function triggerSignal(handlerInfos, ignoreFailure, args) {
   var name = args.shift();
 
   if (!handlerInfos) {
@@ -35627,7 +35627,7 @@ Ember.Router.reopenClass({
     if (!router) {
       router = new Router();
       router.callbacks = [];
-      router.triggerEvent = triggerEvent;
+      router.triggerSignal = triggerSignal;
       this.reopenClass({ router: router });
     }
 
@@ -36849,7 +36849,7 @@ Ember.Route = Ember.Object.extend(Ember.ActionHandler, {
         transition = this.router.router.activeTransition;
 
     // If we are mid-transition, we want to try and look up
-    // resolved parent contexts on the current transitionEvent.
+    // resolved parent contexts on the current transitionSignal.
     if (transition) {
       var modelLookupName = (route && route.routeName) || name;
       if (transition.resolvedModels.hasOwnProperty(modelLookupName)) {
@@ -37417,7 +37417,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
       App.MyLinkView = Ember.LinkView.extend({
         init: function() {
           this._super();
-          Ember.Logger.log('Event is ' + this.get('eventName'));
+          Ember.Logger.log('Signal is ' + this.get('eventName'));
         }
       });
       ```
@@ -37581,11 +37581,11 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     }),
 
     /**
-      Event handler that invokes the link, activating the associated route.
+      Signal handler that invokes the link, activating the associated route.
 
       @private
       @method _invoke
-      @param {Event} event
+      @param {Signal} event
     */
     _invoke: function(event) {
       if (!isSimpleClick(event)) { return true; }
@@ -38049,7 +38049,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
     ``` javascript
     Ember.LinkView.reopen({
-      eventName: 'customEventName'
+      eventName: 'customSignalName'
     });
     ```
 
@@ -38444,7 +38444,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
   var POINTER_EVENT_TYPE_REGEX = /^click|mouse|touch/;
 
-  var isAllowedEvent = function(event, allowedKeys) {
+  var isAllowedSignal = function(event, allowedKeys) {
     if (typeof allowedKeys === "undefined") {
       if (POINTER_EVENT_TYPE_REGEX.test(event.type)) {
         return isSimpleClick(event);
@@ -38474,7 +38474,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     ActionHelper.registeredActions[actionId] = {
       eventName: options.eventName,
       handler: function handleRegisteredAction(event) {
-        if (!isAllowedEvent(event, allowedKeys)) { return true; }
+        if (!isAllowedSignal(event, allowedKeys)) { return true; }
 
         if (options.preventDefault !== false) {
           event.preventDefault();
@@ -38578,9 +38578,9 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     Those parameters will be passed along as arguments to the JavaScript
     function implementing the action.
 
-    ### Event Propagation
+    ### Signal Propagation
 
-    Events triggered through the action helper will automatically have
+    Signals triggered through the action helper will automatically have
     `.preventDefault()` called on them. You do not need to do so in your event
     handlers. If you need to allow event propagation (to handle file inputs for
     example) you can supply the `preventDefault=false` option to the `{{action}}` helper:
@@ -38600,7 +38600,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
     If you need the default handler to trigger you should either register your
     own event handler, or use event methods on your view class. See [Ember.View](/api/classes/Ember.View.html)
-    'Responding to Browser Events' for more information.
+    'Responding to Browser Signals' for more information.
 
     ### Specifying DOM event type
 
@@ -38613,12 +38613,12 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     </div>
     ```
 
-    See `Ember.View` 'Responding to Browser Events' for a list of
+    See `Ember.View` 'Responding to Browser Signals' for a list of
     acceptable DOM event names.
 
     NOTE: Because `{{action}}` depends on Ember's event dispatch system it will
-    only function if an `Ember.EventDispatcher` instance is available. An
-    `Ember.EventDispatcher` instance will be created when a new `Ember.Application`
+    only function if an `Ember.SignalDispatcher` instance is available. An
+    `Ember.SignalDispatcher` instance will be created when a new `Ember.Application`
     is created. Having an instance of `Ember.Application` will satisfy this
     requirement.
 
@@ -40635,7 +40635,7 @@ DeprecatedContainer.prototype = {
   other classes in your application, there are several other responsibilities
   going on under-the-hood that you may want to understand.
 
-  ### Event Delegation
+  ### Signal Delegation
 
   Ember uses a technique called _event delegation_. This allows the framework
   to set up a global, shared event listener instead of requiring each view to
@@ -40654,11 +40654,11 @@ DeprecatedContainer.prototype = {
 
   If there is a bubbling browser event that Ember does not listen for by
   default, you can specify custom events and their corresponding view method
-  names by setting the application's `customEvents` property:
+  names by setting the application's `customSignals` property:
 
   ```javascript
   App = Ember.Application.create({
-    customEvents: {
+    customSignals: {
       // add support for the paste event
       paste: "paste"
     }
@@ -40756,17 +40756,17 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
   rootElement: 'body',
 
   /**
-    The `Ember.EventDispatcher` responsible for delegating events to this
+    The `Ember.SignalDispatcher` responsible for delegating events to this
     application's views.
 
     The event dispatcher is created by the application at initialization time
     and sets up event listeners on the DOM element described by the
     application's `rootElement` property.
 
-    See the documentation for `Ember.EventDispatcher` for more information.
+    See the documentation for `Ember.SignalDispatcher` for more information.
 
     @property eventDispatcher
-    @type Ember.EventDispatcher
+    @type Ember.SignalDispatcher
     @default null
   */
   eventDispatcher: null,
@@ -40774,30 +40774,30 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
   /**
     The DOM events for which the event dispatcher should listen.
 
-    By default, the application's `Ember.EventDispatcher` listens
+    By default, the application's `Ember.SignalDispatcher` listens
     for a set of standard DOM events, such as `mousedown` and
     `keyup`, and delegates them to your application's `Ember.View`
     instances.
 
     If you would like additional bubbling events to be delegated to your
-    views, set your `Ember.Application`'s `customEvents` property
+    views, set your `Ember.Application`'s `customSignals` property
     to a hash containing the DOM event name as the key and the
     corresponding view method name as the value. For example:
 
     ```javascript
     App = Ember.Application.create({
-      customEvents: {
+      customSignals: {
         // add support for the paste event
         paste: "paste"
       }
     });
     ```
 
-    @property customEvents
+    @property customSignals
     @type Object
     @default null
   */
-  customEvents: null,
+  customSignals: null,
 
   // Start off the number of deferrals at 1. This will be
   // decremented by the Application's own `initialize` method.
@@ -41228,7 +41228,7 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
     @method didBecomeReady
   */
   didBecomeReady: function() {
-    this.setupEventDispatcher();
+    this.setupSignalDispatcher();
     this.ready(); // user hook
     this.startRouting();
 
@@ -41244,18 +41244,18 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
   /**
     Setup up the event dispatcher to receive events on the
     application's `rootElement` with any registered
-    `customEvents`.
+    `customSignals`.
 
     @private
-    @method setupEventDispatcher
+    @method setupSignalDispatcher
   */
-  setupEventDispatcher: function() {
-    var customEvents = get(this, 'customEvents'),
+  setupSignalDispatcher: function() {
+    var customSignals = get(this, 'customSignals'),
         rootElement = get(this, 'rootElement'),
         dispatcher = this.__container__.lookup('event_dispatcher:main');
 
     set(this, 'eventDispatcher', dispatcher);
-    dispatcher.setup(customEvents, rootElement);
+    dispatcher.setup(customSignals, rootElement);
   },
 
   /**
@@ -41383,7 +41383,7 @@ Ember.Application.reopenClass({
     container.register('controller:object', Ember.ObjectController, { instantiate: false });
     container.register('controller:array', Ember.ArrayController, { instantiate: false });
     container.register('route:basic', Ember.Route, { instantiate: false });
-    container.register('event_dispatcher:main', Ember.EventDispatcher);
+    container.register('event_dispatcher:main', Ember.SignalDispatcher);
 
     container.register('router:main',  Ember.Router);
     container.injection('router:main', 'namespace', 'application:main');
@@ -43023,7 +43023,7 @@ function click(app, selector, context) {
   return wait(app);
 }
 
-function triggerEvent(app, selector, context, type, options){
+function triggerSignal(app, selector, context, type, options){
   if (arguments.length === 3) {
     type = context;
     context = null;
@@ -43035,21 +43035,21 @@ function triggerEvent(app, selector, context, type, options){
 
   var $el = findWithAssert(app, selector, context);
 
-  var event = Ember.$.Event(type, options);
+  var event = Ember.$.Signal(type, options);
 
   Ember.run($el, 'trigger', event);
 
   return wait(app);
 }
 
-function keyEvent(app, selector, context, type, keyCode) {
+function keySignal(app, selector, context, type, keyCode) {
   if (typeof keyCode === 'undefined') {
     keyCode = type;
     type = context;
     context = null;
   }
 
-  return triggerEvent(app, selector, context, type, { keyCode: keyCode, which: keyCode });
+  return triggerSignal(app, selector, context, type, { keyCode: keyCode, which: keyCode });
 }
 
 function fillIn(app, selector, context, text) {
@@ -43167,18 +43167,18 @@ asyncHelper('click', click);
 * Example:
 *
 * ```javascript
-* keyEvent('.some-jQuery-selector', 'keypress', 13).then(function() {
+* keySignal('.some-jQuery-selector', 'keypress', 13).then(function() {
 *  // assert something
 * });
 * ```
 *
-* @method keyEvent
+* @method keySignal
 * @param {String} selector jQuery selector for finding element on the DOM
 * @param {String} type the type of key event, e.g. `keypress`, `keydown`, `keyup`
 * @param {Number} keyCode the keyCode of the simulated key event
 * @return {RSVP.Promise}
 */
-asyncHelper('keyEvent', keyEvent);
+asyncHelper('keySignal', keySignal);
 
 /**
 * Fills in an input element with some text.
@@ -43322,22 +43322,22 @@ asyncHelper('andThen', andThen);
     Example:
 
     ```javascript
-    triggerEvent('#some-elem-id', 'blur');
+    triggerSignal('#some-elem-id', 'blur');
     ```
 
-    This is actually used internally by the `keyEvent` helper like so:
+    This is actually used internally by the `keySignal` helper like so:
 
     ```javascript
-    triggerEvent('#some-elem-id', 'keypress', { keyCode: 13 });
+    triggerSignal('#some-elem-id', 'keypress', { keyCode: 13 });
     ```
 
-   @method triggerEvent
+   @method triggerSignal
    @param {String} selector jQuery selector for finding element on the DOM
    @param {String} type The event type to be triggered.
-   @param {String} options The options to be passed to jQuery.Event.
+   @param {String} options The options to be passed to jQuery.Signal.
    @return {RSVP.Promise}
   */
-  asyncHelper('triggerEvent', triggerEvent);
+  asyncHelper('triggerSignal', triggerSignal);
 
 
 })();

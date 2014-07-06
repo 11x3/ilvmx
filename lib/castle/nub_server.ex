@@ -15,7 +15,6 @@ defmodule ILM.Nub.Server do
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_function(item) do
     #todo: store to the function to our local cache
-    
     throw IO.inspect "push!(nubspace, item) is_function(item)"
   end
   def push!(nubspace, item) when is_binary(nubspace) and is_binary(item) do
@@ -26,7 +25,7 @@ defmodule ILM.Nub.Server do
     end
 
     # set the static item into the nub
-    sub_id = "#{ ILM.Castle.Server.uuid }"
+    sub_id = "#{ ILM.Castle.uuid }"
     
     sub_path = Path.join(nub_path(nubspace), sub_id)
     file_path = Path.join("priv/static", sub_path)
@@ -61,13 +60,12 @@ defmodule ILM.Nub.Server do
   end
   def pull!(nubspace, item_id) when is_binary(nubspace) do
     #todo: grab the item specifically from the nubspace
-    
     throw IO.inspect "pull!(nubspace, item_id)"
   end
   
   ## Private
   
-  def nub_path(nubspace),  do: Path.join("/api/obj", String.lstrip(nubspace, ?#))
+  def nub_path(nubspace),  do: Path.join("/obj", String.lstrip(nubspace, ?#))
     
   ## GenServer
 

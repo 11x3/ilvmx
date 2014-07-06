@@ -33,16 +33,16 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   function transitionEnd() {
     var el = document.createElement('bootstrap')
 
-    var transEndEventNames = {
+    var transEndSignalNames = {
       'WebkitTransition' : 'webkitTransitionEnd'
     , 'MozTransition'    : 'transitionend'
     , 'OTransition'      : 'oTransitionEnd otransitionend'
     , 'transition'       : 'transitionend'
     }
 
-    for (var name in transEndEventNames) {
+    for (var name in transEndSignalNames) {
       if (el.style[name] !== undefined) {
-        return { end: transEndEventNames[name] }
+        return { end: transEndSignalNames[name] }
       }
     }
   }
@@ -109,7 +109,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
       $parent = $this.hasClass('alert') ? $this : $this.parent()
     }
 
-    $parent.trigger(e = $.Event('close.bs.alert'))
+    $parent.trigger(e = $.Signal('close.bs.alert'))
 
     if (e.isDefaultPrevented()) return
 
@@ -388,7 +388,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     isCycling && this.pause()
 
-    var e = $.Event('slide.bs.carousel', { relatedTarget: $next[0], direction: direction })
+    var e = $.Signal('slide.bs.carousel', { relatedTarget: $next[0], direction: direction })
 
     if ($next.hasClass('active')) return
 
@@ -535,9 +535,9 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   Collapse.prototype.show = function () {
     if (this.transitioning || this.$element.hasClass('in')) return
 
-    var startEvent = $.Event('show.bs.collapse')
-    this.$element.trigger(startEvent)
-    if (startEvent.isDefaultPrevented()) return
+    var startSignal = $.Signal('show.bs.collapse')
+    this.$element.trigger(startSignal)
+    if (startSignal.isDefaultPrevented()) return
 
     var actives = this.$parent && this.$parent.find('> .panel > .in')
 
@@ -579,9 +579,9 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   Collapse.prototype.hide = function () {
     if (this.transitioning || !this.$element.hasClass('in')) return
 
-    var startEvent = $.Event('hide.bs.collapse')
-    this.$element.trigger(startEvent)
-    if (startEvent.isDefaultPrevented()) return
+    var startSignal = $.Signal('hide.bs.collapse')
+    this.$element.trigger(startSignal)
+    if (startSignal.isDefaultPrevented()) return
 
     var dimension = this.dimension()
 
@@ -716,7 +716,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
         $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
       }
 
-      $parent.trigger(e = $.Event('show.bs.dropdown'))
+      $parent.trigger(e = $.Signal('show.bs.dropdown'))
 
       if (e.isDefaultPrevented()) return
 
@@ -766,7 +766,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     $(toggle).each(function (e) {
       var $parent = getParent($(this))
       if (!$parent.hasClass('open')) return
-      $parent.trigger(e = $.Event('hide.bs.dropdown'))
+      $parent.trigger(e = $.Signal('hide.bs.dropdown'))
       if (e.isDefaultPrevented()) return
       $parent.removeClass('open').trigger('hidden.bs.dropdown')
     })
@@ -870,7 +870,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
   Modal.prototype.show = function (_relatedTarget) {
     var that = this
-    var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
+    var e    = $.Signal('show.bs.modal', { relatedTarget: _relatedTarget })
 
     this.$element.trigger(e)
 
@@ -901,7 +901,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
       that.enforceFocus()
 
-      var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
+      var e = $.Signal('shown.bs.modal', { relatedTarget: _relatedTarget })
 
       transition ?
         that.$element.find('.modal-dialog') // wait for modal to slide in
@@ -916,7 +916,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   Modal.prototype.hide = function (e) {
     if (e) e.preventDefault()
 
-    e = $.Event('hide.bs.modal')
+    e = $.Signal('hide.bs.modal')
 
     this.$element.trigger(e)
 
@@ -1206,7 +1206,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   }
 
   Tooltip.prototype.show = function () {
-    var e = $.Event('show.bs.'+ this.type)
+    var e = $.Signal('show.bs.'+ this.type)
 
     if (this.hasContent() && this.enabled) {
       this.$element.trigger(e)
@@ -1331,7 +1331,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   Tooltip.prototype.hide = function () {
     var that = this
     var $tip = this.tip()
-    var e    = $.Event('hide.bs.' + this.type)
+    var e    = $.Signal('hide.bs.' + this.type)
 
     function complete() {
       if (that.hoverState != 'in') $tip.detach()
@@ -1777,7 +1777,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     if ($this.parent('li').hasClass('active')) return
 
     var previous = $ul.find('.active:last a')[0]
-    var e        = $.Event('show.bs.tab', {
+    var e        = $.Signal('show.bs.tab', {
       relatedTarget: previous
     })
 
@@ -1900,7 +1900,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     this.options = $.extend({}, Affix.DEFAULTS, options)
     this.$window = $(window)
       .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
-      .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
+      .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithSignalLoop, this))
 
     this.$element = $(element)
     this.affixed  =
@@ -1915,7 +1915,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     offset: 0
   }
 
-  Affix.prototype.checkPositionWithEventLoop = function () {
+  Affix.prototype.checkPositionWithSignalLoop = function () {
     setTimeout($.proxy(this.checkPosition, this), 1)
   }
 

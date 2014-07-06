@@ -1,40 +1,23 @@
-defmodule Player do
-defstruct castle: nil, # "home" castle (ie. connection to :ilvmx galaxy)
-            home: nil, # "nubspace" (ie. user/nick)
-        programs: [],  # custom pipes/scripts
-            bots: [],  # active bots (see: bot.ex)
-           polls: nil,  # keyword list of okcupid-like data
-           clans: nil,
-           banks: %{cash: nil, karma: nil, dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"},
-          unique: nil
-  
-  @moduledoc """
-  Us. Them. You. Me.
-  """
-
-  @doc """
-  Forever anon.
-  """
-  def anon! do
-    %Player{
-      castle: ILM.Castle.Server.name,
-        home: "#anon",
-      unique: ILM.Castle.Server.uuid
-    }
-  end
-  
-  @doc """
-  Send a one-way `Event` to the `Castle`.
-  """
-  def arrow!(program) do
-    Event.w(program, anon!) |> Wizard.please?
-  end
-  
-  @doc """
-  Send an `Event` and wait for the `Castle` to respond.
-  """
-  def dove!(program) do
-    Event.w(program, anon!) |> Wizard.please?
-  end
-  
-end
+# defmodule Player do
+#    defstruct player: nil, # an Item "home" on a castle/nubspace (ie. /players/nick)
+#   #            # items: [],  # custom pipes/scripts
+#   #            #  bots: [],  # active bots (see: bot.ex)
+#   #            # polls: nil,  # keyword list of okcupid-like data
+#   #            # clans: nil,
+#   #            # banks: %{cash: nil, karma: nil, dogecoin: "DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG"},
+#              unique: nil
+#
+#   import Item
+#
+#   @moduledoc """
+#   Us. Them. You. Me.
+#   """
+#
+#   @doc """
+#   Forever anon.
+#   """
+#   def anon! do
+#     %Player{}
+#   end
+#
+# end
