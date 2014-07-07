@@ -1,4 +1,4 @@
-defmodule ILM.Nub.Server.Supervisor do
+defmodule ILM.Signal.Server.Supervisor do
   use Supervisor
   
   # gen_supervisor
@@ -12,7 +12,7 @@ defmodule ILM.Nub.Server.Supervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Nub.Server, [])
+      worker(ILM.Signal.Server, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

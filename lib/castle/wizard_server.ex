@@ -1,32 +1,32 @@
 defmodule ILM.Castle.Wizard.Server do
   use GenServer
-
+  
   @doc """
-  Submit a `Signal` to the Castle.
+  Ask the Wizard (nicely) to process a `Signal`.
   """
   def please?(signal) do
     signal
-    |> enrich!
+    |> enrich?
     |> ILM.Castle.CPU.Server.process!
   end
 
   @doc """
   Stub :before `Signal` traffic flow control.
   """
-  def enrich!(signal) do
+  def enrich?(signal) do
     # todo: add callbacks api
 
     signal
   end
   
-  # @doc """
-  # Stub :after `Signal` traffic filters.
-  # """
-  # def filter!(signal) do
-  #   # todo: add callbacks api
-  #
-  #   signal
-  # end
+  @doc """
+  Stub :after `Signal` traffic filters.
+  """
+  def filter?(signal) do
+    # todo: add callbacks api
+
+    signal
+  end
 
   # GenServer Callbacks
 

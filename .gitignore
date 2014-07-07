@@ -7,6 +7,7 @@ Mnesia*
 .sass-cache
 node_modules
 .vagrant
-priv/static/obj/*
 priv/static/bin/*
 priv/static/nub/*
+priv/static/obj/*
+priv/static/tmp/*

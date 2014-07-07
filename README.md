@@ -20,13 +20,21 @@ Our API currently supports native Elixir and HTTP APIs with Elm-lang and other l
 Signal
 #|> Player 
 |> Wizard
-#|> Program
-#|> CPU
-#|> Bots
+-|> CPU
+-|> Items
+-|> Programs
+-|> Bots
 #|> Tower
 #|> Wizard
 #|> Effects
 ```
+
+Signal
+Castle.push!
+Wizard.please?
+Wizard.enrich?
+Castle.CPU.process!
+ILM.Signal.Server.collect!
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.
 

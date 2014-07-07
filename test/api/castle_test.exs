@@ -17,4 +17,9 @@ defmodule CastleTest do
   test "ILM.Castle.upload_limit" do
     assert 0 != ILM.Castle.name
   end
+  
+  test "push!" do
+    assert %Signal{} = Signal.m(self, "/") |> ILM.Castle.push!
+  end
+  
 end

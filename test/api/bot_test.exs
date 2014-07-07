@@ -1,5 +1,3 @@
-#use Jazz
-
 defmodule BotTest do
   use ExUnit.Case, async: true
 
@@ -11,14 +9,15 @@ defmodule BotTest do
   test "Bot.web(path, opts = [])" do
     assert false == nil? Bot.web(IT.web("/"))
   end
+
+  test "Bot.prop" do
+    assert true == Regex.match?(~r/html/, Bot.prop("app/index.html"))
+  end
   
-  #
-  # test "Bot.prop(path)" do
-  #   assert true == Regex.match? ~r/html/, Bot.prop("app.html")
-  # end
-  #
-  # test "Bot.drop(path, item)" do
-  # end
+  test "Bot.drop" do
+    assert Bot.prop("tmp/todo") == Bot.drop("tmp/todo", "todo") 
+  end
+  
 
   ## NubTests
 

@@ -5,9 +5,7 @@ defmodule ILMTest do
   
   #todo: add integration tests
   
-  test "serves root page" do    
-    %{"signal" => unique } = JSON.decode!(Bot.web IT.web("/"))
-    
-    IT.assert_unique unique
+  test "serves root page" do
+    assert %{} = JSON.decode!(Bot.web(IT.web("/")))
   end
 end

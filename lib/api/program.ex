@@ -6,14 +6,8 @@ defmodule Program do
             player: nil,
             unique: nil
 
-  def boost!(signal) do
+  def exe(signal) do
     IO.inspect "@@@ signal: #{ signal }"
-
-
-
-
-    
-
 
 
 
@@ -22,3 +16,5 @@ defmodule Program do
   end
 
 end
+
+

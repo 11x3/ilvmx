@@ -1,20 +1,31 @@
 defmodule Signal do
-  defstruct   signal: nil,
-             content: nil,
-              source: nil,
-              unique: nil,
-             program: nil,
-             effects: []
+  defstruct     path: "/",  # "about/ilvmx"
+             content: nil,  # data/params
+              source: nil,  # sender (pid, email, nick, etc)
+              unique: nil,  # uuid
+             effects: []    # items
 
   @moduledoc """
-  `Signal`s are the basic news unit of our ILM Kingdom.
+  `Signal`s are the basic news unit of the ILvMx Galaxy.
   """
-  def w(source, signal, content \\ nil) do
+
+  @doc """
+  Make `Signal`s.
+  """
+  def m(source),                      do: m(source, "/")
+  def m(source, path, content \\ nil) do
     %Signal{
+          path: path,
         unique: ILM.Castle.uuid,
-        signal: signal,
         source: source,
-        content: content
-    }
+       content: content
+    }  
+  end
+  
+  @doc """
+  Add an item/effect to a `Signal`.
+  """
+  def x(signal, item) do
+    %{signal| :effects => List.flatten(Enum.concat(signal.effects, [item])) }
   end
 end

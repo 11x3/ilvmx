@@ -30,5 +30,4 @@ defmodule ILM do
   def start(_type, _args) do
     ILM.Castle.Supervisor.start_link
   end
-  
 end

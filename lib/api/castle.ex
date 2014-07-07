@@ -11,9 +11,14 @@ defmodule ILM.Castle do
   # todo: add Castle.config[:name]
   # todo: support p2p between castles
   """
-
-  ## Native
-    
+  
+  @doc """
+  Our astral connection to the higher planes of communication.
+  """
+  def push!(signal) do
+    signal |> ILM.Castle.Wizard.Server.please?
+  end
+  
   @doc """
   ILM network exchange.
   """

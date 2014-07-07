@@ -9,7 +9,7 @@ defmodule ILM.Castle.Supervisor do
     children = [
       # Define workers and child supervisors to be supervised      
       worker(ILM.Castle.Tower.Supervisor,   []),
-      worker(ILM.Castle,             []),
+      worker(ILM.Castle,                    []),
     ]
     
     # See http://elixir-lang.org/docs/stable/Supervisor.html
