@@ -7,7 +7,7 @@ defmodule ILM.Castle.Wizard.Server do
   def please?(signal) do
     signal
     |> enrich?
-    |> ILM.Castle.CPU.Server.process!
+    |> ILM.Castle.Signal.Server.signal!
   end
 
   @doc """

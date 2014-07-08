@@ -3,13 +3,14 @@ defmodule BotTest do
 
   def signal, do: "signal"
 
-
-  # ## PropTests
-
-  test "Bot.web(path, opts = [])" do
+  # World
+    
+  test "Bot.web" do
     assert false == nil? Bot.web(IT.web("/"))
   end
 
+  # Item
+  
   test "Bot.prop" do
     assert true == Regex.match?(~r/html/, Bot.prop("app/index.html"))
   end

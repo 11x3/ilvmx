@@ -1,10 +1,6 @@
 # Internet Land of #virtual Magic and #excitement.
 
-ILvMx is a functionally minded cloud app server, or something close to an internet load virtual module exchange.
-
-Written in Elixir-lang and built with `Vagrant` so of course ILvMx is an easily cloud or self-hostable package.
-
-Our API currently supports native Elixir and HTTP APIs with Elm-lang and other language support possible.
+ILvMx is a functionally minded cloud app server, or something close to an internet load virtual module exchange. Written with Elixir-lang and `Vagrant` so of course ILvMx is easily cloud or self-hostable. The working-level API currently supports native Elixir, and HTTP APIs, with Elm-lang and other support coming.
 
 ## Features
 
@@ -28,13 +24,6 @@ Signal
 #|> Wizard
 #|> Effects
 ```
-
-Signal
-Castle.push!
-Wizard.please?
-Wizard.enrich?
-Castle.CPU.process!
-ILM.Signal.Server.collect!
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.
 

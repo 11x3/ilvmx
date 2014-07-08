@@ -10,16 +10,11 @@ defmodule Item do
         
     %Item{ unique: ILM.Castle.uuid }
   end
-  
-  @doc """
-  Return the API or public (on-disk) path to an item.
-  """  
+
   def object(item) do
-    unless item.object do
-    end
-    
     "obj/#{ item.unique }"
   end
+  
   def binary(item) do
     "bin/#{ item.unique }"
   end

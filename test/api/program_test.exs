@@ -1,4 +1,4 @@
-defmodule PlayerTest do
+defmodule ProgramTest do
   use   ExUnit.Case
 
   test "Player.anon!" do

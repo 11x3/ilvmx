@@ -16,10 +16,10 @@ defmodule Bot do
       HTTPotion.get(path).body
     end
   end
-    
-  ## Item API
-  ## For working with the binary properties of an `Item`
-
+  
+  
+  ## `Item` API
+  
   @doc """
   Take objects from The World, oh our dear World.
   """
@@ -47,34 +47,28 @@ defmodule Bot do
   end
   
   
-  # ## Signal API (routing)
-  # ## Routing-based methods
-  #
-  # @doc """
-  # """
-  # def sig(nubspace, item) do
-  # end
-  #
+  # ## `Signal` API (routing)
+  
   # @doc """
   # """
   # def cap(nubspace, item) do
   # end
-  
-  
-  # ## Nubspace API (Item.object)
-  # ## For working with the object properties of an `Item`
-  #
+    
   # @doc """
+  # Put or offer `Item`s into Nubspace.
   # """
-  # def exe(nubspace) do
+  # def sig(nubspace, item) do
   # end
-  #
+
+
   # @doc """
+  # Set per `Signal` key/values
   # """
   # def set(nubspace, key, value) do
   # end
-  #
+  
   # @doc """
+  # Get per `Signal` key/values
   # """
   # def get(nubspace, key \\ nil) do
   # end

@@ -12,12 +12,16 @@ defmodule ILM.Castle do
   # todo: support p2p between castles
   """
   
+  
   @doc """
-  Our astral connection to the higher planes of communication.
+  Send our astral connection to the higher planes of the ILvMx network.
   """
-  def push!(signal) do
+  def gate!(signal) do
     signal |> ILM.Castle.Wizard.Server.please?
   end
+  
+  
+  ## Native
   
   @doc """
   ILM network exchange.
@@ -54,11 +58,10 @@ defmodule ILM.Castle do
     8_000_000
   end
   
+  
   ## Private
 
-  @doc """
-  Return the app cache.
-  """
+  # Return the app cache.
   def cache do
     store = Process.get @cache
     if !store do
@@ -70,27 +73,7 @@ defmodule ILM.Castle do
     end
     store
   end
-  
-  def castle_setup do
-    # Load our custom Castles here.
-    project   = File.cwd!
-  
-    # Check and load custom castle scripts.
-    castledir = Path.join(project, "castle")
-      
-    if File.exists?(castledir) do
-      castles = File.ls!(castledir) |> Enum.each fn file ->
-        castlefile = Path.join(castledir, file)
-      
-        if Path.extname(castlefile) == ".exs" do
-          IO.inspect "@@@ castle: #{ Path.basename(castlefile) }"
-          #IO.inspect File.read! castlefile
-          Code.eval_file castlefile
-        end
-      end
-    end
-  end
-  
+    
   ## GenServer
 
   def start_link do
@@ -98,10 +81,7 @@ defmodule ILM.Castle do
     cache
 
     link = :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
-    
-    # eval castle scripts
-    castle_setup
-    
+
     # setup plug adapters
     Plug.Adapters.Cowboy.http ILM.Plug.Server, [], port: 8080
     #todo: support ILM.config for starting options

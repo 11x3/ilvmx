@@ -85,7 +85,7 @@ defmodule ILM.Castle.Tower.Server do
   ## Private
 
   @doc """
-  Return all signals in the Castle ILM.Signal.Server.
+  Return all signals in the Castle ILM.Castle.Signal.Server.
   """
   def signals do
     n = ConCache.get_or_store ILM.Castle.cache, @signals, fn ->

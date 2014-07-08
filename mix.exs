@@ -37,6 +37,7 @@ defmodule ILM.Mixfile do
       {:con_cache,  github: "sasa1977/con_cache", overide: false},
       {:httpotion,  github: "myfreeweb/httpotion", overide: false},
       {:jazz,       github: "meh/jazz"},
+      {:markdown,   github: "devinus/markdown"},
     ]
   end
 end

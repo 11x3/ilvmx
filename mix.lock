@@ -6,9 +6,11 @@
   "datastructures": {:git, "git://github.com/meh/elixir-datastructures.git", "28a7aee9addfe521ad0aa62f5e54f1ad597356cc", []},
   "exactor": {:package, "0.4.0"},
   "exquisite": {:git, "git://github.com/meh/exquisite.git", "8b1420260178fdf50a21a9b020253719b0b373ff", []},
+  "hoedown": {:git, "git://github.com/hoedown/hoedown.git", "0610117f44b173a4e2112afb2f510156a32355b5", []},
   "httpotion": {:git, "git://github.com/myfreeweb/httpotion.git", "37e180343ed21c733a1a0b740d9d8d7081b7f721", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "7871e2ebe8811efb64e1917e2de455fa87e8dfe3", [tag: "v4.1.0"]},
   "jazz": {:git, "git://github.com/meh/jazz.git", "46079b7571d0c70874a0ca002612645d0bafd64c", []},
+  "markdown": {:git, "git://github.com/devinus/markdown.git", "0345e2044ba71780ba02b2591f1017703d0fa148", []},
   "ossp_uuid": {:git, "git://github.com/yrashk/erlang-ossp-uuid.git", "5839a91796349114375c9cb066ec4e1dfdb653ab", []},
   "plug": {:git, "git://github.com/elixir-lang/plug.git", "9937d15c5a072ec9cdc0ebf39837de56b562ac88", []},
   "ranch": {:git, "git://github.com/extend/ranch.git", "3189ef2d47843945efc96c224963380462c33d40", [ref: "0.10.0"]}}

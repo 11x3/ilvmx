@@ -7,8 +7,9 @@ defmodule ILM.Castle.Supervisor do
 
   def init([]) do
     children = [
-      # Define workers and child supervisors to be supervised      
+      # Define workers and child supervisors to be supervised
       worker(ILM.Castle.Tower.Supervisor,   []),
+      worker(ILM.Castle.Signal.Server,      []),
       worker(ILM.Castle,                    []),
     ]
     

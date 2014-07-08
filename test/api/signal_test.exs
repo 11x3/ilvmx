@@ -8,6 +8,6 @@ defmodule SignalTest do
   end
   
   test "x" do
-    assert %Signal{effects: ["todo"]} = Signal.x Signal.m(self, "system/console"), "todo"
+    assert %Signal{effects: ["todo"]} = Signal.x(Signal.m(self, "system/console"), "todo")
   end
 end
