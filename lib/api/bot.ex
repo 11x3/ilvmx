@@ -20,48 +20,49 @@ defmodule Bot do
   
   # ## `Signal` API (routing)
   
-  
   @doc """
   Broadcast a `Signal.path` to this Castle.
   """
   def sig(nubspace, item) do
     #todo: create items
+    #todo: create signals
   end
   
   @doc """
   Get a `Signal.path` (ie. nubspace meta file) from this Castle.
   """
   def cap(signal, item \\ nil) do
-    # read the nub/meta file
-    signal_path = "nub/#{ signal.path }/meta"
-    
-    # use signal.path property for the valid_path? call,
-    # then use the already assembled signal_path var for
-    # the effect calls
-    unless Wizard.valid_path?(signal.path) and File.exists?(signal_path) do
-      Effect.w(signal_path, 404)
-    else
-      Effect.w(signal_path, prop(signal_path))
-    end
-    
-    # program = %Program{
-    #   unique: ILM.Castle.uuid,
-    #   source: nil
-    # }
+    # # read the nub/meta file
+    # signal_path = "nub/#{ signal.path }/meta"
     #
-    # program
+    # # use signal.path property for the valid_path? call,
+    # # then use the already assembled signal_path var for
+    # # the effect calls
+    # unless Wizard.valid_path?(signal.path) and File.exists?(signal_path) do
+    #   Effect.w(signal_path, 404)
+    # else
+    #   Effect.w(signal_path, prop(signal_path))
+    # end
     #
-    # Signal.e signal, File.ls!(@castle_path) |> Enum.map fn file_path ->
-    #   #     prog_path = Path.join(@castle_path, file_path)
-    #   #     signal_path = Path.basename(prog_path, ".cake")
-    #   #     if signal_path == signal.path do
-    #   #       Effect.w(signal_path, Program.run(prog_path))
-    #   #     else
-    #   #       nil
-    #   #     end
-    #   #   end
+    # # program = %Program{
+    # #   unique: ILM.Castle.uuid,
+    # #   source: nil
+    # # }
+    # #
+    # # program
+    # #
+    # # Signal.e signal, File.ls!(@castle_path) |> Enum.map fn file_path ->
+    # #   #     prog_path = Path.join(@castle_path, file_path)
+    # #   #     signal_path = Path.basename(prog_path, ".cake")
+    # #   #     if signal_path == signal.path do
+    # #   #       Effect.w(signal_path, Program.run(prog_path))
+    # #   #     else
+    # #   #       nil
+    # #   #     end
+    # #   #   end
   end
-    
+  
+  
   ## `Item` + item.properties API
       
   # @doc """

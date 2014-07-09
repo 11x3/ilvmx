@@ -1,9 +1,8 @@
-use Jazz
-
 defmodule ILM.Plug.Server do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
+  use     Jazz
   
   @parsers [Plug.Parsers.MULTIPART, Plug.Parsers.URLENCODED]
   @upload_limit ILM.Castle.upload_limit
@@ -18,17 +17,61 @@ defmodule ILM.Plug.Server do
 
   @doc """
   (*/*)
-  Requests from `Plug` will return an %Signal{}
+  Plug: *ring*, *ring*
   """
   def call(conn, opts) do
-    # Async requests    
-    unless Wizard.valid_path?(conn.path_info) do
-      send_resp conn, 404, "404: File not found (ILM.Plug.Server)"
+    adapt(conn, conn.path_info)
+  end
+    
+  def adapt(conn, []) do
+    ## Splash
+    
+    adapt(conn, ["app"])
+  end
+  def adapt(conn, ["app"]) do
+    ## App
+    
+    send_resp conn, 200, Bot.prop "app/index.html"
+  end
+  def adapt(conn, ["app"|commands]) do
+    ## Signals
+    
+    cmd_path = Path.join commands
+    unless Wizard.valid_path?(cmd_path) do
+      send_resp conn, 404, "404:1 File not found (ILM.Plug.Server)"
     else
-      signal = Signal.x(self(), conn.path_info, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
-            
       # exe the signal
+      signal = Signal.x(self(), commands, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
+            
       send_resp(conn, 200, inspect(signal.effects))
+    end
+  end
+  def adapt(conn, ["api"|commands]) do
+    ## Signals
+
+    cmd_path = commands |> Path.join
+    unless Wizard.valid_path?() do
+      send_resp conn, 404, "404:1 File not found (ILM.Plug.Server)"
+    else
+      # exe the signal
+      signal = Signal.x(self(), commands, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
+            
+      send_resp(conn, 200, inspect(signal.effects))
+    end
+  end  
+  def adapt(conn, commands) do
+    ## Files/Items/Objects
+    
+    cmd_path = Path.join(["priv", "static"|commands])
+        
+    unless Wizard.valid_path?(cmd_path) and File.exists?(cmd_path) do
+      send_resp conn, 404, "404:3 File not found (ILM.Plug.Server)"
+    else
+      if File.dir?(cmd_path) do
+        #todo: read the nubspace
+      else
+        send_resp conn, 200, File.read!(cmd_path)
+      end
     end
   end
 
