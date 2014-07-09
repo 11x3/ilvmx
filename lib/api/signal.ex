@@ -32,9 +32,8 @@ defmodule Signal do
   `x` execute a `Signal`.
   """
   def x(source, path, content \\ nil) do
-    #todo: capture this signal  
+    #todo: capture this signal
     signal = Task.async(fn -> m(source, path, content) |> ILM.Castle.gate! end) |> Task.await
-    
   end
 end
 

@@ -1,33 +1,6 @@
 defmodule ILM.Signal.Server.Supervisor do
   use Supervisor
     
-  ## Private
-
-  def signals do
-    n = ConCache.get_or_store ILM.Castle.cache, @signals, fn ->
-      castle_signals
-    end
-  end
-
-  def castle_signals do
-    # Load our custom Castles here.
-    project   = File.cwd!
-
-    # Check and load custom castle scripts.
-    castle_path = Path.join(project, "castle")
-  
-    if File.exists?(castle_path) do
-      # files |> signals
-      programs = File.ls!(castle_path) |> Enum.map fn file_path ->
-        Program.run Path.join(castle_path, file_path)
-      end |> Enum.map fn program ->
-      
-      end
-
-      programs      
-    end
-  end
-  
   ## GenSupervisor
   
   def start_link do

@@ -39,7 +39,7 @@ defmodule Bot do
     # then use the already assembled signal_path var for
     # the effect calls
     unless Wizard.valid_path?(signal.path) and File.exists?(signal_path) do
-      Effect.w(signal_path, nil)
+      Effect.w(signal_path, 404)
     else
       Effect.w(signal_path, prop(signal_path))
     end
