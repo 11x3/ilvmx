@@ -11,7 +11,7 @@ defmodule ILM.Plug.Server do
   Web Requests from Cowboy/Plug.
   """
   
-  plug Plug.Static, at: "/static", from: :ilvmx
+  #plug Plug.Static, at: "/static", from: :ilvmx
   plug :dispatch
   plug :match
 
@@ -22,7 +22,11 @@ defmodule ILM.Plug.Server do
   def call(conn, opts) do
     adapt(conn, conn.path_info)
   end
-    
+  
+  @doc """
+  (*/*)
+  ILvMx: hello?
+  """
   def adapt(conn, []) do
     ## Splash
     
@@ -31,7 +35,7 @@ defmodule ILM.Plug.Server do
   def adapt(conn, ["app"]) do
     ## App
     
-    send_resp conn, 200, Bot.prop "app/index.html"
+    send_resp conn, 200, Bot.prop "index.html"
   end
   def adapt(conn, ["app"|commands]) do
     ## Signals
@@ -62,13 +66,14 @@ defmodule ILM.Plug.Server do
   def adapt(conn, commands) do
     ## Files/Items/Objects
     
-    cmd_path = Path.join(["priv", "static"|commands])
+    cmd_path = Path.join(["priv", "static", "app"|commands])
         
     unless Wizard.valid_path?(cmd_path) and File.exists?(cmd_path) do
       send_resp conn, 404, "404:3 File not found (ILM.Plug.Server)"
     else
       if File.dir?(cmd_path) do
         #todo: read the nubspace
+        []
       else
         send_resp conn, 200, File.read!(cmd_path)
       end
