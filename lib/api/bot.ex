@@ -19,19 +19,19 @@ defmodule Bot do
 
   
   # ## `Signal` API (routing)
-
+  
+  
+  @doc """
+  Broadcast a `Signal.path` to this Castle.
+  """
+  def sig(nubspace, item) do
+    #todo: create items
+  end
+  
   @doc """
   Get a `Signal.path` (ie. nubspace meta file) from this Castle.
   """
   def cap(signal, item \\ nil) do
-    #todo: list items in /nub/
-    
-    # defstruct   kind: nil,  # mime/type
-    #           unique: nil,  # "32453-4544-3434-234324-7879"
-    #           object: nil,  # %{} => "/obj/32453/meta"
-    #           binary: nil   # ""  => "/obj/32453/4544-3434-234324-7879"
-    # todo: Wizard.valid_path?(nubspace)
-    
     # read the nub/meta file
     signal_path = "nub/#{ signal.path }/meta"
     
@@ -43,14 +43,25 @@ defmodule Bot do
     else
       Effect.w(signal_path, prop(signal_path))
     end
+    
+    # program = %Program{
+    #   unique: ILM.Castle.uuid,
+    #   source: nil
+    # }
+    #
+    # program
+    #
+    # Signal.e signal, File.ls!(@castle_path) |> Enum.map fn file_path ->
+    #   #     prog_path = Path.join(@castle_path, file_path)
+    #   #     signal_path = Path.basename(prog_path, ".cake")
+    #   #     if signal_path == signal.path do
+    #   #       Effect.w(signal_path, Program.run(prog_path))
+    #   #     else
+    #   #       nil
+    #   #     end
+    #   #   end
   end
-      
-  # @doc """
-  # """
-  # def sig(nubspace, item) do
-  # end
-
-  
+    
   ## `Item` + item.properties API
       
   # @doc """

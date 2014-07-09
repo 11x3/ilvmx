@@ -12,14 +12,14 @@ defmodule Signal do
   @doc """
   Add an item/effect to a `Signal`.
   """
-  def e(signal, items) do    
+  def e(signal, items) do
     %{signal| :effects => List.flatten(signal.effects ++ [items]) }
   end
   
   @doc """
   `m` make a `Signal`.
   """
-  def m(source, path \\ ILM.Castle.name, content \\ nil) do
+  def m(source, path \\ ILM.Castle.name, content \\ %{}) do
     %Signal{
           path: path,
         unique: ILM.Castle.uuid,
@@ -32,8 +32,7 @@ defmodule Signal do
   `x` execute a `Signal`.
   """
   def x(source, path, content \\ nil) do
-    #todo: capture this signal
-    signal = Task.async(fn -> m(source, path, content) |> ILM.Castle.gate! end) |> Task.await
+    m(source, path, content) |> ILM.Castle.gate!
   end
 end
 

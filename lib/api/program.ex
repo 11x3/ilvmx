@@ -1,15 +1,14 @@
 defmodule Program do
-  defstruct source: nil,
-              code: nil,
-              data: %{},
-            errors: [],
-            player: nil,
+  defstruct source: nil,  # Item
+              code: [],   # [terms]
+              data: %{},  # storage
+            errors: [],   # exceptions or manual logged errors
             unique: nil
             
   @doc """
   Execute a `program_path` from disk.
   """
-  def run(program_path) do
+  def setup(program_path) do
     case Path.extname(program_path) do
       ".cake" -> cake(program_path)
     end

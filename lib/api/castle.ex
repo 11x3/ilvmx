@@ -78,14 +78,15 @@ defmodule ILM.Castle do
     end
     store
   end
-    
+  
+  
   ## GenServer
 
   def start_link do
     # castle-wide cache
     cache
 
-    link = :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
+    link = GenServer.start_link(__MODULE__, nil)
 
     # setup plug adapters
     Plug.Adapters.Cowboy.http ILM.Plug.Server, [], port: 8080

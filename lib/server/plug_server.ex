@@ -25,10 +25,10 @@ defmodule ILM.Plug.Server do
     unless Wizard.valid_path?(conn.path_info) do
       send_resp conn, 404, "404: File not found (ILM.Plug.Server)"
     else
-      signal = Signal.x(conn, conn.path_info, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
+      signal = Signal.x(self(), conn.path_info, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
             
       # exe the signal
-      send_resp(conn, 200, inspect(signal))
+      send_resp(conn, 200, inspect(signal.effects))
     end
   end
 

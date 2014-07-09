@@ -1,5 +1,5 @@
 # An example ILvMx app written in cakedown.
-@exe lolnub
+@nub lolnub
 
 @set about
 

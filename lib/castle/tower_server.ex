@@ -101,6 +101,6 @@ defmodule ILM.Castle.Tower.Server do
     #todo: refactor tick into Castle.Epoch.Server.
     #spawn __MODULE__, :tick, [[]]
     
-    :gen_server.start_link({:local, __MODULE__}, __MODULE__, nil, [])
+    GenServer.start_link(__MODULE__, nil)
   end
 end
