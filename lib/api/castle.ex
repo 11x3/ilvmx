@@ -14,10 +14,15 @@ defmodule ILM.Castle do
   
   
   @doc """
-  Send our astral connection to the higher planes of the ILvMx network.
+  Castle's astral connection to the higher planes of the ILvMx network.
   """
   def gate!(signal) do
-    signal |> ILM.Castle.Wizard.Server.please?
+    signal
+    |> ILM.Castle.Wizard.Server.please?
+    |> ILM.Castle.Signal.Server.capture!
+    |> ILM.Castle.CPU.Server.execute!
+    |> ILM.Castle.Wizard.Server.filter?
+    |> ILM.Castle.Tower.Server.commit!
   end
   
   

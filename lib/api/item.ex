@@ -1,5 +1,5 @@
 defmodule Item do
-  defstruct   kind: nil,
+  defstruct   kind: nil,  # mime/type
             unique: nil,  # "32453-4544-3434-234324-7879"
             object: nil,  # %{} => "/obj/32453/meta"
             binary: nil   # ""  => "/obj/32453/4544-3434-234324-7879"
@@ -11,12 +11,14 @@ defmodule Item do
     %Item{ unique: ILM.Castle.uuid }
   end
 
+  # data/json type
   def object(item) do
-    "obj/#{ item.unique }"
+    "obj/#{ item.unique }.json"
   end
   
+  # binary type
   def binary(item) do
-    "bin/#{ item.unique }"
+    "bin/#{ item.unique }.#{ item.kind }"
   end
   
 end

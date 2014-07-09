@@ -5,7 +5,7 @@ defmodule Program do
             errors: [],
             player: nil,
             unique: nil
-
+            
   @doc """
   Execute a `program_path` from disk.
   """
@@ -26,7 +26,7 @@ defmodule Program do
       source: File.read!(program_path)
     }
 
-    IO.inspect program
+    program
   end
 
 end

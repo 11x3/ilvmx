@@ -1,5 +1,5 @@
 defmodule Signal do
-  defstruct     path: "/",  # "about/ilvmx"
+  defstruct     path: nil,  # "about/ilvmx"
              content: nil,  # data/params
               source: nil,  # sender (pid, email, nick, etc)
               unique: nil,  # uuid
@@ -8,12 +8,18 @@ defmodule Signal do
   @moduledoc """
   `Signal`s are the basic news unit of the ILvMx Galaxy.
   """
-
+  
   @doc """
-  Signal.
+  Add an item/effect to a `Signal`.
   """
-  def m(source), do: m(source, "/")
-  def m(source, path, content \\ nil) do
+  def e(signal, items) do    
+    %{signal| :effects => List.flatten(signal.effects ++ [items]) }
+  end
+  
+  @doc """
+  `m` make a `Signal`.
+  """
+  def m(source, path \\ ILM.Castle.name, content \\ nil) do
     %Signal{
           path: path,
         unique: ILM.Castle.uuid,
@@ -21,14 +27,14 @@ defmodule Signal do
        content: content
     }
   end
-  def mx(source, path, content \\ nil) do
-    m(source, path, content) |> ILM.Castle.gate!
-  end
   
   @doc """
-  Add an item/effect to a `Signal`.
+  `x` execute a `Signal`.
   """
-  def x(signal, items) do
-    %{ signal| :effects => List.flatten [signal.effects, items] }
+  def x(source, path, content \\ nil) do
+    #todo: capture this signal  
+    signal = Task.async(fn -> m(source, path, content) |> ILM.Castle.gate! end) |> Task.await
+    
   end
 end
+

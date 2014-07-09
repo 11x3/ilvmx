@@ -1,5 +1,6 @@
 defmodule Effect do
   defstruct  source: nil,
+            message: nil,
             content: nil,
              unique: nil
 
@@ -15,10 +16,11 @@ defmodule Effect do
   """
   def w(content), do: w(nil, content)
   def w(source, content) do
-   %Effect{
+    #todo: add message
+    %Effect{
        source: source,
       content: content,
        unique: ILM.Castle.uuid
-   }
+    }
   end
 end

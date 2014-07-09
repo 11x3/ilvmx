@@ -6,12 +6,8 @@ defmodule ILM.Castle.CPU.Server do
   @doc """
   Process a `Signal` and emit `Effect`s.
   """
-  def process!(signal) do
-    # start or search for a signal_server
-
-    signal
-    |> ILM.Castle.Wizard.Server.filter?
-    |> ILM.Castle.Tower.Server.commit!
+  def execute!(signal) do
+    Signal.e signal, Bot.cap(signal)
   end
 
   ## GenServer Callbacks

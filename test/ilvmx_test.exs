@@ -4,9 +4,11 @@ defmodule ILMTest do
   #todo: add integration tests
   
   test "serves root page" do
-    #assert "" == Bot.web IT.web("/")
+    assert Regex.match? ~r/nub\/lolnub\/meta/, Bot.web(IT.web("lolnub"))
+
   end
 
-
-
+  test "signals" do
+    assert %Signal{effects: [%Effect{source: "nub/lolnub/meta"}]} = Signal.x self(), "lolnub"
+  end
 end
