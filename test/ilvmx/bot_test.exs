@@ -9,6 +9,7 @@ defmodule BotTest do
     assert false == nil? Bot.web(IT.web("/"))
   end
 
+
   ## Signal
   
   # test "signal a program" do
@@ -17,8 +18,6 @@ defmodule BotTest do
   
   # test "signal a binary" do
   #   Bot.sig "lolnub", "todo"
-  #
-  #   assert %Signal{effects: [%Effect{}]} = Signal.x self, "lolnub"
   # end
 
   # test "signal an item" do

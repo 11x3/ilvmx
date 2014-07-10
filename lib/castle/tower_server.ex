@@ -4,7 +4,7 @@ defmodule ILM.Castle.Tower.Server do
 
   @moduledoc """
   Our ILM.Castle.Tower.Server (or :emit stage) is where our apps produce 
-  most of their outside world side effects, which come from signals that are 
+  most of their outside world side items, which come from signals that are 
   generated during the :adapt, and :transform stage of the app.
   """
 

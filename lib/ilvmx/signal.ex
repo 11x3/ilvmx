@@ -3,19 +3,11 @@ defmodule Signal do
               source: nil,  # sender (pid, email, nick, etc)
              content: nil,  # data/params
               unique: nil,  # uuid
-             effects: []    # items
+               items: []    # items
 
   @moduledoc """
   `Signal`s are the basic news unit of the ILvMx Galaxy.
   """
-  
-  @doc """
-  Add an item/effect to a `Signal`.
-  """
-  def i(signal, items) do
-    %{signal| :effects => List.flatten(signal.effects ++ [items]) }
-  end
-  
   @doc """
   Make a `Signal`.
   """
@@ -32,7 +24,6 @@ defmodule Signal do
   Execute a `Signal`.
   """
   def x(source, path, content \\ nil) do
-    #todo: register with the Signal.Server
     m(source, path, content) |> ILM.Castle.gate!
   end
   
@@ -40,8 +31,15 @@ defmodule Signal do
   Upload a `Signal`.
   """
   def u(source, path, content \\ nil) do
-    #todo: register with the Signal.Server
     m(source, path, content) |> ILM.Castle.Signal.Server.upload!
   end
+  
+  @doc """
+  Add an item/effect to a `Signal`.
+  """
+  def i(signal, items) do
+    %{signal| :items => List.flatten(signal.items ++ [items]) }
+  end
+  
 end
 

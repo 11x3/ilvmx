@@ -39,17 +39,12 @@ defmodule ILM.Castle.Signal.Server do
     Signal.i(signal, castle_signals |> Enum.filter fn boost -> boost.path == signal.path end)
   end
     
-  # @doc """
-  # Put `signal` into Nubspace.
-  # """
-  # def upload!(signal) do
-  #
-  #   ConCache.put ILM.Castle.cache, @signals,
-  #
-  #   throw IO.inspect signal
-  #
-  #   signal
-  # end
+  @doc """
+  Put `signal` into Nubspace.
+  """
+  def upload!(signal) do                
+    signal
+  end
 
   # @doc """
   # #todo: Kill a `signal` already in Nubspace.
@@ -64,7 +59,7 @@ defmodule ILM.Castle.Signal.Server do
   # def tick(_) do
   #   # :timer.sleep(1000)
   #   #
-  #   # signal! Effect.w "tick"
+  #   # signal! "tick"
   #   #
   #   # tick(nil)
   # end

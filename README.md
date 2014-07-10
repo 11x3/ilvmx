@@ -22,7 +22,7 @@ Signal
 -|> Bots
 #|> Tower
 #|> Wizard
-#|> Effects
+Signal
 ```
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.

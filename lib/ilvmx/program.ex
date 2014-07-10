@@ -22,6 +22,7 @@ defmodule Program do
   """
   def setup(program_path) do
     case Path.extname(program_path) do
+      ".exs"  -> Code.eval_file program_path
       ".cake" -> cake(program_path)
     end
   end

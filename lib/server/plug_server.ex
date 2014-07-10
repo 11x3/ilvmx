@@ -49,7 +49,7 @@ defmodule ILM.Plug.Server do
       else
         signal = Signal.x self, Path.join(commands), Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
         
-        send_resp(conn, 200, inspect(signal.effects))
+        send_resp(conn, 200, inspect(signal.items))
       end
     end
   end

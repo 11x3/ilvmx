@@ -4,8 +4,8 @@ defmodule ILMTest do
   ## Integration
   test "signals" do
     signal = Signal.x self, "lolnub"
-    assert 1 == length signal.effects
-    assert %Signal{path: "lolnub", content: %Program{}} = List.first(signal.effects)
+    assert 1 == length signal.items
+    assert %Signal{path: "lolnub", content: %Program{}} = List.first(signal.items)
   end
     
   test "endpoints" do
@@ -21,6 +21,6 @@ defmodule ILMTest do
   end
   
   test "invalids" do
-    assert %Signal{effects: []} = Signal.x self, "something random #{ ILM.Castle.uuid }"
+    assert %Signal{items: []} = Signal.x self, "something random #{ ILM.Castle.uuid }"
   end
 end
