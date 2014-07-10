@@ -7,7 +7,7 @@ defmodule SignalTest do
     assert %Signal{} = Signal.m(self, "system/console")
   end
   
-  test "e" do
-    assert %Signal{effects: ["todo"]} = Signal.e(Signal.m(self, "system/console"), "todo")
+  test "i" do
+    assert %Signal{effects: ["todo"]} = Signal.i(Signal.m(self, "system/console"), "todo")
   end
 end

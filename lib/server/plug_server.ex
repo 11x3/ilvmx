@@ -11,7 +11,7 @@ defmodule ILM.Plug.Server do
   Web Requests from Cowboy/Plug.
   """
   
-  #plug Plug.Static, at: "/static", from: :ilvmx
+  plug Plug.Static, at: "/static", from: :ilvmx
   plug :dispatch
   plug :match
 
@@ -22,6 +22,7 @@ defmodule ILM.Plug.Server do
   def call(conn, opts) do
     adapt(conn, conn.path_info)
   end
+  
   
   @doc """
   (*/*)
@@ -37,49 +38,23 @@ defmodule ILM.Plug.Server do
     
     send_resp conn, 200, Bot.prop "index.html"
   end
-  def adapt(conn, ["app"|commands]) do
-    ## Signals
-    
-    cmd_path = Path.join commands
-    unless Wizard.valid_path?(cmd_path) do
-      send_resp conn, 404, "404:1 File not found (ILM.Plug.Server)"
-    else
-      # exe the signal
-      signal = Signal.x(self(), commands, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
-            
-      send_resp(conn, 200, inspect(signal.effects))
-    end
-  end
-  def adapt(conn, ["api"|commands]) do
-    ## Signals
-
-    cmd_path = commands |> Path.join
-    unless Wizard.valid_path?() do
-      send_resp conn, 404, "404:1 File not found (ILM.Plug.Server)"
-    else
-      # exe the signal
-      signal = Signal.x(self(), commands, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit))
-            
-      send_resp(conn, 200, inspect(signal.effects))
-    end
-  end  
   def adapt(conn, commands) do
-    ## Files/Items/Objects
-    
-    cmd_path = Path.join(["priv", "static", "app"|commands])
-        
-    unless Wizard.valid_path?(cmd_path) and File.exists?(cmd_path) do
-      send_resp conn, 404, "404:3 File not found (ILM.Plug.Server)"
+    ## Files/Items/Object
+    cmd_path = Path.join(["priv", "static"|commands])
+    unless Wizard.valid_path?(commands) do
+      send_resp conn, 404, "404:1 File not found (ILM.Plug.Server)"
     else
-      if File.dir?(cmd_path) do
-        #todo: read the nubspace
-        []
-      else
+      if File.exists?(cmd_path) do
         send_resp conn, 200, File.read!(cmd_path)
+      else
+        signal = Signal.x self, Path.join(commands), Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+        
+        send_resp(conn, 200, inspect(signal.effects))
       end
     end
   end
-
+  
+  
   @doc """
   Initialize options
   """

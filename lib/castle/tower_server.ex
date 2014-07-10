@@ -1,53 +1,34 @@
-use Jazz
-
 defmodule ILM.Castle.Tower.Server do
   use GenServer
-    
-  @signals  :signals
-  
+  use Jazz
+
   @moduledoc """
   Our ILM.Castle.Tower.Server (or :emit stage) is where our apps produce 
   most of their outside world side effects, which come from signals that are 
   generated during the :adapt, and :transform stage of the app.
   """
 
-  # def tick(_) do
-  #   # :timer.sleep(1000)
-  #   #
-  #   # signal! Effect.w "tick"
-  #   #
-  #   # tick(nil)
-  # end
-  
-  ## Signals
-
   @doc """
-  Commit the Signal to galaxy state.
+  #todo: Register external clients for Signals
   """
-  def commit!(signal) do
+  def capture!(signal) do
+    # todo: start or broadcast/search for an existing signal_server
+    
+    signal
+  end
+  
+  @doc """
+  Commit `signal` to Galaxy state.
+  """
+  def signal!(signal) do
     signal
     |> pipe!
     |> archive!
     |> galaxy!
   end
 
-  # @doc """
-  # """
-  # def signal!(signal = %Signal{}) do
-  #   signal.effects |> Enum.each &signal!/1
-  # end
-  # def signal!(effect) do
-  #   signals |> Enum.each fn [signal: signal, program: program] ->
-  #     if signal == effect.source do
-  #       program.(effect)
-  #     end
-  #   end
-  #
-  #   effect
-  # end
-
   @doc """
-  Send the signal to external pipelines.
+  #todo: Send `signal` to external configured pipelines.
   """
   def pipe!(signal) do
     
@@ -55,7 +36,7 @@ defmodule ILM.Castle.Tower.Server do
   end
 
   @doc """
-  Save to disk.
+  #todo: Save `signal` to disk as configured.
   """
   def archive!(signal) do
     # # create nub + meta directory
@@ -74,25 +55,14 @@ defmodule ILM.Castle.Tower.Server do
   end
 
   @doc """
-  Share signals with the galaxy.
+  #todo: Share signals with the galaxy.
   """
   def galaxy!(signal) do
     
     signal
   end
   
-  
-  ## Private
-
-  @doc """
-  Return all signals in the Castle ILM.Castle.Signal.Server.
-  """
-  def signals do
-    n = ConCache.get_or_store ILM.Castle.cache, @signals, fn ->
-      []
-    end
-  end
-
+    
   ## GenServer Callbacks
   
   def start_link do

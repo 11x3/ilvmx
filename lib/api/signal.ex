@@ -1,7 +1,7 @@
 defmodule Signal do
   defstruct     path: nil,  # "about/ilvmx"
-             content: nil,  # data/params
               source: nil,  # sender (pid, email, nick, etc)
+             content: nil,  # data/params
               unique: nil,  # uuid
              effects: []    # items
 
@@ -12,12 +12,12 @@ defmodule Signal do
   @doc """
   Add an item/effect to a `Signal`.
   """
-  def e(signal, items) do
+  def i(signal, items) do
     %{signal| :effects => List.flatten(signal.effects ++ [items]) }
   end
   
   @doc """
-  `m` make a `Signal`.
+  Make a `Signal`.
   """
   def m(source, path \\ ILM.Castle.name, content \\ %{}) do
     %Signal{
@@ -29,10 +29,19 @@ defmodule Signal do
   end
   
   @doc """
-  `x` execute a `Signal`.
+  Execute a `Signal`.
   """
   def x(source, path, content \\ nil) do
+    #todo: register with the Signal.Server
     m(source, path, content) |> ILM.Castle.gate!
+  end
+  
+  @doc """
+  Upload a `Signal`.
+  """
+  def u(source, path, content \\ nil) do
+    #todo: register with the Signal.Server
+    m(source, path, content) |> ILM.Castle.Signal.Server.upload!
   end
 end
 

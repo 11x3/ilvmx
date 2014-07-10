@@ -1,72 +1,81 @@
 defmodule ILM.Castle.Signal.Server do
   use GenServer
+
+  # Check and load custom castle scripts.
+  @castle_signals   :castle_signals
+  @castle_path      Path.join(File.cwd!, "castle")
   
   @moduledoc """
   Nubspace is a mapping of Signals -> Items on disk/memory/galaxy.
   """
   
-  # Check and load custom castle scripts.
-  @castle_path Path.join(File.cwd!, "castle")
-
-
-  # Query Nubspace for Signals
-  def capture!(signal) do
-    # todo: start or broadcast/search for an existing signal_server
+  ## Public
+  
+  @doc """
+  Collect signals from Nubspace.
+  """
+  def boost!(signal) do
+    IO.inspect "signal: #{signal.path}"
     
-    # # get Items from the existing castle nubspace
-    # unless File.exists?(@castle_path) do
-    #   [signal]
-    # else
-    #   [signal, File.ls!(@castle_path) |> Enum.map fn file_path ->
-    #     prog_path = Path.join(@castle_path, file_path)
-    #     signal_path = Path.basename(prog_path, ".cake")
-    #     if signal_path == signal.path do
-    #       Program.setup(prog_path)
-    #     end
-    #   end]
-    # end
+    effects = castle_signals |> Enum.filter fn boost -> boost.path == signal.path end
     
-    signal
+    Signal.i(signal, effects)
   end
   
-  
   # @doc """
-  # Put `item` into Nubspace.
+  # Put `signal` into Nubspace.
   # """
-  # def push!(signal, item) when is_binary(nubspace) and is_function(item) do
-  #   #todo: store to the function to our local cache
-  #   throw IO.inspect "push!(signal, item) is_function(item)"
+  # def upload!(signal) do
+  #
+  #   ConCache.put ILM.Castle.cache, @signals,
+  #
+  #   throw IO.inspect signal
+  #
+  #   signal
   # end
-  # def push!(signal, item) when is_binary(nubspace) and is_binary(item) do
-  #   # create nub directory
-  #   nub_path = Path.join("priv/static", nub_path(signal))
-  #   unless File.exists? nub_path do
-  #     File.mkdir! nub_path
-  #   end
-  #
-  #   # set the static item into the nub
-  #   sub_id = "#{ ILM.Castle.uuid }"
-  #
-  #   sub_path = Path.join(nub_path(nubspace), sub_id)
-  #   file_path = Path.join("priv/static", sub_path)
-  #   File.write(file_path, item)
-  #
-  #   # check/create the metanub
-  #   meta_path = Path.join(nub_path, "meta")
-  #   if File.exists? meta_path do
-  #     # update our nubspace meta file to add the link to the new item
-  #     items = JSON.decode!(File.read!(meta_path))
-  #     items = [sub_path|items]
-  #     json  = JSON.encode!(items)
-  #     File.write!(meta_path, json)
-  #   else
-  #     File.write!(meta_path, JSON.encode!([sub_path]))
-  #   end
-  #
-  #   ILM.Castle.Tower.Server.signal! Effect.w nubspace, [item: item, static: sub_path]
+
+  # @doc """
+  # #todo: Kill a `signal` already in Nubspace.
+  # """
+  # def kill!(signal) do
+  #   signal
+  # end
+
+
+  ## Signals
+  
+  @doc """
+  Return all signals in the Castle.
+  """
+  def castle_signals do
+    n = ConCache.get_or_store ILM.Castle.cache, @castle_signals, fn ->        
+      castle_signals = nil
+      
+      # get Items from the existing castle nubspace
+      if File.exists?(@castle_path) do
+        castle_signals = File.ls!(@castle_path) |> Enum.map fn file_path ->
+          prog_path   = Path.join(@castle_path, file_path)
+          signal_path = Path.basename(prog_path, ".cake")
+        
+          Signal.m("castle/#{ signal_path }", signal_path, Program.setup(prog_path))
+        end
+      end
+      
+      castle_signals
+    end
+  end
+  
+  ## Private
+  
+  # def tick(_) do
+  #   # :timer.sleep(1000)
+  #   #
+  #   # signal! Effect.w "tick"
+  #   #
+  #   # tick(nil)
   # end
   
-  
+
   ## GenServer
 
   def start_link do

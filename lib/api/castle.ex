@@ -19,10 +19,9 @@ defmodule ILM.Castle do
   def gate!(signal) do
     signal
     |> ILM.Castle.Wizard.Server.please?
-    |> ILM.Castle.Signal.Server.capture!
-    |> ILM.Castle.CPU.Server.execute!
+    |> ILM.Castle.Signal.Server.boost!
     |> ILM.Castle.Wizard.Server.filter?
-    |> ILM.Castle.Tower.Server.commit!
+    |> ILM.Castle.Tower.Server.signal!
   end
   
   
