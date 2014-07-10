@@ -20,6 +20,7 @@ defmodule ILM.Castle do
     signal
     |> ILM.Castle.Wizard.Server.please?
     |> ILM.Castle.Signal.Server.boost!
+    |> ILM.Castle.CPU.Server.execute!
     |> ILM.Castle.Wizard.Server.filter?
     |> ILM.Castle.Tower.Server.signal!
   end

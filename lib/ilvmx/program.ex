@@ -4,7 +4,19 @@ defmodule Program do
               data: %{},  # storage
             errors: [],   # exceptions or manual logged errors
             unique: nil
-            
+  
+  @doc """
+  Make a `Program`.
+  """
+  def m(source, code \\ nil, data \\ nil) do
+    %Program{
+        source: source,
+          code: code,
+          data: data,
+        unique: ILM.Castle.uuid
+    }
+  end
+         
   @doc """
   Execute a `program_path` from disk.
   """
@@ -17,9 +29,7 @@ defmodule Program do
   @doc """
   Exe a Cakedown cloud app text document.
   """         
-  def cake(program_path) do
-    IO.inspect "Program.cake: #{ Path.basename(program_path) }"
-    
+  def cake(program_path) do    
     program = %Program{
       unique: ILM.Castle.uuid,
       source: File.read!(program_path)

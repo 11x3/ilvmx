@@ -22,9 +22,9 @@ defmodule Item do
   def object(item) do
     Bot.prop item.object
   end
-  def object(item, object) when is_binary(object) do
+  def object(item, object) when is_binary(object) do    
     Bot.drop object, item.object
-    
+        
     item
   end
   def object(item, object) do
