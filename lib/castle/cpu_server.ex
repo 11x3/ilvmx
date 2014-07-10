@@ -22,8 +22,6 @@ defmodule ILM.Castle.CPU.Server do
     execute!(signal, items_tail)
   end
   def execute!(signal = %Signal{}, program = %Program{}) do
-    
-
     # todo: compile programs inside signal.items
     throw IO.inspect program
     
