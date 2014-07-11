@@ -14,24 +14,23 @@ defmodule ILM.Castle.CPU.Server do
   #             errors: [],   # exceptions or manual logged errors
   #             unique: nil
   
-  def execute!(signal) do
-    signal
-  end
-  def execute!(signal = %Signal{}, [effect|items_tail]) do
-    execute!(signal, effect)
-    execute!(signal, items_tail)
-  end
-  def execute!(signal = %Signal{}, program = %Program{}) do
-    # todo: compile programs inside signal.items
-    throw IO.inspect program
-    
-    signal
-  end
-  def execute!(signal = %Signal{}, effect) do
-    
-    effect
-  end
+  @doc "Install a continuous running program into the CPU."
+  def install!(signal) do
+    # add
 
+    signal
+  end
+  
+  @doc "Execute a program one time on the CPU."
+  def execute!(signal) do    
+    # filter signal.items for programs
+    # compile programs
+    # execute programs
+    
+    signal
+  end
+  
+    
   ## GenServer Callbacks
   
   def start_link do

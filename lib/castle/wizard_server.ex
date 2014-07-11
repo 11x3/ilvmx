@@ -14,6 +14,9 @@ defmodule ILM.Castle.Wizard.Server do
   """
   def enrich?(signal) do
     # todo: add callbacks api
+    
+    signal = %{signal| }
+
 
     signal
   end

@@ -12,17 +12,13 @@ defmodule ILM.Castle do
   # todo: support p2p between castles
   """
   
-  
   @doc """
   Castle's astral connection to the higher planes of the ILvMx network.
   """
   def gate!(signal) do
     signal
     |> ILM.Castle.Wizard.Server.please?
-    |> ILM.Castle.Signal.Server.boost!
-    |> ILM.Castle.CPU.Server.execute!
-    |> ILM.Castle.Wizard.Server.filter?
-    |> ILM.Castle.Tower.Server.signal!
+    |> ILM.SignalServer.boost!
   end
   
   

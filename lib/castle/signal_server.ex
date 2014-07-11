@@ -1,73 +1,93 @@
-defmodule ILM.Castle.Signal.Server do
+defmodule ILM.SignalServer do
   use GenServer
 
   # Check and load custom castle scripts.
   @castle_signals   :castle_signals
-  @castle_path      Path.join(File.cwd!, "castle")
   
   @moduledoc """
   Nubspace is a mapping of Signals -> Items on disk/memory/galaxy.
   """
   
-  ## Signals
-  
-  @doc """
-  Return Castle (local) Signals.
-  """
-  def castle_signals do
-    n = ConCache.get_or_store ILM.Castle.cache, @castle_signals, fn ->        
-      castle_signals = nil
-      
-      # get Items from the existing castle nubspace
-      if File.exists?(@castle_path) do
-        castle_signals = File.ls!(@castle_path) |> Enum.map fn file_path ->
-          prog_path   = Path.join(@castle_path, file_path)
-          signal_path = Path.basename(prog_path, ".cake")
+  ## Public
+  @doc "Put `signal` into Nubspace."
+  def upload!(signal) do
+    {:ok, signal_server} = start_link(signal)
+    
+    # process the signal/program
+    GenServer.cast(signal_server, {:upload, signal})
 
-          Signal.m("castle/#{ signal_path }", signal_path, Program.setup(prog_path))
-        end
-      end
-      
-      castle_signals
-    end
+    # signal.content will now be this SignalServer
+    %{signal| content: signal_server}
   end
-    
-  @doc """
-  Collect signals from Castle.
-  """
+  
+  @doc "Collect signals from Castle."
   def boost!(signal) do
-    Signal.i(signal, castle_signals |> Enum.filter fn boost -> boost.path == signal.path end)
+    # promote the signal to a GenServer
+    {:ok, signal_server} = start_link(self)
+    
+    # signal.content will now be this SignalServer
+    signal = %{signal| content: signal_server}
+    
+    # process the signal/program
+    GenServer.cast(signal_server, {:boost, signal})
+    
+    receive do
+      {:signal, signal} -> signal
+    after
+      5_000 -> signal
+    end
+    
+    share!(signal)
+    |> ILM.Castle.Wizard.Server.filter?
+    |> ILM.Castle.Tower.Server.signal!
   end
     
-  @doc """
-  Put `signal` into Nubspace.
-  """
-  def upload!(signal) do                
+  @doc "Share a message with other SignalServers."
+  def share!(signal) do
+
     signal
   end
+  
+  
+  ## GenServer
 
+  def start_link(signal_server \\ nil) do
+    # # SignalServers listen for GenEvents between them.
+    # {:ok, events} = GenEvent.start_link
+    # GenEvent.add_handler(events, ILM.SignalServer, :share_event!, [])
+    #
+    GenServer.start_link(__MODULE__, signal_server)
+  end
+  
+  def init(signal_server) do
+    {:ok, signal_server}
+  end
+
+  def handle_cast({:boost, signal}, signal_server) do
+    signal = signal |> ILM.Castle.CPU.Server.execute!
+    send(signal.source, {:signal, signal})
+    {:noreply, signal}
+  end
+  
+  def handle_cast({:upload, signal}, signal_server) do
+    IO.inspect "(x-x-).upload: #{ signal.path }"
+    share_loop(signal)
+    {:noreply, signal}
+  end
+  
+  def share_loop(signal) do
+    receive do
+      {:share, shared_signal} -> GenServer.cast(self, {:boost, shared_signal})
+    end
+    
+    share_loop(signal)
+  end
+  
   # @doc """
   # #todo: Kill a `signal` already in Nubspace.
   # """
   # def kill!(signal) do
   #   signal
   # end
-
-
-  ## Private
   
-  # def tick(_) do
-  #   # :timer.sleep(1000)
-  #   #
-  #   # signal! "tick"
-  #   #
-  #   # tick(nil)
-  # end
-  
-  
-  ## GenServer
-
-  def start_link do
-    GenServer.start_link(__MODULE__, nil)
-  end
 end

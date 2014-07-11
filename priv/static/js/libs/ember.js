@@ -1988,7 +1988,7 @@ var utils = Ember.EnumerableUtils = {
 
   /** 
    * Adds an object to an array. If the array already includes the object this
-   * method has no effect.
+   * method has no item.
    *
    * @method addObject
    * @param {Array} array The array the passed item should be added to
@@ -2003,7 +2003,7 @@ var utils = Ember.EnumerableUtils = {
 
   /**
    * Removes an object from an array. If the array does not contain the passed
-   * object this method has no effect.
+   * object this method has no item.
    *
    * @method removeObject
    * @param {Array} array The array to remove the item from.
@@ -4497,7 +4497,7 @@ var NODE_STACK = [];
 
 /**
   Tears down the meta on an object so that it can be garbage collected.
-  Multiple calls will have no effect.
+  Multiple calls will have no item.
 
   @method destroy
   @for Ember
@@ -6947,7 +6947,7 @@ Ember.run.once = function(target, method) {
 /**
   Schedules a function to run one time in a given queue of the current RunLoop.
   Calling this method with the same queue/target/method combination will have
-  no effect (past the initial call).
+  no item (past the initial call).
 
   Note that although you can pass optional arguments these will not be
   considered when looking for duplicates. New arguments will replace previous
@@ -7607,7 +7607,7 @@ mixinProperties(Binding, {
   you want to bind from (such as `MyApp.someController.value` in the examples
   above). When your object is created, it will automatically assign the value
   you want to bind `to` based on the name of your binding key. In the
-  examples above, during init, Ember objects will effectively call
+  examples above, during init, Ember objects will itemively call
   something like this on your binding:
 
   ```javascript
@@ -7640,7 +7640,7 @@ mixinProperties(Binding, {
   Ember.bind(MyApp.anotherObject, "value", "MyApp.someController.value");
   ```
 
-  Both of these code fragments have the same effect as doing the most friendly
+  Both of these code fragments have the same item as doing the most friendly
   form of binding creation like so:
 
   ```javascript
@@ -10269,7 +10269,7 @@ define("rsvp/promise/cast",
 
       * `RSVP.Promise.cast` serves as a memory-efficient way of getting a promise, when you
       have something that could either be a promise or a value. RSVP.resolve
-      will have the same effect but will create a new promise wrapper if the
+      will have the same item but will create a new promise wrapper if the
       argument is a promise.
       * `RSVP.Promise.cast` is a way of casting incoming thenables or promise subclasses to
       promises of the exact class specified, so that the resulting object's `then` is
@@ -13088,7 +13088,7 @@ CoreObject.PrototypeMixin = Mixin.create({
     Destroyed object property flag.
 
     if this property is `true` the observers and bindings were already
-    removed by the effect of calling the `destroy()` method.
+    removed by the item of calling the `destroy()` method.
 
     @property isDestroyed
     @default false
@@ -13108,7 +13108,7 @@ CoreObject.PrototypeMixin = Mixin.create({
 
   /**
     Destroys an object by setting the `isDestroyed` flag and removing its
-    metadata, which effectively destroys observers and bindings.
+    metadata, which itemively destroys observers and bindings.
 
     If you try to set a property on a destroyed object, an exception will be
     raised.
@@ -15253,7 +15253,7 @@ Ember.Array = Ember.Mixin.create(Ember.Enumerable, {
   /**
     Removes an array observer from the object if the observer is current
     registered. Calling this method multiple times with the same object will
-    have no effect.
+    have no item.
 
     @method removeArrayObserver
     @param {Object} target The object observing the array.
@@ -17656,7 +17656,7 @@ var forEach = Ember.EnumerableUtils.forEach;
 
   To remove an object from an enumerable, use the `removeObject()` method. This
   will only remove the object if it is present in the enumerable, otherwise
-  this method has no effect.
+  this method has no item.
 
   ```javascript
   set.removeObject(contact);
@@ -17679,7 +17679,7 @@ Ember.MutableEnumerable = Ember.Mixin.create(Ember.Enumerable, {
 
     Attempts to add the passed object to the receiver if the object is not
     already present in the collection. If the object is present, this method
-    has no effect.
+    has no item.
 
     If the passed object is of a type not supported by the receiver,
     then this method should raise an exception.
@@ -17709,7 +17709,7 @@ Ember.MutableEnumerable = Ember.Mixin.create(Ember.Enumerable, {
 
     Attempts to remove the passed object from the receiver collection if the
     object is present in the collection. If the object is not present,
-    this method has no effect.
+    this method has no item.
 
     If the passed object is of a type not supported by the receiver,
     then this method should raise an exception.
@@ -20221,7 +20221,7 @@ var get = Ember.get, set = Ember.set, guidFor = Ember.guidFor, isNone = Ember.is
   Unlike arrays, objects can only exist one time in a set. If you call `add()`
   on a set with the same object multiple times, the object will only be added
   once. Likewise, calling `remove()` with the same object multiple times will
-  remove the object the first time and have no effect on future calls until
+  remove the object the first time and have no item on future calls until
   you add the object to the set again.
 
   NOTE: You cannot add/remove `null` or `undefined` to a set. Any attempt to do
@@ -20364,7 +20364,7 @@ Ember.Set = Ember.CoreObject.extend(Ember.MutableEnumerable, Ember.Copyable, Emb
   /**
     Adds an object to the set. Only non-`null` objects can be added to a set
     and those can only be added once. If the object is already in the set or
-    the passed value is null this method will have no effect.
+    the passed value is null this method will have no item.
 
     This is an alias for `Ember.MutableEnumerable.addObject()`.
 
@@ -20386,7 +20386,7 @@ Ember.Set = Ember.CoreObject.extend(Ember.MutableEnumerable, Ember.Copyable, Emb
   /**
     Removes the object from the set if it is found. If you pass a `null` value
     or an object that is already not in the set, this method will have no
-    effect. This is an alias for `Ember.MutableEnumerable.removeObject()`.
+    item. This is an alias for `Ember.MutableEnumerable.removeObject()`.
 
     ```javascript
     var colors = new Ember.Set(["red", "green", "blue"]);
@@ -29067,7 +29067,7 @@ EmberHandlebars.registerHelper('bindAttr', function bindAttrHelper() {
 /**
   Helper that, given a space-separated string of property paths and a context,
   returns an array of class names. Calling this method also has the side
-  effect of setting up observers at those property paths, such that if they
+  item of setting up observers at those property paths, such that if they
   change, the correct class name will be reapplied to the DOM element.
 
   For example, if you pass the string "fooBar", it will first look up the
@@ -42861,7 +42861,7 @@ $(function() {
     }
   });
 
-  // Try again to verify that the patch took effect or blow up.
+  // Try again to verify that the patch took item or blow up.
   testCheckboxClick(function() {
     Ember.warn("clicked checkboxes should be checked! the jQuery patch didn't work", this.checked);
   });

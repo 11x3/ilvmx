@@ -65,12 +65,7 @@ defmodule ILM.Castle.Tower.Server do
     
   ## GenServer Callbacks
   
-  def start_link do
-    ConCache.put ILM.Castle.cache, @signals, []
-
-    #todo: refactor tick into Castle.Epoch.Server.
-    #spawn __MODULE__, :tick, [[]]
-    
+  def start_link do    
     GenServer.start_link(__MODULE__, nil)
   end
 end

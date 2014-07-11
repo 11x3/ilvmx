@@ -1,6 +1,21 @@
-defmodule ILM.Signal.Server.Supervisor do
+defmodule ILM.SignalServer.Supervisor do
   use Supervisor
-    
+
+  @castle_path Path.join(File.cwd!, "castle")
+
+  @doc "Load disk-based castle programs."  
+  def castle_programs do
+    # get Items from the existing castle nubspace
+    if File.exists?(@castle_path) do
+      castle_signals = File.ls!(@castle_path) |> Enum.map fn file_path ->
+        prog_path   = Path.join(@castle_path, file_path)
+        signal_path = Path.basename(prog_path, ".cake")
+
+        Signal.u("castle/#{ signal_path }", signal_path, Program.setup(prog_path))
+      end
+    end  
+  end
+  
   ## GenSupervisor
   
   def start_link do
@@ -8,11 +23,12 @@ defmodule ILM.Signal.Server.Supervisor do
   end
 
   def init(_) do
-    # todo: add a poolboy here
+    # Load custom castle programs.
+    Task.async fn -> castle_programs end
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Castle.Signal.Server, [])
+      worker(ILM.SignalServer, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

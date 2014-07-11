@@ -15,41 +15,46 @@ defmodule ILM.Plug.Server do
   plug :dispatch
   plug :match
 
-  @doc """
-  (*/*)
-  Plug: *ring*, *ring*
-  """
+  @doc "Plug: *ring*, *ring*"
   def call(conn, opts) do
-    adapt(conn, conn.path_info)
+    hello(conn, conn.path_info)
   end
   
   
-  @doc """
-  (*/*)
-  ILvMx: hello?
-  """
-  def adapt(conn, []) do
+  @doc "(x-x-): hello?"
+  def hello(conn, []) do
     ## Splash
+    IO.inspect "(x-x-) Plug: #{ inspect self }"
     
-    adapt(conn, ["app"])
+    hello(conn, ["app"])
   end
-  def adapt(conn, ["app"]) do
+  def hello(conn, ["app"]) do
     ## App
     
     send_resp conn, 200, Bot.prop "index.html"
   end
-  def adapt(conn, commands) do
+  def hello(conn, commands) do
     ## Files/Items/Object
     cmd_path = Path.join(["priv", "static"|commands])
+    
     unless Wizard.valid_path?(commands) do
-      send_resp conn, 404, "404:1 File not found (ILM.Plug.Server)"
+      send_resp conn, 404, "(x-x-) 404:1 File not found"
     else
       if File.exists?(cmd_path) do
         send_resp conn, 200, File.read!(cmd_path)
       else
-        signal = Signal.x self, Path.join(commands), Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-        
-        send_resp(conn, 200, inspect(signal.items))
+        # kickoff
+        result = Task.async(fn -> 
+          signal_path = Path.join(commands)
+
+          {:ok, signal} = Signal.x self, signal_path, Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+          
+          receive do
+            {:signal, signal} -> send_resp(conn, 200, inspect(signal))
+          after
+            90_000 -> send_resp(conn, 408, "(x-x-) 408:1 Remote computer not listening")
+          end
+        end)
       end
     end
   end

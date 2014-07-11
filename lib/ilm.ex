@@ -25,6 +25,8 @@ defmodule ILM do
   # See http://elixir-lang.org/docs/stable/Application.html
   # for more information on OTP Applications
   def start do
+    IO.inspect "(x-x-) #ilvmx #lolnub"
+    
     start(nil, nil)
   end
   def start(_type, _args) do

@@ -4902,7 +4902,7 @@ DS.Model.reopen({
 
   A note about the computed properties contained here:
 
-  **These properties are effectively sealed once called for the first time.**
+  **These properties are itemively sealed once called for the first time.**
   To avoid repeatedly doing expensive iteration over a model's fields, these
   values are computed once and then cached for the remainder of the runtime of
   your application.
