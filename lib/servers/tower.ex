@@ -1,9 +1,9 @@
-defmodule ILM.Castle.Tower.Server do
+defmodule ILM.Servers.Tower do
   use GenServer
   use Jazz
 
   @moduledoc """
-  Our ILM.Castle.Tower.Server (or :emit stage) is where our apps produce 
+  Our ILM.Servers.Tower (or :emit stage) is where our apps produce 
   most of their outside world side items, which come from signals that are 
   generated during the :adapt, and :transform stage of the app.
   """
@@ -12,9 +12,23 @@ defmodule ILM.Castle.Tower.Server do
   #todo: Register external clients for Signals
   """
   def capture!(signal) do
-    # todo: start or broadcast/search for an existing signal_server
+    # upload a program to exe on this signal
+    # ILM.SignalServer.upload! signal, fn signal ->
+    #   IO.inspect "(x-xILM.Servers.Towerower.capture! #{ inspect signal }"
+    # end
     
     signal
+  end
+
+  @doc "commit the event"
+  def commit!(signal) do
+    # todo: start or broadcast/search for an existing signal_server
+    # if signal.source do
+    #   send signal.source, {:signal, signal}
+    # end
+    #
+    signal
+    |> signal!
   end
   
   @doc """
@@ -40,16 +54,16 @@ defmodule ILM.Castle.Tower.Server do
   """
   def archive!(signal) do
     # # create nub + meta directory
-    # signals = "priv/static/obj/signals"
-    # unless File.exists? signals do
-    #   File.mkdir! signals
+    # signals_path = "priv/static/obj/signals"
+    # unless File.exists? signals_path do
+    #   File.mkdir! signals_path
     # end
     #
     # # check/create the metanub
-    # file = Path.join(signals, signal.unique)
+    # unique_path = Path.join(signals_path, signal.unique)
     #
     # # todo: add/update commit times of signal
-    # File.write!(file, JSON.encode!(signal))
+    # File.write!(unique_path, inspect(signal))
 
     signal
   end

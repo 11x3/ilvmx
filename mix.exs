@@ -3,7 +3,7 @@ defmodule ILM.Mixfile do
 
   def project do
     [ app: :ilvmx,
-      version: "0.0.1",
+      version: "0.2.0",
       elixir: "~> 0.14.0",
       deps: deps ]
   end
@@ -19,7 +19,8 @@ defmodule ILM.Mixfile do
         :cowboy,
         :plug,
         :httpotion,
-      ]
+      ],
+      env: [signals: []],
     ]
   end
 
@@ -34,7 +35,6 @@ defmodule ILM.Mixfile do
       {:cowboy,     github: "extend/cowboy"},
       {:plug,       github: "elixir-lang/plug"},
       {:ossp_uuid,  github: "yrashk/erlang-ossp-uuid", overide: false},
-      {:con_cache,  github: "sasa1977/con_cache", overide: false},
       {:httpotion,  github: "myfreeweb/httpotion", overide: false},
       {:jazz,       github: "meh/jazz"},
       {:markdown,   github: "devinus/markdown"},

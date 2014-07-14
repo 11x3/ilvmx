@@ -7,7 +7,7 @@ defmodule Wizard do
   Imported from Plug.
   https://raw.githubusercontent.com/elixir-lang/plug/master/lib/plug/static.ex
   
-  Currently returns false for paths that include ".", "..", "", "/", "\\", ":" 
+  Returns false for invalid paths.
   """
   def valid_path?(path) when is_binary(path) and path in [".", "..", ""], do: false
   def valid_path?([h|_]) when h in [nil, "..", "", "\\", " "], do: false

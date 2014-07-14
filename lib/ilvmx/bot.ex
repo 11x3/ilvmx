@@ -8,21 +8,21 @@ defmodule Bot do
 
   ## World API (external items)
 
-  @doc """
-  Read a file from the internet.
-  """
+  @doc "Read a file from the internet."
   def web(path) do
     if Wizard.valid_path?(path) do
       HTTPotion.get(path).body
     end
   end
 
+  
+  ## Item API
+  
 
+  
   ## File API
   
-  @doc """
-  Take files from priv/static.
-  """
+  @doc "Take files from priv/static."
   def prop(static_relative_path) do
     prop_path = Path.join("priv/static", static_relative_path)
     unless Wizard.valid_path?(prop_path) and File.exists?(prop_path) do
@@ -32,9 +32,7 @@ defmodule Bot do
     end
   end
 
-  @doc """
-  Place objects into The World, oh our dear World.
-  """
+  @doc "Place objects into The World, oh our dear World."
   def drop(data, static_relative_path) do
     prop_path = Path.join("priv/static", static_relative_path)
     unless Wizard.valid_path?(prop_path) do
@@ -45,5 +43,10 @@ defmodule Bot do
       data
     end
   end
-    
+  
+  
+  ## Private
+  
+  def nub_path(nubspace),  do: Path.join("/api/obj", String.lstrip(nubspace, ?#))
+  
 end

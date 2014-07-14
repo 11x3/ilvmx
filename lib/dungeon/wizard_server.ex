@@ -5,8 +5,7 @@ defmodule ILM.Castle.Wizard.Server do
   Ask the Wizard (nicely) to process a `Signal`.
   """
   def please?(signal) do
-    signal
-    |> enrich?
+    signal |> enrich? |> ILM.SignalServer.boost!
   end
 
   @doc """
@@ -15,9 +14,6 @@ defmodule ILM.Castle.Wizard.Server do
   def enrich?(signal) do
     # todo: add callbacks api
     
-    signal = %{signal| }
-
-
     signal
   end
   

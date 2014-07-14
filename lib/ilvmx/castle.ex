@@ -1,7 +1,6 @@
 defmodule ILM.Castle do
   use GenServer
   
-  @cache :cache
   @epoch :epoch
 
   @moduledoc """
@@ -16,9 +15,7 @@ defmodule ILM.Castle do
   Castle's astral connection to the higher planes of the ILvMx network.
   """
   def gate!(signal) do
-    signal
-    |> ILM.Castle.Wizard.Server.please?
-    |> ILM.SignalServer.boost!
+    signal |> ILM.Castle.Wizard.Server.please?
   end
   
   
@@ -58,34 +55,14 @@ defmodule ILM.Castle do
   def upload_limit do
     8_000_000
   end
-  
-  
-  ## Private
-
-  # Return the app cache.
-  def cache do
-    store = Process.get @cache
-    if !store do
-      store = ConCache.start_link(
-        touch_on_read: true,
-        ttl: :timer.seconds(0)
-      )
-      Process.put @cache, store
-    end
-    store
-  end
-  
-  
+    
   ## GenServer
 
   def start_link do
-    # castle-wide cache
-    cache
-
     link = GenServer.start_link(__MODULE__, nil)
 
     # setup plug adapters
-    Plug.Adapters.Cowboy.http ILM.Plug.Server, [], port: 8080
+    Plug.Adapters.Cowboy.http ILM.Servers.Plug, [], port: 8080
     #todo: support ILM.config for starting options
     
     link

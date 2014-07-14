@@ -13,16 +13,11 @@ defmodule ILM.Castle.CPU.Server do
   #               data: %{},  # storage
   #             errors: [],   # exceptions or manual logged errors
   #             unique: nil
-  
-  @doc "Install a continuous running program into the CPU."
-  def install!(signal) do
-    # add
-
-    signal
-  end
-  
+    
   @doc "Execute a program one time on the CPU."
-  def execute!(signal) do    
+  def execute!(signal) do
+    IO.inspect "(x-x-):CPU.Server.signal: #{inspect signal}"
+    
     # filter signal.items for programs
     # compile programs
     # execute programs

@@ -4,6 +4,9 @@
 
 use Jazz
 
+# server
+ILM.start
+
 # tests
 ExUnit.start
 
@@ -18,9 +21,3 @@ defmodule IT do
     assert Regex.match? ILM.Castle.uuid_regex, uuid
   end
 end
-
-# server
-ILM.start
-
-
-

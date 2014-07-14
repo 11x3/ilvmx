@@ -10,14 +10,14 @@ defmodule ILMTest do
     
   test "endpoints" do
     # invalid
-    # assert 404 == HTTPotion.get(IT.web "./something").status_code
-    # assert 404 == HTTPotion.get(IT.web "../something").status_code
-    # assert 404 == HTTPotion.get(IT.web "../something:else").status_code
-    
+    assert 404 == HTTPotion.get(IT.web "./something").status_code
+    assert 404 == HTTPotion.get(IT.web "../something").status_code
+    assert 404 == HTTPotion.get(IT.web "../something:else").status_code
+
     # splash
-    # assert 200 == HTTPotion.get(IT.web("")).status_code
-    assert 200 == HTTPotion.get(IT.web("lolnub")).status_code
-    # assert Bot.web IT.web("") == Bot.web IT.web("app")
+    assert 200 == HTTPotion.get(IT.web("")).status_code
+    assert 204 == HTTPotion.get(IT.web("lolnub")).status_code
+    assert Bot.web IT.web("") == Bot.web IT.web("app")
   end
   
   test "invalids" do
