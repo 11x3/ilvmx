@@ -16,7 +16,7 @@ defmodule ILM.SignalSupervisor do
           prog_path   = Path.join(@castle_path, file_path)
           signal_path = Path.basename(prog_path, ".cake")
 
-          Signal.u signal_path, Program.setup(prog_path)
+          Signal.u Path.basename(signal_path, Path.extname(signal_path)), Program.setup(prog_path)
         end
       end
     rescue

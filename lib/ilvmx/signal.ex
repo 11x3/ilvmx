@@ -41,7 +41,7 @@ defmodule Signal do
   Execute a `Signal`.
   """
   def x(source, path, content \\ nil, program \\ nil) do
-    #m(source, path, content) |> ILM.Castle.gate! |> ILM.Servers.Tower.capture!
+    m(source, path, content) |> ILM.Castle.gate! |> ILM.Servers.Tower.capture!
   end
   
   @doc "Add `items` to `signal`."
