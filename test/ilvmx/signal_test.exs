@@ -10,15 +10,14 @@ defmodule SignalTest do
   test "u" do
     assert :ok = Signal.u "html/header", Bot.prop "header.html"
     assert :ok = Signal.u "lolnub", "todo"
-    assert %{"html/header" => [pid1], "lolnub" => [pid2]} = ILM.SignalSupervisor.signals
-    assert true == is_pid pid1
-    assert true == is_pid pid2
+    assert true == is_pid List.first(ILM.SignalSupervisor.signals["lolnub"])
   end
   
   test "x" do
     assert :ok = Signal.u "html/header", Bot.prop "header.html"
   
-    assert "" == Signal.x self, "html/header"
+    assert %Signal{content: {:server, pid}} = Signal.x self, "html/header"
+    assert true == is_pid pid
   end
     
   test "i" do

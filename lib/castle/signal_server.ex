@@ -22,13 +22,14 @@ defmodule ILM.SignalServer do
   
   @doc "Collect signals from Castle."
   def boost!(signal) do
-
     # promote the signal to a GenServer
     {:ok, server} = GenServer.start_link(__MODULE__, nil, debug: [])
     IO.inspect "(x-x-):SignalServer.boost! {signal: #{inspect signal.path}, client: #{inspect self}}"
 
     # process the signal/program,
     GenServer.cast(server, {:boost, signal, self, server})
+    
+    %{signal| content: {:server, server}}
   end
   
   # # @doc """
