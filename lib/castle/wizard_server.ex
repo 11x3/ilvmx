@@ -5,7 +5,7 @@ defmodule ILM.Castle.Wizard.Server do
   Ask the Wizard (nicely) to process a `Signal`.
   """
   def please?(signal) do
-    signal |> enrich? |> ILM.SignalServer.boost!
+    signal |> enrich?
   end
 
   @doc """

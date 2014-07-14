@@ -53,18 +53,9 @@ defmodule ILM.Servers.Tower do
   #todo: Save `signal` to disk as configured.
   """
   def archive!(signal) do
-    # # create nub + meta directory
-    # signals_path = "priv/static/obj/signals"
-    # unless File.exists? signals_path do
-    #   File.mkdir! signals_path
-    # end
-    #
-    # # check/create the metanub
-    # unique_path = Path.join(signals_path, signal.unique)
-    #
-    # # todo: add/update commit times of signal
-    # File.write!(unique_path, inspect(signal))
-
+    # todo: add/update commit times of signal
+    Item.object(Item.m, signal)
+    
     signal
   end
 

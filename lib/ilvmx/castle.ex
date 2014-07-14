@@ -15,7 +15,9 @@ defmodule ILM.Castle do
   Castle's astral connection to the higher planes of the ILvMx network.
   """
   def gate!(signal) do
-    signal |> ILM.Castle.Wizard.Server.please?
+    signal 
+    |> ILM.Castle.Wizard.Server.please?
+    |> ILM.SignalServer.boost!
   end
   
   

@@ -70,8 +70,8 @@ defmodule ILM.SignalServer do
         #todo: exe program or otherwise pattern/match
         
         # "boost" the signal
-        Agent.update(boost_agent,  fn signal -> Signal.i(boost, signal) end)
-        Agent.update(signal_agent, fn signal -> Signal.i(signal, boost) end)
+        Agent.update boost_agent,  fn signal -> Signal.i(signal, signal) end
+        Agent.update signal_agent, fn signal -> Signal.i(signal, boost) end
 
         send client, {:update, boost_agent, server}        
       {_, content} -> IO.inspect "(x-x-):unknown message in signal_loop: #{ inspect content }"
@@ -106,10 +106,8 @@ defmodule ILM.SignalServer do
       3_000 -> boost_agent
     end
     
-    Agent.get(boost_agent, fn signal -> signal end)
+    signal = Agent.get(boost_agent, fn signal -> signal end)
     |> ILM.Castle.CPU.Server.execute!
-    |> ILM.Castle.Wizard.Server.filter?
-    |> ILM.Servers.Tower.commit!
   end
   
   ## GenServer

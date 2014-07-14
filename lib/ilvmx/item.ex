@@ -24,7 +24,7 @@ defmodule Item do
   end
   def object(item, object) when is_binary(object) do    
     Bot.drop object, item.object
-        
+    
     item
   end
   def object(item, object) do

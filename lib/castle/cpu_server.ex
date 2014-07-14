@@ -23,6 +23,8 @@ defmodule ILM.Castle.CPU.Server do
     # execute programs
     
     signal
+    |> ILM.Castle.Wizard.Server.filter?
+    |> ILM.Servers.Tower.commit!
   end
   
     
