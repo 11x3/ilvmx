@@ -13,7 +13,7 @@ defmodule ILM.Castle.CPU.Server do
   #               data: %{},  # storage
   #             errors: [],   # exceptions or manual logged errors
   #             unique: nil
-    
+      
   @doc "Execute a program one time on the CPU."
   def execute!(signal) do
     IO.inspect "(x-x-):CPU.Server.signal: #{inspect signal}"

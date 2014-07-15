@@ -21,7 +21,7 @@ defmodule ILM.Servers.Plug do
   end
   
   
-  @doc "(x-x-):hello?"
+  @doc "(x-x-): hello?"
   def hello(conn, []) do
     ## Splash
     IO.inspect "(x-x-) Plug: #{ inspect self }"
@@ -47,15 +47,15 @@ defmodule ILM.Servers.Plug do
         signal_path   = Path.join(commands)
         signal_params = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
         
-        Signal.x self, signal_path, signal_params
+        # Signal.x self, signal_path, signal_params
+        #
+        # receive do
+        #   {:signal, signal} -> send_resp(conn, 200, inspect(signal))
+        # after
+        #   8_000 -> send_resp(conn, 408, "(x-x-) 408:1 Remote computer not listening")
+        # end
         
-        receive do
-          {:signal, signal} -> send_resp(conn, 200, inspect(signal))
-        after
-          8_000 -> send_resp(conn, 408, "(x-x-) 408:1 Remote computer not listening")
-        end
-        
-        conn
+    
       end
     end
   end

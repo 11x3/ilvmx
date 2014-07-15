@@ -17,7 +17,9 @@ defmodule Bot do
 
   
   ## Item API
-  
+  def item(unique) do
+    
+  end
 
   
   ## File API

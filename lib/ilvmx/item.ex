@@ -1,15 +1,18 @@
 defmodule Item do
   defstruct   kind: nil,  # String (eg. mime/type)
             unique: nil,  # "32453-4544-3434-234324-7879"
-            object: nil,  # %{} => "/obj/32453/meta"
-            binary: nil   # ""  => "/obj/32453/4544-3434-234324-7879"
+            object: nil,  # %{} => "obj/32453/4544-3434-234324-7879/object"
+            binary: nil,  # ""  => "bin/32453/4544-3434-234324-7879/binary"
+            review: nil   #        "obj/32453/4544-3434-234324-7879/meta"
+            
 
   @moduledoc """
   Items = JSON object + binary too.
-  """          
+  """
   def m do
-    unique = ILM.Castle.uuid
-    
+    m(ILM.Castle.uuid)
+  end
+  def m(unique) do
     item = %Item{
       unique: unique,
       object: "obj/#{ unique }.json",
@@ -31,13 +34,13 @@ defmodule Item do
     object item, inspect(object)
   end
 
-  # # binary type
-  # def binary(item) do
-  #   Bot.prop item.binary
-  # end
-  # def binary(item, data) do
-  #   Bot.drop data, item.binary
-  #
-  #   item
-  # end
+  # binary type
+  def binary(item) do
+    Bot.prop item.binary
+  end
+  def binary(item, data) do
+    Bot.drop data, item.binary
+
+    item
+  end
 end

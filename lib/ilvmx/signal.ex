@@ -1,10 +1,9 @@
 defmodule Signal do
   defstruct     path: nil,  # "about/ilvmx"
-             content: nil,  # data/params
               source: nil,  # sender (pid, email, nick, etc)
+                item: nil,  # data/params
               unique: nil,  # uuid
-               items: nil,
-                 tmp: nil  # tmp or private stuff
+               items: []    # [item]
 
   use GenEvent
                
@@ -15,14 +14,13 @@ defmodule Signal do
   @doc """
   Make a `Signal`.
   """
-  def m(source, path \\ ILM.Castle.name, content \\ nil) do
+  def m(source, path \\ ILM.Castle.name, item \\ nil) do
     %Signal{
           path: path,
-       content: content,
         source: source,
-        unique: ILM.Castle.uuid,
+          item: item,
          items: [],
-           tmp: %{}
+        unique: ILM.Castle.uuid
     }
   end
   
@@ -44,9 +42,15 @@ defmodule Signal do
     m(source, path, content) |> ILM.Castle.gate! |> ILM.Servers.Tower.capture!
   end
   
+  @doc "Capture a signal_path and message the source."
+  def c(source, path) do
+    m(source, path) |> ILM.Servers.Tower.capture!
+  end
+  
   @doc "Add `items` to `signal`."
   def i(signal, items) do
     %{signal| :items => List.flatten(signal.items ++ [items]) }
   end
+
 end
 

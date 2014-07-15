@@ -12,4 +12,10 @@ defmodule ItemTest do
     assert "lolnub" == Item.object item
   end
   
+  test "item binaries" do
+    item = Item.m
+    Item.binary item, "lolnub"
+    
+    assert "lolnub" == Item.binary item
+  end
 end

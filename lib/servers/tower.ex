@@ -3,21 +3,23 @@ defmodule ILM.Servers.Tower do
   use Jazz
 
   @moduledoc """
-  Our ILM.Servers.Tower (or :emit stage) is where our apps produce 
-  most of their outside world side items, which come from signals that are 
+  Our Tower server (or :emit stage) is where the app produces 
+  most of the outside world side items, which come from signals that are 
   generated during the :adapt, and :transform stage of the app.
   """
+
 
   @doc """
   #todo: Register external clients for Signals
   """
   def capture!(signal) do
     # upload a program to exe on this signal
-    # ILM.SignalServer.upload! signal, fn signal ->
-    #   IO.inspect "(x-xILM.Servers.Towerower.capture! #{ inspect signal }"
-    # end
-    
-    signal
+    signal |> ILM.SignalServer.upload! fn capture ->
+      IO.inspect "(x-x-):ILM.Servers.Tower {signal: #{inspect signal.path}, capture: #{inspect capture}}"
+      # receive do
+      #   {:commit, signal.unique, capture} -> capture
+      # end
+    end
   end
 
   @doc "commit the event"
@@ -50,10 +52,11 @@ defmodule ILM.Servers.Tower do
   end
 
   @doc """
-  #todo: Save `signal` to disk as configured.
+  Save `signal` to disk as configured.
   """
   def archive!(signal) do
     # todo: add/update commit times of signal
+    # todo: add config support
     Item.object(Item.m, signal)
     
     signal
@@ -67,10 +70,10 @@ defmodule ILM.Servers.Tower do
     signal
   end
   
-    
+  
   ## GenServer Callbacks
   
-  def start_link do    
+  def start_link do
     GenServer.start_link(__MODULE__, nil)
   end
 end

@@ -16,7 +16,7 @@ defmodule SignalTest do
   test "x" do
     assert :ok = Signal.u "html/header", Bot.prop "header.html"
   
-    assert %Signal{content: {:server, pid}} = Signal.x self, "html/header"
+    assert %Signal{item: {:server, pid}} = Signal.x self, "html/header"
     assert true == is_pid pid
   end
     

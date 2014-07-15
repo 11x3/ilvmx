@@ -5,13 +5,13 @@ defmodule ILM.Castle.Wizard.Server do
   Ask the Wizard (nicely) to process a `Signal`.
   """
   def please?(signal) do
-    signal |> enrich?
+    signal |> review?
   end
 
   @doc """
   Stub :before `Signal` traffic flow control.
   """
-  def enrich?(signal) do
+  def review?(signal) do
     # todo: add callbacks api
     
     signal

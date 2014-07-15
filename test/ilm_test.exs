@@ -3,12 +3,12 @@ defmodule ILMTest do
   
   # ## Integration
   
-  # test "signals" do
-  #   signal = Signal.x self, "lolnub"
-  #   assert 1 == length signal.items
-  #   assert %Signal{path: "lolnub", content: %Program{}} = List.first(signal.items)
-  # end
-  #
+  test "signals" do
+    signal = Signal.x self, "lolnub"
+    assert 1 == length signal.items
+    assert %Signal{path: "lolnub", item: %Program{}} = List.first(signal.items)
+  end
+  
   # test "endpoints" do
   #   # invalid
   #   assert 404 == HTTPotion.get(IT.web "./something").status_code

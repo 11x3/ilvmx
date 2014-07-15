@@ -4,7 +4,7 @@ defmodule ILM.SignalServer do
   @castle_signals :castle_signals
   
   @moduledoc """
-  Nubspace is a mapping of Signals -> Items on disk/memory/galaxy.
+  SignalServer or Nubspace server is a mapping of Signals -> Items on disk/memory/galaxy.
   """
 
   ## API
@@ -15,6 +15,8 @@ defmodule ILM.SignalServer do
 
     {:ok, server} = GenServer.start_link(__MODULE__, nil, debug: [])
     IO.inspect "(x-x-):SignalServer.upload! {signal: #{inspect signal.path}, server: #{inspect server}}"
+    
+    program = Program.cmd(program)
     
     # process the signal/program
     GenServer.cast(server, {:upload, signal, program, server})
@@ -29,18 +31,23 @@ defmodule ILM.SignalServer do
     # process the signal/program,
     GenServer.cast(server, {:boost, signal, self, server})
     
-    %{signal| content: {:server, server}}
+    %{signal| item: {:server, server}}
   end
   
-  # # @doc """
-  # # #todo: Kill a `signal` already in Nubspace.
-  # # """
-  # # def kill!(signal) do
-  # #   IO.inspect "#todo: add kill switch"
-  # #
-  # #   signal
-  # # end
+  # @doc """
+  # #todo: Kill a `signal` already in Nubspace.
+  # """
+  # def kill!(signal, token) do
+  #   {:ok, server} = GenServer.start_link(__MODULE__, nil, debug: [])
+  #   IO.inspect "(x-x-):SignalServer.upload! {signal: #{inspect signal.path}, server: #{inspect server}}"
   #
+  #   # process the signal/program
+  #   GenServer.cast(server, {:kill, signal, token})
+  #
+  #   signal
+  # end
+  
+  
   # ## Uploads
   
   def handle_cast({:upload, signal, program, server}, opts) do
@@ -53,6 +60,8 @@ defmodule ILM.SignalServer do
 
     upload_loop(signal_agent, program, server)
 
+    #todo: return a UUID-based token for ownership
+     
     {:noreply, opts}
   end
   
@@ -68,18 +77,29 @@ defmodule ILM.SignalServer do
         IO.inspect "(x-x-):SignalServer.upload_loop.boost:  #{inspect boost}"
         IO.inspect "(x-x-):SignalServer.upload_loop.signal: #{inspect signal}"
         
-        #todo: exe program or otherwise pattern/match
+        #exe program or otherwise pattern/match
         
-        # "boost" the signal
-        Agent.update boost_agent,  fn signal -> Signal.i(signal, signal) end
+        if program do
+          signal |> Program.exe
+        else
+          # a dumb "boost" match to up the signal
+          Agent.update boost_agent,  fn signal -> Signal.i(signal, signal) end
+        end
+        
+        # update our signal
         Agent.update signal_agent, fn signal -> Signal.i(signal, boost) end
-
-        send client, {:update, boost_agent, server}        
+        
+        # forward signal to client
+        if client do
+          send client, {:update, boost_agent, server}    
+        end
+        
       {_, content} -> IO.inspect "(x-x-):unknown message in signal_loop: #{ inspect content }"
     end
 
     upload_loop(signal_agent, server)
   end
+  
   
   ## Boosts
   
@@ -110,6 +130,9 @@ defmodule ILM.SignalServer do
     signal = Agent.get(boost_agent, fn signal -> signal end)
     |> ILM.Castle.CPU.Server.execute!
   end
+  
+  ## Kills
+  
   
   ## GenServer
   
