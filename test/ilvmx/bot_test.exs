@@ -10,39 +10,50 @@ defmodule BotTest do
   end
 
 
-  ## Signal
-  
-  # test "signal a program" do
-    #Bot.sig "#chat", fn event -> send self, :signal end
-  # end
-  
-  # test "signal a binary" do
-  #   Bot.sig "lolnub", "todo"
-  # end
+  ## Nubspace
 
-  # test "signal an item" do
-  #   Bot.sig "#chat", Bot.get
-  # end
-
-
-  ## Item
-  
-  # test "Bot.set" do
-  #
-  # end
-  #
-  # test "Bot.get" do
-  #
-  # end
-
-
-  ## File
-  
-  test "Bot.prop" do
-    assert true == Regex.match?(~r/html/, Bot.prop("index.html"))
+  test "list" do
+    assert [] == Bot.list "xyz"
+    assert []
   end
   
-  test "Bot.drop" do
-    assert Bot.prop("tmp/todo") == Bot.drop("todo", "tmp/todo") 
+  # test "push" do
+  #   effect = Bot.push "chat", "todo"
+  #
+  #   assert false
+  # end
+  #
+  # test "pull" do
+  #   effect = Bot.pull "chat"
+  #
+  #   assert false
+  # end
+  #
+  # ## Item
+  
+  test "item" do
+    assert %Item{} = Bot.item
+  end
+  
+  # test "set" do
+  #   assert %Item{content: %{text: "todo"}} = Bot.set Item.m, :text, "todo"
+  # end
+  #
+  # test "get" do
+  #   assert false
+  # end
+  #
+  # test "binaries" do
+  #   assert false
+  # end
+  #
+  ## File
+  
+  test "Bot.take" do
+    assert true == Regex.match?(~r/html/, Bot.take("index.html"))
+  end
+  
+  test "Bot.make" do
+    assert Bot.take("tmp/todo") == Bot.make("todo", "tmp/todo") 
   end
 end

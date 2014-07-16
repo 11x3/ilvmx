@@ -20,7 +20,7 @@ defmodule ILM.Mixfile do
         :plug,
         :httpotion,
       ],
-      env: [signals: []],
+      env: [signals: %{}],
     ]
   end
 

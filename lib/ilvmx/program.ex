@@ -3,42 +3,51 @@ defmodule Program do
               data: %{},  # storage
             errors: [],   # exceptions or manual logged errors
             unique: nil
+
+  @moduledoc """
+  Programming Program [wip][betabook]
+  """
   
   @doc "Execute a `program_path` from disk."
-  def cmd(function) when is_function(function) do
+  def cmd(function) do
     program = %Program{
       unique: ILM.Castle.uuid,
         code: function
     }
+
+    program
   end
 
   @doc """
-  Exe a Cakedown cloud app text document.
+  Exe Cakedown text.
   """   
-  def doh(item = %Item{}) do
+  def new(text) do
     program = %Program{
       unique: ILM.Castle.uuid,
-        code: Item.object(item)
+        code: text
     }
-
+    
     #todo: convert source into code
-
+    
     program
   end
     
   @doc "Execute a `program_path` from disk."
-  def bat(item = %Item{}) do
-    program = %Program{
-      unique: ILM.Castle.uuid,
-        code: Item.binary(item)
-    }
+  def exe(program_path) do
+    if Wizard.valid_path?(program_path) && File.exists?(program_path) do
+      item = case Path.extname(program_path) do
+        ".exs"  -> Code.eval_file program_path
+        ".doh"  -> File.read!     program_path
+      end
+      program = %Program{
+        unique: ILM.Castle.uuid,
+          code: item
+      }
+    end
     
-    # case Path.extname(item.) do
-    #   ".exs"  -> Code.eval_file program_path
-    #   ".doh" -> exe(program_path)
-    # end
+    program
   end
-
+  
 end
 
 

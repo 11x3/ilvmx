@@ -12,31 +12,31 @@ defmodule ILM.Servers.Tower do
   @doc """
   #todo: Register external clients for Signals
   """
-  def capture!(signal) do
+  def capture!(client, signal) do
     # upload a program to exe on this signal
-    signal |> ILM.SignalServer.upload! fn capture ->
+    signal |> ILM.CPU.upload! fn capture ->
       IO.inspect "(x-x-):ILM.Servers.Tower {signal: #{inspect signal.path}, capture: #{inspect capture}}"
-      # receive do
-      #   {:commit, signal.unique, capture} -> capture
-      # end
+      
+      receive do
+        {:commit, commit} -> 
+          if signal.path == capture.path do
+            send client, {:signal, commit}
+          end
+      end
     end
   end
 
-  @doc "commit the event"
+
+  @doc "Commit `signal` to Galaxy state."
   def commit!(signal) do
-    # todo: start or broadcast/search for an existing signal_server
-    # if signal.source do
-    #   send signal.source, {:signal, signal}
-    # end
-    #
-    signal
-    |> signal!
-  end
-  
-  @doc """
-  Commit `signal` to Galaxy state.
-  """
-  def signal!(signal) do
+    message = {:commit, signal}
+    
+    Task.async fn -> 
+      # Application.get_env(:ilvmx, :signals) |> Enum.each fn sigmap ->
+      #   send sigmap.server, message
+      # end
+    end
+    
     signal
     |> pipe!
     |> archive!
@@ -57,7 +57,7 @@ defmodule ILM.Servers.Tower do
   def archive!(signal) do
     # todo: add/update commit times of signal
     # todo: add config support
-    Item.object(Item.m, signal)
+    Bot.item(signal)
     
     signal
   end

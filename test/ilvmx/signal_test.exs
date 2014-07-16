@@ -8,20 +8,30 @@ defmodule SignalTest do
   end
   
   test "u" do
-    assert :ok = Signal.u "html/header", Bot.prop "header.html"
     assert :ok = Signal.u "lolnub", "todo"
-    assert true == is_pid List.first(ILM.SignalSupervisor.signals["lolnub"])
+    assert :ok = Signal.u "html/header", Bot.take "header.html"
+    
+    assert [%{agent: apid, server: spid}] = Application.get_env(:ilvmx, :signals)["lolnub"]
   end
   
   test "x" do
-    assert :ok = Signal.u "html/header", Bot.prop "header.html"
-  
-    assert %Signal{item: {:server, pid}} = Signal.x self, "html/header"
-    assert true == is_pid pid
+    assert :ok = Signal.u "html/header", Bot.take "header.html"
+    assert %Signal{} = Signal.x self, "html/header"
   end
+    
+  # test "signal a program" do
+  #   Signal.x "#chat", fn event -> send self, :signal end
+  # end
+  
+  # test "signal a binary" do
+  #   Signal.x "lolnub", "todo"
+  # end
+
+  # test "signal an item" do
+  #   Signal.x "#chat", Bot.get
+  # end
     
   test "i" do
     assert %Signal{items: ["todo"]} = Signal.i Signal.m(self, "system/console"), "todo"
   end
-  
 end

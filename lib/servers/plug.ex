@@ -14,24 +14,29 @@ defmodule ILM.Servers.Plug do
   plug Plug.Static, at: "/static", from: :ilvmx
   plug :dispatch
   plug :match
-
+  
+  
+  ## Plug 
+  
   @doc "Plug: *ring*, *ring*"
   def call(conn, opts) do
+    IO.inspect "(x-x-) Plug: #{ Path.join([[]|conn.path_info]) }"
+    
     hello(conn, conn.path_info)
   end
   
+  ## Custom
   
   @doc "(x-x-): hello?"
   def hello(conn, []) do
     ## Splash
-    IO.inspect "(x-x-) Plug: #{ inspect self }"
-    
+        
     hello(conn, ["app"])
   end
   def hello(conn, ["app"]) do
     ## App
     
-    send_resp conn, 200, Bot.prop "index.html"
+    send_resp conn, 200, Bot.take "index.html"
   end
   def hello(conn, commands) do
     ## Files/Items/Object
@@ -47,15 +52,7 @@ defmodule ILM.Servers.Plug do
         signal_path   = Path.join(commands)
         signal_params = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
         
-        # Signal.x self, signal_path, signal_params
-        #
-        # receive do
-        #   {:signal, signal} -> send_resp(conn, 200, inspect(signal))
-        # after
-        #   8_000 -> send_resp(conn, 408, "(x-x-) 408:1 Remote computer not listening")
-        # end
-        
-    
+        send_resp(conn, 200, inspect(Signal.x self, signal_path, signal_params))
       end
     end
   end

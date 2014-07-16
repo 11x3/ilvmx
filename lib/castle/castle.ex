@@ -16,8 +16,11 @@ defmodule ILM.Castle do
   """
   def gate!(signal) do
     signal 
-    |> ILM.Castle.Wizard.Server.please?
+    |> ILM.WizardServer.please?
     |> ILM.SignalServer.boost!
+    |> ILM.CPU.execute!
+    |> ILM.WizardServer.filter?
+    |> ILM.Servers.Tower.commit!
   end
   
   
@@ -57,7 +60,8 @@ defmodule ILM.Castle do
   def upload_limit do
     8_000_000
   end
-    
+  
+  
   ## GenServer
 
   def start_link do

@@ -1,4 +1,4 @@
-defmodule ILM.Castle.CPU.Server.Supervisor do
+defmodule ILM.CPU.Supervisor do
   use Supervisor
 
   def start_link do
@@ -8,7 +8,7 @@ defmodule ILM.Castle.CPU.Server.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Castle.CPU.Server,  []),
+      worker(ILM.CPU,  []),
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

@@ -7,9 +7,7 @@ defmodule ILM.Castle.Tower.Supervisor do
     :supervisor.start_link(__MODULE__, [])
   end
 
-  def init([]) do
-    # todo: add a poolboy of .Servers here
-    
+  def init([]) do    
     children = [
       # Define workers and child supervisors to be supervised
       worker(ILM.Servers.Tower,     [])

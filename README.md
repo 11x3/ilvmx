@@ -4,26 +4,11 @@ ILvMx is a functionally minded cloud app server, or something close to an intern
 
 ## Features
 
-- Storage + Code - global hashtag-based namespace of storage + code
-- Reactive - completely async event, time, and frame-based execution
-- Fun(ctional) - function-level partitioning
-- Fast - low overhead `Bots` and default static object graphs
-- Open Source - server/apps/dsl are completely open source
-
-## Signals
-
-```
-Signal
-#|> Player 
-|> Wizard
--|> CPU
--|> Items
--|> Programs
--|> Bots
-#|> Tower
-#|> Wizard
-Signal
-```
+- Storage + Code - global hashtag-based namespace of storage + code.
+- Reactive - completely async event, time, and frame-based execution.
+- Fun(ctional) - fun and functional/reactive.
+- Fast - low overhead `Bots` and default static object graphs.
+- Open Source - server/apps/dsl are completely open source.
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.
 
@@ -35,26 +20,14 @@ Signal
 
 ## Signal > | Adapt > Transform > Emit |
 
-Description of a reactive and functional development style for cloud apps.
-
-ATE stands for Adapt > Transform > Emit
-
-ATE is an attempt to document a reactive functional development style where data is always pushed forward and each stage or module only has a single concern that it alone handles. 
-
-Do your job here, push forward – never look back.
-
 1. Adapt: protocol-specific adapters create abstract work requests 
 2. Transform: core app executes actor models and updates data
 3. Emit: generate objects and events to the outside world
 
-## General
-
-- Elixir + Ember
 
 ## About
 
-http://lolnub.com/
-
-- http://ilvmx.org/
 - hi@lolnub.com
+- http://lolnub.com/
+- http://ilvmx.org/
 - doge: DBV8M8KT3FzGS5dwbUKdvLXJiNzPjwdtpG

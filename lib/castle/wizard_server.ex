@@ -1,4 +1,4 @@
-defmodule ILM.Castle.Wizard.Server do
+defmodule ILM.WizardServer do
   use GenServer
   
   @doc """

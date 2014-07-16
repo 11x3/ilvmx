@@ -1,22 +1,20 @@
 defmodule ILM.SignalSupervisor do
   use Supervisor
 
-  @castle_path    Path.join(File.cwd!, "castle")
-  @castle_signals :castle_signals
-
+  @castle_path Path.join(File.cwd!, "castle")
   
   @doc "Load disk-based castle programs."  
   def setup_castle do
     IO.inspect "(x-x-):SignalSupervisor.setup_castle: #{ inspect self }"
-    
+        
     try do
       # get Items from the existing castle nubspace
       if File.exists?(@castle_path) do
         castle_signals = File.ls!(@castle_path) |> Enum.map fn file_path ->
           prog_path   = Path.join(@castle_path, file_path)
-          signal_path = Path.basename(prog_path, ".cake")
-
-          Signal.u Path.basename(signal_path, Path.extname(signal_path)), Program.setup(prog_path)
+          signal_path = Path.basename(prog_path, Path.extname(prog_path))
+          
+          Signal.u signal_path, Bot.item Program.exe(prog_path)
         end
       end
     rescue
@@ -25,22 +23,6 @@ defmodule ILM.SignalSupervisor do
     end
   end
 
-  @doc "Return all Castle `Signal`s."
-  def signals do
-    # todo: use bots for app/signals
-    castle_signals = Application.get_env(:ilvmx, @castle_signals)
-    
-    unless castle_signals do
-      # put signals
-      castle_signals = %{}
-      
-      Application.put_env(:ilvmx, @castle_signals, castle_signals)
-    end
-    IO.inspect "(x-x-):SignalServer.signals {signals: #{inspect castle_signals}}"
-    
-    castle_signals
-  end
-  
   ## GenSupervisor
   
   def start_link do
@@ -53,7 +35,7 @@ defmodule ILM.SignalSupervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.SignalServer,  [signals])
+      worker(ILM.SignalServer,  [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html
