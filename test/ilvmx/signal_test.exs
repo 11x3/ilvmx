@@ -11,7 +11,7 @@ defmodule SignalTest do
     assert :ok = Signal.u "lolnub", "todo"
     assert :ok = Signal.u "html/header", Bot.take "header.html"
     
-    assert [%{agent: apid, server: spid}] = Application.get_env(:ilvmx, :signals)["lolnub"]
+    assert 2 <= length Dict.to_list(ILM.signals)
   end
   
   test "x" do

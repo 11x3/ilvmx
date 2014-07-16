@@ -10,13 +10,14 @@ defmodule Item do
   Items = JSON object + binary too.
   #todo: part out the :unique use
   """
-  def m(object \\ nil, binary \\ nil) do
+  def m(content \\ nil, binary \\ nil) do
     unique = ILM.Castle.uuid
     item = %Item{
       unique: unique,
         path: "obj/#{ unique }",
-     content: object
+     content: content
     }
+    #todo: if binary is passed, write it with Bot.make
   end
 
 end

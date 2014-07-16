@@ -4,9 +4,12 @@ defmodule ILMTest do
   # ## Integration
   
   # test "signals" do
+  #   Signal.u "lolnub", "todo"
+  #
   #   signal = Signal.x self, "lolnub"
+  #
   #   assert 1 == length signal.items
-  #   assert %Signal{path: "lolnub", item: %Program{}} = List.first(signal.items)
+  #   assert %Signal{path: "lolnub", item: %Program{}} = signal
   # end
   
   # test "endpoints" do

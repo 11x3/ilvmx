@@ -10,10 +10,17 @@ defmodule Signal do
   @moduledoc """
   `Signal`s are the superglue unit of the ILvMx Galaxy.
   """
+
+  @doc "Upload a `Signal`."
+  def u(path, item) do
+    u(nil, path, item)
+  end
+  def u(source, path, item) do
+    #todo: uploads should go through the gate
+    m(source, path, item) |> ILM.SignalServer.upload!
+  end
   
-  @doc """
-  Make a `Signal`.
-  """
+  @doc "Make a `Signal`."
   def m(source, path \\ ILM.Castle.name, item \\ nil) do
     if item do
       item = Bot.item(item)
@@ -26,15 +33,6 @@ defmodule Signal do
         source: source,
         unique: ILM.Castle.uuid
     }
-  end
-  
-  @doc "Upload a `Signal`."
-  def u(path, item) do
-    u(nil, path, item)
-  end
-  def u(source, path, item) do
-    #todo: uploads should go through the gate
-    m(source, path, item) |> ILM.CPU.upload!
   end
   
   @doc "Boost and capture a `Signal`."

@@ -2,7 +2,7 @@ defmodule ILM.CPU.Supervisor do
   use Supervisor
 
   def start_link do
-    :supervisor.start_link({:local, :castle}, __MODULE__, [])
+    :supervisor.start_link({:local, :cpu}, __MODULE__, [])
   end
 
   def init([]) do

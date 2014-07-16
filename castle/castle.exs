@@ -1,3 +1,3 @@
-# Signal.u "lolnub", Program.cmd fn signal ->
-#   Item.m Application.get_env(:ilvmx, @signals)
-# end
+Signal.u "nubs", Program.cmd fn signal ->
+  Item.m Application.get_env(:ilvmx, :signals)
+end

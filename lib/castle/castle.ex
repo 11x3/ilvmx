@@ -18,7 +18,6 @@ defmodule ILM.Castle do
     signal 
     |> ILM.WizardServer.please?
     |> ILM.SignalServer.boost!
-    |> ILM.CPU.execute!
     |> ILM.WizardServer.filter?
     |> ILM.Servers.Tower.commit!
   end

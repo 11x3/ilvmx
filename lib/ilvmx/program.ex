@@ -7,21 +7,8 @@ defmodule Program do
   @moduledoc """
   Programming Program [wip][betabook]
   """
-  
-  @doc "Execute a `program_path` from disk."
-  def cmd(function) do
-    program = %Program{
-      unique: ILM.Castle.uuid,
-        code: function
-    }
-
-    program
-  end
-
-  @doc """
-  Exe Cakedown text.
-  """   
-  def new(text) do
+  @doc "Exe Cakedown text."   
+  def raw(text) do
     program = %Program{
       unique: ILM.Castle.uuid,
         code: text
@@ -29,6 +16,16 @@ defmodule Program do
     
     #todo: convert source into code
     
+    program
+  end
+  
+  @doc "Execute a `function`"
+  def cmd(function) do
+    program = %Program{
+      unique: ILM.Castle.uuid,
+        code: function
+    }
+
     program
   end
     

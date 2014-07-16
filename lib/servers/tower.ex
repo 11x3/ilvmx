@@ -14,7 +14,7 @@ defmodule ILM.Servers.Tower do
   """
   def capture!(client, signal) do
     # upload a program to exe on this signal
-    signal |> ILM.CPU.upload! fn capture ->
+    signal |> ILM.CPU.install! fn capture ->
       IO.inspect "(x-x-):ILM.Servers.Tower {signal: #{inspect signal.path}, capture: #{inspect capture}}"
       
       receive do
