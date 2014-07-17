@@ -2,15 +2,15 @@
 
 html,
 body {
-	padding: 0;
+	padding: 20px;
 	margin: -15px 0 0;
   font: sans;
   color: #fff;
   font-size: 150%;
-  background-color: #080809;
+  background-color: #161717;
 }
 html {
-	background: url("/img/nubspace.jpg") repeat #131313;
+  border-left: 40px solid #3e3e40;
 }
 body {
 }
@@ -28,5 +28,7 @@ footer {
 label, input {
   font-size: 16px;
 }
-.row {
+.row,
+section {
+  background-color: #1f2121;
 }
