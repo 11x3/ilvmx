@@ -1,4 +1,4 @@
-defmodule ILM.SignalSupervisor do
+defmodule ILM.Nubspace.Supervisor do
   use Supervisor
 
   @castle_path Path.join(File.cwd!, "castle")
@@ -39,7 +39,7 @@ defmodule ILM.SignalSupervisor do
     # children
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.SignalServer, [signal_agent])
+      worker(ILM.Nubspace, [signal_agent])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

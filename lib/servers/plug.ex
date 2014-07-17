@@ -42,7 +42,7 @@ defmodule ILM.Servers.Plug do
     ## Files/Items/Object
     cmd_path = Path.join(["priv", "static"|commands])
     
-    unless Wizard.valid_path?(commands) do
+    unless ILM.Castle.Wizard.valid_path?(commands) do
       send_resp conn, 404, "(x-x-) 404:1 File not found"
     else
       if File.exists?(cmd_path) do

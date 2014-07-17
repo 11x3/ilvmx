@@ -1,4 +1,4 @@
-defmodule ILM.CPU do
+defmodule ILM.Castle.CPU do
   use GenServer
   
   @signals :signals
@@ -102,8 +102,8 @@ defmodule ILM.CPU do
     #     # boost   = Agent.get boost_agent,  fn boost  -> boost end
     #     # signal  = Agent.get signal_agent, fn signal -> signal end
     #     #
-    #     # # IO.inspect "(x-x-):SignalServer.message_loop.boost:  #{inspect boost}"
-    #     # # IO.inspect "(x-x-):SignalServer.message_loop.signal: #{inspect signal}"
+    #     # # IO.inspect "(x-x-):ILM.Nubspace.message_loop.boost:  #{inspect boost}"
+    #     # # IO.inspect "(x-x-):ILM.Nubspace.message_loop.signal: #{inspect signal}"
     #     # #
     #     # #todo: exe program or otherwise pattern/match
     #     # #

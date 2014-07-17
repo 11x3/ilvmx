@@ -1,7 +1,34 @@
-defmodule Wizard do
+defmodule ILM.Castle.Wizard do
+  use GenServer
+
   @moduledoc """
   Wizards filter/enrich/track/intercept Castle Signals.
   """
+  
+  @doc """
+  Ask the Wizard (nicely) to process a `Signal`.
+  """
+  def please?(signal) do
+    signal |> review?
+  end
+
+  @doc """
+  Stub :before `Signal` traffic flow control.
+  """
+  def review?(signal) do
+    # todo: add callbacks api
+    
+    signal
+  end
+  
+  @doc """
+  Stub :after `Signal` traffic filters.
+  """
+  def filter?(signal) do
+    # todo: add callbacks api
+
+    signal
+  end
 
   @doc """
   Imported from Plug.
@@ -19,4 +46,9 @@ defmodule Wizard do
   end
   def valid_path?(_), do: true
 
+  # GenServer Callbacks
+
+  def start_link do
+    GenServer.start_link(__MODULE__, nil)
+  end
 end

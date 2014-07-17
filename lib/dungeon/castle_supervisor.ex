@@ -9,7 +9,7 @@ defmodule ILM.Castle.Supervisor do
     children = [
       # Define workers and child supervisors to be supervised
       worker(ILM.Castle,                    []),
-      worker(ILM.SignalSupervisor,          []),
+      worker(ILM.Nubspace.Supervisor,          []),
       worker(ILM.Castle.Tower.Supervisor,   []),
     ]
     

@@ -17,7 +17,7 @@ defmodule Signal do
   end
   def u(source, path, item) do
     #todo: uploads should go through the gate
-    m(source, path, item) |> ILM.SignalServer.upload!
+    m(source, path, item) |> ILM.Nubspace.upload!
   end
   
   @doc "Make a `Signal`."

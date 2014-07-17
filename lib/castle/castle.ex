@@ -16,9 +16,9 @@ defmodule ILM.Castle do
   """
   def gate!(signal) do
     signal 
-    |> ILM.WizardServer.please?
-    |> ILM.SignalServer.boost!
-    |> ILM.WizardServer.filter?
+    |> ILM.Castle.Wizard.please?
+    |> ILM.Nubspace.boost!
+    |> ILM.Castle.Wizard.filter?
     |> ILM.Servers.Tower.commit!
   end
   

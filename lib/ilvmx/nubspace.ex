@@ -1,8 +1,8 @@
-defmodule ILM.SignalServer do
+defmodule ILM.Nubspace do
   use GenServer
   
   @moduledoc """
-  SignalServer or Nubspace server is a mapping of Signals -> Items 
+  ILM.Nubspace or Nubspace server is a mapping of Signals -> Items 
   on disk/memory/galaxy. Program items are further sent to the CPU.
   """
   
@@ -20,16 +20,15 @@ defmodule ILM.SignalServer do
   def upload!(signal) do
     upload!(signal, signal.item)
   end
-
   def upload!(signal, item = %Item{}) do
     {:ok, server} = GenServer.start_link(__MODULE__, signal, debug: [])
     
     # store the signal/program
     GenServer.cast(server, {:upload, signal, item, server})
   end
-  def upload!(signal, item = %Item{}, program = %Program{}) do    
+  def upload!(signal, item = %Item{}, program = %Program{}) do
     # store the signal
-    # todo: store the program in ILM.CPU
+    # todo: store the program in ILM.Castle.CPU
     throw "unsupported"
   end
   def upload!(signal, item) do
@@ -46,8 +45,8 @@ defmodule ILM.SignalServer do
     
     ILM.signals(signal.path, sigmap)
     
-    IO.inspect "(x-x-):SignalServer.upload! #{inspect sigmap}}"
-    IO.inspect "(x-x-):SignalServer.signals: #{inspect ILM.signals}}"
+    IO.inspect "(x-x-):ILM.Nubspace.upload! #{inspect sigmap}}"
+    IO.inspect "(x-x-):ILM.Nubspace.signals: #{inspect ILM.signals}}"
 
     #todo: return a UUID-based token for ownership    
     message_loop(signal_agent, item, server)
@@ -76,20 +75,19 @@ defmodule ILM.SignalServer do
   def boost!(signal) do
     # promote the signal to a GenServer
     {:ok, server} = GenServer.start_link(__MODULE__, nil, debug: [])
-    IO.inspect "(x-x-):SignalServer.boost! {signal: #{signal.path}, client: #{inspect self}}"
+    IO.inspect "(x-x-):ILM.Nubspace.boost! {signal: #{signal.path}, client: #{inspect self}}"
 
     # process the signal/program
     signal = GenServer.call(server, {:boost, signal, signal.source, server})
-    
   end
  
   def handle_call({:boost, signal, client, server}, _from, _nil) do
-    IO.inspect "(x-x-):SignalServer :boost {signal: #{inspect signal.path}, client: #{inspect client}, server: #{inspect server}}"
+    IO.inspect "(x-x-):ILM.Nubspace :boost {signal: #{inspect signal.path}, client: #{inspect client}, server: #{inspect server}}"
     IO.inspect "(x-x-):ILM.signals: #{inspect ILM.signals}"
     
     {:ok, boost_agent} = Agent.start_link(fn -> signal end)
 
-    #todo: collect nil/all signals support
+    # todo: collect nil/all signals support
     # todo: add a count/event/reduction or otherwise termination for the boost_loop 
     Task.async fn ->
       # broadcast for signal/items
@@ -100,24 +98,21 @@ defmodule ILM.SignalServer do
       end
     end
     
-    # todo: collect nubspace items
+    # collect nubspace items
     Bot.pull(signal.path) |> Enum.each fn item ->
       Agent.update boost_agent, &(Signal.i(&1, item))
     end
-     
+    IO.inspect "(x-x-) :pull: #{inspect signal.path}, pull: #{inspect Bot.pull(signal.path)}}"
+    
     {:reply, boost_loop(boost_agent, client, server), nil}
   end
 
   def boost_loop(boost_agent, client, server) do
     receive do
       {:item, item, server} ->
-        IO.inspect "(x-x-):SignalServer.boost_loop :update"
-        
-        # map signal.items = Item
-        #   \return item/link
+        IO.inspect "(x-x-):ILM.Nubspace.boost_loop :update"
 
-        boost_loop(boost_agent, client, server)
-        
+        boost_loop(boost_agent, client, server)        
     after
       1000 -> Agent.get boost_agent, fn signal -> signal end
     end
@@ -139,7 +134,7 @@ defmodule ILM.SignalServer do
   end
   
   def start_link(opts \\ nil) do
-    IO.inspect "(x-x-):SignalServer.start_link self: #{inspect self} opts: #{inspect opts}"
+    IO.inspect "(x-x-):ILM.Nubspace.start_link self: #{inspect self} opts: #{inspect opts}"
     
     GenServer.start_link(__MODULE__, opts)
   end
