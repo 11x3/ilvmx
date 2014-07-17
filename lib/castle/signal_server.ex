@@ -90,19 +90,21 @@ defmodule ILM.SignalServer do
     {:ok, boost_agent} = Agent.start_link(fn -> signal end)
 
     #todo: collect nil/all signals support
-    
-    # broadcast for signal/items
-    (ILM.signals[signal.path] || []) |> Enum.each fn sigmap ->
-      send(sigmap.server, {:boost, boost_agent, client, server})
-      
-      IO.inspect "(x-x-) :signal: #{inspect signal.path}, sigmap: #{inspect sigmap}}"
-    end
-
     # todo: add a count/event/reduction or otherwise termination for the boost_loop 
-    Task.async fn ->  end
+    Task.async fn ->
+      # broadcast for signal/items
+      (ILM.signals[signal.path] || []) |> Enum.each fn sigmap ->
+        send(sigmap.server, {:boost, boost_agent, client, server})
+      
+        IO.inspect "(x-x-) :signal: #{inspect signal.path}, sigmap: #{inspect sigmap}}"
+      end
+    end
     
     # todo: collect nubspace items
-    
+    Bot.pull(signal.path) |> Enum.each fn item ->
+      Agent.update boost_agent, &(Signal.i(&1, item))
+    end
+     
     {:reply, boost_loop(boost_agent, client, server), nil}
   end
 

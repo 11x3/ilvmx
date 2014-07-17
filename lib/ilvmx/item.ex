@@ -1,9 +1,9 @@
 defmodule Item do
   defstruct   kind: nil,  # String (eg. mime/type)
             unique: nil,  # "32453-4544-3434-234324-7879"
-              path: nil,  # %{}           => "obj/32453-4544-3434-234324-7879/object"
-           content: nil,  # {:file, etc}  => "bin/32453-4544-3434-234324-7879/binary"
-            review: nil   # :ilvmx        => "rev/32453-4544-3434-234324-7879/meta"
+              path: nil,  # %{}           => "obj/32453-4544-3434-234324-7879"
+              meta: nil,  # :ilvmx        => "obj/32453-4544-3434-234324-7879/meta"
+           content: nil   # {:file, etc}  => "obj/32453-4544-3434-234324-7879/binary"
             
   
   @moduledoc """
