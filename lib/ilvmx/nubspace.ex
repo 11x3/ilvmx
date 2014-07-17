@@ -83,7 +83,7 @@ defmodule ILM.Nubspace do
  
   def handle_call({:boost, signal, client, server}, _from, _nil) do
     IO.inspect "(x-x-):ILM.Nubspace :boost {signal: #{inspect signal.path}, client: #{inspect client}, server: #{inspect server}}"
-    IO.inspect "(x-x-):ILM.signals: #{inspect ILM.signals}"
+    IO.inspect "(x-x-):ILM.signal: #{inspect signal.item}"
     
     {:ok, boost_agent} = Agent.start_link(fn -> signal end)
 

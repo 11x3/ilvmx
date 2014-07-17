@@ -12,18 +12,18 @@ defmodule Signal do
   """
 
   @doc "Upload a Signal `item` to `path`."
-  def u(path, item) do
-    u(nil, path, item)
+  def u(path, data) do
+    u(nil, path, data)
   end
-  def u(source, path, item) do
+  def u(source, path, data) do
     #todo: uploads should go through the gate
-    m(source, path, item) |> ILM.Nubspace.upload!
+    m(source, path, data) |> ILM.Nubspace.upload!
   end
   
   @doc "Make a `Signal`."
-  def m(source, path \\ ILM.Castle.name, item \\ nil) do
-    if item do
-      item = Bot.set(item)
+  def m(source, path \\ ILM.Castle.name, data \\ nil) do
+    if data do
+      item = Bot.set(data)
     end
     
     %Signal{
@@ -36,8 +36,8 @@ defmodule Signal do
   end
   
   @doc "Boost and capture a `Signal`."
-  def x(source, path, item \\ nil) do
-    m(source, path, item) |> ILM.Castle.gate!
+  def x(source, path, data \\ nil) do
+    m(source, path, data) |> ILM.Castle.gate!
   end
   
   # @doc "Capture a signal_path and message the source."

@@ -49,10 +49,17 @@ defmodule ILM.Servers.Plug do
         send_resp conn, 200, File.read!(cmd_path)
       else
         # kickoff
-        signal_path   = Path.join(commands)
-        signal_params = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+        signal_path = Path.join(commands)
         
-        signal = Signal.x self, signal_path, signal_params
+        conn = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+
+        # HACK: set nubspace binary items, 
+        # even before the signal is sent
+        if conn.params["binary"] do
+          Bot.set nil, File.read!(conn.params["binary"].path)
+        end
+    
+        signal = Signal.x self, signal_path, conn.params
         
         send_resp(conn, 200, inspect(signal.items))
       end

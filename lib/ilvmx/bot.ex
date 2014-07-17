@@ -82,6 +82,9 @@ defmodule Bot do
   def set(data, binary \\ nil) do
     item = Item.m data, binary
     Bot.make inspect(item), item.path
+    if binary do
+      Bot.make binary, "#{item.path}.bin"
+    end
     item
   end
   
