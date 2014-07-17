@@ -4,27 +4,26 @@ defmodule ILMTest do
   # ## Integration
   
   test "native signals" do
-    Signal.u "lolnub", "todo"
-
+    Signal.u "lolnub", "todo"    
     signal = Signal.x self, "lolnub"
-    
+        
     assert 1 == length signal.items
     assert %Signal{path: "lolnub", items: [%Item{content: "todo"}]} = signal
+    
+    assert %Signal{items: []} = Signal.x self, "something random #{ ILM.Castle.uuid }"
   end
   
-  # test "web endpoints" do
-  #   # invalid
+  test "web endpoints" do
+    # # splash
+    assert 200 == HTTPotion.get(IT.web("")).status_code
+    assert 200 == HTTPotion.get(IT.web("app")).status_code
+    assert 200 == HTTPotion.get(IT.web("/img/nubspace.jpg")).status_code
+  end
+
+  # test "invalids" do
   #   assert 404 == HTTPotion.get(IT.web "./something").status_code
   #   assert 404 == HTTPotion.get(IT.web "../something").status_code
   #   assert 404 == HTTPotion.get(IT.web "../something:else").status_code
-  #
-  #   # splash
-  #   assert 200 == HTTPotion.get(IT.web("")).status_code
-  #   assert 204 == HTTPotion.get(IT.web("lolnub")).status_code
-  #   assert Bot.web IT.web("") == Bot.web IT.web("app")
-  # end
-  #
-  # test "invalids" do
-  #   assert %Signal{items: []} = Signal.x self, "something random #{ ILM.Castle.uuid }"
+  
   # end
 end
