@@ -23,7 +23,7 @@ defmodule Signal do
   @doc "Make a `Signal`."
   def m(source, path \\ ILM.Castle.name, item \\ nil) do
     if item do
-      item = Bot.item(item)
+      item = Bot.set(item)
     end
     
     %Signal{

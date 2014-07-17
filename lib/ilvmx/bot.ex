@@ -43,12 +43,14 @@ defmodule Bot do
     end
     
     # update our nubspace meta file to add the link to the new item
-    items = JSON.decode!(File.read!(meta_path))
+    items = JSON.decode! File.read!(meta_path)
     items = [item.path|items]
-    json  = JSON.encode!(items)
+    
+    # write the meta file
+    File.write!(meta_path, JSON.encode!(items))
 
     # add the ln
-    File.ln_s(item.path, Path.join(nub_path, item.path)) 
+    #File.ln_s(item.path, Path.join(nub_path, item.path)) 
     
     # todo: add the nubspace link to item.meta
     # Bot.set item, :links, nubspace
@@ -56,7 +58,7 @@ defmodule Bot do
     item
   end
   def push(nubspace, data, binary \\ nil) when is_binary(nubspace) and is_binary(data) do
-    push nubspace, Bot.item(data, binary)
+    push nubspace, Bot.set(data, binary)
   end
   
   @doc "List `nubspace` items."
@@ -77,19 +79,24 @@ defmodule Bot do
 
   ## Item API (items are at the kinda slightly structured level)
   
-  def item(data, binary \\ nil) do
+  def set(data, binary \\ nil) do
     item = Item.m data, binary
     Bot.make inspect(item), item.path
     item
   end
   
-  # def get(item, key) do
-  #
-  # end
-  #
-  # def set(item, key, value) do
-  #   #Bot.make Dict.update(object(item), key, value), item.object
-  # end
+  def get(obj_paths, key) when is_list(obj_paths) do
+    obj_paths |> Enum.map fn path ->
+      get(path)
+    end
+  end
+  def get(obj_path) do
+    # read and eval the item data into an Item
+    data = take(obj_path)
+    {item, _binding} = Code.eval_string data
+    
+    item
+  end
   
   
   ## File API (file system level blobs)

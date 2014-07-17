@@ -12,7 +12,7 @@ defmodule ILMTest do
   end
   
   test "web endpoints" do
-    # # splash
+    # splash
     assert 200 == HTTPotion.get(IT.web("")).status_code
     assert 200 == HTTPotion.get(IT.web("app")).status_code
     assert 200 == HTTPotion.get(IT.web("/img/nubspace.jpg")).status_code

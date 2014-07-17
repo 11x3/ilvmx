@@ -21,10 +21,6 @@ defmodule BotTest do
     assert [] == Bot.pull "xyz"
   end
 
-  # test "link" do
-  #   assert [] = Bot.push "chat", "todo"
-  # end
-  
   # ## Item
   
   test "item" do
