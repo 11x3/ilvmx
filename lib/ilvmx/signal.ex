@@ -11,7 +11,7 @@ defmodule Signal do
   `Signal`s are the superglue unit of the ILvMx Galaxy.
   """
 
-  @doc "Upload a `Signal`."
+  @doc "Upload a Signal `item` to `path`."
   def u(path, item) do
     u(nil, path, item)
   end
