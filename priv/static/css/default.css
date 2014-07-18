@@ -2,14 +2,14 @@
 
 html,
 body {
-	padding: 20px;
 	margin: -15px 0 0;
   font: sans;
   color: #fff;
   font-size: 150%;
+  padding: 20px;
 }
 html {
-  background: #131618;
+  background: #1d1d1d;
 }
 body {
   background: transparent;
@@ -33,16 +33,34 @@ label, input {
 section {
 }
 
+a:hover {
+  color: #c4adfe;
+  background-color: #4e00cc;
+}
+
+ol,
+ul {
+  padding: 0;
+}
+ul li {
+  list-style: none;
+  display: inline-block;
+}
 #content {
   background: url(../img/content.png) repeat-y #cde9ff;
   height: 100%;
-  width: 420px;
+  width: 400px;
   position: fixed;
   right: 0;
   display: block;
   top: 0;
   bottom: 0;
   z-index: 1;
+  padding-left: 100px;
+}
+
+#content .title {
+  color: #004c77;
 }
 
 #patches {
@@ -54,15 +72,9 @@ section {
 }
 
 footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  display: hidden;
   overflow: visible;
 }
 
 #copyright {
-  position: fixed;
-  bottom: 140px;
-  left: 140px;
+
 }

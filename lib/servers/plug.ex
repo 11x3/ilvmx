@@ -28,15 +28,12 @@ defmodule ILM.Servers.Plug do
   ## Custom
   
   @doc "(x-x-): hello?"
-  def hello(conn, []) do
-    ## Splash
-        
-    hello(conn, ["app"])
-  end
-  def hello(conn, ["app"]) do
-    ## App
-    
+  def hello(conn, []), do: hello(conn, ["app"])
+  def hello(conn, ["app"]) do ## App    
     send_resp conn, 200, Bot.take "index.html"
+  end
+  def hello(conn, ["nub"]) do
+    
   end
   def hello(conn, commands) do
     ## Files/Items/Object
