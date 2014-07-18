@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   #   provider.client_id            = ENV["DO_CLIENT_ID"] || (throw "nil ENV['RS_USERNAME']")
   #   provider.api_key              = ENV["DO_API_KEY"]  || (throw "nil ENV['RS_API_KEY']")
   # end
-    
+  
   # Shared folders
   config.vm.synced_folder ".", "/ilvmx"
   

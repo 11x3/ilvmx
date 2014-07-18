@@ -4,9 +4,9 @@ defmodule Bot do
   @moduledoc """
   Bots are the direct-level workers of the ILvMx universe,
   and are the foundation of the Cakedown (or whatever it 
-  eventually becomes called) syntax.
+  eventually becomes called) markup syntax.
   """
-  
+
   ## World API (readin the webs)
 
   @doc "Read a file from the internet."
@@ -77,6 +77,7 @@ defmodule Bot do
     end
   end
 
+
   ## Item API (items are at the kinda slightly structured level)
   
   def set(data, binary \\ nil) do
@@ -88,7 +89,7 @@ defmodule Bot do
     item
   end
   
-  def get(obj_paths, key) when is_list(obj_paths) do
+  def get(obj_paths) when is_list(obj_paths) do
     obj_paths |> Enum.map fn path ->
       get(path)
     end
@@ -129,7 +130,7 @@ defmodule Bot do
   
   ## Private
   
-  def nub_path(nubspace) do
+  defp nub_path(nubspace) do
     # todo: secure nubspace
     Path.join("nub", String.lstrip(nubspace, ?#))
   end

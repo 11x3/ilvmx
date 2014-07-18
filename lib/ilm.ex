@@ -1,4 +1,4 @@
-# ILvMx/ILM project and all related sub directories and source code are 
+# ILM/ILvMx projects and all related sub directories and source code are 
 # Copyright 2014 lolnub.com developers AND licensed as open source:
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

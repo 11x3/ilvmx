@@ -7,11 +7,13 @@ body {
   font: sans;
   color: #fff;
   font-size: 150%;
-  background-color: #19191B;
 }
 html {
+  background: #131618;
 }
 body {
+  background: transparent;
+  padding-left: 90px;
 }
 header {
 }
@@ -29,5 +31,38 @@ label, input {
 }
 .row,
 section {
-  background-color: #1f2121;
+}
+
+#content {
+  background: url(../img/content.png) repeat-y #cde9ff;
+  height: 100%;
+  width: 420px;
+  position: fixed;
+  right: 0;
+  display: block;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+#patches {
+  margin-left: 160px;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  display: hidden;
+  overflow: visible;
+}
+
+#copyright {
+  position: fixed;
+  bottom: 140px;
+  left: 140px;
 }

@@ -57,6 +57,7 @@ defmodule ILM.Servers.Tower do
   def archive!(signal) do
     # todo: add/update commit times of signal
     # todo: add config support
+    
     Bot.set(signal)
     
     signal

@@ -27,11 +27,12 @@ defmodule ILM.Castle.CPU do
   
   @doc "Execute a program one time on the CPU."
   def execute!(program) do
-    IO.inspect "(x-x-):CPU.Server.execute!: #{inspect program}"
-    IO.inspect "(x-x-):~tsignals: #{ inspect Application.get_env(:ilvmx, @signals) }"
+    IO.inspect "(x-x-).execute!: #{inspect program}"
 
     # map Program
     #   \compile program
+    #     \ unquote functions
+    #     \ parse cakedown
     #   \execute program
     #   \pull data out of program
     #   \store program.data into signal.items {:item, x}

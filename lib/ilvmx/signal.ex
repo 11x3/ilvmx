@@ -3,7 +3,8 @@ defmodule Signal do
                 item: nil,  # data/params
                items: [],   # [item] 
               source: nil,  # sender (pid, email, nick, etc)  
-              unique: nil   # uuid
+              unique: nil,  # uuid
+               owner: nil   # Player
 
   use GenEvent
            
@@ -31,7 +32,8 @@ defmodule Signal do
           item: item,
          items: [],
         source: source,
-        unique: ILM.Castle.uuid
+        unique: ILM.Castle.uuid,
+         owner: Player.anon!
     }
   end
   

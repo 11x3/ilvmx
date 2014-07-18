@@ -20,19 +20,24 @@
 <body>
 <div id="page" class"container">
 	
-	<header>
-			
-	<form method="post" action="/hello" name="submit" enctype="multipart/form-data">
-		<h1>#lolnub</h1>
+	<header class="col-golden-offset-lg">
+        <h1><img src="img/header.png"></h1>
+    	<form method="post" action="/hello" name="submit" enctype="multipart/form-data" class="form-horizontal" role="form">
+    		<h1>exe<strong><strong></h1>
 		
-        <input class="form-control" type="text" name="nubspace" id="nubspace"><br>
-		<input class="form-control" type="file" name="binary" id="binary">
-	  <input class="form-control" type="submit" name="submit" value="Submit">
-	</form>
-	
+            <input class="form-control" type="text" name="nubspace" id="nubspace"><br>
+    		<input class="form-control" type="file" name="binary" id="binary">
+    	    <input class="form-control" type="submit" name="submit" value="Submit">
+    	</form>
+    </header>
+    
+
+	<div id="content" class="col-golden-offset-sm">
 	<script type="text/x-handlebars" id="application">		
 		{{outlet}}
 	</script>
+        <img id="patches" src="img/patches.png" alt="">
+	</div>
 	
 	<script type="text/javascript" src="js/libs/jquery.js"></script>
 	<script type="text/javascript" src="js/libs/handlebars.js"></script>
@@ -43,11 +48,10 @@
 </div>
 
 <footer class="">
-<p id="copyright">
+    <p id="copyright">
 	<a id="" title="(c) 2014 #lolnub.com" href="http://lolnub.com/">
-		2014 &copy; #lolnub</a>
-		<a href="http://lolnub.com/blog">#blog</a>
-		<a href="https://www.kickstarter.com/projects/1188856672/1502040661?token=cd0ffadc">#kickstarter</a></p>
+		#lolnub</a> <a href="http://lolnub.com/blog">#blog</a>
+		<a href="https://www.kickstarter.com/projects/1188856672/1502040661?token=cd0ffadc">#kickstarter</a> &copy; 2014</p>
 </footer>
 </body>
 </html>

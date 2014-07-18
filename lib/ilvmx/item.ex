@@ -2,13 +2,14 @@ defmodule Item do
   defstruct   kind: nil,  # String (eg. mime/type)
             unique: nil,  # "32453-4544-3434-234324-7879"
               path: nil,  # %{}           => "obj/32453-4544-3434-234324-7879"
-              meta: nil,  # :ilvmx        => "obj/32453-4544-3434-234324-7879/meta"
-           content: nil   # {:file, etc}  => "obj/32453-4544-3434-234324-7879/binary"
+           content: nil,  # {:file, etc}  => "obj/32453-4544-3434-234324-7879/binary"
+              meta: nil   # :ilvmx        => "obj/32453-4544-3434-234324-7879/meta"
             
   
   @moduledoc """
-  Items = JSON object + binary too.
-  #todo: part out the :unique use
+  Items = a JSON object + optional binary.
+  
+  #todo: partition the disk on Item.unique
   """
   def m(content \\ nil, binary \\ nil) do
     unique = ILM.Castle.uuid

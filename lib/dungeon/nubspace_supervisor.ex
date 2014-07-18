@@ -5,7 +5,7 @@ defmodule ILM.Nubspace.Supervisor do
   
   @doc "Load disk-based Castle programs."  
   def setup_castle do
-    IO.inspect "(x-x-):SignalSupervisor.setup_castle: #{ inspect self }"
+    IO.inspect "(x-x-).setup_castle: #{ inspect self }"
         
     try do
       if File.exists?(@castle_path) do
@@ -18,7 +18,7 @@ defmodule ILM.Nubspace.Supervisor do
       end
     rescue
       x in [RuntimeError, ArgumentError, BadArityError] ->
-        IO.inspect "(x-x-):failed setup_castle"
+        IO.inspect "(x-x-).setup_castle: [failed]"
     end
   end
 

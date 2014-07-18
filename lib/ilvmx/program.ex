@@ -1,5 +1,6 @@
 defmodule Program do
-  defstruct   code: nil,  # expression
+  defstruct source: nil,
+              code: nil,  # expression
               data: %{},  # storage
             errors: [],   # exceptions or manual logged errors
             unique: nil
@@ -7,7 +8,10 @@ defmodule Program do
   @moduledoc """
   Programming Program [wip][betabook]
   """
-  @doc "Exe Cakedown text."   
+  
+  ## Dynamic
+  
+  @doc "Exe raw Cakedown text."   
   def raw(text) do
     program = %Program{
       unique: ILM.Castle.uuid,
@@ -25,20 +29,22 @@ defmodule Program do
       unique: ILM.Castle.uuid,
         code: function
     }
+    
+    #todo: quote the function
 
     program
   end
-    
+  
+  
+  ## Static
+  
   @doc "Execute a `program_path` from disk."
   def exe(program_path) do
     if ILM.Castle.Wizard.valid_path?(program_path) && File.exists?(program_path) do
-      item = case Path.extname(program_path) do
-        ".exs"  -> Code.eval_file program_path
-        ".doh"  -> File.read!     program_path
-      end
       program = %Program{
         unique: ILM.Castle.uuid,
-          code: item
+        source: program_path,
+          code: Item.m File.read!(program_path)
       }
     end
     
