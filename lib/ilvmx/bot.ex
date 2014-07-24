@@ -2,9 +2,13 @@ use Jazz
 
 defmodule Bot do
   @moduledoc """
-  Bots are the direct-level workers of the ILvMx universe,
-  and are the foundation of the Cakedown (or whatever it 
+  Bots are direct-level workers of the ILvMx universe.
+  
+  Bots are the foundation of the Cakedown (or whatever it 
   eventually becomes called) markup syntax.
+  
+  All public `Bot` functions work with user generated content,
+  and so should be hostile safe. #todo
   """
 
   ## World API (readin the webs)
@@ -21,47 +25,52 @@ defmodule Bot do
   
   @doc "Put `item` into `nubspace`."
   def push(nubspace, item = %Item{}) when is_binary(nubspace) do
+    
     # defmodule Item do
     #   defstruct   kind: nil,  # String (eg. mime/type)
     #             unique: nil,  # "32453-4544-3434-234324-7879"
     #               path: nil,  # %{}           => "obj/32453-4544-3434-234324-7879"
     #               meta: nil   # :ilvmx        => "obj/32453-4544-3434-234324-7879/meta"
     #            content: nil,  # {:file, etc}  => "bin/32453-4544-3434-234324-7879/content"
+
     
     # set the item into nubspace
-    
+    Bot.make(inspect(item), Item.path(item))
+            
     # create nub directory
     nub_path = Path.join("priv/static", nub_path(nubspace))
     unless File.exists? nub_path do
-      File.mkdir! nub_path
+      File.mkdir_p! nub_path
     end
     
     # check/create the metanub
     meta_path = Path.join(nub_path, "meta")
     unless File.exists? meta_path do
-      File.write!(meta_path, JSON.encode!([item.path]))
+      File.write!(meta_path, JSON.encode!([]))
     end
     
     # update our nubspace meta file to add the link to the new item
     items = JSON.decode! File.read!(meta_path)
-    items = [item.path|items]
-    
+    items = [Item.path(item)|items]
     # write the meta file
     File.write!(meta_path, JSON.encode!(items))
 
     # add the ln
-    #File.ln_s(item.path, Path.join(nub_path, item.path)) 
-    
-    # todo: add the nubspace link to item.meta
-    # Bot.set item, :links, nubspace
+    File.ln_s(Item.path(item), Path.join(nub_path, Item.path(item))) 
+
+
+    #todo: return an ownership token
     
     item
   end
-  def push(nubspace, data, binary \\ nil) when is_binary(nubspace) and is_binary(data) do
-    push nubspace, Bot.set(data, binary)
+  def push(nubspace, data) when is_binary(nubspace) and is_binary(data) do
+    push nubspace, Item.m(data)
   end
   
   @doc "List `nubspace` items."
+  def pull(nubspace) when is_list(nubspace) do
+    pull Path.join(nubspace)
+  end
   def pull(nubspace) when is_binary(nubspace) do
     # todo: IT.valid_path?(nubspace)
 
@@ -73,19 +82,23 @@ defmodule Bot do
       # todo: return an error
       []
     else
-      JSON.decode! File.read!(meta_path)
+      JSON.decode!(File.read!(meta_path)) |> get 
     end
   end
 
 
   ## Item API (items are at the kinda slightly structured level)
   
-  def set(data, binary \\ nil) do
-    item = Item.m data, binary
-    Bot.make inspect(item), item.path
-    if binary do
-      Bot.make binary, "#{item.path}.bin"
+  def set(data) do
+    item      = Item.m data
+    item_path = Item.path item 
+    
+    unless File.exists? item_path do
+      File.mkdir_p! item_path
     end
+    
+    Bot.make inspect(item), Item.path(item)
+
     item
   end
   
@@ -104,6 +117,19 @@ defmodule Bot do
   
   
   ## File API (file system level blobs)
+
+  @doc "Place objects into The World, oh our dear World."
+  def make(data, static_relative_path) do
+    prop_path = Path.join("priv/static", static_relative_path)
+    
+    unless ILM.Castle.Wizard.valid_path?(prop_path) do
+      nil
+    else
+      File.write!(prop_path, data)
+      
+      data
+    end
+  end
   
   @doc "Take files from priv/static."
   def take(static_relative_path) do
@@ -112,18 +138,6 @@ defmodule Bot do
       nil
     else
       File.read! prop_path
-    end
-  end
-
-  @doc "Place objects into The World, oh our dear World."
-  def make(data, static_relative_path) do
-    prop_path = Path.join("priv/static", static_relative_path)
-    unless ILM.Castle.Wizard.valid_path?(prop_path) do
-      nil
-    else
-      File.write!(prop_path, data)
-      
-      data
     end
   end
   

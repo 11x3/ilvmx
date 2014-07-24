@@ -7,31 +7,17 @@ defmodule SignalTest do
     assert %Signal{} = Signal.m(self, "system/console")
   end
   
-  test "u" do
-    assert :ok = Signal.u "lolnub", "todo"
-    assert :ok = Signal.u "html/header", Bot.take "header.html"
+  test "i" do
+    result = Signal.i "lolnub", "todo"
     
-    assert 2 <= length Dict.to_list(ILM.signals)
+    assert %Signal{item: %Item{content: "todo"}} = result
   end
   
   test "x" do
-    assert :ok = Signal.u "html/header", Bot.take "header.html"
-    assert %Signal{} = Signal.x self, "html/header"
+    assert %Signal{} = Signal.i "html/header", Bot.take "header.html"
   end
-    
-  # test "signal a program" do
-  #   Signal.x "#chat", fn event -> send self, :signal end
-  # end
-  
-  # test "signal a binary" do
-  #   Signal.x "lolnub", "todo"
-  # end
 
-  # test "signal an item" do
-  #   Signal.x "#chat", Bot.get
-  # end
-    
-  test "i" do
-    assert %Signal{items: ["todo"]} = Signal.i Signal.m(self, "system/console"), "todo"
+  test "a" do
+    assert %Signal{items: ["todo"]} = Signal.a Signal.m(self, "system/console"), "todo"
   end
 end

@@ -2,14 +2,14 @@ defmodule ILM.Castle.Supervisor do
   use Supervisor
 
   def start_link do
-    :supervisor.start_link({:local, :castle}, __MODULE__, [])
+    :supervisor.start_link(__MODULE__, [])
   end
 
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
       worker(ILM.Castle,                    []),
-      worker(ILM.Nubspace.Supervisor,          []),
+      worker(ILM.CPU.Supervisor,            []),
       worker(ILM.Castle.Tower.Supervisor,   []),
     ]
     

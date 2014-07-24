@@ -22,34 +22,29 @@ defmodule ILM do
 
   ## API
   
-  def signals_agent do
-    Application.get_env :ilvmx, :signals
-  end
-  
-  def signals do
-    Agent.get ILM.signals_agent, fn signals -> signals end
-  end
-  
-  def signals(path, sigmap) do
-    Agent.update ILM.signals_agent, fn signals -> 
-      Dict.update signals, path, [sigmap], &(List.flatten signals[path], &1)
+  def reset! do
+    #debug: remove dev cleanup stuff
+    ["priv/static/obj", "priv/static/nub"] |> Enum.map fn file ->
+      file |> File.rm_rf!
+      file |> File.mkdir_p!
     end
+        
+    {:ok, signal_agent} = Agent.start_link(fn -> %{} end)
+    Application.put_env(:ilvmx, :signals, signal_agent)
   end
-  
+
   # GenSupervisor
   
   # See http://elixir-lang.org/docs/stable/Application.html
   # for more information on OTP Applications
   def start do
-    IO.inspect "(x-x-) #ilvmx."
-    
-    # Setup dynamic castle signals.
-    {:ok, signal_agent} = Agent.start_link(fn -> %{} end)
-    Application.put_env(:ilvmx, :signals, signal_agent)
-    
     start(nil, nil)
   end
   def start(_type, _args) do
+    IO.inspect "(x-x-) #ilvmx."
+    
+    reset!
+        
     ILM.Castle.Supervisor.start_link
   end
 end

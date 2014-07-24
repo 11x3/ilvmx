@@ -1,4 +1,5 @@
 @import "bootflat.css";
+@import "golden.css";
 
 html,
 body {
@@ -7,21 +8,19 @@ body {
   color: #fff;
   font-size: 150%;
   padding: 20px;
+  background: transparent;
 }
 html {
-  background: #1d1d1d;
+  background-color: #0a0e13;
 }
 body {
-  background: transparent;
-  padding-left: 90px;
 }
 header {
 }
 footer {
 }
 #page {
-	padding: 20px;
-  min-height: 740px;
+
 }
 #nubspace {
   font-size: 28px;
@@ -47,16 +46,6 @@ ul li {
   display: inline-block;
 }
 #content {
-  background: url(../img/content.png) repeat-y #cde9ff;
-  height: 100%;
-  width: 400px;
-  position: fixed;
-  right: 0;
-  display: block;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-  padding-left: 100px;
 }
 
 #content .title {
@@ -64,17 +53,13 @@ ul li {
 }
 
 #patches {
-  margin-left: 160px;
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
+
 }
 
 footer {
-  overflow: visible;
+
 }
 
 #copyright {
-
+  z-index: -4;
 }

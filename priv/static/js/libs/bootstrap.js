@@ -537,7 +537,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     var startSignal = $.Signal('show.bs.collapse')
     this.$element.trigger(startSignal)
-    if (startSignal.isDefaultPrevented()) return
+    if (startSignal.asDefaultPrevented()) return
 
     var actives = this.$parent && this.$parent.find('> .panel > .in')
 
@@ -581,7 +581,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     var startSignal = $.Signal('hide.bs.collapse')
     this.$element.trigger(startSignal)
-    if (startSignal.isDefaultPrevented()) return
+    if (startSignal.asDefaultPrevented()) return
 
     var dimension = this.dimension()
 

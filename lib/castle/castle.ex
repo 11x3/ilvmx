@@ -1,7 +1,8 @@
 defmodule ILM.Castle do
   use GenServer
   
-  @epoch :epoch
+  @epoch          :epoch
+  @castle_path    Path.join(File.cwd!, "castle")
 
   @moduledoc """
   ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
@@ -14,12 +15,12 @@ defmodule ILM.Castle do
   @doc """
   Castle's astral connection to the higher planes of the ILvMx network.
   """
-  def gate!(signal) do
+  def please?(signal) do
     signal 
-    |> ILM.Castle.Wizard.please?
-    |> ILM.Nubspace.boost!
-    |> ILM.Castle.Wizard.filter?
-    |> ILM.Servers.Tower.commit!
+    |> ILM.Castle.Wizard.review?
+    |> ILM.CPU.execute!
+    |> ILM.Castle.Wizard.review?
+    |> ILM.Services.Tower.commit!
   end
   
   
@@ -67,7 +68,7 @@ defmodule ILM.Castle do
     link = GenServer.start_link(__MODULE__, nil)
 
     # setup plug adapters
-    Plug.Adapters.Cowboy.http ILM.Servers.Plug, [], port: 8080
+    Plug.Adapters.Cowboy.http ILM.Services.Plug, [], port: 8080
     #todo: support ILM.config for starting options
     
     link

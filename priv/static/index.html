@@ -11,17 +11,16 @@
   <meta name="keywords" content="lolnub, ilm, ilvmx, modern, web 4, web 4.0, fun, adventurama, cloud, apps, program, nubspace">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="HandheldFriendly" content="True"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="viewport" content="width=device-width"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   
   <link rel="stylesheet" href="css/default.css" type="text/css" media="screen" charset="utf-8">
   <link rel="icon" type="image/png" href="/img/favicon.png">
 </head>
-<body>
-<div id="page" class"container">
-	
-	<header class="col-golden-offset-lg">
-        <h1><img src="img/header.png"></h1>
+<bodyclass"container-fluid">
+<div id="page" class="row">
+    
+	<header class=".col-golden-sm">
+        <h1></h1>
     	<form method="post" action="/api/exe" name="submit" enctype="multipart/form-data" class="form-horizontal" role="form">
     		<h1>exe<strong>)<strong></h1>
 		
@@ -31,18 +30,25 @@
     	</form>
     </header>
         
-	<div id="content" class="col-golden-offset-sm">
+	<div id="content" class=".col-golden-lg">
         <!-- templates -->
-          <p class="title">#lolnub</p>
-          <ul>
-          <li><a href="nub/">#nub<a></li>
-          <li><a href="obj/">#obj<a></li>
-          </ul>
+        <ul>
+        {{#each photo in photos}}
+          <li>{{#link-to 'photos.edit' photo}}{{photo.title}}{{/link-to}}</li>
+        {{/each}}
+        </ul>
         
 	    <script type="text/x-handlebars" id="application">		
-		{{outlet}}
+          <ul>
+              {{#each signal in signals}}
+           <li>{{#link-to "signals"}}nub{{/link-to}}</li>
+              {{/each}}
+          </ul>
+        
+		 {{outlet}}
 	    </script>
-        <img id="patches" src="img/patches.png" alt="">
+
+        <!-- <img id="patches" src="img/patches.png" alt=""> -->
 	</div>
 	
 	<script type="text/javascript" src="js/libs/jquery.js"></script>
@@ -53,13 +59,14 @@
 	<script type="text/javascript" src="js/app.js"></script>
 </div>
 
-<footer class="">
+<footer class="row">
     <p id="copyright">
         <a href="http://blog.lolnub.com/">#blog</a>
 	<a id="" title="(c) 2014 #lolnub.com" href="http://lolnub.com/">
 		#lolnub</a>
         <a href="http://github.com/lolnub">#source</a>
 		<a href="https://www.kickstarter.com/projects/1188856672/1502040661?token=cd0ffadc">#kickstarter</a> <br>&copy; 2014</p>
+        
 </footer>
 </body>
 </html>

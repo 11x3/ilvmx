@@ -38,17 +38,11 @@ defmodule Program do
   
   ## Static
   
-  @doc "Execute a `program_path` from disk."
+  @doc "Compile or start `program_path` from disk."
   def exe(program_path) do
     if ILM.Castle.Wizard.valid_path?(program_path) && File.exists?(program_path) do
-      program = %Program{
-        unique: ILM.Castle.uuid,
-        source: program_path,
-          code: Item.m File.read!(program_path)
-      }
-    end
-    
-    program
+      Code.eval_file program_path
+    end    
   end
   
 end

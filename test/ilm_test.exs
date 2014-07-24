@@ -1,21 +1,32 @@
 defmodule ILMTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   
+  setup do: ILM.reset!
+    
   # ## Integration
   
-  test "native signals" do
-    Signal.u "lolnub", "todo"
-    signal = Signal.x self, "lolnub"
-        
-    assert 1 <= length signal.items
-    assert %Signal{path: "lolnub", items: items} = signal
+  test "signals (install)" do
+    assert %Signal{item: item = %Item{}} = Signal.i "lolnub", "a"
+
+    assert Regex.match? ~r/obj/, Item.path(item)
+    assert true == File.exists? "priv/static/#{ Item.path(item) }"
   end
   
-  test "web endpoints" do
+  test "signals (native)" do    
+    assert %Signal{item: item = %Item{}} = Signal.i "lolnub", "a"
+    assert %Signal{item: item = %Item{}} = Signal.i "lolnub", "b"
+    
+    assert [%Item{content: "a"}, %Item{content: "b"}] = Signal.x(self, "lolnub").items |> Enum.sort
+  end
+  
+  test "splash" do
     # splash
-    assert 200 == HTTPotion.get(IT.web("")).status_code
-    assert 200 == HTTPotion.get(IT.web("app")).status_code
-    assert 200 == HTTPotion.get(IT.web("/img/nubspace.jpg")).status_code
+    assert 200  == HTTPotion.get(IT.web("")).status_code
+    assert true == Regex.match? ~r/html/, HTTPotion.get(IT.web("")).body  
+  end
+  
+  test "img" do
+    assert 200  == HTTPotion.get(IT.web("/img/nubspace.jpg")).status_code
   end
 
   # test "invalids" do

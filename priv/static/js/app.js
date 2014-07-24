@@ -1,25 +1,36 @@
-App = Ember.Application.create({});
+App = Ember.Application.create({
+  LOG_TRANSITIONS: true,
+  LOG_BINDINGS: true,
+  LOG_VIEW_LOOKUPS: true,
+  LOG_STACKTRACE_ON_DEPRECATION: true,
+  LOG_VERSION: true,
+  debugMode: true
+});
+
+// models
 
 App.Signal = Ember.Object.extend({
-    unique : "",
+    unique  : "",
+    path    : ""
 });
 
 App.Item = Ember.Object.extend({
     unique : "",
 });
 
-App.IndexRoute = Ember.Route.extend({
-  model: function(){
-      return App.Signal.create()
-  },
-    setupController : function(controller, model){
-        controller.set("model", model);
-    }
+// routes
+App.Router.map(function() {
+  this.resource("photos", function(){
+    this.route("edit", { path: "/:photo_id" });
+  });
 });
 
+// controllers
+
 App.IndexController = Ember.ObjectController.extend({
-    submitAction : function(){
+  signals : ["nub", "obj"],
+  submitAction : function(){
         // here you could perform your actions like persisting to the server or so
         alert("now we can submit the model:" + this.get("model"));
-    }
+  }
 });

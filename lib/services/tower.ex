@@ -1,4 +1,4 @@
-defmodule ILM.Servers.Tower do
+defmodule ILM.Services.Tower do
   use GenServer
   use Jazz
 
@@ -14,8 +14,8 @@ defmodule ILM.Servers.Tower do
   """
   def capture!(client, signal) do
     # upload a program to exe on this signal
-    signal |> ILM.Castle.CPU.install! fn capture ->
-      IO.inspect "(x-x-):ILM.Servers.Tower {signal: #{inspect signal.path}, capture: #{inspect capture}}"
+    signal |> ILM.CPU.install! fn capture ->
+      #IO.inspect "(x-x-):ILM.Services.Tower {signal: #{inspect signal.path}, capture: #{inspect capture}}"
       
       receive do
         {:commit, commit} -> 
@@ -58,7 +58,7 @@ defmodule ILM.Servers.Tower do
     # todo: add/update commit times of signal
     # todo: add config support
     
-    Bot.set(signal)
+    #Bot.set(signal)
     
     signal
   end
