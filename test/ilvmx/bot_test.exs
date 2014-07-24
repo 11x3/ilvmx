@@ -7,33 +7,46 @@ defmodule BotTest do
     
   test "Bot.web" do
     assert false == nil? Bot.web(IT.web("/"))
-    assert true == Regex.match? ~r/html/, Bot.web(IT.web "/" )
   end
 
 
   ## Nubspace
-  
-  test "push" do
-    #assert %Item{} = Bot.push "chat", "todo"
-  end
-  
-  test "pull" do
-    assert [] == Bot.pull "xyz"
-  end
 
+  test "list" do
+    assert [] == Bot.list "xyz"
+    assert []
+  end
+  
+  # test "push" do
+  #   effect = Bot.push "chat", "todo"
+  #
+  #   assert false
+  # end
+  #
+  # test "pull" do
+  #   effect = Bot.pull "chat"
+  #
+  #   assert false
+  # end
+  #
   # ## Item
   
-  test "item" do
-  end
-
-  # test "get" do
-  #   assert %Item{} = Bot.push "chat", "todo"
+  # test "item" do
+  #   assert %Item{} = Bot.item
   # end
   #
   # test "set" do
-  #   assert %Item{content: %{text: "todo"}} = Bot.set Item.m :text, "todo"
+  #   assert %Item{content: %{text: "todo"}} = Bot.set Item.m, :text, "todo"
   # end
-
+  #
+  # test "get" do
+  #   assert false
+  # end
+  #
+  # test "binaries" do
+  #   assert false
+  # end
+  #
   ## File
   
   test "Bot.take" do

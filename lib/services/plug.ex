@@ -23,21 +23,16 @@ defmodule ILM.Services.Plug do
     send_resp conn, 200, Bot.take "index.html"
   end
   
-  def call(conn, options) do
-    #IO.inspect "(x-x-) Plug: >#{ Path.join([[]|conn.path_info]) }<"
+  def call(conn = %Plug.Conn{path_info: signal_path}, options) do
+    IO.inspect "(x-x-) Plug: >#{inspect signal_path}<"
     
-    cmd_path = Path.join(["priv", "static"|conn.path_info])
+    cmd_path = Path.join(["priv", "static"|signal_path])
     
     if File.exists?(cmd_path) do
       send_resp conn, 200, File.read!(cmd_path)
+    else
+      send_resp conn, 200, inspect(Signal.x(conn, signal_path, conn.params).items)
     end
-    
-    # accept, then spawn
-    # Signal.x conn, conn.path_info, Program.cmd fn signal ->
-    #   chunk(conn, inspect(signal.items))
-    # end
-
-    send_chunked(conn, 200)
   end
 
   @doc """
