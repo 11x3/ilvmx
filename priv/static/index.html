@@ -21,23 +21,16 @@
     
 	<header class=".col-golden-sm">
         <h1></h1>
-    	<form method="post" action="/api/exe" name="submit" enctype="multipart/form-data" class="form-horizontal" role="form">
+    	<form method="post" action="/api/push" name="submit" enctype="multipart/form-data" class="form-horizontal" role="form">
     		<h1>exe<strong>)<strong></h1>
 		
     		<input class="form-control" type="file" name="binary" id="binary"><br>
             <input class="form-control" type="text" name="nubspace" id="nubspace"><br>
-    	    <input class="form-control" type="submit" name="share" value="Share">
+    	    <input class="form-control" type="submit" name="push" value="Push!">
     	</form>
     </header>
         
 	<div id="content" class=".col-golden-lg">
-        <!-- templates -->
-        <ul>
-        {{#each photo in photos}}
-          <li>{{#link-to 'photos.edit' photo}}{{photo.title}}{{/link-to}}</li>
-        {{/each}}
-        </ul>
-        
 	    <script type="text/x-handlebars" id="application">		
           <ul>
               {{#each signal in signals}}

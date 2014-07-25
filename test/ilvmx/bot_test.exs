@@ -5,15 +5,15 @@ defmodule BotTest do
 
   ## World
     
-  test "Bot.web" do
-    assert false == nil? Bot.web(IT.web("/"))
-  end
+  # test "Bot.web" do
+  #   IT.assert_web_page Bot.web(IT.web("/"))
+  # end
 
 
   ## Nubspace
 
-  test "list" do
-    assert [] == Bot.list "xyz"
+  test "pull" do
+    assert [] == Bot.pull "xyz"
     assert []
   end
   

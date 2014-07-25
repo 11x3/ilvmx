@@ -34,25 +34,28 @@ defmodule Signal do
   ## API
   
   @doc "Install a Signal from an optional `source`, with `data` to `path`."
-  def i(path, data) do
-    i(nil, path, data)
+  def i(path, item) do
+    i(nil, path, item)
   end
-  def i(source, path, data) do
+  def i(source, path, item) do
     #todo: uploads should go through the gate
-    m(source, path, data) |> ILM.CPU.install!
+    m(source, path, item) |> ILM.Castle.please? |> ILM.CPU.install!
   end
 
   @doc "Execute a `Signal` `path` with optional `data`."
-  def x(source, path, data \\ nil) do
-    m(source, path, data) |> ILM.Castle.please?
+  def x(source, path, item \\ nil) do
+    m(source, path, item) |> ILM.Castle.please? |> ILM.CPU.execute!
   end
   
   
   ## Instance
   
   @doc "Add `items` to `signal`."
-  def a(signal, items) do
-    %{signal| :items => List.flatten(signal.items ++ [items]) }
+  def a(signal, items) when is_list(items) do
+    %{signal| :items => List.flatten([signal.items|items]) }
+  end
+  def a(signal, item) do
+    %{signal| :items => List.flatten([signal.items|[item]]) }
   end
   
 end

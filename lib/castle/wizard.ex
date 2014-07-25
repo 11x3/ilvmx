@@ -3,6 +3,7 @@ defmodule ILM.Castle.Wizard do
 
   @moduledoc """
   Wizards filter/enrich/track/intercept Castle Signals.
+  # todo: add review/callbacks api
   """
   
   @doc """
@@ -12,14 +13,17 @@ defmodule ILM.Castle.Wizard do
     signal |> review?
   end
 
-  @doc """
-  Stub :before `Signal` traffic flow control.
-  """
+  @doc "Stub :before `Signal` traffic review."
+  def review?(signal = %Signal{item: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
+    upload = item.content["binary"]
+    # hack: auto-init binary items before the signal is processed    
+    review?(%{signal| item: %{item| kind: upload.content_type, content: File.read!(upload.path) }})
+  end
   def review?(signal) do
-    # todo: add callbacks api
     
     signal
   end
+  
   
   @doc """
   Stub :after `Signal` traffic filters.

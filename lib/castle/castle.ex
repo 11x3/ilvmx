@@ -16,11 +16,7 @@ defmodule ILM.Castle do
   Castle's astral connection to the higher planes of the ILvMx network.
   """
   def please?(signal) do
-    signal 
-    |> ILM.Castle.Wizard.review?
-    |> ILM.CPU.execute!
-    |> ILM.Castle.Wizard.review?
-    |> ILM.Services.Tower.commit!
+    signal |> ILM.Castle.Wizard.please?
   end
   
   

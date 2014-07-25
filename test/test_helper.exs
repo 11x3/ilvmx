@@ -17,4 +17,8 @@ defmodule IT do
   def assert_unique(uuid) do
     assert Regex.match? ILM.Castle.uuid_regex, uuid
   end
+  
+  def assert_web_page(binary) do
+    assert Regex.match? ~r/html/, binary
+  end
 end

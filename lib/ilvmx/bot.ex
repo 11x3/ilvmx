@@ -36,7 +36,7 @@ defmodule Bot do
     
     # set the item into nubspace
     Bot.make(inspect(item), Item.path(item))
-            
+    
     # create nub directory
     nub_path = Path.join("priv/static", nub_path(nubspace))
     unless File.exists? nub_path do
@@ -52,13 +52,13 @@ defmodule Bot do
     # update our nubspace meta file to add the link to the new item
     items = JSON.decode! File.read!(meta_path)
     items = [Item.path(item)|items]
+    
     # write the meta file
     File.write!(meta_path, JSON.encode!(items))
 
     # add the ln
-    File.ln_s(Item.path(item), Path.join(nub_path, Item.path(item))) 
-
-
+    File.ln_s(Item.path(item), Path.join(nub_path, Item.path(item)))
+    
     #todo: return an ownership token
     
     item
@@ -67,13 +67,11 @@ defmodule Bot do
     push nubspace, Item.m(data)
   end
   
-  @doc "List `nubspace` items."
+  @doc "Return a list of `nubspace` items."
   def pull(nubspace) when is_list(nubspace) do
     pull Path.join(nubspace)
   end
-  def pull(nubspace) when is_binary(nubspace) do
-    # todo: IT.valid_path?(nubspace)
-
+  def pull(nubspace) when is_binary(nubspace) do    
     # check
     nubspace  = Path.join("priv/static", nub_path(nubspace))
     meta_path = Path.join(nubspace, "meta")
@@ -82,13 +80,14 @@ defmodule Bot do
       # todo: return an error
       []
     else
-      JSON.decode!(File.read!(meta_path)) |> get 
+      JSON.decode!(File.read!(meta_path))
     end
   end
 
 
   ## Item API (items are at the kinda slightly structured level)
   
+  @doc "Return an `Item` set with `data` as the content"
   def set(data) do
     item      = Item.m data
     item_path = Item.path item 
@@ -98,24 +97,22 @@ defmodule Bot do
     end
     
     Bot.make inspect(item), Item.path(item)
-
-    item
-  end
-  
-  def get(obj_paths) when is_list(obj_paths) do
-    obj_paths |> Enum.map fn path ->
-      get(path)
-    end
-  end
-  def get(obj_path) do
-    # read and eval the item data into an Item
-    data = take(obj_path)
-    {item, _binding} = Code.eval_string data
     
     item
   end
   
+  def get(obj_paths) when is_list(obj_paths) do
+    obj_paths |> Enum.map &(get &1)
+  end
+  def get(obj_path) do
+    # read and eval the item data into an Item
+    data = take(obj_path)
+    {item, _binding} = Item.from(data)
+    
+    item
+  end
   
+
   ## File API (file system level blobs)
 
   @doc "Place objects into The World, oh our dear World."

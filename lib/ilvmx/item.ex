@@ -17,9 +17,9 @@ defmodule Item do
      content: content
     }
   end
-
+  
   def path(item) do
     "obj/#{ item.unique }"
   end
-  
+
 end

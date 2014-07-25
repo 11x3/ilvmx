@@ -22,7 +22,7 @@ defmodule ILM.CPU.Supervisor do
     # hack: todo: fix this costly "hot" reloading
     unless map_size(signals) > 0 do
       IO.inspect "(x-x-)...setup: #{ inspect self }"
-        
+      
       try do
         if File.exists?(@castle_path) do
           castle_signals = File.ls!(@castle_path) |> Enum.map fn file_path ->

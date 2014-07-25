@@ -4,8 +4,8 @@ defmodule ILM.Services.Plug do
   use     Plug.Builder
   use     Jazz
   
-  @parsers [Plug.Parsers.MULTIPART, Plug.Parsers.URLENCODED]
-  @upload_limit ILM.Castle.upload_limit
+  @parsers          [Plug.Parsers.MULTIPART, Plug.Parsers.URLENCODED]
+  @upload_limit     ILM.Castle.upload_limit
   
   @moduledoc """
   Web Requests from Cowboy/Plug.
@@ -14,8 +14,7 @@ defmodule ILM.Services.Plug do
   plug Plug.Static, at: "/static", from: :ilvmx
   plug :dispatch
   plug :match
-  
-  
+
   ## Plug 
   
   @doc "Plug: *ring*, *ring*"
@@ -26,15 +25,52 @@ defmodule ILM.Services.Plug do
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
     IO.inspect "(x-x-) Plug: >#{inspect signal_path}<"
     
-    cmd_path = Path.join(["priv", "static"|signal_path])
-    
-    if File.exists?(cmd_path) do
-      send_resp conn, 200, File.read!(cmd_path)
-    else
-      send_resp conn, 200, inspect(Signal.x(conn, signal_path, conn.params).items)
-    end
+    hello conn, signal_path
   end
 
+  @doc ""
+  def hello(conn, signal_path = ["api", "push"]) do
+    # parse the http signal
+    conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+    nubspace  = conn.params["nubspace"] || nil
+    
+    # install signal to a valid nubspace..
+    if nubspace do
+      send_resp conn, 200, inspect(Signal.i(conn, nubspace, conn.params))
+    else
+      send_resp(conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)")
+    end
+  end
+  
+  def hello(conn, signal_path = ["obj"|unique]) do
+    obj_path = Path.join(["priv", "static"|signal_path])
+    
+    if File.exists?(obj_path) do
+      # todo: add send_file here
+      send_resp conn, 200, File.read!(obj_path)
+    else
+      send_resp(conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)")
+    end
+  end
+  
+  def hello(conn, nubspace) do
+    # always send a signal, but sometimes return an item.
+    items = Signal.x(conn, nubspace, conn.params).items
+    
+    if 0 < length(items) do
+      send_resp conn, 200, inspect(items)
+    else
+      obj_path = Path.join(["priv", "static"|nubspace])
+      
+      if File.exists?(obj_path) do
+        # todo: add send_file here
+        send_resp conn, 200, File.read!(obj_path)
+      else
+        send_resp(conn, 404, inspect(items))
+      end
+    end
+  end
+  
   @doc """
   Initialize options
   """
@@ -43,7 +79,6 @@ defmodule ILM.Services.Plug do
   end
 
   @doc """
-  Errors. Props to http://stanislavs.org/helppc/dos_error_codes.html for the DOS codes
   #todo: forward errors to the Wizard for defensive purposes.
   """
   match(_) do
