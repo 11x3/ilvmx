@@ -1,8 +1,6 @@
-# clear the test API
-
-
 # server
-ILM.start
+ILM.Castle.start
+ILM.Castle.reset!
 
 # tests
 ExUnit.start
@@ -15,7 +13,7 @@ defmodule IT do
   end
   
   def assert_unique(uuid) do
-    assert Regex.match? ILM.Castle.uuid_regex, uuid
+    assert Regex.match? Castle.uuid_regex, uuid
   end
   
   def assert_web_page(binary) do

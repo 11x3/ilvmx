@@ -7,14 +7,17 @@ defmodule Item do
   
   @moduledoc """
   Items are the simplest objects in the Kingdom.
-  
   #todo: partition the disk on Item.unique
   """
-  def m(content \\ nil) do
-    unique = ILM.Castle.uuid
+  def m(content) do
+    m(:binary, content)
+  end
+  def m(kind, content) do
+    unique = Castle.uuid
     item = %Item{
       unique: unique,
-     content: content
+     content: content,
+        kind: kind,
     }
   end
   

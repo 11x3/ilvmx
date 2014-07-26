@@ -1,4 +1,4 @@
-defmodule ILM.Castle.Arcade.Supervisor do
+defmodule Castle.Arcade.Supervisor do
   use Supervisor
 
   def start_link do
@@ -8,7 +8,7 @@ defmodule ILM.Castle.Arcade.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Castle.Arcade,  []),
+      worker(Castle.Arcade,  []),
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

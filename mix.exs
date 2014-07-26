@@ -1,4 +1,4 @@
-defmodule ILM.Mixfile do
+defmodule Mixfile do
   use Mix.Project
 
   def project do
@@ -12,7 +12,7 @@ defmodule ILM.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [
-      mod: { ILM, [] },
+      mod: { ILM.Castle, [] },
       applications: [
         :crypto,
         :ossp_uuid,

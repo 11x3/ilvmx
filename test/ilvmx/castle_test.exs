@@ -5,21 +5,21 @@ defmodule CastleTest do
     assert %Signal{} = Signal.m(self, "/")
   end
     
-  test "ILM.Castle.uuid" do
-    assert true == IT.assert_unique ILM.Castle.uuid
-    assert true == Regex.match? ILM.Castle.uuid_regex, ILM.Castle.uuid
+  test "Castle.uuid" do
+    assert true == IT.assert_unique Castle.uuid
+    assert true == Regex.match? Castle.uuid_regex, Castle.uuid
   end
   
-  test "ILM.Castle.galaxy" do
-    assert "#ilvmx" == ILM.Castle.galaxy
+  test "Castle.galaxy" do
+    assert "#ilvmx" == Castle.galaxy
   end
   
-  test "ILM.Castle.name" do
-    assert "#lolnub" == ILM.Castle.name
+  test "Castle.name" do
+    assert "#lolnub" == Castle.name
   end
   
-  test "ILM.Castle.upload_limit" do
-    assert 0 != ILM.Castle.name
+  test "Castle.upload_limit" do
+    assert 0 != Castle.name
   end
   
 end

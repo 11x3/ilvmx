@@ -1,4 +1,4 @@
-defmodule ILM.Castle.Tower.Supervisor do
+defmodule Castle.Tower.Supervisor do
   use Supervisor
 
   # gen_supervisor
@@ -10,7 +10,7 @@ defmodule ILM.Castle.Tower.Supervisor do
   def init([]) do    
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.Services.Tower,     [])
+      worker(Services.Tower,     [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

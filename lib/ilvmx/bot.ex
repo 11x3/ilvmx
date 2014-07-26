@@ -15,7 +15,7 @@ defmodule Bot do
 
   @doc "Read a file from the internet."
   def web(path) do
-    if ILM.Castle.Wizard.valid_path?(path) do
+    if Castle.Wizard.valid_path?(path) do
       HTTPotion.get(path).body
     end
   end
@@ -76,7 +76,7 @@ defmodule Bot do
     nubspace  = Path.join("priv/static", nub_path(nubspace))
     meta_path = Path.join(nubspace, "meta")
 
-    unless ILM.Castle.Wizard.valid_path?(nubspace) and File.exists?(meta_path) do
+    unless Castle.Wizard.valid_path?(nubspace) and File.exists?(meta_path) do
       # todo: return an error
       []
     else
@@ -119,7 +119,7 @@ defmodule Bot do
   def make(data, static_relative_path) do
     prop_path = Path.join("priv/static", static_relative_path)
     
-    unless ILM.Castle.Wizard.valid_path?(prop_path) do
+    unless Castle.Wizard.valid_path?(prop_path) do
       nil
     else
       File.write!(prop_path, data)
@@ -131,7 +131,7 @@ defmodule Bot do
   @doc "Take files from priv/static."
   def take(static_relative_path) do
     prop_path = Path.join("priv/static", static_relative_path)
-    unless ILM.Castle.Wizard.valid_path?(prop_path) and File.exists?(prop_path) do
+    unless Castle.Wizard.valid_path?(prop_path) and File.exists?(prop_path) do
       nil
     else
       File.read! prop_path

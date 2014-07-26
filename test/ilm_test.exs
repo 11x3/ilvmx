@@ -1,7 +1,7 @@
 defmodule ILMTest do
   use ExUnit.Case
 
-  setup do: ILM.reset!
+  setup do: ILM.Castle.reset!
 
   # ## Integration
 
@@ -32,7 +32,7 @@ defmodule ILMTest do
   end
 
   # test "invalids" do
-  #  assert %Signal{items: []} = Signal.x self, "something random #{ ILM.Castle.uuid }"
+  #  assert %Signal{items: []} = Signal.x self, "something random #{ Castle.uuid }"
   #   assert 404 == HTTPotion.get(IT.web "./something").status_code
   #   assert 404 == HTTPotion.get(IT.web "../something").status_code
   #   assert 404 == HTTPotion.get(IT.web "../something:else").status_code

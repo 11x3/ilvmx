@@ -4,11 +4,11 @@ ILvMx is a functionally minded cloud app server, or something close to an intern
 
 ## Features
 
-- Storage + Code - global hashtag-based namespace of code + storage.
-- Reactive - completely async event/signal, time, and frame-based execution.
-- Fun(ctional) - fun and functional/reactive.
-- Fast - low overhead `Bots` and default static object graphs.
-- Open Source - server/apps/dsl are completely open source.
+- [] Storage + Code - global hashtag-based namespace of code + storage.
+- [] Reactive - completely async event/signal, time, and frame-based execution.
+- [x] Fun(ctional) - fun and functional/reactive.
+- [x] Fast - low overhead `Bots` and default static object graphs.
+- [x] Open Source - server/apps/dsl are completely open source.
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.
 

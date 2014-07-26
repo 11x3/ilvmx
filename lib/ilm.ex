@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
   
-defmodule ILM do
+defmodule ILM.Castle do
   use Application
   
   @moduledoc """
@@ -44,7 +44,7 @@ defmodule ILM do
     IO.inspect "(x-x-) #ilvmx."
     
     reset!
-        
-    ILM.Castle.Supervisor.start_link
+    
+    Castle.Supervisor.start_link
   end
 end

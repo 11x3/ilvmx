@@ -1,11 +1,11 @@
-defmodule ILM.Services.Plug do
+defmodule Services.Plug do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
   use     Jazz
   
   @parsers          [Plug.Parsers.MULTIPART, Plug.Parsers.URLENCODED]
-  @upload_limit     ILM.Castle.upload_limit
+  @upload_limit     Castle.upload_limit
   
   @moduledoc """
   Web Requests from Cowboy/Plug.

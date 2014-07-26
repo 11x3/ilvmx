@@ -1,4 +1,4 @@
-defmodule ILM.CPU do
+defmodule Castle.CPU do
   use GenServer
     
   # defmodule Player do
@@ -42,30 +42,38 @@ defmodule ILM.CPU do
   
   ## Execute
   
-  @doc "Execute a signal on the CPU."
-  def execute!(signal) do    
-    # map Program
-    #   \compile program
-    #     \ unquote functions
-    #     \ parse cakedown
-    #   \execute program
-    #   \pull data out of program
-    #   \store program.data into signal.items {:item, x}
-    
+  @doc "Execute a signal on the Castle.CPU."
+  def execute!(signal) do
     # promote the signal to a GenServer
-    {:ok, server} = GenServer.start_link(ILM.CPU, nil, debug: [])
+    {:ok, server} = GenServer.start_link(Castle.CPU, nil, debug: [])
 
     # process the signal/program
     GenServer.call(server, {:execute, signal, signal.source, server})
-    |> ILM.Castle.Wizard.review?
-    |> ILM.Services.Tower.commit!
+    |> Castle.Wizard.review?
+    |> Services.Tower.commit!
   end
+
   
+  ## Capture
   
+  @doc "Capture and repeatedely execute Program on Castle.CPU."
+  def capture!(signal) do
+    IO.inspect "(x-x-):capture! {signal: #{inspect signal.path}, program: #{inspect signal.item}}"
+    
+    # start the server
+    {:ok, server} = GenServer.start_link(Castle.CPU, nil, debug: [])
+
+    # start the signal/program
+    #GenServer.cast(server, {:capture, signal})
+    
+    signal
+    |> Castle.Wizard.review?
+    |> Services.Tower.beam!
+  end
   
   ## Install
   
-  @doc "Install `signal` to provide `item` or `program` in the Castle memory space."
+  @doc "Install `signal` to disk to provide `item` or `program` in Castle.Nubspace."
   def install!(signal) do
     install!(signal, signal.item)
   end
@@ -77,7 +85,7 @@ defmodule ILM.CPU do
   end
   def install!(signal, item = %Item{}) do
     # start the server
-    {:ok, server} = GenServer.start_link(ILM.CPU, signal, debug: [])
+    {:ok, server} = GenServer.start_link(Castle.CPU, signal, debug: [])
 
     # start the signal/program
     GenServer.call(server, {:install, signal})
@@ -90,7 +98,7 @@ defmodule ILM.CPU do
   # #todo: Kill a `signal` already in Nubspace.
   # """
   # def kill!(signal, token) do
-  #   {:ok, server} = GenServer.start_link(ILM.CPU, nil, debug: [])
+  #   {:ok, server} = GenServer.start_link(Castle.CPU, nil, debug: [])
   #
   #   # process the signal/program
   #   GenServer.cast(server, {:kill, signal, token})
@@ -99,34 +107,9 @@ defmodule ILM.CPU do
   # end
   
   
-  ## callbacks
-
-  # def handle_cast({:install, item = %Program{}, server}, signal) do
-  #   # IO.inspect "(x-x-):install {signal: #{inspect signal.path}, item: #{inspect item}}"
-  #   #
-  #   # {:ok, signal_agent} = Agent.start_link(fn -> signal end)
-  #   #
-  #   # # add dynamic :boost signal/server
-  #   # # # todo: fix these Castle sigmaps
-  #   # # sigmap = %{signal: signal.path, server: server, item: String.slice(inspect(signal.item), 0..42)}
-  #   # # #todo: check for existing item
-  #   # # #signals(signal.path, sigmap)
-  #   # # graph the item
-  #   #
-  #   # message_loop(signal_agent, item, server)
-  #   #
-  #   #todo: return a ownership token
-  #   {:noreply, :noreply}
-  # end
+  ## Callbacks
   
-  
-  def handle_call({:install, signal}, from, state) do  
-    # graph the item
-    {:reply, %{signal| item: Bot.push(signal.path, signal.item)}, state}
-  end
- 
-  
-  def handle_call({:execute, signal, client, server}, from, state) do    
+  def handle_call({:execute, signal, client, server}, from, state) do
     IO.inspect "(x-x-).execute!: #{inspect signal.path}"
 
     # collect nubspace items
@@ -138,7 +121,52 @@ defmodule ILM.CPU do
 
     {:reply, signal, nil}
   end
+
+  def handle_cast({:capture, signal}, state) do
+    IO.inspect "(x-x-):capture {signal: #{inspect signal.path}, program: #{inspect signal.item}}"
+    
+    {:ok, signal_agent} = Agent.start_link(fn -> signal end)
+    
+    #todo: check for kill9 on signal
+
+    # # add dynamic :boost signal/server
+    # # # todo: fix these Castle sigmaps
+    # # sigmap = %{signal: signal.path, server: server, item: String.slice(inspect(signal.item), 0..42)}
+    # # #todo: check for existing item
+    # # #signals(signal.path, sigmap)
+    # # graph the item
+    
+    #todo: return a ownership token
+    {:noreply, exe(signal_agent, signal.item)}
+  end
   
+  def exe(signal_agent, program) do
+    signal_item = fn item ->
+      Agent.update signal_agent, fn signal -> Signal.a(signal, item) end
+    end
+    
+    signal = Agent.get signal_agent, fn signal -> signal end
+    
+    # add the signal_item function to the program's data
+    data = %{
+      signal_item: signal_item,
+      signal: signal,
+      cpu: self
+    }
+    program = %{program| data: Map.merge(program.data, data) }
+
+    Program.exe(program)
+  end
+  
+  
+  def handle_call({:install, signal}, from, state) do
+    IO.inspect "(x-x-):install {signal: #{inspect signal.path}, item: #{inspect signal.item}}"
+    
+    # graph the item
+    
+    #todo: return a ownership token
+    {:reply, %{signal| item: Bot.push(signal.path, signal.item)}, state}
+  end
   
   ## private
   
@@ -155,8 +183,8 @@ defmodule ILM.CPU do
   #   #     # boost   = Agent.get boost_agent,  fn boost  -> boost end
   #   #     # signal  = Agent.get signal_agent, fn signal -> signal end
   #   #     #
-  #   #     # # #IO.inspect "(x-x-):ILM.Nubspace.message_loop.boost:  #{inspect boost}"
-  #   #     # # #IO.inspect "(x-x-):ILM.Nubspace.message_loop.signal: #{inspect signal}"
+  #   #     # # #IO.inspect "(x-x-):Nubspace.message_loop.boost:  #{inspect boost}"
+  #   #     # # #IO.inspect "(x-x-):Nubspace.message_loop.signal: #{inspect signal}"
   #   #     # #
   #   #     # #todo: exe program or otherwise pattern/match
   #   #     # #
@@ -197,6 +225,6 @@ defmodule ILM.CPU do
   end
   
   def start_link(default \\ nil) do
-    GenServer.start_link(ILM.CPU, default)
+    GenServer.start_link(Castle.CPU, default)
   end
 end

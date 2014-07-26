@@ -1,4 +1,4 @@
-defmodule ILM.Castle.Arcade do
+defmodule Castle.Arcade do
   #todo: add player/session server
   
   

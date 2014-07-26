@@ -1,4 +1,4 @@
-defmodule ILM.CPU.Supervisor do
+defmodule Castle.CPU.Supervisor do
   use Supervisor
   
   @castle_path Path.join(File.cwd!, "castle")
@@ -29,7 +29,7 @@ defmodule ILM.CPU.Supervisor do
             prog_path   = Path.join(@castle_path, file_path)
             signal_path = Path.basename(prog_path, Path.extname(prog_path))
           
-            Program.exe(prog_path)
+            Program.app(prog_path)
           end
         end
       rescue
@@ -48,7 +48,7 @@ defmodule ILM.CPU.Supervisor do
     
     children = [
       # Define workers and child supervisors to be supervised
-      worker(ILM.CPU,  []),
+      worker(Castle.CPU,  []),
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.html

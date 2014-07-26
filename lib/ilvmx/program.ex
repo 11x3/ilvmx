@@ -8,13 +8,33 @@ defmodule Program do
   @moduledoc """
   Programming Program [wip][betabook]
   """
+  def exe(signal, program) do
+    # map Program
+    #     \compile program
+    #     \ unquote functions
+    #     \ parse cakedown
+    #   \execute program
+    #   \pull data out of program
+    #   \store program.data into signal.items {:item, x}
+
+    #throw IO.inspect "XXX))) #{inspect program}"
+    
+    # |> Program.compile
+    # |> Program.before
+    # |> Program.main
+    # |> Program.after
+    
+    signal
+  end
+  
+
   
   ## Dynamic
   
   @doc "Exe raw Cakedown text."   
   def raw(text) do
     program = %Program{
-      unique: ILM.Castle.uuid,
+      unique: Castle.uuid,
         code: text
     }
     
@@ -26,7 +46,7 @@ defmodule Program do
   @doc "Execute a `function`"
   def cmd(function) do
     program = %Program{
-      unique: ILM.Castle.uuid,
+      unique: Castle.uuid,
         code: function
     }
     
@@ -39,10 +59,10 @@ defmodule Program do
   ## Static
   
   @doc "Compile or start `program_path` from disk."
-  def exe(program_path) do
-    if ILM.Castle.Wizard.valid_path?(program_path) && File.exists?(program_path) do
+  def app(program_path) do
+    if Castle.Wizard.valid_path?(program_path) && File.exists?(program_path) do
       Code.eval_file program_path
-    end    
+    end
   end
   
 end

@@ -7,11 +7,11 @@ body {
   font: sans;
   color: #fff;
   font-size: 150%;
-  padding: 20px;
+  padding: 0px;
   background: transparent;
 }
 html {
-  background-color: #0a0e13;
+  background-color: #121212;
 }
 body {
 }
@@ -22,6 +22,10 @@ footer {
 #page {
 
 }
+.row {
+  padding: 0 10px 0 20px;
+}
+
 #nubspace {
   font-size: 28px;
 }

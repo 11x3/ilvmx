@@ -15,7 +15,7 @@ defmodule Signal do
   """
   
   @doc "Make a `Signal`."
-  def m(source, path \\ ILM.Castle.name, data \\ nil) do
+  def m(source, path \\ Castle.name, data \\ nil) do
     if data do
       item = Item.m data
     end
@@ -25,7 +25,7 @@ defmodule Signal do
           item: item,
          items: [],
         source: source,
-        unique: ILM.Castle.uuid,
+        unique: Castle.uuid,
          owner: Player.anon!
     }
   end
@@ -34,17 +34,23 @@ defmodule Signal do
   ## API
   
   @doc "Install a Signal from an optional `source`, with `data` to `path`."
+  def i(path, item) when is_function(item) do
+    i(nil, path, Program.cmd(item))
+  end
   def i(path, item) do
     i(nil, path, item)
   end
+  def i(source, path, item = %Program{}) do
+    i(source, path, item) |> Castle.please? |> Castle.CPU.capture!
+  end
   def i(source, path, item) do
     #todo: uploads should go through the gate
-    m(source, path, item) |> ILM.Castle.please? |> ILM.CPU.install!
+    m(source, path, item) |> Castle.please? |> Castle.CPU.install!
   end
 
   @doc "Execute a `Signal` `path` with optional `data`."
   def x(source, path, item \\ nil) do
-    m(source, path, item) |> ILM.Castle.please? |> ILM.CPU.execute!
+    m(source, path, item) |> Castle.please? |> Castle.CPU.execute!
   end
   
   

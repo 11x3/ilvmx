@@ -1,4 +1,4 @@
-defmodule ILM.Castle do
+defmodule Castle do
   use GenServer
   
   @epoch          :epoch
@@ -16,7 +16,7 @@ defmodule ILM.Castle do
   Castle's astral connection to the higher planes of the ILvMx network.
   """
   def please?(signal) do
-    signal |> ILM.Castle.Wizard.please?
+    signal |> Castle.Wizard.please?
   end
   
   
@@ -44,7 +44,7 @@ defmodule ILM.Castle do
   end
   
   @doc """
-  Return the regex that matches ILM.Castle.uuids
+  Return the regex that matches Castle.uuids
   """
   def uuid_regex do
     ~r/[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}/i
@@ -64,8 +64,8 @@ defmodule ILM.Castle do
     link = GenServer.start_link(__MODULE__, nil)
 
     # setup plug adapters
-    Plug.Adapters.Cowboy.http ILM.Services.Plug, [], port: 8080
-    #todo: support ILM.config for starting options
+    Plug.Adapters.Cowboy.http Services.Plug, [], port: 8080
+    #todo: support config for starting options
     
     link
   end
