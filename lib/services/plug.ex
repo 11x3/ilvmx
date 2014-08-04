@@ -28,7 +28,7 @@ defmodule Castle.Services.Plug do
     hello conn, signal_path
   end
 
-  @doc ""
+  @doc "Route to upload items."
   def hello(conn, signal_path = ["api", "push"]) do
     # parse the http signal
     conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
@@ -42,6 +42,7 @@ defmodule Castle.Services.Plug do
     end
   end
   
+  @doc "Route for static objects."
   def hello(conn, signal_path = ["obj"|unique]) do
     obj_path = Path.join(["priv", "static"|signal_path])
     
@@ -53,6 +54,7 @@ defmodule Castle.Services.Plug do
     end
   end
   
+  @doc "Dynamic nubspace routes."
   def hello(conn, nubspace) do
     # always send a signal, but sometimes return an item.
     items = Signal.x(self, nubspace, conn.params).items
