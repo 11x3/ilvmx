@@ -1,4 +1,4 @@
-defmodule Services.Plug do
+defmodule Castle.Services.Plug do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
@@ -38,7 +38,7 @@ defmodule Services.Plug do
     if nubspace do
       send_resp conn, 200, inspect(Signal.i(conn, nubspace, conn.params))
     else
-      send_resp(conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)")
+      send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
     end
   end
   
@@ -49,13 +49,13 @@ defmodule Services.Plug do
       # todo: add send_file here
       send_resp conn, 200, File.read!(obj_path)
     else
-      send_resp(conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)")
+      send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
     end
   end
   
   def hello(conn, nubspace) do
     # always send a signal, but sometimes return an item.
-    items = Signal.x(conn, nubspace, conn.params).items
+    items = Signal.x(self, nubspace, conn.params).items
     
     if 0 < length(items) do
       send_resp conn, 200, inspect(items)
@@ -66,7 +66,7 @@ defmodule Services.Plug do
         # todo: add send_file here
         send_resp conn, 200, File.read!(obj_path)
       else
-        send_resp(conn, 404, inspect(items))
+        send_resp conn, 404, inspect(items)
       end
     end
   end

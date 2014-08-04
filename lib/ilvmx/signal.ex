@@ -41,16 +41,16 @@ defmodule Signal do
     i(nil, path, item)
   end
   def i(source, path, item = %Program{}) do
-    i(source, path, item) |> Castle.please? |> Castle.CPU.capture!
+    i(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.capture!
   end
   def i(source, path, item) do
     #todo: uploads should go through the gate
-    m(source, path, item) |> Castle.please? |> Castle.CPU.install!
+    m(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.install!
   end
 
   @doc "Execute a `Signal` `path` with optional `data`."
   def x(source, path, item \\ nil) do
-    m(source, path, item) |> Castle.please? |> Castle.CPU.execute!
+    m(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.execute!
   end
   
   

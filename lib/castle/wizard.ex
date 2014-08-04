@@ -12,7 +12,8 @@ defmodule Castle.Wizard do
   def please?(signal) do
     signal |> review?
   end
-
+  
+  
   @doc "Stub :before `Signal` traffic review."
   def review?(signal = %Signal{item: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
     upload = item.content["binary"]

@@ -11,15 +11,7 @@ defmodule Castle do
   # todo: add Castle.config[:name]
   # todo: support p2p between castles
   """
-  
-  @doc """
-  Castle's astral connection to the higher planes of the ILvMx network.
-  """
-  def please?(signal) do
-    signal |> Castle.Wizard.please?
-  end
-  
-  
+
   ## Native
   
   @doc """
@@ -64,7 +56,7 @@ defmodule Castle do
     link = GenServer.start_link(__MODULE__, nil)
 
     # setup plug adapters
-    Plug.Adapters.Cowboy.http Services.Plug, [], port: 8080
+    Plug.Adapters.Cowboy.http Castle.Services.Plug, [], port: 8080
     #todo: support config for starting options
     
     link

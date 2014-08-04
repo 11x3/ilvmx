@@ -71,7 +71,7 @@ defmodule Bot do
   def pull(nubspace) when is_list(nubspace) do
     pull Path.join(nubspace)
   end
-  def pull(nubspace) when is_binary(nubspace) do    
+  def pull(nubspace) when is_binary(nubspace) do
     # check
     nubspace  = Path.join("priv/static", nub_path(nubspace))
     meta_path = Path.join(nubspace, "meta")
@@ -106,8 +106,7 @@ defmodule Bot do
   end
   def get(obj_path) do
     # read and eval the item data into an Item
-    data = take(obj_path)
-    {item, _binding} = Item.from(data)
+    {item, _binding} = Code.eval_string take(obj_path)
     
     item
   end

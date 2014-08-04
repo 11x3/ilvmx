@@ -2,14 +2,14 @@ defmodule Castle.Supervisor do
   use Supervisor
 
   def start_link do
-    :supervisor.start_link(__MODULE__, [])
+    :supervisor.start_link(__MODULE__, [debug: [:trace]])
   end
 
-  def init([]) do
+  def init(opts \\ nil) do
     children = [
       # Define workers and child supervisors to be supervised
       worker(Castle,                    []),
-      worker(Castle.CPU.Supervisor,            []),
+      worker(Castle.CPU.Supervisor,     []),
       worker(Castle.Tower.Supervisor,   []),
     ]
     

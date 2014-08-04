@@ -2,13 +2,17 @@ defmodule Program do
   defstruct source: nil,
               code: nil,  # expression
               data: %{},  # storage
+           effects: [],
             errors: [],   # exceptions or manual logged errors
             unique: nil
 
   @moduledoc """
   Programming Program [wip][betabook]
+  #todo: returns `Signal`
   """
-  def exe(signal, program) do
+  def exe(program) do
+    IO.inspect "XXX))) #{inspect program}"
+    
     # map Program
     #     \compile program
     #     \ unquote functions
@@ -17,14 +21,13 @@ defmodule Program do
     #   \pull data out of program
     #   \store program.data into signal.items {:item, x}
 
-    #throw IO.inspect "XXX))) #{inspect program}"
     
     # |> Program.compile
     # |> Program.before
     # |> Program.main
     # |> Program.after
     
-    signal
+    program.data[:signal]
   end
   
 

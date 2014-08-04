@@ -43,7 +43,7 @@ defmodule ILM.Castle do
   def start(_type, _args) do
     IO.inspect "(x-x-) #ilvmx."
     
-    reset!
+    #reset!
     
     Castle.Supervisor.start_link
   end

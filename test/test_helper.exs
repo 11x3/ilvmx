@@ -1,6 +1,6 @@
 # server
-ILM.Castle.start
 ILM.Castle.reset!
+ILM.Castle.start
 
 # tests
 ExUnit.start

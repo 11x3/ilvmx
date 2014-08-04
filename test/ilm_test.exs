@@ -16,9 +16,7 @@ defmodule ILMTest do
     assert %Signal{item: item = %Item{}} = Signal.i "lolnub", "a"
     assert %Signal{item: item = %Item{}} = Signal.i "lolnub", "b"
 
-    
-    assert [a, b] = Signal.x(self, "lolnub").items |> Enum.sort
-    assert true == is_binary(a) and is_binary(b)
+    assert [a = %{}, b = %{}] = Signal.x(self, "lolnub").items |> Enum.sort
   end
 
   test "splash" do
