@@ -8,11 +8,10 @@ defmodule Signal do
   
   @moduledoc """
   `Signal`s are the superglue unit of the ILvMx Galaxy.
-  
-  Some things:
-  - signals are the core MESSAGE unit of the Kingdom.
-  - functions in `Signal` should NOT *directly* graph to disk (memory only)
   """
+  
+    
+  ## API
   
   @doc "Make a `Signal`."
   def m(source, path \\ Castle.name, data \\ nil) do
@@ -30,10 +29,7 @@ defmodule Signal do
     }
   end
   
-  
-  ## API
-  
-  @doc "Install a Signal from an optional `source`, with `data` to `path`."
+  @doc "Install a Signal from an optional `source` at `path` with `item`."
   def i(path, item) when is_function(item) do
     i(nil, path, Program.cmd(item))
   end

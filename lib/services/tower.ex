@@ -21,7 +21,7 @@ defmodule Services.Tower do
 
 
   @doc "Commit `signal` to Galaxy state."
-  def commit!(signal) do    
+  def commit!(signal) do
     signal
     |> pipe!
     |> archive!

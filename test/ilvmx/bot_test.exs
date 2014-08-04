@@ -5,55 +5,47 @@ defmodule BotTest do
 
   ## World
     
-  # test "Bot.web" do
-  #   IT.assert_web_page Bot.web(IT.web("/"))
-  # end
+  test "Bot.web to grab web pages" do
+    IT.assert_web_page Bot.web(IT.web("/"))
+  end
 
 
   ## Nubspace
+  
+  test "Bot.push to link items in nubspace" do
+    assert %Item{} = Bot.push "chat", "todo"
+  end
 
-  test "pull" do
-    assert [] == Bot.pull "xyz"
-    assert []
+  test "Bot.pull to collect items from nubspace" do
+    signal = Signal.i "lolnub", "todo"
+    
+    assert (Bot.pull("lolnub") |> Enum.any? fn x -> x == "obj/#{ signal.item.unique }" end)
+  end
+
+
+  ## Item
+  
+  test "Bot.set to create static items" do
+    assert %Item{content: "todo"} = Bot.set "todo"
   end
   
-  # test "push" do
-  #   effect = Bot.push "chat", "todo"
-  #
-  #   assert false
-  # end
-  #
-  # test "pull" do
-  #   effect = Bot.pull "chat"
-  #
-  #   assert false
-  # end
-  #
-  # ## Item
-  
-  # test "item" do
-  #   assert %Item{} = Bot.item
-  # end
-  #
-  # test "set" do
-  #   assert %Item{content: %{text: "todo"}} = Bot.set Item.m, :text, "todo"
-  # end
-  #
-  # test "get" do
-  #   assert false
-  # end
-  #
-  # test "binaries" do
-  #   assert false
-  # end
-  #
+  test "Bot.get to init static items" do
+    signal = Signal.i "lolnub", "todo"
+    
+    assert Bot.pull(signal.path) |> Enum.map fn item_unique ->      
+      assert %Item{} = Bot.get item_unique
+    end
+  end
+
+
   ## File
-  
-  test "Bot.take" do
-    assert true == Regex.match?(~r/html/, Bot.take("index.html"))
-  end
-  
-  test "Bot.make" do
+
+  test "Bot.make to write files to disk" do
     assert Bot.take("tmp/todo") == Bot.make("todo", "tmp/todo") 
   end
+  
+  test "Bot.take to read files from disk" do
+    assert Regex.match?(~r/html/, Bot.take("index.html"))
+  end
+  
 end

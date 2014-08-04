@@ -9,7 +9,7 @@ defmodule Item do
   Items are the simplest objects in the Kingdom.
   #todo: partition the disk on Item.unique
   """
-  def m(content) do
+  def m(content \\ nil) do
     m(:binary, content)
   end
   def m(kind, content) do

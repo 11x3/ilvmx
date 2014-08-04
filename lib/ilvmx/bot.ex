@@ -25,15 +25,6 @@ defmodule Bot do
   
   @doc "Put `item` into `nubspace`."
   def push(nubspace, item = %Item{}) when is_binary(nubspace) do
-    
-    # defmodule Item do
-    #   defstruct   kind: nil,  # String (eg. mime/type)
-    #             unique: nil,  # "32453-4544-3434-234324-7879"
-    #               path: nil,  # %{}           => "obj/32453-4544-3434-234324-7879"
-    #               meta: nil   # :ilvmx        => "obj/32453-4544-3434-234324-7879/meta"
-    #            content: nil,  # {:file, etc}  => "bin/32453-4544-3434-234324-7879/content"
-
-    
     # set the item into nubspace
     Bot.make(inspect(item), Item.path(item))
     

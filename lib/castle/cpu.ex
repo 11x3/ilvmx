@@ -7,6 +7,7 @@ defmodule Castle.CPU do
     Agent.get signals_agent, fn signals -> signals end
   end
   
+  
   ## Execute
   
   @doc "Execute a signal on the Castle.CPU."
@@ -137,7 +138,7 @@ defmodule Castle.CPU do
         Agent.update signal_agent, fn signal -> Program.exe(%{program| data: signal}) end
       rescue
         x in [RuntimeError, ArgumentError, BadArityError] ->
-          IO.inspect "(x-x-).setup_castle.FAILED: #{inspect x}"
+          IO.inspect "(x-x-).cap_loop: #{inspect x}"
       end
     end
     

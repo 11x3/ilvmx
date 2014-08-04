@@ -10,6 +10,9 @@ defmodule Program do
   Programming Program [wip][betabook]
   #todo: returns `Signal`
   """
+  
+  ## API
+  
   def exe(program) do
     IO.inspect "XXX))) #{inspect program}"
     
@@ -31,7 +34,6 @@ defmodule Program do
   end
   
 
-  
   ## Dynamic
   
   @doc "Exe raw Cakedown text."   
