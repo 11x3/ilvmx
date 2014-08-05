@@ -119,6 +119,9 @@ defmodule Bot do
   end
   
   @doc "Take files from priv/static."
+  def take(static_relative_path_list) when is_list(static_relative_path_list) do
+    (static_relative_path_list |> Enum.map &(take &1)) |> :binary.list_to_bin
+  end
   def take(static_relative_path) do
     prop_path = Path.join("priv/static", static_relative_path)
     unless Castle.Wizard.valid_path?(prop_path) and File.exists?(prop_path) do

@@ -1,13 +1,8 @@
 defmodule Castle.CPU do
   use GenServer
   
-  ## API
-  
-  def signals do
-    Agent.get signals_agent, fn signals -> signals end
-  end
-  
-  
+  @castle_path Path.join(File.cwd!, "castle")
+    
   ## Execute
   
   @doc "Execute a signal on the Castle.CPU."
@@ -80,26 +75,15 @@ defmodule Castle.CPU do
   ## Callbacks
   
   def handle_call({:execute, signal, client, server}, from, state) do
-    IO.inspect "(x-x-).execute!: #{inspect signal.path}"
+    IO.inspect "(x-x-).execute!: #{inspect signal.path} client: #{inspect client} server: #{inspect server}"
     
-    effects = Bot.pull(signal.path) |> Enum.map fn item ->      
-      item = Bot.get item
-      
-      # if item = %Program{} do
-      #   %{item| data: %{signal: signal} } |> Program.exe
-      # else
-        item
-      #end
-    end
-    
-    {:reply, Signal.a(signal, effects), nil}
+    {:reply, Signal.a(signal, Bot.get(Bot.pull signal.path)), nil}
   end
 
   def handle_cast({:capture, signal, duration}, state) do
     IO.inspect "(x-x-):capture {signal: #{inspect signal.path}, program: #{inspect signal.item}}"
     
-    {:ok, signal_agent} = Agent.start_link(fn -> signal end)
-    
+    {:ok, signal_agent} = Agent.start_link(fn -> signal end)    
     #todo: check for kill9 on signal
 
     #add dynamic :boost signal/server
@@ -107,7 +91,7 @@ defmodule Castle.CPU do
     sigmap = %{signal: signal.path, server: self, item: String.slice(inspect(signal.item), 0..42)}
     
     #todo: check for existing item
-    signals(signal.path, sigmap)
+    Castle.signals(signal.path, sigmap)
 
     cap_loop(signal_agent, signal.item, duration)
     
@@ -117,11 +101,9 @@ defmodule Castle.CPU do
   
   def handle_call({:install, signal}, from, state) do
     IO.inspect "(x-x-):install {signal: #{inspect signal.path}, item: #{inspect signal.item}}"
-    
-    # graph the item
-    
+        
     #todo: return a ownership token
-    {:reply, %{signal| item: Bot.push(signal.path, signal.item)}, state}
+    {:reply, Signal.a(signal, Bot.push(signal.path, signal.item)), state}
   end
 
   
@@ -145,18 +127,12 @@ defmodule Castle.CPU do
     Agent.get signal_agent, fn signal -> signal end
   end
 
-  defp signals(path, sigmap) do
-    Agent.update signals_agent, fn signals -> 
-      Dict.update signals, path, [sigmap], &(List.flatten signals[path], &1)
-    end
-  end
-  
-  defp signals_agent do
-    Application.get_env :ilvmx, :signals
-  end
-
   
   ## GenServer
+  
+  def handle_info(timeout, state) do
+    #todo: setup epoch
+  end
   
   def handle_info(message, _nil) do
     {:noreply, _nil}
@@ -166,7 +142,7 @@ defmodule Castle.CPU do
     {:noreply, state}
   end
   
-  def start_link(default \\ nil) do
+  def start_link(default \\ nil) do    
     GenServer.start_link(Castle.CPU, default)
   end
 end

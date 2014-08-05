@@ -19,7 +19,7 @@ defmodule Castle.Services.Plug do
   
   @doc "Plug: *ring*, *ring*"
   def call(conn = %Plug.Conn{path_info: []}, options) do
-    send_resp conn, 200, Bot.take "index.html"
+    send_resp conn, 200, Bot.take(["header.html", "footer.html"])
   end
   
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do

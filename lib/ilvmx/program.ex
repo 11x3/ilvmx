@@ -14,15 +14,15 @@ defmodule Program do
   ## API
   
   def exe(program) do
-    IO.inspect "XXX))) #{inspect program}"
+    IO.inspect "xxx))) #{inspect program}"
     
     # map Program
-    #     \compile program
+    #     \ compile program
     #     \ unquote functions
     #     \ parse cakedown
-    #   \execute program
-    #   \pull data out of program
-    #   \store program.data into signal.items {:item, x}
+    #   \ execute program
+    #   \ pull data out of program
+    #   \ store program.data into signal.items {:item, x}
 
     
     # |> Program.compile

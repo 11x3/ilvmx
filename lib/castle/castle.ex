@@ -12,6 +12,13 @@ defmodule Castle do
   # todo: support p2p between castles
   """
 
+  ## API
+  
+  def signals do
+    Agent.get signals_agent, fn signals -> signals end
+  end
+  
+
   ## Native
   
   @doc """
@@ -50,10 +57,46 @@ defmodule Castle do
   end
   
   
+  ## Private
+  
+  defp signals_setup do
+    # Load static castle scripts
+    # hack: todo: fix this costly "hot" reloading
+    if nil? signals_agent do
+      IO.inspect "(x-x-)...setup: #{ inspect self }"
+    
+      try do
+        if File.exists?(@castle_path) do
+          castle_signals = File.ls!(@castle_path) |> Enum.map fn file_path ->
+            prog_path   = Path.join(@castle_path, file_path)
+            signal_path = Path.basename(prog_path, Path.extname(prog_path))
+        
+            Program.app(prog_path)
+          end
+        end
+      rescue
+        x in [RuntimeError, ArgumentError, BadArityError] ->
+          IO.inspect "(x-x-).setup_castle.FAILED: #{inspect x}"
+      end
+    end
+  end
+  
+  defp signals_agent do
+    Application.get_env :ilvmx, :signals
+  end
+  
+  defp signals(path, sigmap) do
+    Agent.update signals_agent, fn signals -> 
+      Dict.update signals, path, [sigmap], &(List.flatten signals[path], &1)
+    end
+  end
+  
   ## GenServer
 
   def start_link do
     link = GenServer.start_link(__MODULE__, nil)
+
+    Task.async fn -> signals_setup end
 
     # setup plug adapters
     Plug.Adapters.Cowboy.http Castle.Services.Plug, [], port: 8080

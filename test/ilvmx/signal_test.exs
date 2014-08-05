@@ -1,6 +1,6 @@
 defmodule SignalTest do
   use   ExUnit.Case, async: true
-
+  
   test "m" do
     assert %Signal{} = Signal.m(self)
     assert %Signal{} = Signal.m(self, [])
@@ -16,9 +16,9 @@ defmodule SignalTest do
   end
   
   test "x" do
-    assert %Signal{} = Signal.i "splash", Bot.take "index.html"
+    assert %Signal{} = Signal.i "splash", Bot.take(["header.html", "footer.html"])
   end
-
+  
   test "a" do
     assert %Signal{items: ["todo"]} = Signal.a Signal.m(self, "system/console"), "todo"
   end

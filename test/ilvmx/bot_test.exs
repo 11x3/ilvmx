@@ -45,7 +45,7 @@ defmodule BotTest do
   end
   
   test "Bot.take to read files from disk" do
-    assert Regex.match?(~r/html/, Bot.take("index.html"))
+    assert Regex.match?(~r/html/, Bot.take(["header.html", "footer.html"]))
   end
   
 end
