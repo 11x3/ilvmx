@@ -10,7 +10,8 @@ defmodule Castle.Supervisor do
       # Define workers and child supervisors to be supervised
       worker(Castle,                    []),
       worker(Castle.CPU.Supervisor,     []),
-      worker(Castle.Tower.Supervisor,   []),
+      worker(Castle.Wizard.Supervisor,  []),
+      worker(Castle.Arcade.Supervisor,  []),
     ]
     
     # See http://elixir-lang.org/docs/stable/Supervisor.html

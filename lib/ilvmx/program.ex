@@ -13,7 +13,7 @@ defmodule Program do
   
   ## API
   
-  def exe(program) do
+  def exe(program = %Signal{}) do
     IO.inspect "xxx))) #{inspect program}"
     
     # map Program
@@ -30,7 +30,7 @@ defmodule Program do
     # |> Program.main
     # |> Program.after
     
-    program.data[:signal]
+    program
   end
   
 

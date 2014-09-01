@@ -12,7 +12,7 @@ defmodule Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [
-      mod: { ILM.Castle, [] },
+      mod: { ILM, [] },
       applications: [
         :crypto,
         :ossp_uuid,

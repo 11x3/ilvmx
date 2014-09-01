@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
   
-defmodule ILM.Castle do
+defmodule ILM do
   use Application
     
   @moduledoc """
@@ -30,6 +30,7 @@ defmodule ILM.Castle do
     end
         
     {:ok, signal_agent} = Agent.start_link(fn -> %{} end)
+    
     Application.put_env(:ilvmx, :signals, signal_agent)
   end
 
@@ -43,7 +44,7 @@ defmodule ILM.Castle do
   def start(_type, _args) do
     IO.inspect "(x-x-) #ilvmx."
     
-    #reset!
+    reset!
     
     Castle.Supervisor.start_link
   end

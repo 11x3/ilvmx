@@ -17,7 +17,7 @@ defmodule BotTest do
   end
 
   test "Bot.pull to collect items from nubspace" do
-    signal = Signal.i "lolnub", "todo"
+    signal = Castle.s "lolnub", "todo"
     
     assert (Bot.pull("lolnub") |> Enum.any? fn x -> x == "obj/#{ signal.item.unique }" end)
   end
@@ -30,7 +30,7 @@ defmodule BotTest do
   end
   
   test "Bot.get to init static items" do
-    signal = Signal.i "lolnub", "todo"
+    signal = Castle.s "lolnub", "todo"
     
     assert Bot.pull(signal.path) |> Enum.map fn item_unique ->      
       assert %Item{} = Bot.get item_unique

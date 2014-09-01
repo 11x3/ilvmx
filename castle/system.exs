@@ -1,5 +1,5 @@
-Signal.i "lolnub", "todo"
+Castle.s "ilvmx", "(x-x-)... hello."
 
-Signal.i "lolnub", fn signal ->
-  inspect Castle.CPU.signals
+Castle.s "signals", fn signal ->
+  Item.m Castle.CPU.signals
 end

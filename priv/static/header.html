@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>  
-  <!-- todo: pass in variables for meta description, keywords, title, links, etc. github.com/lolnub/ilvmx -->
+<head>
+  <!-- github.com/lolnub/ilvmx -->
   <title>#lolnub</title>
   
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -16,27 +16,28 @@
   <link rel="stylesheet" href="css/default.css" type="text/css" media="screen" charset="utf-8">
   <link rel="icon" type="image/png" href="/img/favicon.png">
 </head>
-<bodyclass"container-fluid">
-<div id="page" class="row">
+<body class"container-fluid">
 
+<div id="page" class="row">
+    
 	<div id="content" class=".col-golden-lg">
-	    <script type="text/x-handlebars" id="application">		
-          <ul>
+	    <script type="text/x-handlebars" id="application">
+            <img id="patches" src="/img/lol-patches.png" alt="">
+            {{input id="lolnub" placeholder="#lolnub" size=28}}
+            
+            <ul>
               {{#each signal in signals}}
-           <li>{{#link-to "signals"}}nub{{/link-to}}</li>
+               <li>{{#link-to "signals"}}nub{{/link-to}}</li>
               {{/each}}
-          </ul>
-        
+              </ul>
 		 {{outlet}}
 	    </script>
-
-        <img id="patches" src="img/patches.png" alt="">
+        
+    	<script type="text/javascript" src="js/libs/jquery.js"></script>
+    	<script type="text/javascript" src="js/libs/handlebars.js"></script>
+    	<script type="text/javascript" src="js/libs/ember.js"></script>
+    	<script type="text/javascript" src="js/libs/ember-data.js"></script>
+    	<script type="text/javascript" src="js/libs/bootstrap.js"></script>
+    	<script type="text/javascript" src="js/app.js"></script>
 	</div>
-	
-	<script type="text/javascript" src="js/libs/jquery.js"></script>
-	<script type="text/javascript" src="js/libs/handlebars.js"></script>
-	<script type="text/javascript" src="js/libs/ember.js"></script>
-	<script type="text/javascript" src="js/libs/ember-data.js"></script>
-	<script type="text/javascript" src="js/libs/bootstrap.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
 </div>

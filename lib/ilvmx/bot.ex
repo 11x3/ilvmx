@@ -5,6 +5,7 @@ defmodule Bot do
   Bots are direct-level workers of the ILvMx universe.
   
   Bots are the foundation of the Cakedown (or whatever it 
+  
   eventually becomes called) markup syntax.
   
   All public `Bot` functions work with user generated content,
@@ -24,6 +25,9 @@ defmodule Bot do
   ## Nubspace API (nubspace = cooking with love)
   
   @doc "Put `item` into `nubspace`."
+  def push(nubspace, data) when is_binary(nubspace) and is_binary(data) do
+    push nubspace, Item.m(data)
+  end
   def push(nubspace, item = %Item{}) when is_binary(nubspace) do
     # set the item into nubspace
     Bot.make(inspect(item), Item.path(item))
@@ -53,9 +57,6 @@ defmodule Bot do
     #todo: return an ownership token
     
     item
-  end
-  def push(nubspace, data) when is_binary(nubspace) and is_binary(data) do
-    push nubspace, Item.m(data)
   end
   
   @doc "Return a list of `nubspace` items."
@@ -93,12 +94,14 @@ defmodule Bot do
   end
   
   def get(obj_paths) when is_list(obj_paths) do
-    obj_paths |> Enum.map &(get &1)
+    obj_paths |> Enum.map fn path ->
+      get(path)
+    end
   end
   def get(obj_path) do
-    # read and eval the item data into an Item
-    {item, _binding} = Code.eval_string take(obj_path)
-    
+    # read and eval the item data into an Item    
+    {item, _binding} = Code.eval_string(take(obj_path))
+        
     item
   end
   

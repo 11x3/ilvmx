@@ -11,7 +11,7 @@ body {
   background: transparent;
 }
 html {
-  background-color: #121212;
+  background: url(../img/scene.png) left bottom repeat-x fixed #121212;
 }
 body {
 }
@@ -49,7 +49,23 @@ ul li {
   list-style: none;
   display: inline-block;
 }
-#content {
+
+#lolnub {
+  display: block;
+  padding: 42px;
+  font-size: 42px;
+  text-align: right;
+  color: #4e00cc;
+}
+
+#patches {
+  margin: 40px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100px;
+  display: block;
+  height: 100px;
 }
 
 #content .title {
