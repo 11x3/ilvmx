@@ -3,8 +3,7 @@ defmodule Mixfile do
 
   def project do
     [ app: :ilvmx,
-      version: "0.2.0",
-      elixir: "~> 0.14.0",
+      version: "0.3.0",
       deps: deps ]
   end
 
@@ -32,7 +31,7 @@ defmodule Mixfile do
   
   defp deps do
     [
-      {:cowboy,     github: "extend/cowboy"},
+      {:cowboy,     "~> 1.0.0", [hex_app: :cowboy]},
       {:plug,       github: "elixir-lang/plug"},
       {:ossp_uuid,  github: "yrashk/erlang-ossp-uuid", overide: false},
       {:httpotion,  github: "myfreeweb/httpotion", overide: false},
