@@ -1,19 +1,16 @@
 defmodule CPUTest do
   use   ExUnit.Case, async: true
 
-  test "capture a signal path" do
-    
-  end
   
-  test "execute a signal" do
+  test "install a signal" do
 
   end
   
-  test "install a signal" do
+  test "capture a signal" do
     
   end
-  
-  test "install a signal" do
+
+  test "execute a signal" do
     
   end
   

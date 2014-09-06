@@ -60,6 +60,9 @@ defmodule Bot do
   end
   
   @doc "Return a list of `nubspace` items."
+  def pull(nubspace = []) do
+    pull "castle"
+  end
   def pull(nubspace) when is_list(nubspace) do
     pull Path.join(nubspace)
   end

@@ -1,26 +1,44 @@
 defmodule Castle.CPU do
   use GenServer
+  import Castle
   
   ## API
+
+  ## Execute
+  
+  @doc "Execute signal matches for `duration` in the Castle.Nubspace."
+  def execute!(signal, duration \\ 1000) do
+    IO.inspect "(x-x-).execute!: #{inspect signal}"
+    
+    # promote the signal to a GenServer
+    {:ok, server} = GenServer.start_link(Castle.CPU, nil, debug: [])
+    
+    # process the signal/program
+    signal = GenServer.call(server, {:execute, signal, signal.source, server})
+    
+    signal
+    |> Castle.Wizard.review?
+    |> Castle.Arcade.commit!
+  end
   
   ## Install
   
-  @doc "Install `signal` to disk to provide `item` in Castle.Nubspace."
-  def install!(signal) do
-    install!(signal, signal.item)
+  @doc "Boost a `signal` with optionally provided `item` in Castle.Nubspace."
+  def boost!(signal \\ "/") do
+    boost!(signal, signal.item)
   end
-  def install!(signal, item) when is_binary(item) do
-    install!(signal, Program.app(item))
+  def boost!(signal, item) when is_binary(item) do
+    boost!(signal, Program.app(item))
   end
-  def install!(signal, item) when is_function(item) do
-    install!(signal, Program.cmd(item))
+  def boost!(signal, item) when is_function(item) do
+    boost!(signal, Program.cmd(item))
   end
-  def install!(signal, item) do
+  def boost!(signal, item) do
     # start the server
     {:ok, server} = GenServer.start_link(Castle.CPU, signal, debug: [])
 
     # start the signal/program
-    GenServer.call(server, {:install, signal})
+    GenServer.call(server, {:boost, signal})
   end
 
   ## Capture
@@ -36,24 +54,12 @@ defmodule Castle.CPU do
 
     # start the signal/program
     signal = GenServer.call(server, {:capture, signal, duration})
+    
+    signal
     |> Castle.Wizard.review?
     |> Castle.Arcade.beam!
   end
-
-  ## Execute
   
-  @doc "Execute a signal *once* in the Castle.Nubspace."
-  def execute!(signal) do
-    IO.inspect "(x-x-).execute!: #{inspect signal}"
-    
-    # promote the signal to a GenServer
-    {:ok, server} = GenServer.start_link(Castle.CPU, nil, debug: [])
-    
-    # process the signal/program
-    signal = GenServer.call(server, {:execute, signal, signal.source, server})
-    |> Castle.Wizard.review?
-    |> Castle.Arcade.commit!
-  end
   
   ## Suspend
   
@@ -68,9 +74,33 @@ defmodule Castle.CPU do
   end
   
   
+  
   ## Callbacks
 
-  def handle_call({:install, signal}, from, state) do
+  def handle_call({:execute, signal, client, server}, from, state) do
+    IO.inspect "(x-x-):execute: client: #{inspect client} server: #{inspect server}"
+    
+    # map Program
+    #     \ compile program
+    #     \ unquote functions
+    #     \ parse cakedown
+    #   \ execute program
+    #   \ pull data out of program
+    #   \ store program.data into signal.items {:item, x}
+
+    
+    # |> Program.compile
+    # |> Program.before
+    # |> Program.main
+    # |> Program.after
+    
+    items = Bot.get(Bot.pull signal.path)
+    
+    {:reply, Signal.a(signal, items), state}
+  end
+
+  #todo: add :duration to :install
+  def handle_call({:boost, signal}, from, state) do
     IO.inspect "(x-x-):install {signal: #{inspect signal.path}, item: #{inspect signal.item}}"
     
     #todo: return a ownership token
@@ -79,7 +109,7 @@ defmodule Castle.CPU do
     {:reply, signal, state}
   end
 
-  def handle_call({:capture, signal, duration}, from, state) do
+  def handle_call({:capture, signal, duration}, _from, _state) do
     IO.inspect "(x-x-):capture {signal: #{inspect signal.path}, program: #{inspect signal.item}}"
     
     #todo: check for kill9 on signal
@@ -92,21 +122,11 @@ defmodule Castle.CPU do
     #todo: check for existing item
     Castle.signals(signal.path, sigmap)
 
-    cap_loop(signal_agent, signal.item, duration)
-
     # #todo: return a ownership token
-    {:noreply, nil}
+    {:reply, cap_loop(signal_agent, signal.item, duration), nil}
   end
     
-  def handle_call({:execute, signal, client, server}, from, state) do
-    IO.inspect "(x-x-):execute: client: #{inspect client} server: #{inspect server}"
-    
-    items = Bot.get(Bot.pull signal.path)
-    
-    {:reply, Signal.a(signal, items), state}
-  end
-
-  def handle_call({:suspend, signal, token}, from, state) do
+  def handle_call({:kill, signal, token}, from, state) do
     IO.inspect "(x-x-):suspend {signal: #{inspect signal.path}, item: #{inspect signal.item}}"
   
     {:reply, signal}
@@ -116,18 +136,12 @@ defmodule Castle.CPU do
   ## private
 
   defp cap_loop(signal_agent, program, duration) do
-    signal = Agent.get signal_agent, fn signal -> signal end
-
     receive do
       {message, content} -> IO.inspect "(x-x-).message.unknown: #{inspect {message, content}}"
 
-    after duration ->
-      try do
-        Agent.update signal_agent, fn signal -> Program.exe(signal) end
-      rescue
-        x in [RuntimeError, ArgumentError, BadArityError] ->
-          IO.inspect "(x-x-).cap_loop: #{inspect x}"
-      end
+      Agent.update signal_agent, fn signal -> Program.exe(signal) end
+      
+    after duration -> true
     end
     
     Agent.get signal_agent, fn signal -> signal end
@@ -144,7 +158,7 @@ defmodule Castle.CPU do
     {:reply, state}
   end
 
-  def start_link(default \\ nil) do    
+  def start_link(default \\ nil) do
     GenServer.start_link(Castle.CPU, default)
   end
 end

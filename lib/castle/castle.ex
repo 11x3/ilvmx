@@ -8,45 +8,57 @@ defmodule Castle do
   ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
   are top-level ILM nodes and the `Galaxy` is simply the ILM exchange.
 
-  # todo: add Castle.config[:name]
+  # todo: add Castle.caponfig[:name]
   # todo: support p2p between castles
   """
-
-  ## Signals
   
   @doc "A map of the Castle.Nubspace"
   def signals do
     Agent.get signals_agent, fn signals -> signals end
   end
   
+  @doc "Map Castle.Nubspace signal paths to internal sigmaps."
+  def signals(path, sigmap) do
+    Agent.update signals_agent, fn signals -> 
+      Dict.update signals, path, [sigmap], &(List.flatten signals[path], &1)
+    end
+  end
+  
+  ## System
+  
+  @doc "Execute a `Signal` `path` with optional `data`."
+  def exe(path) do
+    Castle.exe(self, path, nil)
+  end
+  def exe(path, item) do
+    Castle.exe(self, path, item)
+  end
+  def exe(source, path, item) do
+    Signal.m(source, path, item) |> Castle.CPU.execute!
+  end
+    
+  ## Dynamic
+  
   @doc "Install a Signal from an optional `source` at `path` with `item`."
-  def s(path, item) when is_function(item) do
-    Castle.s(self, path, Program.cmd(item))
+  def sig(path \\ nil) do
+    Castle.sig self, :castle
   end
-  def s(path, item) do
-    Castle.s(self, path, item)
+  def sig(path, item) when is_function(item) do
+    Castle.sig(self, path, Program.cmd(item))
   end
-  def s(source, path, item) do
-    Signal.m(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.install!
+  def sig(path, item) do
+    Castle.sig(self, path, item)
+  end
+  def sig(source, path, item) do
+    Signal.m(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.boost!
   end
 
   @doc "Capture a signal path for `duration` in Castle.Nubspace."
-  def c(path) do
-    c(self, path)
+  def cap(path \\ "castle") do
+    Castle.cap(self, path)
   end
-  def c(source, path, duration \\ 1000) do
+  def cap(source, path, duration \\ 1000) do
     Signal.m(source, path) |> Castle.Wizard.please? |> Castle.CPU.capture!
-  end
-  
-  @doc "Execute a `Signal` `path` with optional `data`."
-  def x(path) do
-    x(self, path, nil)
-  end
-  def x(path, item) do
-    x(self, path, item)
-  end
-  def x(source, path, item) do
-    Signal.m(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.execute!
   end
   
   
@@ -101,11 +113,6 @@ defmodule Castle do
     Application.get_env :ilvmx, :signals
   end
   
-  def signals(path, sigmap) do
-    Agent.update signals_agent, fn signals -> 
-      Dict.update signals, path, [sigmap], &(List.flatten signals[path], &1)
-    end
-  end
   
   ## GenServer
 

@@ -12,30 +12,6 @@ defmodule Program do
   """
   
   ## API
-  
-  def exe(program = %Signal{}) do
-    IO.inspect "xxx))) #{inspect program}"
-    
-    # map Program
-    #     \ compile program
-    #     \ unquote functions
-    #     \ parse cakedown
-    #   \ execute program
-    #   \ pull data out of program
-    #   \ store program.data into signal.items {:item, x}
-
-    
-    # |> Program.compile
-    # |> Program.before
-    # |> Program.main
-    # |> Program.after
-    
-    program
-  end
-  
-
-  ## Dynamic
-  
   @doc "Exe raw Cakedown text."   
   def raw(text) do
     program = %Program{
@@ -60,8 +36,12 @@ defmodule Program do
     program
   end
   
-  
-  ## Static
+  @doc ""
+  def exe(program = %Signal{}) do
+    IO.inspect "xxx))) #{inspect program}"
+
+    program
+  end
   
   @doc "Compile or start `program_path` from disk."
   def app(program_path) do

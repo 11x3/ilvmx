@@ -32,16 +32,14 @@ defmodule Castle.Arcade.Plug do
 
 
   @doc "Route to upload items."
-  def hello(conn, signal_path = ["api", "sig"]) do
+  def hello(conn, signal_path = ["api", "sig"|nubspace]) do
     # parse the http signal
     conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-    nubspace  = conn.params["nubspace"] || nil
+    nubspace  = conn.params["nubspace"] || ""
     
     # install signal to a valid nubspace..
     if nubspace do
-      send_resp conn, 200, inspect(Castle.s(conn, nubspace, conn.params))
-    else
-      send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
+      send_resp conn, 200, inspect(Castle.sig(conn, nubspace, conn.params))
     end
   end
   @doc "Route to upload items."
@@ -50,22 +48,8 @@ defmodule Castle.Arcade.Plug do
     nubspace  = nubspace || conn.params["nubspace"] || nil
     
     # install signal to a valid nubspace..
-    send_resp conn, 200, inspect(Castle.c(conn, nubspace, conn.params))
+    send_resp conn, 200, inspect(Castle.cap(conn, nubspace, conn.params))
   end
-  @doc "Route to upload items."
-  def hello(conn, signal_path = ["api", "exe"]) do
-    # parse the http signal
-    conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-    nubspace  = conn.params["nubspace"] || nil
-    
-    # install signal to a valid nubspace..
-    if nubspace do
-      send_resp conn, 200, inspect(Castle.s(conn, nubspace, conn.params))
-    else
-      send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
-    end
-  end
-  
   
   @doc "Route for static objects."
   def hello(conn, signal_path = ["obj"|unique]) do
@@ -83,7 +67,7 @@ defmodule Castle.Arcade.Plug do
   def hello(conn, nubspace) do
     # always send a signal, but sometimes return an item.
     
-    signal = Castle.x(self, nubspace, conn.params)
+    signal = Castle.exe(self, nubspace, conn.params)
     
     if length(signal.items) > 0 do
       send_resp conn, 200, inspect(signal.items)
