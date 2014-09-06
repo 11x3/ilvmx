@@ -23,14 +23,14 @@ defmodule Castle.Arcade.Plug do
   def call(conn = %Plug.Conn{path_info: []}, options) do
     send_resp conn, 200, Bot.take(["header.html", "footer.html"])
   end
-  
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
-    IO.inspect "(x-x-) Plug: >#{inspect signal_path}<"
+    IO.inspect "(x-x-) Castle.Arcade.Plug: #{inspect signal_path}"
     
     hello conn, signal_path
   end
 
-
+  ## API
+  
   @doc "Route to upload items."
   def hello(conn, signal_path = ["api", "sig"|nubspace]) do
     # parse the http signal
@@ -42,14 +42,33 @@ defmodule Castle.Arcade.Plug do
       send_resp conn, 200, inspect(Castle.sig(conn, nubspace, conn.params))
     end
   end
+  
+  def hello(conn, signal_path = ["api", "exe"|nubspace]) do
+    # parse the http signal
+    conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+    nubspace  = conn.params["nubspace"] || ""
+    
+    # install signal to a valid nubspace..
+    if nubspace do
+      send_resp conn, 200, inspect(Castle.exe(conn, nubspace, conn.params))
+    end
+  end
+      
   @doc "Route to upload items."
-  def hello(conn, signal_path = ["api", "cap"|nubspace]) do
+  def hello(conn, signal_path = ["api", "cap"]) do
+    #todo "redirect to a api/cap/1000"
+    hello(conn, signal_path = ["api", "cap", "1000"])
+  end
+  def hello(conn, signal_path = ["api", "cap"|[duration, nubspace]]) do
     # parse the http signal
     nubspace  = nubspace || conn.params["nubspace"] || nil
     
     # install signal to a valid nubspace..
     send_resp conn, 200, inspect(Castle.cap(conn, nubspace, conn.params))
   end
+  
+  
+  ## Objects
   
   @doc "Route for static objects."
   def hello(conn, signal_path = ["obj"|unique]) do
@@ -62,6 +81,9 @@ defmodule Castle.Arcade.Plug do
       send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
     end
   end
+  
+  
+  ## Dynamic
   
   @doc "Dynamic nubspace routes."
   def hello(conn, nubspace) do

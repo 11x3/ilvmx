@@ -25,42 +25,7 @@ defmodule Castle do
   end
   
   ## System
-  
-  @doc "Execute a `Signal` `path` with optional `data`."
-  def exe(path) do
-    Castle.exe(self, path, nil)
-  end
-  def exe(path, item) do
-    Castle.exe(self, path, item)
-  end
-  def exe(source, path, item) do
-    Signal.m(source, path, item) |> Castle.CPU.execute!
-  end
-    
-  ## Dynamic
-  
-  @doc "Install a Signal from an optional `source` at `path` with `item`."
-  def sig(path \\ nil) do
-    Castle.sig self, :castle
-  end
-  def sig(path, item) when is_function(item) do
-    Castle.sig(self, path, Program.cmd(item))
-  end
-  def sig(path, item) do
-    Castle.sig(self, path, item)
-  end
-  def sig(source, path, item) do
-    Signal.m(source, path, item) |> Castle.Wizard.please? |> Castle.CPU.boost!
-  end
 
-  @doc "Capture a signal path for `duration` in Castle.Nubspace."
-  def cap(path \\ "castle") do
-    Castle.cap(self, path)
-  end
-  def cap(source, path, duration \\ 1000) do
-    Signal.m(source, path) |> Castle.Wizard.please? |> Castle.CPU.capture!
-  end
-  
   
   ## API
   

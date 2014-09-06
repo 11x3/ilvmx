@@ -1,6 +1,21 @@
 defmodule BotTest do
   use ExUnit.Case, async: true
 
+  @moduledoc """
+    Bots are stateless and work with side effects. Bots mostly
+    revolve around this set of concepts:
+    
+    Bot = [
+      World,
+      Nubspace,
+      Item,
+      File
+    ]
+    
+    All processes should consider using Bots to interact with
+    the primitives.
+  """
+  
   def signal, do: "signal"
 
   ## World
@@ -16,25 +31,11 @@ defmodule BotTest do
     assert %Item{} = Bot.push "chat", "todo"
   end
 
-  test "Bot.pull to collect items from nubspace" do
-    signal = Castle.sig "lolnub", "todo"
-    
-    assert (Bot.pull("lolnub") |> Enum.any? fn x -> x == "obj/#{ signal.item.unique }" end)
-  end
-
 
   ## Item
   
   test "Bot.set to create static items" do
     assert %Item{content: "todo"} = Bot.set "todo"
-  end
-  
-  test "Bot.get to init static items" do
-    signal = Castle.sig "lolnub", "todo"
-    
-    assert Bot.pull(signal.path) |> Enum.map fn item_unique ->      
-      assert %Item{} = Bot.get item_unique
-    end
   end
 
 

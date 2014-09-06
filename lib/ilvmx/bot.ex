@@ -22,7 +22,7 @@ defmodule Bot do
   end
 
   
-  ## Nubspace API (nubspace = cooking with love)
+  ## Nubspace API push/pull data+items (nubspace = cooking with love)
   
   @doc "Put `item` into `nubspace`."
   def push(nubspace, data) when is_binary(nubspace) and is_binary(data) do
@@ -80,7 +80,7 @@ defmodule Bot do
   end
 
 
-  ## Item API (items are at the kinda slightly structured level)
+  ## Item API for set/get item properties (items are at the kinda slightly structured level)
   
   @doc "Return an `Item` set with `data` as the content"
   def set(data) do

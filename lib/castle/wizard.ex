@@ -17,6 +17,7 @@ defmodule Castle.Wizard do
   @doc "Stub :before `Signal` traffic review."
   def review?(signal = %Signal{item: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
     upload = item.content["binary"]
+    
     # hack: auto-init binary items before the signal is processed    
     review?(%{signal| item: %{item| kind: upload.content_type, content: File.read!(upload.path) }})
   end
@@ -34,6 +35,7 @@ defmodule Castle.Wizard do
 
     signal
   end
+
 
   @doc """
   Imported from Plug.

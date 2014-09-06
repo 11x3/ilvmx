@@ -10,7 +10,8 @@ defmodule Item do
   #todo: partition the disk on Item.unique
   """
   def m(content \\ nil) do
-    m(:binary, content)
+    # an empty item
+    m(:item, content)
   end
   def m(kind, content) do
     unique = Castle.uuid
@@ -18,6 +19,7 @@ defmodule Item do
       unique: unique,
      content: content,
         kind: kind,
+        meta: %{}
     }
   end
   
