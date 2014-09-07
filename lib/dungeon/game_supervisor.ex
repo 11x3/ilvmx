@@ -1,4 +1,4 @@
-defmodule Castle.Arcade.Supervisor do
+defmodule Castle.Game.Supervisor do
   use Supervisor
 
   def start_link do
@@ -8,9 +8,13 @@ defmodule Castle.Arcade.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(Castle.Arcade,  []),
+      worker(Castle.Game,  []),
     ]
 
+    # setup arcade/adapters
+    # todo: support config for starting options
+    Plug.Adapters.Cowboy.http Castle.Game.Plug, [self], port: 8080
+    
     # See http://elixir-lang.org/docs/stable/Supervisor.html
     # for other strategies and supported options
     supervise(children, strategy: :one_for_one)

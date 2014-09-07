@@ -8,10 +8,7 @@ defmodule Castle.Supervisor do
   def init(opts \\ nil) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(Castle,                    []),
-      worker(Castle.CPU.Supervisor,     []),
-      worker(Castle.Wizard.Supervisor,  []),
-      worker(Castle.Arcade.Supervisor,  []),
+      worker(Castle.Game.Supervisor,    []),
     ]
     
     # See http://elixir-lang.org/docs/stable/Supervisor.html

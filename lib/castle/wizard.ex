@@ -9,13 +9,13 @@ defmodule Castle.Wizard do
   @doc """
   Ask the Wizard (nicely) to process a `Signal`.
   """
-  def please?(signal) do
+  def please?(signal, action \\ nil) do
     signal |> review?
   end
   
   
   @doc "Stub :before `Signal` traffic review."
-  def review?(signal = %Signal{item: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
+  def review?(signal = %Signal{set: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
     upload = item.content["binary"]
     
     # hack: auto-init binary items before the signal is processed    

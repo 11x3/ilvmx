@@ -42,14 +42,7 @@ defmodule Program do
 
     program
   end
-  
-  @doc "Compile or start `program_path` from disk."
-  def app(program_path) do
-    if Castle.Wizard.valid_path?(program_path) && File.exists?(program_path) do
-      Code.eval_file program_path
-    end
-  end
-  
+    
 end
 
 

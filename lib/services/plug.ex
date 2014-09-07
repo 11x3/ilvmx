@@ -1,4 +1,4 @@
-defmodule Castle.Arcade.Plug do
+defmodule Castle.Game.Plug do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
@@ -25,7 +25,7 @@ defmodule Castle.Arcade.Plug do
     send_resp conn, 200, Bot.take(["header.html", "footer.html"])
   end
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
-    IO.inspect "(x-x-) Castle.Arcade.Plug: #{inspect signal_path}"
+    IO.inspect "(x-x-) Castle.Game.Plug: #{inspect signal_path}"
     
     hello conn, signal_path
   end
@@ -52,7 +52,7 @@ defmodule Castle.Arcade.Plug do
   def hello(conn, nubspace) do
     # always send a signal, but sometimes return an item.
     
-    signal = Castle.exe(self, nubspace, conn.params)
+    signal = Castle.capture!(self, nubspace, conn.params)
     
     if length(signal.items) > 0 do
       send_resp conn, 200, inspect(signal.items)

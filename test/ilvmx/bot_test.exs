@@ -16,12 +16,6 @@ defmodule BotTest do
     do: assert File.exists? "priv/static/#{ Bot.new("chat") |> Item.path }"
 
 
-  ## Nubspace
-  
-  test "Bot.push to link items in nubspace",
-    do: assert "[\"#{to_string(Item.path(Bot.push("lol", "todo")))}\"]" == Bot.take("nub/lol/meta")
-  
-
   ## World
 
   test "Bot.web to grab web pages", 

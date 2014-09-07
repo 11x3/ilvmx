@@ -28,10 +28,6 @@ defmodule ILM do
       file |> File.rm_rf!
       file |> File.mkdir_p!
     end
-        
-    {:ok, castle_agent} = Agent.start_link(fn -> %{} end)
-    
-    Application.put_env(:ilvmx, :castle_agent, castle_agent)
   end
 
   # GenSupervisor
@@ -46,6 +42,13 @@ defmodule ILM do
     
     reset!
     
-    Castle.Supervisor.start_link
+    {:ok, castle_agent} = Agent.start_link(fn -> %{signals: %{}} end)
+    
+    Application.put_env(:ilvmx, :castle_agent, castle_agent)
+   
+    castle  = Castle.Supervisor.start_link
+    cpu     = Castle.CPU.Supervisor.start_link
+    
+    castle
   end
 end

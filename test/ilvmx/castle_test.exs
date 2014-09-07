@@ -1,7 +1,6 @@
 defmodule CastleTest do
   use   ExUnit.Case, async: true
 
-  
   ## API
   
   test "Castle.uuid for app-wide UUIDs" do
@@ -9,19 +8,32 @@ defmodule CastleTest do
     assert true == Regex.match? Castle.uuid_regex, Castle.uuid
   end
   
-  test "Castle.galaxy for the current network exchange" do
-    assert "#ilvmx" == Castle.galaxy
-  end
+  test "Castle.galaxy for the current network exchange", 
+    do: assert "#ilvmx" == Castle.galaxy
   
-  test "Castle.name" do
-    assert "#lolnub" == Castle.name
-  end
-  
+  test "Castle.name", 
+    do: assert "#lolnub" == Castle.name
+
+  test "Castle.agent", 
+    do: assert is_pid Castle.agent
+
+  test "Castle.signal", 
+    do: assert %Signal{} = Castle.signal
+    
+  test "Castle.signal.items", 
+    do: assert is_list Castle.signal.items
+
+
+  # test "Castle.beam! to broadcast a `Signal`",
+  #   do: assert %Signal{path: "lol", set: %Item{}} = Castle.beam! "lol", "nub"
+
+  # test "Castle.capture! to capture `Signal` items",
+  #   do: assert %Signal{path: "lol", items: []} = Castle.capture! "lol", Program.cmd fn signal -> signal end
+   
   ## Capture signals
   
-  # test "capture all Castle.Nubspace signals with Castle.cap" do
-  #   assert %Signal{items: []} = Castle.cap
-  # end
+  # test "capture all Castle.Nubspace signals with Castle.signals",
+  #   do: assert %Signal{} = Castle.x(Signal.m "lolnub")
   #
   # ## Signals
   #

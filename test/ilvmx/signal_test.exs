@@ -1,5 +1,5 @@
 defmodule SignalTest do
-  use   ExUnit.Case, async: true
+  use ExUnit.Case, async: true
   
   test "m" do
     assert %Signal{} = Signal.m(self)
@@ -7,7 +7,15 @@ defmodule SignalTest do
     assert %Signal{} = Signal.m(self, "system/console")
   end
 
-  test "a" do
-    assert %Signal{items: ["todo"]} = Signal.a Signal.m(self, "system/console"), "todo"
-  end  
+  ## Add to a signal
+  
+  test "a",
+    do: assert %Signal{items: ["todo"]} = Signal.b Signal.m(self, "system/console"), "todo"
+  
+
+  ## Nubspace
+  
+  # test "Signal.push to link items in nubspace",
+  #   do: assert "[\"#{to_string( Signal.push("lol", "todo") |> Item.path )}\"]" == Bot.take("nub/lol/meta")
+  #
 end

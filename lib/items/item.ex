@@ -1,5 +1,5 @@
 defmodule Item do
-  defstruct   kind: nil,  # String (eg. mime/type)
+  defstruct   kind: nil,  # [:data, :program] (eg. mime/type)
             unique: nil,  # "32453-4544-3434-234324-7879"
            content: nil,  # {:file, etc}  => "obj/32453-4544-3434-234324-7879/binary"
               meta: nil   # :ilvmx        => "obj/32453-4544-3434-234324-7879/meta"
