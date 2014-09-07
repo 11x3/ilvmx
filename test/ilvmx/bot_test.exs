@@ -1,52 +1,31 @@
 defmodule BotTest do
   use ExUnit.Case, async: true
-
-  @moduledoc """
-    Bots are stateless and work with side effects. Bots mostly
-    revolve around this set of concepts:
-    
-    Bot = [
-      World,
-      Nubspace,
-      Item,
-      File
-    ]
-    
-    All processes should consider using Bots to interact with
-    the primitives.
-  """
   
-  def signal, do: "signal"
+  ## File
 
-  ## World
-    
-  test "Bot.web to grab web pages" do
-    IT.assert_web_page Bot.web(IT.web("/"))
-  end
+  test "Bot.make to write files to disk", 
+    do: assert Bot.take("tmp/todo") == Bot.make("todo", "tmp/todo") 
+  
+  test "Bot.take to read files from disk", 
+    do: assert Regex.match?(~r/html/, Bot.take(["header.html", "footer.html"]))
+  
+  
+  ## Item
+
+  test "Bot.new to create static items",
+    do: assert File.exists? "priv/static/#{ Bot.new("chat") |> Item.path }"
 
 
   ## Nubspace
   
-  test "Bot.push to link items in nubspace" do
-    assert %Item{} = Bot.push "chat", "todo"
-  end
-
-
-  ## Item
+  test "Bot.push to link items in nubspace",
+    do: assert "[\"#{to_string(Item.path(Bot.push("lol", "todo")))}\"]" == Bot.take("nub/lol/meta")
   
-  test "Bot.set to create static items" do
-    assert %Item{content: "todo"} = Bot.set "todo"
-  end
+
+  ## World
+
+  test "Bot.web to grab web pages", 
+    do: IT.assert_web_page Bot.web(IT.web "/")
 
 
-  ## File
-
-  test "Bot.make to write files to disk" do
-    assert Bot.take("tmp/todo") == Bot.make("todo", "tmp/todo") 
-  end
-  
-  test "Bot.take to read files from disk" do
-    assert Regex.match?(~r/html/, Bot.take(["header.html", "footer.html"]))
-  end
-  
 end

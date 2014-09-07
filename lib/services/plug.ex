@@ -17,6 +17,7 @@ defmodule Castle.Arcade.Plug do
   plug :dispatch
   plug :match
 
+
   ## Plug 
   
   @doc "Plug: *ring*, *ring*"
@@ -29,44 +30,6 @@ defmodule Castle.Arcade.Plug do
     hello conn, signal_path
   end
 
-  ## API
-  
-  @doc "Route to upload items."
-  def hello(conn, signal_path = ["api", "sig"|nubspace]) do
-    # parse the http signal
-    conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-    nubspace  = conn.params["nubspace"] || ""
-    
-    # install signal to a valid nubspace..
-    if nubspace do
-      send_resp conn, 200, inspect(Castle.sig(conn, nubspace, conn.params))
-    end
-  end
-  
-  def hello(conn, signal_path = ["api", "exe"|nubspace]) do
-    # parse the http signal
-    conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-    nubspace  = conn.params["nubspace"] || ""
-    
-    # install signal to a valid nubspace..
-    if nubspace do
-      send_resp conn, 200, inspect(Castle.exe(conn, nubspace, conn.params))
-    end
-  end
-      
-  @doc "Route to upload items."
-  def hello(conn, signal_path = ["api", "cap"]) do
-    #todo "redirect to a api/cap/1000"
-    hello(conn, signal_path = ["api", "cap", "1000"])
-  end
-  def hello(conn, signal_path = ["api", "cap"|[duration, nubspace]]) do
-    # parse the http signal
-    nubspace  = nubspace || conn.params["nubspace"] || nil
-    
-    # install signal to a valid nubspace..
-    send_resp conn, 200, inspect(Castle.cap(conn, nubspace, conn.params))
-  end
-  
   
   ## Objects
   

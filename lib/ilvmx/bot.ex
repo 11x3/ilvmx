@@ -5,24 +5,51 @@ defmodule Bot do
   Bots are direct-level workers of the ILvMx universe.
   
   Bots are the foundation of the Cakedown (or whatever it 
-  
-  eventually becomes called) markup syntax.
+  eventually becomes called..) markup syntax.
   
   All public `Bot` functions work with user generated content,
-  and so should be hostile safe. #todo
+  and so should be programmed as hostile safe. 
+  
+  Because Bots are stateless agents that work with side effects,
+  they mostly revolve around a small set of concepts:
+  
+  Bot = [
+    World,
+    Castle.Nubspace,
+    Item,
+    File
+  ]
+  
+  All processes should consider using Bots to interact with
+  as primitives.
   """
-
+  
   ## World API (readin the webs)
 
   @doc "Read a file from the internet."
   def web(path) do
+    #todo: add a SpiderBot server and distribute these requests
     if Castle.Wizard.valid_path?(path) do
       HTTPotion.get(path).body
     end
   end
 
   
-  ## Nubspace API push/pull data+items (nubspace = cooking with love)
+  ## Item/Nubspace API push/pull data+items (nubspace = cooking with love)
+  
+  @doc "Return a new `Item` set with `data` as the content"
+  def new(data) do
+    item      = Item.m data
+    item_path = Item.path item 
+    
+    unless File.exists? item_path do
+      File.mkdir_p! item_path
+    end
+    
+    Bot.make inspect(item), Item.path(item)
+    
+    item
+  end
   
   @doc "Put `item` into `nubspace`."
   def push(nubspace, data) when is_binary(nubspace) and is_binary(data) do
@@ -82,32 +109,24 @@ defmodule Bot do
 
   ## Item API for set/get item properties (items are at the kinda slightly structured level)
   
-  @doc "Return an `Item` set with `data` as the content"
-  def set(data) do
-    item      = Item.m data
-    item_path = Item.path item 
-    
-    unless File.exists? item_path do
-      File.mkdir_p! item_path
-    end
-    
-    Bot.make inspect(item), Item.path(item)
-    
-    item
-  end
+
+  # @doc "Return existing `Item`s at `obj_path` which is looks like 'obj/UUID' etc."
+  # def get(obj_paths) when is_list(obj_paths) do
+  #   obj_paths |> Enum.map fn path ->
+  #     get(path)
+  #   end
+  # end
+  # def get(obj_path) do
+  #   # read and eval the item data into an Item
+  #   {item, _binding} = Code.eval_string(take(obj_path))
+  #
+  #   item
+  # end
   
-  def get(obj_paths) when is_list(obj_paths) do
-    obj_paths |> Enum.map fn path ->
-      get(path)
-    end
-  end
-  def get(obj_path) do
-    # read and eval the item data into an Item    
-    {item, _binding} = Code.eval_string(take(obj_path))
-        
-    item
-  end
-  
+  # @doc "Set an Item at `obj_path` `key` property to `value`."
+  # def set(obj_path, key, value) do
+  #
+  # end
 
   ## File API (file system level blobs)
 

@@ -1,7 +1,3 @@
-# server
-ILM.reset!
-ILM.start
-
 # tests
 ExUnit.start
 

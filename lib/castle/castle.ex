@@ -8,6 +8,12 @@ defmodule Castle do
   ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
   are top-level ILM nodes and the `Galaxy` is simply the ILM exchange.
 
+  Castle = [
+    Arcade/Players,
+    Wizard/Signals/Castle.Nubspace,
+    Bots/Items
+  ]
+  
   # todo: add Castle.caponfig[:name]
   # todo: support p2p between castles
   """
@@ -23,6 +29,7 @@ defmodule Castle do
       Dict.update signals, path, [sigmap], &(List.flatten signals[path], &1)
     end
   end
+  
   
   ## System
 
