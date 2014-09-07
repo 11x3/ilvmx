@@ -1,5 +1,5 @@
 defmodule ItemTest do
-  use   ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "m to make an empty item",
     do: assert %Item{} = Item.m

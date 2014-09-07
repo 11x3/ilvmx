@@ -39,13 +39,7 @@ defmodule Bot do
   
   @doc "Return a new `Item` set with `data` as the content"
   def new(data) do
-    item      = Item.m data
-    item_path = Item.path item 
-    
-    unless File.exists? item_path do
-      File.mkdir_p! item_path
-    end
-    
+    item = Item.m data
     Bot.make inspect(item), Item.path(item)
     
     item

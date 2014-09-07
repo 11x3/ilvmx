@@ -19,7 +19,7 @@ defmodule Mixfile do
         :plug,
         :httpotion,
       ],
-      env: [signals: nil],
+      env: [castle_agent: nil],
     ]
   end
 

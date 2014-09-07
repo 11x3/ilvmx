@@ -29,9 +29,9 @@ defmodule ILM do
       file |> File.mkdir_p!
     end
         
-    {:ok, signal_agent} = Agent.start_link(fn -> %{} end)
+    {:ok, castle_agent} = Agent.start_link(fn -> %{} end)
     
-    Application.put_env(:ilvmx, :signals, signal_agent)
+    Application.put_env(:ilvmx, :castle_agent, castle_agent)
   end
 
   # GenSupervisor
