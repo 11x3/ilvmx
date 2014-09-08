@@ -3,6 +3,10 @@ defmodule ILMTest do
 
   ## Integration
   
+  test "use Castles to beam signals" do
+  end
+  
+  
   # test "defaults signals" do
   #   assert 200 == HTTPotion.get(IT.web "ilvmx").status_code
   # end

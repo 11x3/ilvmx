@@ -2,7 +2,7 @@ use Jazz
 
 defmodule Signal do
   defstruct     path: nil,  # "about/ilvmx"
-                 set: nil,  # request/item/upload/etc
+                 let: nil,  # request/item/upload/etc
                items: [],   # [item] 
               source: nil,  # sender (pid, email, nick, etc)  
               unique: nil,  # uuid
@@ -17,14 +17,10 @@ defmodule Signal do
   # Signal.set about: Bot.pull "html/about"
   
   @doc "Make a `Signal`."
-  def m(path \\ Castle.name, data \\ nil, source \\ nil) do
-    if data do
-      item = Item.m data
-    end
-    
+  def m(path \\ Castle.name, item \\ nil, source \\ nil) do
     %Signal{
           path: path,
-           set: item,
+           let: item,
          items: [],
         source: source,
         unique: Castle.uuid,
@@ -35,10 +31,10 @@ defmodule Signal do
   ## Instance
   
   @doc "Add `items` to `signal`."
-  def b(signal, items) when is_list(items) do
+  def boost!(signal, items) when is_list(items) do
     %{signal| items: List.flatten([signal.items|items]) }
   end
-  def b(signal, item) do
+  def boost!(signal, item) do
     %{signal| items: List.flatten([signal.items|[item]]) }
   end
 

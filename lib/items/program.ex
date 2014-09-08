@@ -25,10 +25,10 @@ defmodule Program do
   end
   
   @doc "Execute a `function`"
-  def cmd(function) do
+  def exe(program) when is_function(program) do
     program = %Program{
       unique: Castle.uuid,
-        code: function
+        code: program
     }
     
     #todo: quote the function
@@ -36,10 +36,19 @@ defmodule Program do
     program
   end
   
+  def exe(signal, item = %Program{}) do
+    
+    signal
+  end
+  def exe(signal, item) do
+    #todo: exe each item for results
+    
+    signal
+  end
+  
   @doc ""
-  def exe(program = %Signal{}) do
-    IO.inspect "xxx))) #{inspect program}"
-
+  def exe(program = %Signal{}, duration, auto) do
+    
     program
   end
     

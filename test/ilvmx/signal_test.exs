@@ -9,8 +9,8 @@ defmodule SignalTest do
 
   ## Add to a signal
   
-  test "a",
-    do: assert %Signal{items: ["todo"]} = Signal.b Signal.m(self, "system/console"), "todo"
+  test "boost! to add items to a `Signal`.",
+    do: assert %Signal{items: ["todo"]} = Signal.boost! Signal.m, "todo"
   
 
   ## Nubspace

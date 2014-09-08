@@ -15,7 +15,7 @@ defmodule Castle.Wizard do
   
   
   @doc "Stub :before `Signal` traffic review."
-  def review?(signal = %Signal{set: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
+  def review?(signal = %Signal{let: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
     upload = item.content["binary"]
     
     # hack: auto-init binary items before the signal is processed    

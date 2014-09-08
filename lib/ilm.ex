@@ -28,6 +28,12 @@ defmodule ILM do
       file |> File.rm_rf!
       file |> File.mkdir_p!
     end
+    
+    Castle.CPU.reset!
+    
+    Application.put_env :ilvmx, :signal, Signal.m(Castle.name, %{})
+
+    IO.inspect "(x-x-) #ilvmx."
   end
 
   # GenSupervisor
@@ -38,17 +44,8 @@ defmodule ILM do
     start(nil, nil)
   end
   def start(_type, _args) do
-    IO.inspect "(x-x-) #ilvmx."
-    
     reset!
-    
-    {:ok, castle_agent} = Agent.start_link(fn -> %{signals: %{}} end)
-    
-    Application.put_env(:ilvmx, :castle_agent, castle_agent)
    
-    castle  = Castle.Supervisor.start_link
-    cpu     = Castle.CPU.Supervisor.start_link
-    
-    castle
+    Castle.Supervisor.start_link
   end
 end

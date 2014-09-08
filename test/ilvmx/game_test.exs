@@ -3,13 +3,25 @@ defmodule GameTest do
   use ExUnit.Case, async: true
   
   ## Game
-
+  
+  # @doc "Publish a `Signal` to the Game rules."
+#   def on!(signal, program = %Program{}) do
+#     #todo: broadcast to ruleset
+#     signal
+#     |> Castle.beam!
+#   end
+#
+#   @doc "#todo: Send a command to the arcade."
+#   def on?(signal, command \\ nil, item \\ nil) do
+#     Player.items Player.start, Castle.ping!(Signal.m(command, item))
+#   end
+#
   # test "Game.on?",
-  #   do: assert [%Item{}] = Game.on?(Player.anon!).items
+  #   do: assert %Signal{} == Castle.Game.host!("lol", Program.cmd(fn -> IO.inspect "lol" end))
 
 
-  test "Game.commit!",
-    do: assert %Signal{} = Game.commit! Signal.m
+  test "Game.next?",
+    do: assert %Signal{} = Game.next? Signal.m
   
   
   test "Game.ping!",

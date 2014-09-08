@@ -9,29 +9,38 @@ defmodule CastleTest do
   end
   
   test "Castle.galaxy for the current network exchange", 
-    do: assert "#ilvmx" == Castle.galaxy
+    do: assert "ilvmx" == Castle.galaxy
   
   test "Castle.name", 
-    do: assert "#lolnub" == Castle.name
+    do: assert "ilvmx/lolnub" == Castle.name
 
-  test "Castle.agent", 
-    do: assert is_pid Castle.agent
 
   test "Castle.signal", 
-    do: assert %Signal{} = Castle.signal
+    do: assert %Signal{path: "ilvmx/lolnub"} = Castle.signal
     
-  test "Castle.signal.items", 
+  test "Castle.signal.items",
     do: assert is_list Castle.signal.items
 
+  test "Castle.map",
+    do: assert %{} = Castle.map
 
-  # test "Castle.beam! to broadcast a `Signal`",
-  #   do: assert %Signal{path: "lol", set: %Item{}} = Castle.beam! "lol", "nub"
 
-  # test "Castle.capture! to capture `Signal` items",
-  #   do: assert %Signal{path: "lol", items: []} = Castle.capture! "lol", Program.cmd fn signal -> signal end
-   
-  ## Capture signals
+  test "Castle.beam! to broadcast a `Signal`" do
+    ILM.reset!
+    
+    assert signal = %Signal{} = Castle.beam! Signal.m("lol", "nub")
   
+    assert [signal] = Castle.signal.items
+    assert %{"lol" => [%Signal{let: "nub"}]} = Castle.map
+  end
+  
+  test "Castle.download to capture `Castle.Nubspace` items",
+    do: assert is_list Castle.download 
+
+  test "Castle.next? to update `Castle` to return to the Castle.",
+    do: assert {:ok, _next} = Castle.next?
+
+
   # test "capture all Castle.Nubspace signals with Castle.signals",
   #   do: assert %Signal{} = Castle.x(Signal.m "lolnub")
   #

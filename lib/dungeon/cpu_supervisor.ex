@@ -1,6 +1,6 @@
 defmodule Castle.CPU.Supervisor do
   use Supervisor
-    
+  
   def start_link do
     :supervisor.start_link(__MODULE__, [])
   end
@@ -8,7 +8,7 @@ defmodule Castle.CPU.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      worker(Castle.CPU,  []),
+      worker(Castle.CPU,                []),
     ]
         
     # See http://elixir-lang.org/docs/stable/Supervisor.html

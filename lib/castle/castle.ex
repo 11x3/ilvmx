@@ -1,5 +1,6 @@
 defmodule Castle do
-  
+  use GenServer
+
   @epoch :epoch
 
   @moduledoc """
@@ -8,7 +9,7 @@ defmodule Castle do
 
   Castle [
     Game [
-      Wizard/Players/Services
+      Map/Wizard/Players/Services
     ],
     CPU [
       Signals/Programs/Items/Bots
@@ -17,45 +18,59 @@ defmodule Castle do
   """
   
   ## System
-
-  def agent do
-    Application.get_env :ilvmx, :castle_agent
-  end
-
-  @doc "Return all :install'ed `Signals`s."
+  
+  @doc "Return the `Castle.signal` of yore."
   def signal do
-    Signal.m
+    Application.get_env :ilvmx, :signal
   end
   
-  
+  @doc "Our signal map."
+  def map do
+    Castle.Game.map
+  end
+
   ## API
 
-  @doc "Beam `Signal`s into the `Castle`."
-  def beam!(signal) do
-    #todo: readd: duration \\ 1000, auto \\ true
-    IO.inspect "Castle.beam!: ##{signal.path}"
+  @doc "Ping a `signal_path` of the Castle.Nubspace and return *all* `Castle.signals`."
+  def beam!(signal = %Signal{}) do
+    IO.inspect "Castle.beam!: #{signal.path}"
     
-    Castle.CPU.install!(signal)
+    signal |> Castle.Game.host!
   end
   
-  @doc "Ping a `signal_path` of the Castle.Nubspace."
-  def ping!(signal) do
-    IO.inspect "Castle.beam!: ##{signal.path}"
+  # @doc "Boost `signal` with appropriate Castle.Nubspace items."
+  # def boost?(signal = %Signal{}) do
+  #   IO.inspect "Castle.boost?: #{signal.path}"
+  #
+  #   signal |> Castle.Game.run!
+  # end
+  
+  @doc "Return updated items and noops our worker."
+  def next?(items \\ nil) do
+    unless nil?(items) or not is_list(items) do 
+      Application.put_env :ilvmx, :signal, Signal.boost!(signal, items)
+    end
     
-    Castle.CPU.install!(signal)
+    {:ok, karma: "#todo", next: "#todo"}
   end
   
+  @doc "Return the `Castle.signal.items` – all of them. #todo: add streams"
+  def download do
+    IO.inspect "Castle.download"
 
+    signal.items
+  end
+  
   ## Public
   
   @doc "ILvMx network exchange."
   def galaxy do
-    "#ilvmx"
+    "ilvmx"
   end
   
   @doc "Castle name."
   def name do
-    "#lolnub"
+    "#{ galaxy }/lolnub"
   end
   
   @doc "Return an UUID."
@@ -74,6 +89,33 @@ defmodule Castle do
   @doc "Return the general max size of an upload."
   def upload_limit do
     8_000_000
+  end
+  
+  ## Private
+
+  
+  ## GenServer
+  
+  def handle_info(timeout, state) do
+    #todo: setup epoch
+    
+    {:noreply, nil}
+  end
+  
+  def handle_info(message, state) do
+    {:noreply, nil}
+  end
+  
+  def handle_info(_args, _state) do
+    {:noreply, nil}
+  end
+
+  def start_link(default \\ nil) do
+    link = {:ok, castle} = GenServer.start_link(Castle, default)
+    
+    IO.inspect "Castle: #{ inspect castle }"
+
+    link
   end
   
 end

@@ -52,20 +52,24 @@ defmodule Castle.Game.Plug do
   def hello(conn, nubspace) do
     # always send a signal, but sometimes return an item.
     
-    signal = Castle.capture!(self, nubspace, conn.params)
+    signal = Signal.m(nubspace, conn.params) 
     
-    if length(signal.items) > 0 do
-      send_resp conn, 200, inspect(signal.items)
-    else
-      obj_path = Path.join(["priv", "static"|nubspace])
-      
-      if File.exists?(obj_path) do
-        # todo: add send_file here
-        send_resp conn, 200, File.read!(obj_path)
+    Castle.Game.host! "#{signal.unique}/commit", Program.cmd fn signal ->
+      if length(signal.items) > 0 do
+        send_resp conn, 200, inspect(signal.items)
       else
-        send_resp conn, 404, inspect(signal.items)
+        obj_path = Path.join(["priv", "static"|nubspace])
+      
+        if File.exists?(obj_path) do
+          # todo: add send_file here
+          send_resp conn, 200, File.read!(obj_path)
+        else
+          send_resp conn, 404, inspect(signal.items)
+        end
       end
     end
+    
+    Castle.Game.step! signal
   end
   
   
