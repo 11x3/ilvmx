@@ -50,12 +50,14 @@ ul li {
   display: inline-block;
 }
 
-#lolnub {
+#lolnub, 
+#lolnub input[type=submit] {
   display: block;
   padding: 42px;
   font-size: 42px;
-  text-align: right;
-  color: #4e00cc;
+  color: #b0e0fa;
+  background-color: #0a304c;
+  border: 1px solid #1b1b1b;
 }
 
 #patches {
@@ -74,6 +76,10 @@ ul li {
 
 #patches {
 
+}
+
+header {
+  padding: 40px;
 }
 
 footer {

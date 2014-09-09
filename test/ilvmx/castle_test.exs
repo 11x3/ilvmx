@@ -1,5 +1,5 @@
 defmodule CastleTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   ## API
   
@@ -26,7 +26,7 @@ defmodule CastleTest do
 
 
   test "Castle.beam! to broadcast a `Signal`" do
-    ILM.reset!
+    ILvMx.reset!
     
     assert signal = %Signal{} = Castle.beam! Signal.m("lol", "nub")
   
@@ -35,7 +35,7 @@ defmodule CastleTest do
   end
 
   test "Castle.boost? to boost a `Signal` with Castle.Nubspace items." do
-    ILM.reset!
+    ILvMx.reset!
     
     assert lol = %Signal{} = Castle.beam! Signal.m("lol", "nub")
     assert sup = %Signal{} = Castle.beam! Signal.m("sup", "nub")
@@ -50,7 +50,7 @@ defmodule CastleTest do
     do: assert {:ok, _next} = Castle.next?
 
   test "Castle.x to capture signals from Castle.Nubspace." do
-    ILM.reset!
+    ILvMx.reset!
     
     Castle.beam! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
     
@@ -58,22 +58,22 @@ defmodule CastleTest do
     assert ["nub err roo"] == Castle.x "lol"
   end
 
-  # test "install a binary string" do
-  #   signal = %Signal{item: %Item{}} = Castle.sig "ilvmx", "todo"
-  #
-  #   assert Regex.match? ~r/obj/, Item.path(signal.item)
-  #   assert true == File.exists? "priv/static/#{ Item.path(signal.item) }"
-  #   assert "todo" == signal.item.content
-  # end
-  #
+  test "install a binary string" do
+    signal = %Signal{} = Castle.beam! Signal.m "ilvmx", Bot.new("todo")
+    
+    assert Regex.match? ~r/obj/, Item.path(signal.let)
+    assert true == File.exists? "priv/static/#{ Item.path(signal.let) }"
+    assert "todo" == signal.let.content
+  end
+
   # test "install static content with Bot.take" do
-  #   signal = %Signal{item: %Item{}} = Castle.sig "splash", Bot.take(["header.html", "footer.html"])
+  #   signal = %Signal{} = Castle.beam! Signal.m("splash", Bot.take(["header.html", "footer.html"]))
   #
-  #   assert Regex.match? ~r/obj/, Item.path(signal.item)
-  #   assert File.exists? "priv/static/#{ Item.path(signal.item) }"
-  #   assert Regex.match? ~r/html/i, signal.item.content
-  #   assert Regex.match? ~r/body/i, signal.item.content
-  #   assert Regex.match? ~r/footer/i, signal.item.content
+  #   assert Regex.match? ~r/obj/,      Item.path(signal.let)
+  #   assert File.exists? "priv/static/#{ Item.path(signal.let) }"
+  #   assert Regex.match? ~r/html/i,    signal.let.content
+  #   assert Regex.match? ~r/body/i,    signal.let.content
+  #   assert Regex.match? ~r/footer/i,  signal.let.content
   # end
 
   ## Castle.Plug

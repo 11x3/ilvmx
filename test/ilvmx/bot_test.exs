@@ -15,7 +15,6 @@ defmodule BotTest do
   test "Bot.new to create static items",
     do: assert File.exists? "priv/static/#{ Bot.new("chat") |> Item.path }"
 
-
   ## World
 
   test "Bot.web to grab web pages", 

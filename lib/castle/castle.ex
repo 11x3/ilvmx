@@ -4,8 +4,8 @@ defmodule Castle do
   @epoch :epoch
 
   @moduledoc """
-  ILM takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
-  are top-level ILM nodes and the `Galaxy` is simply the ILM exchange.
+  ILvMx takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
+  are top-level ILvMx nodes and the `Galaxy` is simply the ILvMx exchange.
 
   Castle [
     Game [
@@ -18,8 +18,10 @@ defmodule Castle do
   """
   
   ## System
-  def x(binary) do
-    Castle.boost? Signal.m binary
+  
+  @doc "Boost `signal_path` with Castle.Nubspace items."
+  def x(signal_path) when is_binary(signal_path) do
+    Castle.boost? Signal.m signal_path
   end
   
   @doc "Return the `Castle.signal` of yore."

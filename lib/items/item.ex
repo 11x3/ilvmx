@@ -11,7 +11,7 @@ defmodule Item do
   """
   def m(content \\ nil) do
     # an empty item
-    m(:item, content)
+    m(nil, content)
   end
   def m(kind, content) do
     unique = Castle.uuid
@@ -23,7 +23,7 @@ defmodule Item do
     }
   end
   
-  def path(item) do
+  def path(item = %Item{}) do
     "obj/#{ item.unique }"
   end
 

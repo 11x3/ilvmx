@@ -36,7 +36,7 @@ defmodule Castle.Game do
     
     Application.put_env :ilvmx, :signal, %Signal{Castle.signal| let: signal_map, items: [signal|Castle.signal.items]}
 
-    Castle.signal
+    signal
   end
   
   @doc "Remove a `Signal` from the Game map."
@@ -81,7 +81,7 @@ defmodule Castle.Game do
   @doc "Save `signal` to disk as configured."
   def archive!(signal) do
     # todo: add/update commit times of signal
-
+    
     signal
   end
 

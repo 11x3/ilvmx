@@ -20,11 +20,20 @@
 
 <div id="page" class="row">
     
+    <header>
+    <h1>#lolnub</h1>
+    <form action="/" method="get" accept-charset="utf-8">
+        <input id="lolnub" placeholder="lolnub" size=28>
+        <input type="submit" name="submit" value="boost?">
+    </form>
+    <h1>#signals</h1>
+    <h2><a href="/system/">system/</a></h2>
+    <h2><a href="/hello">hello</a></h2>
+    </header>
+    
 	<div id="content" class=".col-golden-lg">
 	    <script type="text/x-handlebars" id="application">
-            <img id="patches" src="/img/lol-patches.png" alt="">
-            {{input id="lolnub" placeholder="lolnub" size=28}}
-            
+            <img id="patches" src="/img/lol-patches.png" alt="">            
             <ul>
               {{#each signal in signals}}
                <li>{{#link-to "signals"}}nub{{/link-to}}</li>
