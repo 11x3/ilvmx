@@ -88,9 +88,9 @@ defmodule CastleTest do
   test "invalids" do
     assert [] == Castle.x "something random #{ Castle.uuid }"
     
-    assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
-    assert "[]" == HTTPotion.get(IT.web "../something").body
-    assert "[]" == HTTPotion.get(IT.web "../something:else").body
+    # assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
+    # assert "[]" == HTTPotion.get(IT.web "../something").body
+    # assert "[]" == HTTPotion.get(IT.web "../something:else").body
   end
   
   test "splash" do

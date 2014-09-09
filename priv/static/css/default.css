@@ -50,6 +50,12 @@ ul li {
   display: inline-block;
 }
 
+code {
+  background-color: #272727;
+  padding: 40px;
+  display: block;
+}
+
 #lolnub, 
 #lolnub input[type=submit] {
   display: block;
