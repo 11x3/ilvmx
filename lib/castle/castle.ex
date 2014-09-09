@@ -44,7 +44,7 @@ defmodule Castle do
   
   @doc "Boost `signal` with appropriate Castle.Nubspace items."
   def boost?(signal = %Signal{}) do
-    IO.inspect "Castle.boost?: #{signal.path}"
+    IO.inspect "Castle.boost?: #{inspect signal.path}"
 
     Castle.Game.run! signal, Castle.map[signal.path]
   end

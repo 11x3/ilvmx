@@ -1,4 +1,4 @@
-defmodule Castle.Game.Plug do
+defmodule Castle.Plug do
   import  Plug.Conn
   use     Plug.Router
   use     Plug.Builder
@@ -8,15 +8,12 @@ defmodule Castle.Game.Plug do
   @upload_limit     Castle.upload_limit
   
   @moduledoc """
-  Web Requests from Cowboy/Plug.
-  
-  #todo: register with the arcade to receive signals
+  Basic Castle access for Web requests from Cowboy/Plug.
   """
   
   plug Plug.Static, at: "/static", from: :ilvmx
   plug :dispatch
   plug :match
-
 
   ## Plug 
   
@@ -24,14 +21,47 @@ defmodule Castle.Game.Plug do
   def call(conn = %Plug.Conn{path_info: []}, options) do
     send_resp conn, 200, Bot.take(["header.html", "footer.html"])
   end
+  
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
-    IO.inspect ".x.x. Castle.Game.Plug: #{inspect signal_path}"
+    IO.inspect "(x-x-) Plug: >#{inspect signal_path}<"
     
     hello conn, signal_path
   end
 
-  
-  ## Objects
+  # @doc "Route to upload items."
+  # def hello(conn, signal_path = ["api", "sig"]) do
+  #   # parse the http signal
+  #   conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+  #   nubspace  = conn.params["nubspace"] || nil
+  #
+  #   # install signal to a valid nubspace..
+  #   if nubspace do
+  #     send_resp conn, 200, inspect(Castle.x(conn, nubspace, conn.params))
+  #   else
+  #     send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
+  #   end
+  # end
+  # @doc "Route to upload items."
+  # def hello(conn, signal_path = ["api", "cap"|nubspace]) do
+  #   # parse the http signal
+  #   nubspace  = nubspace || conn.params["nubspace"] || nil
+  #
+  #   # install signal to a valid nubspace..
+  #   send_resp conn, 200, inspect(Castle.x(Signal.m(nubspace, conn.params)))
+  # end
+  # @doc "Route to upload items."
+  # def hello(conn, signal_path = ["api", "exe"]) do
+  #   # parse the http signal
+  #   conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
+  #   nubspace  = conn.params["nubspace"] || nil
+  #
+  #   # install signal to a valid nubspace..
+  #   if nubspace do
+  #     send_resp conn, 200, inspect(Castle.x(Signal.m(nubspace, conn.params)))
+  #   else
+  #     send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
+  #   end
+  # end
   
   @doc "Route for static objects."
   def hello(conn, signal_path = ["obj"|unique]) do
@@ -45,31 +75,19 @@ defmodule Castle.Game.Plug do
     end
   end
   
-  
-  ## Dynamic
-  
   @doc "Dynamic nubspace routes."
   def hello(conn, nubspace) do
     # always send a signal, but sometimes return an item.
+    obj_path = Path.join(["priv", "static"|nubspace])
     
-    signal = Signal.m(nubspace, conn.params) 
-    
-    Castle.Game.host! "#{signal.unique}/commit", Program.cmd fn signal ->
-      if length(signal.items) > 0 do
-        send_resp conn, 200, inspect(signal.items)
-      else
-        obj_path = Path.join(["priv", "static"|nubspace])
+    if File.exists?(obj_path) do
+      Task.async fn -> Castle.x Path.join(nubspace) end
       
-        if File.exists?(obj_path) do
-          # todo: add send_file here
-          send_resp conn, 200, File.read!(obj_path)
-        else
-          send_resp conn, 404, inspect(signal.items)
-        end
-      end
+      # todo: add send_file here
+      send_resp conn, 200, File.read!(obj_path)
+    else
+      send_resp conn, 200, inspect(Castle.x Path.join(nubspace))
     end
-    
-    Castle.Game.step! signal
   end
   
   

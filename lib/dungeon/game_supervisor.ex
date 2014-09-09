@@ -13,7 +13,7 @@ defmodule Castle.Game.Supervisor do
 
     # setup arcade/adapters
     # todo: support config for starting options
-    Plug.Adapters.Cowboy.http Castle.Game.Plug, [self], port: 8080
+    Plug.Adapters.Cowboy.http Castle.Plug, [self], port: 8080
     
     # See http://elixir-lang.org/docs/stable/Supervisor.html
     # for other strategies and supported options

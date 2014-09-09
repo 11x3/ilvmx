@@ -1,8 +1,8 @@
 IO.inspect "./system.exs"
 
-"system/hello"
+"hello"
   |> Signal.m(Program.cmd fn s -> 
-    Item.m "HAHAHAHAAHA!!! #{inspect s.unique}"
+    Item.m "HAHAHAHAAHA!!! #{inspect s.unique} see: system/"
   end) |> Castle.beam!
     
 "system/source" |> 
@@ -14,12 +14,6 @@ IO.inspect "./system.exs"
   Signal.m(Program.cmd fn s -> 
     Castle.signals 
   end) |> Castle.beam!
-
-
-
-
-
-
 
 
 # Castle.ping! Program.app "details", fn signal ->

@@ -61,7 +61,7 @@ defmodule Castle.CPU do
   end
   
   def handle_call({:execute, signal, items}, from, state) do
-    IO.inspect ".x.x.<execute {signal.path: #{signal.path} signal.let: #{inspect signal.let} signal.items: #{inspect signal.items}}"
+    IO.inspect ".x.x.<execute {signal.path: #{inspect signal.path} signal.let: #{inspect signal.let} signal.items: #{inspect signal.items}}"
     
     #todo: add dynamic :boost signal/server
     #todo: return a ownership token

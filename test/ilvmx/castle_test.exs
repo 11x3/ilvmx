@@ -76,4 +76,30 @@ defmodule CastleTest do
   #   assert Regex.match? ~r/footer/i, signal.item.content
   # end
 
+  ## Castle.Plug
+
+  test "system" do
+    assert 200 == HTTPotion.get(IT.web "ilvmx").status_code
+    assert 200 == HTTPotion.get(IT.web "hello").status_code
+    assert 200 == HTTPotion.get(IT.web "system/source").status_code
+    assert 200 == HTTPotion.get(IT.web "system/signals/list").status_code
+  end
+    
+  test "invalids" do
+    assert [] == Castle.x "something random #{ Castle.uuid }"
+    
+    assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
+    assert "[]" == HTTPotion.get(IT.web "../something").body
+    assert "[]" == HTTPotion.get(IT.web "../something:else").body
+  end
+  
+  test "splash" do
+    assert 200  == HTTPotion.get(IT.web("/")).status_code
+    assert Regex.match? ~r/html/, HTTPotion.get(IT.web("/")).body
+  end
+  
+  test "static" do
+    assert 200  == HTTPotion.get(IT.web("/img/nubspace.jpg")).status_code
+  end
+  
 end
