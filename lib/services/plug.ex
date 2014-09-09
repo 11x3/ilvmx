@@ -25,7 +25,7 @@ defmodule Castle.Plug do
   end
   
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
-    Logger.debug "(x-x-) Plug: >#{inspect signal_path}<"
+    Logger.debug "(x-x-) Plug: #{inspect Path.join(signal_path)}"
     
     hello conn, signal_path
   end

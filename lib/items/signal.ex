@@ -1,6 +1,6 @@
 defmodule Signal do
-  defstruct     path: nil,  # "about/ilvmx"
-                 let: nil,  # request/item/upload/etc
+  defstruct      set: nil,  # "about/ilvmx"
+                item: nil,  # request/item/upload/etc
                items: [],   # [item] 
               source: nil,  # sender (pid, email, nick, etc)  
               unique: nil,  # uuid
@@ -13,10 +13,10 @@ defmodule Signal do
   # Signal.set about: Bot.pull "html/about"
   
   @doc "Make a `Signal`."
-  def m(path \\ Castle.name, item \\ nil, source \\ nil) do
+  def m(set \\ Castle.name, item \\ nil, source \\ nil) do
     %Signal{
-          path: path,
-           let: item,
+           set: set,
+          item: item,
          items: [],
         source: source,
         unique: Castle.uuid,

@@ -13,7 +13,7 @@ defmodule CastleTest do
   end
   
   test "Castle.signal", 
-    do: assert %Signal{path: "ilvmx/lolnub"} = Castle.signal
+    do: assert %Signal{set: "ilvmx/lolnub"} = Castle.signal
     
   test "Castle.signal.items",
     do: assert is_list Castle.signal.items
@@ -28,25 +28,25 @@ defmodule CastleTest do
     assert signal = %Signal{} = Castle.beam! Signal.m("lol", "nub")
   
     assert [signal] = Castle.signal.items
-    assert %{"lol" => [%Signal{let: "nub"}]} = Castle.map
+    assert %{"lol" => [%Signal{item: "nub"}]} = Castle.map
   end
 
   test "Castle.beam! to install a binary string" do
     signal = %Signal{} = Castle.beam! Signal.m "ilvmx", Bot.new("todo")
     
-    assert Regex.match? ~r/obj/, Item.path(signal.let)
-    assert true == File.exists? "priv/static/#{ Item.path(signal.let) }"
-    assert "todo" == signal.let.content
+    assert Regex.match? ~r/obj/, Item.path(signal.item)
+    assert true == File.exists? "priv/static/#{ Item.path(signal.item) }"
+    assert "todo" == signal.item.content
   end
   
   test "Castle.beam! to install static content with Bot.take" do
     signal = %Signal{} = Castle.beam! Signal.m("splash", Bot.new(Bot.take(["header.html", "footer.html"])))
 
-    assert Regex.match? ~r/obj/,      Item.path(signal.let)
-    assert File.exists? "priv/static/#{ Item.path(signal.let) }"
-    assert Regex.match? ~r/html/i,    signal.let.content
-    assert Regex.match? ~r/body/i,    signal.let.content
-    assert Regex.match? ~r/footer/i,  signal.let.content
+    assert Regex.match? ~r/obj/,      Item.path(signal.item)
+    assert File.exists? "priv/static/#{ Item.path(signal.item) }"
+    assert Regex.match? ~r/html/i,    signal.item.content
+    assert Regex.match? ~r/body/i,    signal.item.content
+    assert Regex.match? ~r/footer/i,  signal.item.content
   end
   
   test "Castle.boost? to boost a `Signal` with Castle.Nubspace items." do

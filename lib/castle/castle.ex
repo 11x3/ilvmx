@@ -44,16 +44,25 @@ defmodule Castle do
 
   @doc "Ping a `signal_path` of the Castle.Nubspace and return *all* `Castle.signals`."
   def beam!(signal = %Signal{}) do
-    Logger.debug "Castle.beam!: #{signal.path}"
+    Logger.debug "Castle.beam!: #{signal.set}"
     
     signal |> Castle.Game.host!
   end
   
-  @doc "Boost `signal` with appropriate Castle.Nubspace items."
+  @doc """
+  Boost `signal` with appropriate Castle.Nubspace items. `boost?` creates Castle GenServers 
+  which basically means every boost?'ed signal becomes a full Castle peer by design.
+  """
   def boost?(signal = %Signal{}) do
-    Logger.debug "Castle.boost?: #{inspect signal.path}"
-
-    Castle.Game.run! signal, Castle.map[signal.path]
+    Logger.debug "Castle.boost?: #{inspect signal.set}"
+    
+    # promote the signal to a GenServer
+    {:ok, castle} = GenServer.start_link(Castle, signal, debug: [])
+    
+    # process the signal/program
+    signal = GenServer.call(castle, {:boost, signal, Castle.map[signal.set]})
+        
+    signal
   end
   
   @doc "Return updated items and noops our worker."
@@ -103,8 +112,14 @@ defmodule Castle do
     8_000_000
   end
   
+  
   ## Private
-
+  
+  def handle_call({:boost, signal, items}, from, state) do
+    Logger.debug ".x.x.<execute {signal.set: #{inspect signal.set} signal.item: #{inspect signal.item} signal.items: #{inspect signal.items}}"
+    
+    {:reply, Castle.Game.run!(signal, items), state}
+  end
   
   ## GenServer
   

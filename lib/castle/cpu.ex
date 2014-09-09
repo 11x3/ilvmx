@@ -63,7 +63,7 @@ defmodule Castle.CPU do
   end
   
   def handle_call({:execute, signal, items}, from, state) do
-    Logger.debug ".x.x.<execute {signal.path: #{inspect signal.path} signal.let: #{inspect signal.let} signal.items: #{inspect signal.items}}"
+    Logger.debug "Castle.CPU:execute {signal.set: #{inspect signal.set} signal.item: #{inspect signal.item} signal.items: #{inspect signal.items}}"
     
     #todo: add dynamic :boost signal/server
     #todo: return a ownership token
@@ -89,12 +89,12 @@ defmodule Castle.CPU do
   #   exe_loop(signal, items)
   # end
   defp exe_loop(signal, [item|items]) do
-    Logger.debug ".x.x.<exe_loop/[item|items]"
+    #Logger.debug ".x.x.<exe_loop/[item|items]"
         
     exe_loop(Program.exe(signal, item), items)
   end
   defp exe_loop(signal, done) when nil?(done) or length(done) == 0 do
-    Logger.debug ".x.x.<exe_loop/signal.items: #{inspect signal.items}"
+    #Logger.debug ".x.x.<exe_loop/signal.items: #{inspect signal.items}"
     
     signal.items
   end
@@ -118,7 +118,7 @@ defmodule Castle.CPU do
   def start_link(default \\ nil) do
     link = {:ok, server} = GenServer.start_link(Castle.CPU, default)
     
-    Logger.debug "Castle.CPU: #{ inspect server }, castle_path: #{@castle_path}"
+    Logger.debug "Castle.name: #{Castle.name} Castle.CPU: #{ inspect server }, castle_path: #{@castle_path}"
     
     # setup system apps
     File.ls!(@castle_path) |> Enum.each fn file_path -> 

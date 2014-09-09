@@ -19,24 +19,15 @@ defmodule Castle.Game do
   
   @doc "Our Castle.Game map (handy item)."
   def map do
-    Castle.signal.let
+    Castle.signal.item
   end
   
-  @doc "Run `signal` through the Castle.Game."
-  def run!(signal, items \\ Castle.signal.items) do
-    Logger.debug ".x.x.Castle.Game.run!/signal: #{inspect signal}"
-    
-    # oh yeah, we're going to hit them all unless you say so...
-    signal = Castle.CPU.execute!(signal, items)
-    |> next?
-  end
-
   @doc "Publish a `Signal` to the Game rules."
   def host!(signal) do
     #todo: validate signal
-    signal_map = Dict.update(Castle.map, signal.path, [signal], fn signals -> [signal|signals] end)
+    signal_map = Dict.update(Castle.map, signal.set, [signal], fn signals -> [signal|signals] end)
     
-    Application.put_env :ilvmx, :signal, %Signal{Castle.signal| let: signal_map, items: [signal|Castle.signal.items]}
+    Application.put_env :ilvmx, :signal, %Signal{Castle.signal| item: signal_map, items: [signal|Castle.signal.items]}
 
     signal
   end
@@ -46,6 +37,15 @@ defmodule Castle.Game do
     #Application.put_env :ilvmx, :signal,
     
     signal
+  end
+  
+  @doc "Run `signal` through the Castle.Game."
+  def run!(signal, items \\ Castle.signal.items) do
+    Logger.debug ".x.x.Castle.Game.run!/signal: #{inspect signal}"
+    
+    # oh yeah, we're going to hit them all unless you say so...
+    signal = Castle.CPU.execute!(signal, items) 
+    |> next?
   end
   
   @doc "Move `signal` to primitives."
@@ -69,7 +69,7 @@ defmodule Castle.Game do
     
   @doc "#todo: forward sequentially to all ping! observers."
   def ping!(signal) do
-    #Castle.Game.cast! "#{signal.unique}/commit"
+    #todo: post "castle/signals/commit/#{signal.unique}"
     
     signal
   end
