@@ -45,11 +45,14 @@ ul li {
   display: inline-block;
 }
 
+h1 {
+  padding-left: 40px;  
+}
+
 code,
 form, 
 footer {
   background-color: #1b1b1b;
-  border-left: 80px solid rgba(87, 87, 87, 0.52);
   padding: 40px;
   display: block;
   margin-bottom: 40px;

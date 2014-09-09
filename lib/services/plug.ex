@@ -57,17 +57,10 @@ defmodule Castle.Plug do
       hello_result(conn, Castle.x(Path.join(nubspace)))
     end
   end
-  defp hello_result(conn, [item = %Item{}]) do
-    send_resp conn, 200, (Bot.take("header.html") <> inspect(item.content) <> Bot.take("footer.html"))
+  defp hello_result(conn, items) do    
+    send_resp conn, 200, (Bot.take("header.html") <> inspect(items) <> Bot.take("footer.html"))
   end
-  defp hello_result(conn, item = %Item{}) do
-    send_resp conn, 200, (Bot.take("header.html") <> item.content <> Bot.take("footer.html"))
-  end
-  defp hello_result(conn, items) do
-    Logger.debug "(x-x-) Plug/items: #{inspect items}"
-    
-    send_resp conn, 200, (Bot.take("header.html") <> Bot.take("footer.html"))
-  end
+  
   
   @doc "Initialize options"
   def init(options) do
