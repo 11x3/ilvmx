@@ -3,18 +3,15 @@ defmodule CastleTest do
 
   ## API
   
-  test "Castle.uuid for app-wide UUIDs" do
-    assert true == IT.assert_unique Castle.uuid
-    assert true == Regex.match? Castle.uuid_regex, Castle.uuid
+  test "Castle.x to boost signals with Castle.Nubspace items (aka magic)." do
+    ILvMx.reset!
+
+    Castle.beam! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
+
+    # the Program/fn above is executed... great success.
+    assert ["nub err roo"] == Castle.x "lol"
   end
   
-  test "Castle.galaxy for the current network exchange", 
-    do: assert "ilvmx" == Castle.galaxy
-  
-  test "Castle.name", 
-    do: assert "ilvmx/lolnub" == Castle.name
-
-
   test "Castle.signal", 
     do: assert %Signal{path: "ilvmx/lolnub"} = Castle.signal
     
@@ -34,6 +31,24 @@ defmodule CastleTest do
     assert %{"lol" => [%Signal{let: "nub"}]} = Castle.map
   end
 
+  test "Castle.beam! to install a binary string" do
+    signal = %Signal{} = Castle.beam! Signal.m "ilvmx", Bot.new("todo")
+    
+    assert Regex.match? ~r/obj/, Item.path(signal.let)
+    assert true == File.exists? "priv/static/#{ Item.path(signal.let) }"
+    assert "todo" == signal.let.content
+  end
+  
+  test "Castle.beam! to install static content with Bot.take" do
+    signal = %Signal{} = Castle.beam! Signal.m("splash", Bot.new(Bot.take(["header.html", "footer.html"])))
+
+    assert Regex.match? ~r/obj/,      Item.path(signal.let)
+    assert File.exists? "priv/static/#{ Item.path(signal.let) }"
+    assert Regex.match? ~r/html/i,    signal.let.content
+    assert Regex.match? ~r/body/i,    signal.let.content
+    assert Regex.match? ~r/footer/i,  signal.let.content
+  end
+  
   test "Castle.boost? to boost a `Signal` with Castle.Nubspace items." do
     ILvMx.reset!
     
@@ -43,39 +58,24 @@ defmodule CastleTest do
     assert [lol] = Castle.boost? Signal.m "lol"
   end
   
-  test "Castle.download to capture `Castle.Nubspace` items",
-    do: assert is_list Castle.download 
-
   test "Castle.next? to update `Castle` to return to the Castle.",
     do: assert {:ok, _next} = Castle.next?
 
-  test "Castle.x to capture signals from Castle.Nubspace." do
-    ILvMx.reset!
-    
-    Castle.beam! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
-    
-    # the Program/fn above is executed... great success.
-    assert ["nub err roo"] == Castle.x "lol"
+  test "Castle.download to capture `Castle.Nubspace` items",
+    do: assert is_list Castle.download 
+
+  
+  test "Castle.galaxy for the current network exchange", 
+    do: assert "ilvmx" == Castle.galaxy
+  
+  test "Castle.name", 
+    do: assert "ilvmx/lolnub" == Castle.name
+
+  test "Castle.uuid for app-wide UUIDs" do
+    assert true == IT.assert_unique Castle.uuid
+    assert true == Regex.match? Castle.uuid_regex, Castle.uuid
   end
-
-  test "install a binary string" do
-    signal = %Signal{} = Castle.beam! Signal.m "ilvmx", Bot.new("todo")
-    
-    assert Regex.match? ~r/obj/, Item.path(signal.let)
-    assert true == File.exists? "priv/static/#{ Item.path(signal.let) }"
-    assert "todo" == signal.let.content
-  end
-
-  # test "install static content with Bot.take" do
-  #   signal = %Signal{} = Castle.beam! Signal.m("splash", Bot.take(["header.html", "footer.html"]))
-  #
-  #   assert Regex.match? ~r/obj/,      Item.path(signal.let)
-  #   assert File.exists? "priv/static/#{ Item.path(signal.let) }"
-  #   assert Regex.match? ~r/html/i,    signal.let.content
-  #   assert Regex.match? ~r/body/i,    signal.let.content
-  #   assert Regex.match? ~r/footer/i,  signal.let.content
-  # end
-
+  
   ## Castle.Plug
 
   test "system" do

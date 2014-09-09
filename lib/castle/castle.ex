@@ -124,5 +124,4 @@ defmodule Castle do
 
     link
   end
-  
 end
