@@ -8,7 +8,7 @@ defmodule Castle.Plug do
   @upload_limit     Castle.upload_limit
   
   @moduledoc """
-  Basic Castle access for Web requests from Cowboy/Plug.
+  Castle access for Web requests from Cowboy/Plug.
   """
   
   plug Plug.Static, at: "/static", from: :ilvmx
@@ -28,40 +28,6 @@ defmodule Castle.Plug do
     hello conn, signal_path
   end
 
-  # @doc "Route to upload items."
-  # def hello(conn, signal_path = ["api", "sig"]) do
-  #   # parse the http signal
-  #   conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-  #   nubspace  = conn.params["nubspace"] || nil
-  #
-  #   # install signal to a valid nubspace..
-  #   if nubspace do
-  #     send_resp conn, 200, inspect(Castle.x(conn, nubspace, conn.params))
-  #   else
-  #     send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
-  #   end
-  # end
-  # @doc "Route to upload items."
-  # def hello(conn, signal_path = ["api", "cap"|nubspace]) do
-  #   # parse the http signal
-  #   nubspace  = nubspace || conn.params["nubspace"] || nil
-  #
-  #   # install signal to a valid nubspace..
-  #   send_resp conn, 200, inspect(Castle.x(Signal.m(nubspace, conn.params)))
-  # end
-  # @doc "Route to upload items."
-  # def hello(conn, signal_path = ["api", "exe"]) do
-  #   # parse the http signal
-  #   conn      = Plug.Parsers.call(conn, parsers: @parsers, limit: @upload_limit)
-  #   nubspace  = conn.params["nubspace"] || nil
-  #
-  #   # install signal to a valid nubspace..
-  #   if nubspace do
-  #     send_resp conn, 200, inspect(Castle.x(Signal.m(nubspace, conn.params)))
-  #   else
-  #     send_resp conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)"
-  #   end
-  # end
   
   @doc "Route for static objects."
   def hello(conn, signal_path = ["obj"|unique]) do
@@ -91,17 +57,13 @@ defmodule Castle.Plug do
   end
   
   
-  @doc """
-  Initialize options
-  """
+  @doc "Initialize options"
   def init(options) do
     
     options
   end
 
-  @doc """
-  #todo: forward errors to the Wizard for defensive purposes.
-  """
+  @doc "#todo: forward errors to the Wizard for defensive purposes."
   match(_) do
     send_resp(conn, 500, "500: 5A Required system component not installed (ILvMx 4.x)")
   end
