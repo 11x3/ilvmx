@@ -29,8 +29,10 @@ defmodule Program do
     Logger.debug ".x.x..Program.exe/signal: #{inspect signal}"
     Logger.debug ".x.x..Program.exe/signal/item: #{inspect item}"
     
+    result = Task.async(fn -> item.let.code.(signal) end) |> Task.await
+        
     #todo: pass signal into program
-    Signal.boost!(signal, item.let.code.(signal))
+    Signal.boost!(signal, result)
   end
   def exe(signal = %Signal{}, _signal = %Signal{let: item = %Item{}}) do
     Logger.debug ".x.x..Program.exe/signal/item: #{inspect item}"

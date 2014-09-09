@@ -11,11 +11,5 @@ defmodule SignalTest do
   
   test "boost! to add items to a `Signal`.",
     do: assert %Signal{items: ["todo"]} = Signal.boost! Signal.m, "todo"
-  
 
-  ## Nubspace
-  
-  # test "Signal.push to link items in nubspace",
-  #   do: assert "[\"#{to_string( Signal.push("lol", "todo") |> Item.path )}\"]" == Bot.take("nub/lol/meta")
-  #
 end

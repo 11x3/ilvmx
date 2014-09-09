@@ -1,6 +1,9 @@
+require Logger
 use Jazz
 
 defmodule Bot do
+  use GenServer
+  
   @moduledoc """
   Bots are direct-level workers of the ILvMx universe.
   
@@ -45,7 +48,6 @@ defmodule Bot do
     item
   end
   
-  
   ## File API (file system level blobs)
 
   @doc "Place objects into The World, oh our dear World."
@@ -73,5 +75,35 @@ defmodule Bot do
       File.read! prop_path
     end
   end
+  
+  
+  ## Callbacks
+  
+  def handle_call({:echo, signal}, from, state) do
+    {:reply, signal, state}
+  end
+  
+  ## GenServer
+  
+  def handle_info(timeout, state) do
+    #todo: setup epoch
     
+    {:noreply, nil}
+  end
+  
+  def handle_info(message, state) do
+    {:noreply, nil}
+  end
+  
+  def handle_info(_args, _state) do
+    {:noreply, nil}
+  end
+
+  def start_link(default \\ nil) do
+    link = {:ok, bot} = GenServer.start_link(Bot, default)
+    
+    Logger.debug "Bot: #{inspect bot}"
+
+    link
+  end
 end

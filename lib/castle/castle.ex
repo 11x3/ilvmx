@@ -10,8 +10,11 @@ defmodule Castle do
   are top-level ILvMx nodes and the `Galaxy` is simply the ILvMx exchange.
 
   Castle [
+    Services [
+      Plug
+    ],
     Game [
-      Map/Wizard/Players/Services
+      Map/Wizard/Players
     ],
     CPU [
       Signals/Programs/Items/Bots

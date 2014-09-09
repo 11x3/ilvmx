@@ -1,5 +1,3 @@
-use Jazz
-
 defmodule Signal do
   defstruct     path: nil,  # "about/ilvmx"
                  let: nil,  # request/item/upload/etc
@@ -7,9 +5,7 @@ defmodule Signal do
               source: nil,  # sender (pid, email, nick, etc)  
               unique: nil,  # uuid
                owner: nil   # Player
-  
-               
-               
+   
   @moduledoc """
   `Signal`s are the superglue unit of the ILvMx Galaxy.  
   """
@@ -35,13 +31,5 @@ defmodule Signal do
     %{signal| items: List.flatten([signal.items|[items]]) }
   end
 
-
-  ## Private
-  
-  defp nub_path(nubspace) do
-    # todo: secure nubspace
-    Path.join("nub", String.lstrip(nubspace, ?#))
-  end
-  
 end
 

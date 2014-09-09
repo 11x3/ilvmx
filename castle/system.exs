@@ -3,8 +3,8 @@ require Logger
 Logger.debug "./system.exs"
 
 "hello" |> Signal.m(Program.cmd fn s -> 
-    Bot.new "HAHAHAHAAHA!!! #{inspect s.unique} see: system/"
-  end) |> Castle.beam!
+  Bot.new "HAHAHAHAAHA!!! #{inspect s.unique} see: system/"
+end
     
 "castle/source" |> Signal.m(Program.cmd fn s -> 
     Logger.debug "system.exs: #{ self }" 
