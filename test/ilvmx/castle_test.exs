@@ -82,7 +82,7 @@ defmodule CastleTest do
     assert 200 == HTTPotion.get(IT.web "ilvmx").status_code
     assert 200 == HTTPotion.get(IT.web "hello").status_code
     assert 200 == HTTPotion.get(IT.web "system/source").status_code
-    assert 200 == HTTPotion.get(IT.web "system/signals/list").status_code
+    assert 200 == HTTPotion.get(IT.web "system/signals").status_code
   end
     
   test "invalids" do

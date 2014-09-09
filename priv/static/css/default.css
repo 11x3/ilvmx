@@ -1,29 +1,26 @@
-@import "bootflat.css";
-@import "golden.css";
+@import url("bootflat.css");
 
 html,
 body {
-	margin: -15px 0 0;
   font: sans;
   color: #fff;
   font-size: 150%;
   padding: 0px;
+  margin: 0px;
   background: transparent;
 }
 html {
-  background: #121212;
+  background: #0d0d0d;
 }
-body {
-}
-header {
-}
-footer {
-}
-#page {
 
+h1 {
+  max-height: 80px;
+  height: 80px;
+  overflow: hidden;
 }
-.row {
-  padding: 0 10px 0 20px;
+.row,
+#page {
+  padding: 0;
 }
 
 #nubspace {
@@ -31,9 +28,6 @@ footer {
 }
 label, input {
   font-size: 16px;
-}
-.row,
-section {
 }
 
 a:hover {
@@ -45,53 +39,32 @@ ol,
 ul {
   padding: 0;
 }
+
 ul li {
   list-style: none;
   display: inline-block;
 }
 
-code {
-  background-color: #272727;
+code,
+form, 
+footer {
+  background-color: #1b1b1b;
+  border-left: 80px solid rgba(87, 87, 87, 0.52);
   padding: 40px;
   display: block;
+  margin-bottom: 40px;
 }
 
 #lolnub, 
 #lolnub input[type=submit] {
   display: block;
-  padding: 42px;
+  padding: 40px;
   font-size: 42px;
-  color: #b0e0fa;
-  background-color: #0a304c;
+  color: #4b4b4b;
+  background-color: #d5d5d5;
   border: 1px solid #1b1b1b;
-}
-
-#patches {
-  margin: 40px;
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 100px;
-  display: block;
-  height: 100px;
 }
 
 #content .title {
   color: #004c77;
-}
-
-#patches {
-
-}
-
-header {
-  padding: 40px;
-}
-
-footer {
-
-}
-
-#copyright {
-  z-index: -4;
 }

@@ -49,7 +49,7 @@ defmodule Castle.Plug do
     obj_path = Path.join(["priv", "static"|nubspace])
     
     if File.exists?(obj_path) do
-      Task.async fn -> Castle.x Path.join(nubspace) end
+      #Task.async fn -> Castle.x Path.join(nubspace) end
       
       # todo: add send_file here
       send_resp conn, 200, File.read!(obj_path)
@@ -58,13 +58,15 @@ defmodule Castle.Plug do
     end
   end
   defp hello_result(conn, [item = %Item{}]) do
-    send_resp conn, 200, (Bot.take("header.html") <> item.content <> Bot.take("footer.html"))
+    send_resp conn, 200, (Bot.take("header.html") <> inspect(item.content) <> Bot.take("footer.html"))
   end
   defp hello_result(conn, item = %Item{}) do
     send_resp conn, 200, (Bot.take("header.html") <> item.content <> Bot.take("footer.html"))
   end
   defp hello_result(conn, items) do
-    send_resp conn, 200, (Bot.take("header.html") <> inspect(items) <> Bot.take("footer.html"))
+    Logger.debug "(x-x-) Plug/items: #{inspect items}"
+    
+    send_resp conn, 200, (Bot.take("header.html") <> Bot.take("footer.html"))
   end
   
   @doc "Initialize options"
