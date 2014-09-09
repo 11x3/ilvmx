@@ -1,3 +1,5 @@
+require Logger
+
 defmodule Castle do
   use GenServer
 
@@ -39,14 +41,14 @@ defmodule Castle do
 
   @doc "Ping a `signal_path` of the Castle.Nubspace and return *all* `Castle.signals`."
   def beam!(signal = %Signal{}) do
-    IO.inspect "Castle.beam!: #{signal.path}"
+    Logger.debug "Castle.beam!: #{signal.path}"
     
     signal |> Castle.Game.host!
   end
   
   @doc "Boost `signal` with appropriate Castle.Nubspace items."
   def boost?(signal = %Signal{}) do
-    IO.inspect "Castle.boost?: #{inspect signal.path}"
+    Logger.debug "Castle.boost?: #{inspect signal.path}"
 
     Castle.Game.run! signal, Castle.map[signal.path]
   end
@@ -62,7 +64,7 @@ defmodule Castle do
   
   @doc "Return the `Castle.signal.items` – all of them. #todo: add streams"
   def download do
-    IO.inspect "Castle.download"
+    Logger.debug "Castle.download"
 
     signal.items
   end
@@ -120,7 +122,7 @@ defmodule Castle do
   def start_link(default \\ nil) do
     link = {:ok, castle} = GenServer.start_link(Castle, default)
     
-    IO.inspect "Castle: #{ inspect castle }"
+    Logger.debug "Castle: #{ inspect castle }"
 
     link
   end

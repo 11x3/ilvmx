@@ -1,3 +1,5 @@
+require Logger
+
 defmodule Castle.Game do
   use GenServer
   use Jazz
@@ -22,7 +24,7 @@ defmodule Castle.Game do
   
   @doc "Run `signal` through the Castle.Game."
   def run!(signal, items \\ Castle.signal.items) do
-    IO.inspect ".x.x.Castle.Game.run!/signal: #{inspect signal}"
+    Logger.debug ".x.x.Castle.Game.run!/signal: #{inspect signal}"
     
     # oh yeah, we're going to hit them all unless you say so...
     signal = Castle.CPU.execute!(signal, items)

@@ -17,7 +17,7 @@ defmodule GameTest do
 #   end
 #
   # test "Game.on?",
-  #   do: assert %Signal{} == Castle.Game.host!("lol", Program.cmd(fn -> IO.inspect "lol" end))
+  #   do: assert %Signal{} == Castle.Game.host!("lol", Program.cmd(fn -> Logger.debug "lol" end))
 
 
   test "Game.next?", 

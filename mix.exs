@@ -18,6 +18,7 @@ defmodule Mixfile do
         :cowboy,
         :plug,
         :httpotion,
+        :logger
       ],
       env: [castle_agent: nil],
     ]

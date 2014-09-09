@@ -12,10 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-  
+
+require Logger
+
 defmodule ILvMx do
   use Application
-    
+  
   @moduledoc """
   ILvMx a functionally minded cloud app server and #virtual module exchange.
   """
@@ -33,7 +35,7 @@ defmodule ILvMx do
     
     Application.put_env :ilvmx, :signal, Signal.m(Castle.name, %{})
 
-    IO.inspect ".x.x. #ilvmx."
+    Logger.debug ".x.x. #ilvmx."
   end
 
   # GenSupervisor

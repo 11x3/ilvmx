@@ -1,3 +1,5 @@
+require Logger
+
 defmodule Castle.CPU do
   use GenServer
   
@@ -61,7 +63,7 @@ defmodule Castle.CPU do
   end
   
   def handle_call({:execute, signal, items}, from, state) do
-    IO.inspect ".x.x.<execute {signal.path: #{inspect signal.path} signal.let: #{inspect signal.let} signal.items: #{inspect signal.items}}"
+    Logger.debug ".x.x.<execute {signal.path: #{inspect signal.path} signal.let: #{inspect signal.let} signal.items: #{inspect signal.items}}"
     
     #todo: add dynamic :boost signal/server
     #todo: return a ownership token
@@ -72,14 +74,14 @@ defmodule Castle.CPU do
   
   ## Private
   # defp exe_loop(signal, items, duration) do
-  #   IO.inspect ".x.x.<exe_loop/3"
+  #   Logger.debug ".x.x.<exe_loop/3"
   #
   #   receive do
   #     {:boost, content} ->
-  #       IO.inspect ".x.x.:boost: #{inspect content}"
+  #       Logger.debug ".x.x.:boost: #{inspect content}"
   #
   #     {message, content} ->
-  #       IO.inspect ".x.x.:message.unknown: #{inspect {message, content}}"
+  #       Logger.debug ".x.x.:message.unknown: #{inspect {message, content}}"
   #
   #   after duration -> true
   #   end
@@ -87,12 +89,12 @@ defmodule Castle.CPU do
   #   exe_loop(signal, items)
   # end
   defp exe_loop(signal, [item|items]) do
-    IO.inspect ".x.x.<exe_loop/[item|items]"
+    Logger.debug ".x.x.<exe_loop/[item|items]"
         
     exe_loop(Program.exe(signal, item), items)
   end
   defp exe_loop(signal, done) when nil?(done) or length(done) == 0 do
-    IO.inspect ".x.x.<exe_loop/signal.items: #{inspect signal.items}"
+    Logger.debug ".x.x.<exe_loop/signal.items: #{inspect signal.items}"
     
     signal.items
   end
@@ -116,11 +118,11 @@ defmodule Castle.CPU do
   def start_link(default \\ nil) do
     link = {:ok, server} = GenServer.start_link(Castle.CPU, default)
     
-    IO.inspect "Castle.CPU: #{ inspect server }, castle_path: #{@castle_path}"
+    Logger.debug "Castle.CPU: #{ inspect server }, castle_path: #{@castle_path}"
     
     # setup system apps
     File.ls!(@castle_path) |> Enum.each fn file_path -> 
-      IO.inspect "Code.eval_file: #{ file_path }"
+      Logger.debug "Code.eval_file: #{ file_path }"
       Task.async fn -> Code.eval_file(Path.join(@castle_path, file_path)) end
     end
     

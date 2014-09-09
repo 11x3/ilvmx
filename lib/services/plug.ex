@@ -1,3 +1,5 @@
+require Logger
+
 defmodule Castle.Plug do
   import  Plug.Conn
   use     Plug.Router
@@ -23,7 +25,7 @@ defmodule Castle.Plug do
   end
   
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
-    IO.inspect "(x-x-) Plug: >#{inspect signal_path}<"
+    Logger.debug "(x-x-) Plug: >#{inspect signal_path}<"
     
     hello conn, signal_path
   end
