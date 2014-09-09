@@ -6,10 +6,6 @@ defmodule ItemTest do
   
   test "m to make an item with content", 
     do: assert %Item{content: "lol"} = Item.m "lol"
-      
-  test "m to make an item kind + content",
-    do: assert %Item{kind: :special, content: "lol"} = Item.m :special, "lol"
-  
   
   test "path to get the path of item", 
     do: assert Regex.match? ~r/obj/, Item.path(Item.m)  
