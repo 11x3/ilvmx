@@ -1,46 +1,19 @@
 IO.inspect "./system.exs"
 
-Castle.beam! Signal.m "hello", Program.exe fn s ->
-  Item.m "how are you?"
-end
+"system/hello"
+  |> Signal.m(Program.cmd fn s -> 
+    Item.m "HAHAHAHAAHA!!! #{inspect s.unique}"
+  end) |> Castle.beam!
+    
+"system/source" |> 
+  Signal.m(Program.cmd fn s -> 
+    Item.m IO.inspect "system.exs: #{ self }" 
+  end) |> Castle.beam!
 
-#
-# Castle.beam! , Program.exe fn signal ->
-#   signal = signal
-#   |> Castle.CPU.execute!
-#   |> Castle.Wizard.filter?
-#
-#   Castle.next? signal
-#
-#   signal
-# end
-#
-#
-
-
-
-# Signal.m "system", Program.cmd fn ->
-#   Item.m IO.inspect "system.exs: #{ self }"
-# end |> Castle.beam!
-#
-
-
-
-
-#|> Castle.Game.host! Program.cmd(fn -> IO.inspect "Castle.Game.host!" end)
-
-
-
-
-
-
-## Setup
-
-# @doc "A generic welcome message for all Players."
-# "players/hello" |> Castle.beam! Program.cmd fn -> "(x-x-) #hello" end
-#
-# @doc "List all Castle.Nubspace.signals."
-# "signals/list"  |> Castle.beam! Program.cmd fn -> Castle.signals end
+"system/signals/list" |> 
+  Signal.m(Program.cmd fn s -> 
+    Castle.signals 
+  end) |> Castle.beam!
 
 
 

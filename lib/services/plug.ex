@@ -25,7 +25,7 @@ defmodule Castle.Game.Plug do
     send_resp conn, 200, Bot.take(["header.html", "footer.html"])
   end
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
-    IO.inspect "(x-x-) Castle.Game.Plug: #{inspect signal_path}"
+    IO.inspect ".x.x. Castle.Game.Plug: #{inspect signal_path}"
     
     hello conn, signal_path
   end

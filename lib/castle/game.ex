@@ -22,16 +22,13 @@ defmodule Castle.Game do
   
   @doc "Run `signal` through the Castle.Game."
   def run!(signal, items \\ Castle.signal.items) do
+    IO.inspect ".x.x.Castle.Game.run!/signal: #{inspect signal}"
+    
     # oh yeah, we're going to hit them all unless you say so...
-    Signal.boost!(signal, items |> Enum.map fn item -> Program.exe signal, item end) 
+    signal = Castle.CPU.execute!(signal, items)
+    |> next?
   end
-  
-  ## +++
-  ## END
-  
-  
-  ## Signals/Pipes/Networks aka Distribution.
-  
+
   @doc "Publish a `Signal` to the Game rules."
   def host!(signal) do
     #todo: validate signal
@@ -57,7 +54,14 @@ defmodule Castle.Game do
     |> pipe!
     |> galaxy!
     |> archive!
+    
+    signal
   end
+  
+  ## +++
+  ## END
+    
+  ## Signals/Pipes/Networks aka Distribution.
   
   #todo: register/forward observers
     

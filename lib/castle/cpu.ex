@@ -5,12 +5,13 @@ defmodule Castle.CPU do
   
   @moduledoc """
   
-  Castle,
-  Game,
-  CPU = [
-    Signals/Castle.Nubspace [
-      Programs/Items/Bots
-    ],
+  Castle [
+    Game,
+    CPU = [
+      Signals/Castle.Nubspace [
+        Programs/Items/Bots
+      ],
+    ]
   ]
   
   Program = [
@@ -27,7 +28,6 @@ defmodule Castle.CPU do
   |> Program.main
   |> Program.after
   
-  
   ## Callbacks  #
   #
   # defmodule Program do
@@ -39,7 +39,7 @@ defmodule Castle.CPU do
   #             unique: nil
   
   """
-  #"castle/cpu/signals" |> Castle.beam! Program.cmd fn -> "(x-x-) #hello" end
+  #"castle/cpu/signals" |> Castle.beam! Program.cmd fn -> ".x.x. #hello" end
 
   ## System
   
@@ -50,24 +50,52 @@ defmodule Castle.CPU do
 
 
   @doc "Boost a `Signal` with Castle.Nubspace items!"
-  def execute!(signal) do
+  def execute!(signal, items \\ []) do
     # promote the signal to a GenServer
     {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
     
     # process the signal/program
-    signal = GenServer.call(cpu, {:execute, signal})
+    signal = GenServer.call(cpu, {:execute, signal, items})
+        
+    signal
   end
   
-  def handle_call({:execute, signal}, from, state) do    
-    IO.inspect "(x-x-):execute {signal: #{inspect signal}}"
-
-    {:reply, Program.exe(signal), state}
+  def handle_call({:execute, signal, items}, from, state) do
+    IO.inspect ".x.x.<execute {signal.path: #{signal.path} signal.let: #{inspect signal.let} signal.items: #{inspect signal.items}}"
+    
+    #todo: add dynamic :boost signal/server
+    #todo: return a ownership token
+    #todo: check for kill9 on signal
+        
+    {:reply, exe_loop(signal, items), state}
   end
-  
   
   ## Private
-
-
+  # defp exe_loop(signal, items, duration) do
+  #   IO.inspect ".x.x.<exe_loop/3"
+  #
+  #   receive do
+  #     {:boost, content} ->
+  #       IO.inspect ".x.x.:boost: #{inspect content}"
+  #
+  #     {message, content} ->
+  #       IO.inspect ".x.x.:message.unknown: #{inspect {message, content}}"
+  #
+  #   after duration -> true
+  #   end
+  #
+  #   exe_loop(signal, items)
+  # end
+  defp exe_loop(signal, [item|items]) do
+    IO.inspect ".x.x.<exe_loop/[item|items]"
+        
+    exe_loop(Program.exe(signal, item), items)
+  end
+  defp exe_loop(signal, done) when nil?(done) or length(done) == 0 do
+    IO.inspect ".x.x.<exe_loop/signal.items: #{inspect signal.items}"
+    
+    signal.items
+  end
   
   ## GenServer
   

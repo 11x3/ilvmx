@@ -33,7 +33,7 @@ defmodule ILM do
     
     Application.put_env :ilvmx, :signal, Signal.m(Castle.name, %{})
 
-    IO.inspect "(x-x-) #ilvmx."
+    IO.inspect ".x.x. #ilvmx."
   end
 
   # GenSupervisor

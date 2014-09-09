@@ -12,44 +12,40 @@ defmodule Program do
   """
   
   ## API
-  @doc "Exe raw Cakedown text."   
-  def raw(text) do
-    program = %Program{
-      unique: Castle.uuid,
-        code: text
-    }
-    
-    #todo: convert source into code
-    
-    program
-  end
   
   @doc "Execute a `function`"
-  def exe(program) when is_function(program) do
+  def cmd(program) when is_function(program) do
+    #todo: quote the function for transport
     program = %Program{
       unique: Castle.uuid,
         code: program
     }
-    
-    #todo: quote the function
-
     program
   end
   
-  def exe(signal, item = %Program{}) do
+  def exe(signal = %Signal{}, item = %Signal{let: %Program{}}) do
+    IO.inspect ".x.x..Program.exe/signal: #{inspect signal}"
+    IO.inspect ".x.x..Program.exe/signal/item: #{inspect item}"
+    
+    #todo: pass signal into program
+    Signal.boost!(signal, item.let.code.(signal))
+  end
+  def exe(signal = %Signal{}, _signal = %Signal{let: item = %Item{}}) do
+    IO.inspect ".x.x..Program.exe/signal/item: #{inspect item}"
+    
+    #todo: pass signal into program
+    Signal.boost!(signal, item)
+  end
+  def exe(signal = %Signal{}, item) do
+    IO.inspect ".x.x..Program.exe/item: #{inspect item}"
+    
+    #todo: pass signal into program
+    Signal.boost!(signal, item)
+  end
+  def exe(signal, []) do
+    IO.inspect ".x.x..Program.exe/[]"
     
     signal
-  end
-  def exe(signal, item) do
-    #todo: exe each item for results
-    
-    signal
-  end
-  
-  @doc ""
-  def exe(program = %Signal{}, duration, auto) do
-    
-    program
   end
     
 end

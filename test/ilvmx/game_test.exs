@@ -20,10 +20,9 @@ defmodule GameTest do
   #   do: assert %Signal{} == Castle.Game.host!("lol", Program.cmd(fn -> IO.inspect "lol" end))
 
 
-  test "Game.next?",
+  test "Game.next?", 
     do: assert %Signal{} = Game.next? Signal.m
-  
-  
+    
   test "Game.ping!",
     do: assert %Signal{} = Game.ping! Signal.m
   

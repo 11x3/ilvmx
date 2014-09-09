@@ -1,5 +1,5 @@
 defmodule CastleTest do
-  use   ExUnit.Case, async: true
+  use ExUnit.Case, async: true
 
   ## API
   
@@ -33,6 +33,15 @@ defmodule CastleTest do
     assert [signal] = Castle.signal.items
     assert %{"lol" => [%Signal{let: "nub"}]} = Castle.map
   end
+
+  test "Castle.boost? to boost a `Signal` with Castle.Nubspace items." do
+    ILM.reset!
+    
+    assert lol = %Signal{} = Castle.beam! Signal.m("lol", "nub")
+    assert sup = %Signal{} = Castle.beam! Signal.m("sup", "nub")
+    
+    assert [lol] = Castle.boost? Signal.m "lol"
+  end
   
   test "Castle.download to capture `Castle.Nubspace` items",
     do: assert is_list Castle.download 
@@ -40,12 +49,15 @@ defmodule CastleTest do
   test "Castle.next? to update `Castle` to return to the Castle.",
     do: assert {:ok, _next} = Castle.next?
 
+  test "Castle.x to capture signals from Castle.Nubspace." do
+    ILM.reset!
+    
+    Castle.beam! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
+    
+    # the Program/fn above is executed... great success.
+    assert ["nub err roo"] == Castle.x "lol"
+  end
 
-  # test "capture all Castle.Nubspace signals with Castle.signals",
-  #   do: assert %Signal{} = Castle.x(Signal.m "lolnub")
-  #
-  # ## Signals
-  #
   # test "install a binary string" do
   #   signal = %Signal{item: %Item{}} = Castle.sig "ilvmx", "todo"
   #

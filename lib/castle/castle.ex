@@ -18,6 +18,9 @@ defmodule Castle do
   """
   
   ## System
+  def x(binary) do
+    Castle.boost? Signal.m binary
+  end
   
   @doc "Return the `Castle.signal` of yore."
   def signal do
@@ -29,6 +32,7 @@ defmodule Castle do
     Castle.Game.map
   end
 
+
   ## API
 
   @doc "Ping a `signal_path` of the Castle.Nubspace and return *all* `Castle.signals`."
@@ -38,12 +42,12 @@ defmodule Castle do
     signal |> Castle.Game.host!
   end
   
-  # @doc "Boost `signal` with appropriate Castle.Nubspace items."
-  # def boost?(signal = %Signal{}) do
-  #   IO.inspect "Castle.boost?: #{signal.path}"
-  #
-  #   signal |> Castle.Game.run!
-  # end
+  @doc "Boost `signal` with appropriate Castle.Nubspace items."
+  def boost?(signal = %Signal{}) do
+    IO.inspect "Castle.boost?: #{signal.path}"
+
+    Castle.Game.run! signal, Castle.map[signal.path]
+  end
   
   @doc "Return updated items and noops our worker."
   def next?(items \\ nil) do
@@ -60,6 +64,7 @@ defmodule Castle do
 
     signal.items
   end
+
   
   ## Public
   

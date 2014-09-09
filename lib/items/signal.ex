@@ -31,11 +31,8 @@ defmodule Signal do
   ## Instance
   
   @doc "Add `items` to `signal`."
-  def boost!(signal, items) when is_list(items) do
-    %{signal| items: List.flatten([signal.items|items]) }
-  end
-  def boost!(signal, item) do
-    %{signal| items: List.flatten([signal.items|[item]]) }
+  def boost!(signal, items) do
+    %{signal| items: List.flatten([signal.items|[items]]) }
   end
 
 
