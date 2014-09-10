@@ -41,7 +41,7 @@ defmodule Castle.CPU do
   #             unique: nil
   
   """
-  #"castle/cpu/signals" |> Castle.beam! Program.cmd fn -> ".x.x. #hello" end
+  #"castle/cpu/signals" |> Castle.beam! Program.cmd fn -> "...\ #hello" end
 
   ## System
   
@@ -57,9 +57,7 @@ defmodule Castle.CPU do
     {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
     
     # process the signal/program
-    signal = GenServer.call(cpu, {:execute, signal, items})
-        
-    signal
+    GenServer.call(cpu, {:execute, signal, items})
   end
   
   def handle_call({:execute, signal, items}, from, state) do
@@ -74,14 +72,14 @@ defmodule Castle.CPU do
   
   ## Private
   # defp exe_loop(signal, items, duration) do
-  #   Logger.debug ".x.x.<exe_loop/3"
+  #   Logger.debug "...\<exe_loop/3"
   #
   #   receive do
   #     {:boost, content} ->
-  #       Logger.debug ".x.x.:boost: #{inspect content}"
+  #       Logger.debug "...\:boost: #{inspect content}"
   #
   #     {message, content} ->
-  #       Logger.debug ".x.x.:message.unknown: #{inspect {message, content}}"
+  #       Logger.debug "...\:message.unknown: #{inspect {message, content}}"
   #
   #   after duration -> true
   #   end
@@ -89,14 +87,14 @@ defmodule Castle.CPU do
   #   exe_loop(signal, items)
   # end
   defp exe_loop(signal, [item|items]) do
-    #Logger.debug ".x.x.<exe_loop/[item|items]"
+    #Logger.debug "...\<exe_loop/[item|items]"
         
     exe_loop(Program.exe(signal, item), items)
   end
   defp exe_loop(signal, done) when nil?(done) or length(done) == 0 do
-    #Logger.debug ".x.x.<exe_loop/signal.items: #{inspect signal.items}"
+    #Logger.debug "...\<exe_loop/signal.items: #{inspect signal.items}"
     
-    signal.items
+    signal
   end
   
   ## GenServer

@@ -2,9 +2,7 @@ defmodule SignalTest do
   use ExUnit.Case, async: true
   
   test "m" do
-    assert %Signal{} = Signal.m(self)
-    assert %Signal{} = Signal.m(self, [])
-    assert %Signal{} = Signal.m(self, "system/console")
+    assert %Signal{set: "lol"} = Signal.m "lol"
   end
 
   ## Add to a signal

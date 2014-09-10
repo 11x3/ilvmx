@@ -13,29 +13,10 @@ defmodule GameTest do
 #
 #   @doc "#todo: Send a command to the arcade."
 #   def on?(signal, command \\ nil, item \\ nil) do
-#     Player.items Player.start, Castle.ping!(Signal.m(command, item))
+#     Player.items Player.start, Castle.ping!(Castle.exe(command, item))
 #   end
 #
   # test "Game.on?",
   #   do: assert %Signal{} == Castle.Game.host!("lol", Program.cmd(fn -> Logger.debug "lol" end))
-
-
-  test "Game.next?", 
-    do: assert %Signal{} = Game.next? Signal.m
-    
-  test "Game.ping!",
-    do: assert %Signal{} = Game.ping! Signal.m
-  
-  
-  test "Game.pipe!",
-    do: assert %Signal{} = Game.pipe! Signal.m
-  
-  
-  test "Game.archive!",
-    do: assert %Signal{} = Game.archive! Signal.m
-
-  
-  test "Game.galaxy!",
-    do: assert %Signal{} = Game.galaxy! Signal.m
 
 end

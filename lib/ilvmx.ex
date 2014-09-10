@@ -33,9 +33,9 @@ defmodule ILvMx do
     
     Castle.CPU.reset!
     
-    Application.put_env :ilvmx, :signal, Signal.m(Castle.name, %{})
+    Application.put_env(:ilvmx, :signal, Castle.CPU.execute! Signal.m(Castle.name, %{}))
 
-    Logger.debug ".x.x. #ilvmx."
+    Logger.debug "...\ #ilvmx."
   end
 
   # GenSupervisor

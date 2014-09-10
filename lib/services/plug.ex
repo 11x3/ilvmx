@@ -49,12 +49,12 @@ defmodule Castle.Plug do
     obj_path = Path.join(["priv", "static"|nubspace])
     
     if File.exists?(obj_path) do
-      #Task.async fn -> Castle.x Path.join(nubspace) end
+      #Task.async fn -> Castle.exe Path.join(nubspace) end
       
       # todo: add send_file here
       send_resp conn, 200, File.read!(obj_path)
     else
-      hello_result(conn, Castle.x(Path.join(nubspace)))
+      hello_result(conn, Castle.exe(Path.join(nubspace)))
     end
   end
   defp hello_result(conn, items) do    

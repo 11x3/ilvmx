@@ -24,9 +24,14 @@ defmodule Castle do
   
   ## System
   
-  @doc "Boost `signal_path` with Castle.Nubspace items."
-  def x(signal_path) when is_binary(signal_path) do
-    Castle.boost? Signal.m signal_path
+  @doc "Boost `signal_path` and return a `Signal` with Castle.Nubspace `items`."
+  def exe(signal_path, item \\ nil) when is_binary(signal_path) do
+    Castle.boost? Signal.m signal_path, item
+  end
+  
+  @doc "Boost `signal_path` and magically return an item or list of `items`."
+  def exe!(signal_path, item \\ nil) when is_binary(signal_path) do
+    Castle.boost?(Signal.m signal_path, item).items
   end
   
   @doc "Return the `Castle.signal` of yore."
@@ -53,25 +58,43 @@ defmodule Castle do
   Boost `signal` with appropriate Castle.Nubspace items. `boost?` creates Castle GenServers 
   which basically means every boost?'ed signal becomes a full Castle peer by design.
   """
+  def boost!(signal = %Signal{}) do
+    Logger.debug "Castle.boost!: #{inspect signal.set}"
+    
+    boost?(signal).items
+  end
   def boost?(signal = %Signal{}) do
     Logger.debug "Castle.boost?: #{inspect signal.set}"
     
     # promote the signal to a GenServer
+    # todo: search for existing GenServers at signal/path 
     {:ok, castle} = GenServer.start_link(Castle, signal, debug: [])
     
     # process the signal/program
-    signal = GenServer.call(castle, {:boost, signal, Castle.map[signal.set]})
-        
-    signal
+    GenServer.call(castle, {:boost, signal, Castle.map[signal.set]})
+  end
+  
+  def handle_call({:boost, signal, items}, from, state) do    
+    {:reply, 
+      Castle.Game.run!(signal, items)
+      |> Castle.Wizard.filter?
+      |> ping!
+      |> pipe!
+      |> galaxy!
+      |> archive!
+      |> next?, 
+    state}
   end
   
   @doc "Return updated items and noops our worker."
-  def next?(items \\ nil) do
-    unless nil?(items) or not is_list(items) do 
-      Application.put_env :ilvmx, :signal, Signal.boost!(signal, items)
-    end
+  def next?(signal \\ nil) do
+    # unless nil?(items) or not is_list(items) do
+    #   Application.put_env :ilvmx, :signal, Signal.boost!(signal, items)
+    # end
     
-    {:ok, karma: "#todo", next: "#todo"}
+    #{:ok, karma: "#todo", next: "#todo"}
+    
+    signal
   end
   
   @doc "Return the `Castle.signal.items` – all of them. #todo: add streams"
@@ -81,6 +104,37 @@ defmodule Castle do
     signal.items
   end
 
+  ## Signals/Pipes/Networks aka Distribution.
+  
+  #todo: register/forward observers
+    
+  @doc "#todo: forward sequentially to all ping! observers."
+  def ping!(signal) do
+    #todo: post "castle/signals/commit/#{signal.unique}"
+    
+    signal
+  end
+
+  @doc "#todo: Send `signal` to external configured pipelines."
+  def pipe!(signal) do
+    
+    signal
+  end
+
+  @doc "#todo: Share signals with the galaxy."
+  def galaxy!(signal) do
+
+    signal
+  end
+  
+  @doc "Save `signal` to disk as configured."
+  def archive!(signal) do
+    # todo: add/update commit times of signal
+    Logger.debug "...\\#{ inspect signal.unique }/..............................................................."
+    
+    signal
+  end
+  
   
   ## Public
   
@@ -115,11 +169,7 @@ defmodule Castle do
   
   ## Private
   
-  def handle_call({:boost, signal, items}, from, state) do
-    Logger.debug ".x.x.<execute {signal.set: #{inspect signal.set} signal.item: #{inspect signal.item} signal.items: #{inspect signal.items}}"
-    
-    {:reply, Castle.Game.run!(signal, items), state}
-  end
+
   
   ## GenServer
   
@@ -137,10 +187,10 @@ defmodule Castle do
     {:noreply, nil}
   end
 
-  def start_link(default \\ nil) do
-    link = {:ok, castle} = GenServer.start_link(Castle, default)
+  def start_link(signal \\ nil) do
+    link = {:ok, castle} = GenServer.start_link(Castle, signal)
     
-    Logger.debug "Castle: #{ inspect castle }"
+    Logger.debug "Castle: #{ inspect castle } default: #{inspect signal}"
 
     link
   end

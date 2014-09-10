@@ -3,13 +3,22 @@ defmodule CastleTest do
 
   ## API
   
-  test "Castle.x to boost signals with Castle.Nubspace items (aka magic)." do
+  test "Castle.exe to boost signals with Castle.Nubspace items (aka magic)." do
     ILvMx.reset!
 
-    Castle.beam! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
+    Castle.beam! Castle.exe("lol", Program.cmd(fn s -> "nub err roo" end))
 
     # the Program/fn above is executed... great success.
-    assert ["nub err roo"] == Castle.x "lol"
+    assert %Signal{items: ["nub err roo"]} = Castle.exe "lol"
+  end
+  
+  test "Castle.exe! to return signal items. (aka different magic)." do
+    ILvMx.reset!
+
+    Castle.beam! Castle.exe("lol", Program.cmd(fn s -> "nub err roo" end))
+
+    # the Program/fn above is executed... great success.
+    assert ["nub err roo"] == Castle.exe! "lol"
   end
   
   test "Castle.signal", 
@@ -25,14 +34,14 @@ defmodule CastleTest do
   test "Castle.beam! to broadcast a `Signal`" do
     ILvMx.reset!
     
-    assert signal = %Signal{} = Castle.beam! Signal.m("lol", "nub")
+    assert signal = %Signal{} = Castle.beam! Castle.exe("lol", "nub")
   
     assert [signal] = Castle.signal.items
     assert %{"lol" => [%Signal{item: "nub"}]} = Castle.map
   end
 
   test "Castle.beam! to install a binary string" do
-    signal = %Signal{} = Castle.beam! Signal.m "ilvmx", Bot.new("todo")
+    signal = %Signal{} = Castle.beam! Castle.exe "ilvmx", Bot.new("todo")
     
     assert Regex.match? ~r/obj/, Item.path(signal.item)
     assert true == File.exists? "priv/static/#{ Item.path(signal.item) }"
@@ -40,7 +49,7 @@ defmodule CastleTest do
   end
   
   test "Castle.beam! to install static content with Bot.take" do
-    signal = %Signal{} = Castle.beam! Signal.m("splash", Bot.new(Bot.take(["header.html", "footer.html"])))
+    signal = %Signal{} = Castle.beam! Castle.exe("splash", Bot.new(Bot.take(["header.html", "footer.html"])))
 
     assert Regex.match? ~r/obj/,      Item.path(signal.item)
     assert File.exists? "priv/static/#{ Item.path(signal.item) }"
@@ -52,19 +61,33 @@ defmodule CastleTest do
   test "Castle.boost? to boost a `Signal` with Castle.Nubspace items." do
     ILvMx.reset!
     
-    assert lol = %Signal{} = Castle.beam! Signal.m("lol", "nub")
-    assert sup = %Signal{} = Castle.beam! Signal.m("sup", "nub")
+    assert lol = %Signal{} = Castle.beam! Castle.exe("lol", "nub")
+    assert sup = %Signal{} = Castle.beam! Castle.exe("sup", "nub")
     
-    assert [lol] = Castle.boost? Signal.m "lol"
+    assert [lol] = Castle.boost! Signal.m "lol"
   end
   
-  test "Castle.next? to update `Castle` to return to the Castle.",
-    do: assert {:ok, _next} = Castle.next?
-
   test "Castle.download to capture `Castle.Nubspace` items",
     do: assert is_list Castle.download 
 
-  
+  test "Game.next?", 
+    do: assert %Signal{} = Castle.next? Signal.m
+
+  test "Game.ping!",
+    do: assert %Signal{} = Castle.ping! Signal.m
+
+
+  test "Game.pipe!",
+    do: assert %Signal{} = Castle.pipe! Signal.m
+
+
+  test "Game.archive!",
+    do: assert %Signal{} = Castle.archive! Signal.m
+
+
+  test "Game.galaxy!",
+    do: assert %Signal{} = Castle.galaxy! Signal.m
+
   test "Castle.galaxy for the current network exchange", 
     do: assert "ilvmx" == Castle.galaxy
   
@@ -86,7 +109,7 @@ defmodule CastleTest do
   end
     
   test "invalids" do
-    assert [] == Castle.x "something random #{ Castle.uuid }"
+    assert [] == Castle.exe! "something random #{ Castle.uuid }"
     
     # assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
     # assert "[]" == HTTPotion.get(IT.web "../something").body

@@ -41,21 +41,14 @@ defmodule Castle.Game do
   
   @doc "Run `signal` through the Castle.Game."
   def run!(signal, items \\ Castle.signal.items) do
-    Logger.debug ".x.x.Castle.Game.run!/signal: #{inspect signal}"
+    Logger.debug "Castle.Game.run!/signal: #{inspect signal}"
     
     # oh yeah, we're going to hit them all unless you say so...
-    signal = Castle.CPU.execute!(signal, items) 
-    |> next?
+    Castle.CPU.execute!(signal, items)
   end
   
   @doc "Move `signal` to primitives."
   def next?(signal) do
-    signal
-    |> Castle.Wizard.filter?
-    |> ping!
-    |> pipe!
-    |> galaxy!
-    |> archive!
     
     signal
   end
@@ -63,37 +56,6 @@ defmodule Castle.Game do
   ## +++
   ## END
     
-  ## Signals/Pipes/Networks aka Distribution.
-  
-  #todo: register/forward observers
-    
-  @doc "#todo: forward sequentially to all ping! observers."
-  def ping!(signal) do
-    #todo: post "castle/signals/commit/#{signal.unique}"
-    
-    signal
-  end
-
-  @doc "#todo: Send `signal` to external configured pipelines."
-  def pipe!(signal) do
-    
-    signal
-  end
-
-  @doc "Save `signal` to disk as configured."
-  def archive!(signal) do
-    # todo: add/update commit times of signal
-    
-    signal
-  end
-
-  @doc "#todo: Share signals with the galaxy."
-  def galaxy!(signal) do
-
-    signal
-  end
-
-
   ## GenServer Callbacks
 
   def start_link do
