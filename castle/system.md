@@ -14,16 +14,6 @@ Signal.m("page/footer", Bot.take "footer.html") |> Castle.install!
     Hi from the server.
     """
   end) |> Castle.install!
-  
-"hi" |> Signal.m(Program.cmd fn s -> 
-    Item.m Markdown.to_html """
-    HAHAHAHAAHA!!! #{inspect s.unique}
-    
-    #welcome
-    
-    Hi from the server.
-    """
-  end) |> Castle.install!
 
 "signals" |> Signal.m(Program.cmd fn s -> 
     Item.m Castle.signal.items

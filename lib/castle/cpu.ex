@@ -43,7 +43,7 @@ defmodule Castle.CPU do
   defp exe_loop(signal, [item|items]) do
     exe_loop(Program.exe(signal, item), items)
   end
-  defp exe_loop(signal, done) when nil?(done) or length(done) == 0 do    
+  defp exe_loop(signal, done) when nil?(done) or length(done) == 0 do
     signal
   end
   

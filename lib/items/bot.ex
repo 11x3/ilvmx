@@ -92,9 +92,9 @@ defmodule Bot do
   
   ## Callbacks
   
-  def handle_call({:echo, signal}, from, state) do
-    {:reply, signal, state}
-  end
+  # def handle_call({:echo, signal}, from, state) do
+  #   {:reply, signal, state}
+  # end
   
   
   ## GenServer
