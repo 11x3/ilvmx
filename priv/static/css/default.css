@@ -10,7 +10,13 @@ body {
   background: transparent;
 }
 html {
-  background: #0d0d0d;
+  background: url(../img/lolnub-background.png) left top no-repeat fixed #080808;
+}
+
+#page {
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;  
 }
 
 h1 {
@@ -45,9 +51,9 @@ h1,
 h2,
 h3,
 h4 {
+  color: rgba(255, 255, 255, 0.29);
   padding-left: 40px;
   font-family: "Arial Black", "Helvetica Neue", Helvetica, Geneva, sans-serif;
-  color: #ececec;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -5px;
@@ -55,7 +61,6 @@ h4 {
 
 code,
 form {
-  background-color: #1b1b1b;
   padding: 40px;
   display: block;
   margin-bottom: 40px;
@@ -71,11 +76,16 @@ form {
   border: 1px solid #1b1b1b;
 }
 
+body a {
+  color: rgba(26, 169, 254, 0.45);
+}
+
 #content .title {
   color: #004c77;
 }
 
-footer {
+header {
   padding: 40px;
   display: block;
+  color: rgba(44, 44, 44, 0.43);
 }
