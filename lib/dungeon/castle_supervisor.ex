@@ -9,7 +9,7 @@ defmodule Castle.Supervisor do
     children = [
       # Define workers and child supervisors to be supervised
       worker(Castle,                    []),
-      worker(Castle.CPU.Supervisor,     []),
+      worker(Castle.Machine.Supervisor,     []),
       worker(Castle.Game.Supervisor,    []),
       worker(Castle.Wizard.Supervisor,  [])
     ]

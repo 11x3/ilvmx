@@ -1,6 +1,6 @@
 require Logger
 
-defmodule Castle.CPU do
+defmodule Castle.Machine do
   use GenServer
     
   @moduledoc """
@@ -12,20 +12,21 @@ defmodule Castle.CPU do
   #Program.main
   #Program.after
   
+  
   @doc "Reset the Castle.Nubspace map."
   def reset! do
     #todo: self kill
   end
 
 
-  @doc "Execute `signal` with `items` for `duration` on the Castle.CPU."
+  @doc "Execute `signal` with `items` for `duration` on the Castle.Machine."
   def handle_call({:execute, signal, items, duration}, from, state) do
-    # Logger.debug "Castle.CPU:execute
+    # Logger.debug "Castle.Machine:execute
     #          cpu: #{inspect self}
     #          set: #{inspect signal.set}
     #         item: #{inspect signal.item}
     #        items: #{inspect signal.items}
-    #     "
+    # "
     
     #todo: add dynamic :boost signal/server
     #todo: return an ownership token
@@ -54,9 +55,9 @@ defmodule Castle.CPU do
   def handle_info(_args, _state), do: {:noreply, nil}
   
   def start_link(default \\ nil) do
-    link = {:ok, server} = GenServer.start_link(Castle.CPU, default)
+    link = {:ok, server} = GenServer.start_link(Castle.Machine, default)
     
-    Logger.debug "Castle.name: #{Castle.name} Castle.CPU: #{ inspect server }, castle_path: #{@castle_path}"
+    Logger.debug "Castle.name: #{Castle.name} Castle.Machine: #{ inspect server }, castle_path: #{@castle_path}"
     
     # setup system apps
     File.ls!(@castle_path) |> Enum.each fn file_path -> 

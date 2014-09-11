@@ -1,4 +1,4 @@
-defmodule CPUTest do
+defmodule MachineTest do
   use   ExUnit.Case, async: true
   
   #todo

@@ -31,7 +31,7 @@ defmodule ILvMx do
       file |> File.mkdir_p!
     end
     
-    Castle.CPU.reset!
+    Castle.Machine.reset!
     
     Application.put_env(:ilvmx, :signal, Signal.m(Castle.name, %{}))
 

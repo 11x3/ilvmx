@@ -2,7 +2,6 @@ require Logger
 
 defmodule Castle.Game do
   use GenServer
-  use Jazz
 
   @moduledoc """
   # todo: add config support

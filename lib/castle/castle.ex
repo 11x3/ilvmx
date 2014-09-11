@@ -20,7 +20,7 @@ defmodule Castle do
     Game [
       Map/Wizard/Players
     ],
-    CPU [
+    Machine [
       Signals/Programs/Items/Bots
     ],
   ]
@@ -63,7 +63,7 @@ defmodule Castle do
     Application.put_env :ilvmx, :signal, %Signal{Castle.signal| item: signal_map, items: signal_items}
   
     # promote the signal to a GenServer
-    {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
+    {:ok, cpu} = GenServer.start_link(Castle.Machine, nil, debug: [])
     
     # process the signal/program
     signal = GenServer.call(cpu, {:execute, signal, items, duration})
@@ -76,7 +76,7 @@ defmodule Castle do
     Logger.debug "Castle.execute: #{inspect signal.set}"
     
     # promote the signal to a GenServer
-    {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
+    {:ok, cpu} = GenServer.start_link(Castle.Machine, nil, debug: [])
     
     # process the signal/program
     signal = GenServer.call(cpu, {:execute, signal, items, duration})
@@ -93,13 +93,13 @@ defmodule Castle do
   @doc "Ping `signal` through `items`."
   def ping!(signal = %Signal{}, items \\ [], duration \\ 0) do
     #Logger.debug "Castle.ping! #{inspect signal}"
-    
-    {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
-    
+
+    {:ok, cpu} = GenServer.start_link(Castle.Machine, nil, debug: [])
+        
     # oh yeah, we're going to hit them all unless you say so...
-    signal = GenServer.call(cpu, {:execute, signal, Castle.map[signal.set], duration})
-    |> next?
-    |> Castle.Wizard.filter?
+    GenServer.cast(cpu, {:execute, signal, Castle.map[signal.set], duration})
+    
+    %{signal| source: cpu}
   end
   
   @doc "Return an updated `signal` to the Castle."

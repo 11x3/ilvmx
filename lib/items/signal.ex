@@ -2,8 +2,8 @@ defmodule Signal do
   defstruct      set: nil,  # "about/ilvmx"
                 item: nil,  # request/item/upload/etc
                items: [],   # [item] 
-              source: nil,  # sender (pid, email, nick, etc)  
               unique: nil,  # uuid
+              source: nil,  # sender (pid, email, nick, etc)  
                owner: nil   # Player
    
   @moduledoc """
