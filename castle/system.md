@@ -1,13 +1,37 @@
+## install some html stubs
+Signal.m("page/header", Bot.take "header.html") |> Castle.install!
+Signal.m("page/footer", Bot.take "footer.html") |> Castle.install!
+
+
+## basic commands
+
 "hi" |> Signal.m(Program.cmd fn s -> 
-    Bot.new Markdown.to_html """
+    Item.m Markdown.to_html """
+    HAHAHAHAAHA!!! #{inspect s.unique}
+  
+    #welcome
+  
+    Hi from the server.
+    """
+  end) |> Castle.install!
+  
+"hi" |> Signal.m(Program.cmd fn s -> 
+    Item.m Markdown.to_html """
     HAHAHAHAAHA!!! #{inspect s.unique}
     
     #welcome
     
     Hi from the server.
     """
-  end) |> Castle.beam!
+  end) |> Castle.install!
 
 "signals" |> Signal.m(Program.cmd fn s -> 
-    Bot.new Castle.signal.items
-  end) |> Castle.beam!
+    Item.m Castle.signal.items
+  end) |> Castle.install!
+
+
+## pages
+  
+"about" |> Signal.m(Program.cmd fn s -> 
+    Item.m [Bot.pull("page/header"), Castle.signal.items, Bot.pull("page/footer")]
+  end) |> Castle.install!

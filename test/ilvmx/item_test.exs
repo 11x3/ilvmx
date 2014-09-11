@@ -6,7 +6,10 @@ defmodule ItemTest do
   
   test "m to make an item with content", 
     do: assert %Item{content: "lol"} = Item.m "lol"
-  
+
+  test "Item.m creates static items",
+    do: assert File.exists? "priv/static/#{ Item.m("chat") |> Item.path }"
+
   test "path to get the path of item", 
     do: assert Regex.match? ~r/obj/, Item.path(Item.m)  
   

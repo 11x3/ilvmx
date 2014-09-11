@@ -10,15 +10,19 @@ defmodule BotTest do
     do: assert Regex.match?(~r/html/, Bot.take(["header.html", "footer.html"]))
   
   
-  ## Item
-
-  test "Bot.new to create static items",
-    do: assert File.exists? "priv/static/#{ Bot.new("chat") |> Item.path }"
-
   ## World
 
   test "Bot.web to grab web pages", 
     do: IT.assert_web_page Bot.web(IT.web "/")
 
+
+  ## Nubspace
+      
+  test "Bot.pull to grab web pages" do
+    ILvMx.reset!
+    Castle.install! Signal.m "lol", "nub"
+    
+    assert [] == Bot.pull "lol"
+  end
 
 end

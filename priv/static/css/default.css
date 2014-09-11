@@ -18,10 +18,6 @@ h1 {
   height: 80px;
   overflow: hidden;
 }
-.row,
-#page {
-  padding: 0;
-}
 
 #nubspace {
   font-size: 28px;
@@ -45,13 +41,20 @@ ul li {
   display: inline-block;
 }
 
-h1 {
-  padding-left: 40px;  
+h1,
+h2,
+h3,
+h4 {
+  padding-left: 40px;
+  font-family: "Arial Black", "Helvetica Neue", Helvetica, Geneva, sans-serif;
+  color: #ececec;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -5px;
 }
 
 code,
-form, 
-footer {
+form {
   background-color: #1b1b1b;
   padding: 40px;
   display: block;
@@ -70,4 +73,9 @@ footer {
 
 #content .title {
   color: #004c77;
+}
+
+footer {
+  padding: 40px;
+  display: block;
 }

@@ -1,3 +1,0 @@
-defmodule Cake do
-  
-end

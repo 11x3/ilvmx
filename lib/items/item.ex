@@ -9,10 +9,13 @@ defmodule Item do
   """
   def m(content \\ nil) do
     unique = Castle.uuid
-    %Item{
+    item = %Item{
       unique: unique,
      content: content
     }
+    Bot.make inspect(item), path(item)
+    
+    item
   end
   
   def path(item = %Item{}) do

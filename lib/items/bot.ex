@@ -27,6 +27,7 @@ defmodule Bot do
   as primitives.
   """
   
+  
   ## World API (readin the webs)
 
   @doc "Read a file from the internet."
@@ -39,15 +40,27 @@ defmodule Bot do
 
   
   ## Item/Nubspace API push/pull data+items (nubspace = cooking with love)
-  
-  @doc "Return a new `Item` set with `data` as the content"
-  def new(data) do
-    item = Item.m data
-    Bot.make inspect(item), Item.path(item)
-    
-    item
+
+  @doc "Return a list of `nubspace` items."
+  def pull(nubspace = []) do
+    pull "signals"
   end
-  
+  def pull(nubspace) when is_list(nubspace) do
+    pull Path.join(nubspace)
+  end
+  def pull(nubspace) when is_binary(nubspace) do
+    # check
+    meta_path  = Path.join(["priv/static/nub", nubspace, "meta"])
+
+    unless Castle.Wizard.valid_path?(nubspace) and File.exists?(meta_path) do
+      # todo: return an error
+      []
+    else
+      JSON.decode!(File.read!(meta_path))
+    end
+  end
+
+
   ## File API (file system level blobs)
 
   @doc "Place objects into The World, oh our dear World."
@@ -57,7 +70,7 @@ defmodule Bot do
     unless Castle.Wizard.valid_path?(prop_path) do
       nil
     else
-      File.write!(prop_path, data)
+      Task.async(fn -> File.write!(prop_path, data) end) |> Task.await
       
       data
     end
@@ -82,6 +95,7 @@ defmodule Bot do
   def handle_call({:echo, signal}, from, state) do
     {:reply, signal, state}
   end
+  
   
   ## GenServer
   

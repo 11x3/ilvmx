@@ -7,7 +7,7 @@ defmodule SignalTest do
 
   ## Add to a signal
   
-  test "boost! to add items to a `Signal`.",
-    do: assert %Signal{items: ["todo"]} = Signal.boost! Signal.m, "todo"
+  test "boost to add items to a `Signal`.",
+    do: assert %Signal{items: ["todo"]} = Signal.boost Signal.m, "todo"
 
 end

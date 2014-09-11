@@ -10,6 +10,10 @@ defmodule Castle do
   are top-level ILvMx nodes and the `Galaxy` is simply the ILvMx exchange.
 
   Castle [
+    Signal [
+       item: %{},   # ping/servers
+      items: [],    # exe/programs
+    ],
     Services [
       Plug
     ],
@@ -24,16 +28,6 @@ defmodule Castle do
   
   ## System
   
-  @doc "Boost `signal_path` and return a `Signal` with Castle.Nubspace `items`."
-  def exe(signal_path, item \\ nil) when is_binary(signal_path) do
-    Castle.boost? Signal.m signal_path, item
-  end
-  
-  @doc "Boost `signal_path` and magically return an item or list of `items`."
-  def exe!(signal_path, item \\ nil) when is_binary(signal_path) do
-    Castle.boost?(Signal.m signal_path, item).items
-  end
-  
   @doc "Return the `Castle.signal` of yore."
   def signal do
     Application.get_env :ilvmx, :signal
@@ -41,58 +35,104 @@ defmodule Castle do
   
   @doc "Our signal map."
   def map do
-    Castle.Game.map
-  end
-
-
-  ## API
-
-  @doc "Ping a `signal_path` of the Castle.Nubspace and return *all* `Castle.signals`."
-  def beam!(signal = %Signal{}) do
-    Logger.debug "Castle.beam!: #{signal.set}"
-    
-    signal |> Castle.Game.host!
+    Castle.signal.item
   end
   
-  @doc """
-  Boost `signal` with appropriate Castle.Nubspace items. `boost?` creates Castle GenServers 
-  which basically means every boost?'ed signal becomes a full Castle peer by design.
-  """
-  def boost!(signal = %Signal{}) do
-    Logger.debug "Castle.boost!: #{inspect signal.set}"
+  @doc "Testing shortcut to create and execute a signal from a binary."
+  def x(signal_path, thing \\ nil) when is_binary(signal_path) do
+    Logger.debug "Castle.x: #{signal_path} thing: #{inspect thing}"
     
-    boost?(signal).items
+    execute!(Signal.m(signal_path, thing), Castle.signal.items, 0)
   end
-  def boost?(signal = %Signal{}) do
-    Logger.debug "Castle.boost?: #{inspect signal.set}"
+  
+  
+  ## API (castle)
+  
+  @doc "Install a `signal` into Castle.Nubspace."
+  def install!(signal = %Signal{}, items \\ [], duration \\ 0) do
+    Logger.debug "Castle.install!: #{inspect signal.set}"
     
+    #todo: validate signal
+    
+    # add it to the castle if the signal stick around..
+
+    # todo: support regex in signal.set
+    signal_map    = Dict.update(Castle.map, signal.set, [signal], fn signals -> [signal|signals] end)
+    signal_items  = [signal|Castle.signal.items]
+    
+    Application.put_env :ilvmx, :signal, %Signal{Castle.signal| item: signal_map, items: signal_items}
+  
     # promote the signal to a GenServer
-    # todo: search for existing GenServers at signal/path 
-    {:ok, castle} = GenServer.start_link(Castle, signal, debug: [])
+    {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
     
     # process the signal/program
-    GenServer.call(castle, {:boost, signal, Castle.map[signal.set]})
+    signal = GenServer.call(cpu, {:execute, signal, items, duration})
+    |> Castle.Wizard.filter?
   end
   
-  def handle_call({:boost, signal, items}, from, state) do    
-    {:reply, 
-      Castle.Game.run!(signal, items)
-      |> Castle.Wizard.filter?
-      |> ping!
-      |> pipe!
-      |> galaxy!
-      |> archive!
-      |> next?, 
-    state}
+  @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
+  @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
+  def execute(signal, items \\ [], duration \\ 0) do
+    Logger.debug "Castle.execute: #{inspect signal.set}"
+    
+    # promote the signal to a GenServer
+    {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
+    
+    # process the signal/program
+    signal = GenServer.call(cpu, {:execute, signal, items, duration})
+    |> next?
+    |> Castle.Wizard.filter?
+    |> pipe!
+    |> galaxy!
+    |> archive!
+  end
+  def execute!(signal, items \\ [], duration \\ 0) do
+    execute(signal, items, duration).items
+  end
+
+  @doc "Ping `signal` through `items`."
+  def ping!(signal = %Signal{}, items \\ [], duration \\ 0) do
+    #Logger.debug "Castle.ping! #{inspect signal}"
+    
+    {:ok, cpu} = GenServer.start_link(Castle.CPU, nil, debug: [])
+    
+    # oh yeah, we're going to hit them all unless you say so...
+    signal = GenServer.call(cpu, {:execute, signal, Castle.map[signal.set], duration})
+    |> next?
+    |> Castle.Wizard.filter?
   end
   
-  @doc "Return updated items and noops our worker."
-  def next?(signal \\ nil) do
+  @doc "Return an updated `signal` to the Castle."
+  def next?(signal = %Signal{}) do
     # unless nil?(items) or not is_list(items) do
-    #   Application.put_env :ilvmx, :signal, Signal.boost!(signal, items)
+    #   Application.put_env :ilvmx, :signal, Signal.items?(signal, items)
     # end
     
     #{:ok, karma: "#todo", next: "#todo"}
+    
+    signal
+  end
+  
+  
+  ### API (guest)
+  
+  @doc "#todo: Send `signal` to external configured pipelines."
+  def pipe!(signal = %Signal{}) do
+    
+    signal
+  end
+
+  @doc "#todo: Share signals with the galaxy."
+  def galaxy!(signal = %Signal{}) do
+
+    signal
+  end
+  
+  @doc "Save `signal` to disk as configured."
+  def archive!(signal = %Signal{}) do
+    Logger.debug "...\\#{ inspect signal }/..............................................................."
+    
+    # todo: add/update commit times of signal
     
     signal
   end
@@ -102,37 +142,6 @@ defmodule Castle do
     Logger.debug "Castle.download"
 
     signal.items
-  end
-
-  ## Signals/Pipes/Networks aka Distribution.
-  
-  #todo: register/forward observers
-    
-  @doc "#todo: forward sequentially to all ping! observers."
-  def ping!(signal) do
-    #todo: post "castle/signals/commit/#{signal.unique}"
-    
-    signal
-  end
-
-  @doc "#todo: Send `signal` to external configured pipelines."
-  def pipe!(signal) do
-    
-    signal
-  end
-
-  @doc "#todo: Share signals with the galaxy."
-  def galaxy!(signal) do
-
-    signal
-  end
-  
-  @doc "Save `signal` to disk as configured."
-  def archive!(signal) do
-    # todo: add/update commit times of signal
-    Logger.debug "...\\#{ inspect signal.unique }/..............................................................."
-    
-    signal
   end
   
   
@@ -169,7 +178,15 @@ defmodule Castle do
   
   ## Private
   
-
+  defp epoch_loop do
+    # exe 10/sec
+    :timer.sleep(1000)
+    
+    ping!(Signal.m "ping/1000")
+    
+    epoch_loop
+  end
+  
   
   ## GenServer
   
@@ -190,6 +207,8 @@ defmodule Castle do
   def start_link(signal \\ nil) do
     link = {:ok, castle} = GenServer.start_link(Castle, signal)
     
+    Task.async &(epoch_loop/0)
+        
     Logger.debug "Castle: #{ inspect castle } default: #{inspect signal}"
 
     link

@@ -1,13 +1,15 @@
-# Internet Land of #virtual Magic and #excitement.
+# ILvMx / Internet Love #virtual Machine #exchange.
 
-ILvMx is a functionally minded cloud app server, or something close to an internet load virtual module exchange. Written with Elixir-lang and `Vagrant` so of course ILvMx is easily cloud or self-hostable. The working-level API currently supports native Elixir, and HTTP APIs, with Elm-lang and other support coming.
+ILvMx is a functionally minded cloud app server. 
+Written with Elixir-lang and `Vagrant`of course ILvMx is easily cloud or self-hostable. 
+The working-level API currently supports native Elixir, and HTTP APIs, with Elm-lang and other support coming.
 
 ## Features
 
-- [] Storage + Code - global hashtag-based namespace of code + storage.
-- [] Reactive - completely async event/signal, time, and frame-based execution.
-- [x] Fun(ctional) - fun and functional/reactive.
-- [x] Fast - low overhead `Bots` and default static object graphs.
+- [x] Fun + Functional - Fun *and* Functional Castle, Wizards, Bots, and Hugs.
+- [.] Reactive - completely async event/signal, time, and step-based execution.
+- [.] Code + Storage - global hashtag-based namespace of code + storage.
+- [x] Wicked Fast - low overhead `Bots` and default static object graphs.
 - [x] Open Source - server/apps/dsl are completely open source.
 
 ## Playing with the *best* Web 4 theme park and story attraction ever.

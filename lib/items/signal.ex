@@ -13,10 +13,10 @@ defmodule Signal do
   # Signal.set about: Bot.pull "html/about"
   
   @doc "Make a `Signal`."
-  def m(set \\ Castle.name, item \\ nil, source \\ nil) do
+  def m(set \\ Castle.name, thing \\ nil, source \\ nil) do
     %Signal{
            set: set,
-          item: item,
+          item: thing,
          items: [],
         source: source,
         unique: Castle.uuid,
@@ -27,7 +27,7 @@ defmodule Signal do
   ## Instance
   
   @doc "Add `items` to `signal`."
-  def boost!(signal, items) do
+  def boost(signal, items) do
     %{signal| items: List.flatten([signal.items|[items]]) }
   end
 
