@@ -9,20 +9,24 @@ defmodule Castle do
   ILvMx takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
   are top-level ILvMx nodes and the `Galaxy` is simply the ILvMx exchange.
 
-  Castle [
-    Signal [
-       item: %{},   # ping/servers
-      items: [],    # exe/programs
-    ],
+  
+  ILvMx [
     Services [
-      Plug
-    ],
-    Game [
-      Map/Wizard/Players
-    ],
-    Machine [
-      Signals/Programs/Items/Bots
-    ],
+        Plug,
+        Game
+      ],
+    Castle [
+      Signals [
+         item: %{},   # ping/servers
+        items: [],    # exe/programs
+      ],
+      Machine [
+        Signals/Programs/Items/Bots
+      ],
+      Game [
+        Map/Wizard/Players
+      ],
+    ]
   ]
   """
   
@@ -53,20 +57,19 @@ defmodule Castle do
     Logger.debug "Castle.install!: #{inspect signal.set}"
     
     #todo: validate signal
+    #todo: support regex in signal.set
     
-    # add it to the castle if the signal stick around..
-
-    # todo: support regex in signal.set
+    # promote the signal to a GenServer
+    {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
+    
+    signal        = %{signal| source: machine}
     signal_map    = Dict.update(Castle.map, signal.set, [signal], fn signals -> [signal|signals] end)
     signal_items  = [signal|Castle.signal.items]
     
     Application.put_env :ilvmx, :signal, %Signal{Castle.signal| item: signal_map, items: signal_items}
   
-    # promote the signal to a GenServer
-    {:ok, cpu} = GenServer.start_link(Castle.Machine, nil, debug: [])
-    
     # process the signal/program
-    signal = GenServer.call(cpu, {:execute, signal, items, duration})
+    signal = GenServer.call(machine, {:execute, signal, items, duration})
     |> Castle.Wizard.filter?
   end
   
@@ -76,10 +79,10 @@ defmodule Castle do
     Logger.debug "Castle.execute: #{inspect signal.set}"
     
     # promote the signal to a GenServer
-    {:ok, cpu} = GenServer.start_link(Castle.Machine, nil, debug: [])
+    {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
     
     # process the signal/program
-    signal = GenServer.call(cpu, {:execute, signal, items, duration})
+    signal = GenServer.call(machine, {:execute, signal, items, duration})
     |> next?
     |> Castle.Wizard.filter?
     |> pipe!
@@ -94,12 +97,11 @@ defmodule Castle do
   def ping!(signal = %Signal{}, items \\ [], duration \\ 0) do
     #Logger.debug "Castle.ping! #{inspect signal}"
 
-    {:ok, cpu} = GenServer.start_link(Castle.Machine, nil, debug: [])
-        
-    # oh yeah, we're going to hit them all unless you say so...
-    GenServer.cast(cpu, {:execute, signal, Castle.map[signal.set], duration})
+    # promote signal to a Machine or full-peer GenServer.
+    {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
+    signal = %{signal| source: machine}
     
-    %{signal| source: cpu}
+    GenServer.call(machine, {:ping, signal, Castle.map[signal.set], duration})
   end
   
   @doc "Return an updated `signal` to the Castle."

@@ -17,8 +17,32 @@ defmodule Castle.Machine do
   def reset! do
     #todo: self kill
   end
-
-
+  
+  @doc "A stub to :ping the Castle.Machine."
+  def handle_call({:ping, signal, items, duration}, from, state) do
+    # call the signal server to execute
+    GenServer.cast(signal.source, {:execute, signal, items, duration})
+    
+    {:reply, signal, state}
+  end
+  
+  @doc "Execute `signal` with `items` for `duration` on the Castle.Machine."
+  def handle_cast({:execute, signal, items, duration}, state) do
+    # Logger.debug "Castle.Machine:execute
+    #          cpu: #{inspect self}
+    #          set: #{inspect signal.set}
+    #         item: #{inspect signal.item}
+    #        items: #{inspect signal.items}
+    # "
+    
+    #todo: add dynamic :boost signal/server
+    #todo: return an ownership token
+    #todo: check for kill9 on signal
+    #todo: fix/append the custom items to our castle items
+    
+    {:noreply, exe_loop(signal, Castle.map[signal.set], duration)}
+  end
+  
   @doc "Execute `signal` with `items` for `duration` on the Castle.Machine."
   def handle_call({:execute, signal, items, duration}, from, state) do
     # Logger.debug "Castle.Machine:execute
