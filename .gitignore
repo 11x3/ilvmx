@@ -1,3 +1,4 @@
+priv/static/api/obj
 /_build
 /deps
 erl_crash.dump
