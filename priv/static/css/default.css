@@ -7,10 +7,9 @@ body {
   font-size: 150%;
   padding: 0px;
   margin: 0px;
-  background: transparent;
+  background: #0d0d0d;
 }
 html {
-  background: url(../img/lolnub-background.png) left top no-repeat fixed #080808;
 }
 
 #page {
@@ -61,7 +60,6 @@ h4 {
 
 code,
 form {
-  padding: 40px;
   display: block;
   margin-bottom: 40px;
 }
