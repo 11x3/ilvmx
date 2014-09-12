@@ -1,4 +1,5 @@
 defmodule Signal do
+  @derive [Enumerable]
   defstruct      set: nil,  # "about/ilvmx"
                 item: nil,  # request/item/upload/etc
                items: [],   # [item] 

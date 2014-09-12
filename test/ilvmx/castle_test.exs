@@ -58,6 +58,13 @@ defmodule CastleTest do
   
   test "Castle.execute to boost a `Signal` with Castle.Nubspace items." do
     ILvMx.reset!
+    assert lol = %Signal{} = Castle.install! Signal.m("lol", "nub")
+    
+    assert %Signal{set: "lol", items: [%Signal{item: "nub"}]} = Castle.execute Signal.m "lol"
+  end
+  
+  test "Castle.execute! to boost a `Signal` with Castle.Nubspace items." do
+    ILvMx.reset!
     
     assert lol = %Signal{} = Castle.install! Signal.m("lol", "nub")
     assert sup = %Signal{} = Castle.install! Signal.m("sup", "nub")
@@ -108,9 +115,9 @@ defmodule CastleTest do
   test "invalids" do
     assert [] == Castle.x "something random #{ Castle.uuid }"
     
-    # assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
-    # assert "[]" == HTTPotion.get(IT.web "../something").body
-    # assert "[]" == HTTPotion.get(IT.web "../something:else").body
+    assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
+    assert "[]" == HTTPotion.get(IT.web "../something").body
+    assert "[]" == HTTPotion.get(IT.web "../something:else").body
   end
   
   test "splash" do
