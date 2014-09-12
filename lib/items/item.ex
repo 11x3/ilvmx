@@ -17,7 +17,20 @@ defmodule Item do
     
     item
   end
-  
+
+  # @doc "Return existing `Item`s at `obj_path` which is looks like 'obj/UUID' etc."
+  # def get(obj_paths) when is_list(obj_paths) do
+  #   obj_paths |> Enum.map fn path ->
+  #     get(path)
+  #   end
+  # end
+  # def get(obj_path) do
+  #   # read and eval the item data into an Item
+  #   {item, _binding} = Code.eval_string(take(obj_path))
+  #
+  #   item
+  # end
+    
   def path(item = %Item{}) do
     "obj/#{ item.unique }"
   end

@@ -3,7 +3,7 @@ require Logger
 defmodule Hug do
   
   @moduledoc """
-  A promise to get an Item at a later date.
+  A promise to get a reply or Item from the Player a later date.
   """
   
   # ask player for input, save program, return link to resume program

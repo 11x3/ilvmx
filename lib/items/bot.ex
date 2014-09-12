@@ -92,10 +92,26 @@ defmodule Bot do
   
   ## Callbacks
   
-  # def handle_call({:echo, signal}, from, state) do
-  #   {:reply, signal, state}
-  # end
   
+  # @doc """
+  # Execute a `nubspace` with `cupcake`.
+  # # todo: make this non-brute force
+  # Beam or lift a Bot (in a reactive style), onto a Nubspace to produce an
+  # FRP-like signal. todo: add the :epoch support back in.
+  #
+  # Or.. beam a Bot up into the Nubspace where it may long live the rest of its
+  # days. Or at least until it discovers a tiny civilization has developed on
+  # the rear, and then God and friends save it. The End.
+  # """
+  # def jump!(bot, nubspace) do
+  #   nub = pull! nubspace
+  #
+  #   bot.results(nub.cupcakes |> Enum.map fn cake ->
+  #     if is_function cake do
+  #       bot.results(Enum.concat(bot.results, [cake.(bot, bot.cupcake)]))
+  #     end
+  #   end)
+  # end
   
   ## GenServer
   

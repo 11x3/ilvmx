@@ -72,7 +72,7 @@ defmodule Castle do
     signal = GenServer.call(machine, {:execute, signal, items, duration})
     |> Castle.Wizard.filter?
   end
-  
+    
   @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
   @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
   def execute(signal, items \\ [], duration \\ 0) do
@@ -103,6 +103,25 @@ defmodule Castle do
     
     GenServer.call(machine, {:ping, signal, Castle.map[signal.set], duration})
   end
+  
+  # @doc "Collect a signal path for `duration` in Castle.Nubspace."
+  # def capture!(signal, duration \\ 1000) do
+  #   Logger.debug "(x-x-):capture! {signal: #{inspect signal.path}, program: #{inspect signal.item}}"
+  #
+  #   # start the server
+  #   {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
+  #
+  #   # start the signal/program
+  #   signal = GenServer.call(machine, {:capture, signal, duration})
+  # end
+  
+  # @doc "#todo: Kill a `signal` already in Nubspace."
+  # def break!(signal, token) do
+  #   {:ok, server} = GenServer.start_link(Castle.CPU, nil, debug: [])
+  #
+  #   # process the signal/program
+  #   GenServer.call(signal.source, {:break, signal, token})
+  # end
   
   @doc "Return an updated `signal` to the Castle."
   def next?(signal = %Signal{}) do
