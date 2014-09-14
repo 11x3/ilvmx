@@ -9,22 +9,19 @@ defmodule Castle do
   ILvMx takes place in `Castle` servers in the Great Kingdom of Nub. Castles 
   are top-level ILvMx nodes and the `Galaxy` is simply the ILvMx exchange.
 
-  
   ILvMx [
     Services [
-        Plug,
-        Game
-      ],
+      Game/Players,
+      Plug
+    ]
     Castle [
-      Signals [
+      Wizard,
+      Signal [
          item: %{},   # ping/servers
         items: [],    # exe/programs
       ],
       Machine [
         Signals/Programs/Items/Bots
-      ],
-      Game [
-        Map/Wizard/Players
       ],
     ]
   ]
@@ -51,7 +48,7 @@ defmodule Castle do
   
   
   ## API (castle)
-  
+    
   @doc "Install a `signal` into Castle.Nubspace."
   def install!(signal = %Signal{}, items \\ [], duration \\ 0) do
     Logger.debug "Castle.install!: #{inspect signal.set}"
@@ -104,8 +101,8 @@ defmodule Castle do
     GenServer.call(machine, {:ping, signal, Castle.map[signal.set], duration})
   end
   
-  # @doc "Collect a signal path for `duration` in Castle.Nubspace."
-  # def capture!(signal, duration \\ 1000) do
+  # @doc "Collect a `signal` at `step` for `duration` in Castle.Nubspace."
+  # def capture!(signal, step, duration \\ 3000) do
   #   Logger.debug "(x-x-):capture! {signal: #{inspect signal.path}, program: #{inspect signal.item}}"
   #
   #   # start the server

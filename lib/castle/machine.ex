@@ -59,8 +59,7 @@ defmodule Castle.Machine do
     
     {:reply, exe_loop(signal, Castle.map[signal.set], duration), state}
   end
-  
-  
+
   ## Private
   defp exe_loop(signal, items, duration) do
     exe_loop(signal, items)
