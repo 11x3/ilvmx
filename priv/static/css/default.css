@@ -7,15 +7,16 @@ body {
   font-size: 150%;
   padding: 0px;
   margin: 0px;
-  background: #0d0d0d;
+  /*background: #040404;*/
+  background: #0a0a0a;
 }
+
 html {
 }
 
-#page {
-  max-width: 80%;
-  margin-left: auto;
-  margin-right: auto;  
+header {
+  background-color: #161616;
+  padding: 20px;
 }
 
 h1 {
@@ -24,16 +25,18 @@ h1 {
   overflow: hidden;
 }
 
-#nubspace {
-  font-size: 28px;
-}
-label, input {
+label, 
+input {
   font-size: 16px;
 }
 
 a:hover {
   color: #c4adfe;
   background-color: #4e00cc;
+}
+
+body a {
+  color: rgba(26, 169, 254, 0.45);
 }
 
 ol,
@@ -49,41 +52,81 @@ ul li {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6,
+#poke {
   color: rgba(255, 255, 255, 0.29);
   padding-left: 40px;
-  font-family: "Arial Black", "Helvetica Neue", Helvetica, Geneva, sans-serif;
+  font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
   font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: -5px;
+  text-transform: lowercase;
+  letter-spacing: -1px;
 }
 
-code,
-form {
+code {
+  background: transparent;
   display: block;
   margin-bottom: 40px;
 }
 
-#lolnub, 
-#lolnub input[type=submit] {
-  display: block;
-  padding: 40px;
+
+/* custom */
+
+#console {
+  padding: 0;
+}
+
+#poke {
+  text-align: right;
+  color: #fe750c;
+  margin-top: 25px;
+}
+
+#lolnub {
+  margin: 0;
+  background-color: #1f0063;
+}
+
+#lolnub #execute {
+  padding: 20px 10px 20px 30px;
   font-size: 42px;
-  color: #4b4b4b;
-  background-color: #d5d5d5;
-  border: 1px solid #1b1b1b;
+  color: #910aff;
+  border: none;
+  background: transparent;
 }
 
-body a {
-  color: rgba(26, 169, 254, 0.45);
+#lolnub #execute:focus {
+  outline: none;
 }
 
-#content .title {
-  color: #004c77;
+#lolnub input[type=submit] {
+  margin-left: -9000px;  
 }
 
-header {
-  padding: 40px;
+#signals {
+  background: #181818;
+  text-align: right;
+}
+
+#signals li {
+  text-transform: lowercase;
   display: block;
-  color: rgba(44, 44, 44, 0.43);
 }
+
+#signals li a {
+  color: rgb(26, 169, 254);
+}
+
+#output {
+  background: url('../images/bg.jpg') left top no-repeat #000000;
+}
+
+
+
+
+
+
+
+
+

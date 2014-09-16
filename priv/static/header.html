@@ -16,38 +16,46 @@
 </head>
 <body class="container-fluid">
 
-<div id="page" class="row">
+<div id="page">
         
-    <header>
-        <p id="copyright">
-            &copy; 2014 #lolnub<br>
-            <a href="http://blog.lolnub.com/">#blog</a>
-    	    <a id="" title="(c) 2014 #lolnub.com" href="http://lolnub.com/">
-    		#lolnub</a>
-            <a href="http://github.com/lolnub">#source</a>
-    		<a href="https://www.kickstarter.com/projects/1188856672/1502040661?token=cd0ffadc">#kickstarter</a></p>
+    <header id="console" class="row">
+        <p id="poke" class="col-md-4">exe:</p>
         
-    <form action="/" method="get" accept-charset="utf-8">
-        <input id="lolnub" placeholder="lolnub" size=28>
-        <input type="submit" name="submit" value="boost?">
-    </form>
+        <form id="lolnub" action="/" method="get" accept-charset="utf-8" class="col-md-8">
+            <input id="execute" placeholder="#lolnub" size=42 >
+            <input type="submit" name="submit" value="#lolnub">
+        </form>
     </header>
-    
-    <div id="output">
-        <script id='template' type='text/ractive'>
-        <h1>#signals</h1>
-        <ul id="signals">{{signals}}</ul>
-        </script>
-    </div>
-    
-    <!-- <div class="row">
-    <div id="" class="col-golden-lg">
-        <p>large</p>
-    </div>
-    <div id="" class="col-golden-sm">
-        <p>small</p>
-    </div>
-    </div> -->
 
+    <section class="content row">
+    
+    <div id="signals" class="content col-md-4">
+        <h1>#signals</h1>
+        <ul id="signals">
+            <li><a href="/">Magic</a></li>       
+            <li><a href="/signals">Signals</a></li>       
+            <li><a href="/programs">Programs</a></li>       
+            <li><a href="/items">Items</a></li>       
+            <li><a href="/players">Players</a></li>       
+        </ul>
+    </div>
+    
+
+    <div id="output" class="col-md-8">
+        <h1>#output</h1>
+    </div>
+    </section>
+    
 <code>
     
+    
+
+<!--
+    <p id="copyright">
+        &copy; 2014 #lolnub<br>
+        <a href="http://blog.lolnub.com/">#blog</a>
+        <a id="" title="(c) 2014 #lolnub.com" href="http://lolnub.com/">
+        #lolnub</a>
+        <a href="http://github.com/lolnub">#source</a>
+        <a href="https://www.kickstarter.com/projects/1188856672/1502040661?token=cd0ffadc">#kickstarter</a></p>
+     -->

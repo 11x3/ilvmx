@@ -21,3 +21,8 @@ Signal.m("page/footer", Bot.take "footer.html") |> Castle.install!
 "about" |> Signal.m(Program.cmd fn s -> 
     Item.m [Bot.pull("page/header"), Castle.signal.items, Bot.pull("page/footer")]
   end) |> Castle.install!
+  
+
+# "hi" |> Signal.m(Program.cmd fn s ->
+#     Item.m Bot.web "http://lolnub.com"
+#   end) |> Castle.install!
