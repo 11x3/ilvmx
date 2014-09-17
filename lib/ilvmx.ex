@@ -33,7 +33,7 @@ defmodule ILvMx do
     
     Castle.Machine.reset!
     
-    Application.put_env(:ilvmx, :signal, Signal.m(Castle.name, %{}))
+    Application.put_env(:ilvmx, :signal, Signal.all %{})
 
     Logger.debug "...\ #ilvmx."
   end

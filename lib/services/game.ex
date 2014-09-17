@@ -12,7 +12,7 @@ defmodule Castle.Game do
   # @doc "Publish a `Signal` to the Game rules."
   # def host!(signal) do
   #   #todo: validate signal
-  #   # signal_map = Dict.update(Castle.map, signal.set, [signal], fn signals -> [signal|signals] end)
+  #   # signal_map = Dict.update(Castle.map, signal.path, [signal], fn signals -> [signal|signals] end)
   #   # Application.put_env :ilvmx, :signal, %Signal{Castle.signal| item: signal_map, items: [signal|Castle.signal.items]}
   #
   #   signal

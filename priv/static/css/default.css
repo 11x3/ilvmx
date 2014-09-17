@@ -19,7 +19,7 @@ body {
 }
 
 header {
-  background: rgb(0, 0, 0);
+  background: rgb(68, 68, 68);
 }
 
 h1 {
@@ -88,7 +88,7 @@ code {
 
 #poke {
   text-align: right;
-  color: #910aff;
+  color: #181818;
   font-weight: normal;
   font-style: normal;
 }
@@ -96,13 +96,15 @@ code {
 #lolnub {
   overflow: hidden;
 }
+
 #lolnub #execute {
   border-style: none;
   border-width: 0;
   font-weight: normal;
   font-style: normal;
-  color: #910aff;
+  color: #4e59ab;
   background: transparent;
+  margin-left: 40px;
 }
 
 #lolnub #execute:focus {
@@ -123,7 +125,7 @@ code {
 #signals li {
   text-transform: lowercase;
   display: block;
-  margin: 10px;
+  margin: 10px 9px 10px 10px;
   color: #5d5d5d;
 }
 
@@ -132,10 +134,15 @@ code {
   font-weight: bold;
 }
 
+#signals .patches {
+  position: relative;
+  left: 20px;
+}
+
 #output {  
   padding-top: 20px;
-  padding-right: 40px;
-  padding-left: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 #output section {

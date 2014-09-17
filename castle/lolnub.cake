@@ -1,4 +1,4 @@
-"about" |> Signal.m(Program.cmd fn s -> Item.m Markdown.to_html """
+"about" |> Signal.set(Program.cmd fn s -> Item.m Markdown.to_html """
 #Cakedown
 
 Cakedown is one of many [magic programming languages](http://en.wikipedia.org/wiki/Magic_(programming)) you use to create cloud apps in seconds, writing them with only simple words and easy commands to program them.

@@ -43,30 +43,30 @@ defmodule Castle do
   def x(signal_path, thing \\ nil) when is_binary(signal_path) do
     Logger.debug "Castle.x: #{signal_path} thing: #{inspect thing}"
     
-    execute(Signal.m(signal_path, thing), Castle.signal.items, 0)
+    execute(Signal.set(signal_path, thing), Castle.signal.items, 0)
   end
   
   @doc "Testing shortcut to create, exe, and return items from Castle.Nubspace at `signal_path`."
   def x!(signal_path, thing \\ nil) when is_binary(signal_path) do
     Logger.debug "Castle.x!: #{signal_path} thing: #{inspect thing}"
     
-    execute!(Signal.m(signal_path, thing), Castle.signal.items, 0)
+    execute!(Signal.set(signal_path, thing), Castle.signal.items, 0)
   end
   
   ## API (castle)
     
   @doc "Install a `signal` into Castle.Nubspace."
   def install!(signal = %Signal{}, items \\ [], duration \\ 0) do
-    Logger.debug "Castle.install!: #{inspect signal.set}"
+    Logger.debug "Castle.install!: #{inspect signal.path}"
     
     #todo: validate signal
-    #todo: support regex in signal.set
+    #todo: support regex in signal.path
     
     # promote the signal to a GenServer
     {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
     
     signal        = %{signal| source: machine}
-    signal_map    = Dict.update(Castle.map, signal.set, [signal], fn signals -> [signal|signals] end)
+    signal_map    = Dict.update(Castle.map, signal.path, [signal], fn signals -> [signal|signals] end)
     signal_items  = [signal|Castle.signal.items]
     
     Application.put_env :ilvmx, :signal, %Signal{Castle.signal| item: signal_map, items: signal_items}
@@ -78,7 +78,7 @@ defmodule Castle do
     
   @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
   def execute(signal, items \\ [], duration \\ 0) do
-    Logger.debug "Castle.execute: #{inspect signal.set}"
+    Logger.debug "Castle.execute: #{inspect signal.path}"
     
     # promote the signal to a GenServer
     {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
@@ -110,7 +110,7 @@ defmodule Castle do
     {:ok, machine} = GenServer.start_link(Castle.Machine, nil, debug: [])
     signal = %{signal| source: machine}
     
-    GenServer.call(machine, {:ping, signal, Castle.map[signal.set], duration})
+    GenServer.call(machine, {:ping, signal, Castle.map[signal.path], duration})
   end
   
   # @doc "Collect a `signal` at `step` for `duration` in Castle.Nubspace."
@@ -213,7 +213,7 @@ defmodule Castle do
     
     :timer.sleep(1000)
     
-    ping!(Signal.m path)
+    ping!(Signal.set path)
   end
   
   

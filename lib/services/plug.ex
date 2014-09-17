@@ -40,7 +40,7 @@ defmodule Castle.Plug do
     # auto-init binary items before the signal is processed
     upload  = conn.params["item"]
     item    = Item.m File.read!(upload["content"].path), upload["program"]
-    signal  = Signal.m(signal_path, conn) |> Signal.boost item
+    signal  = Signal.set(signal_path, conn) |> Signal.boost item
     
     game_result(conn, Castle.execute(signal, conn))
   end
@@ -67,7 +67,7 @@ defmodule Castle.Plug do
     obj_path = Path.join(["priv", "static"|command])
     
     if File.exists?(obj_path) do
-      Task.async fn -> Castle.ping! Signal.m Path.join(command) end
+      Task.async fn -> Castle.ping! Signal.set Path.join(command) end
       
       # todo: add send_file here
       send_resp conn, 200, File.read!(obj_path)

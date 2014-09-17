@@ -1,35 +1,34 @@
 defmodule Signal do
   @derive [Enumerable]
-  defstruct      set: nil,  # "about/ilvmx"
-                item: nil,  # request/item/upload/etc
-               items: [],   # [item] 
-              unique: nil,  # uuid
-              source: nil,  # sender (pid, email, nick, etc)  
-               owner: nil   # Player
-   
+  defstruct   path: nil,  # "about/ilvmx"
+            source: nil,  # castle/program/etc
+            unique: nil,  # uuid
+              item: nil,  # item/request/upload/etc
+             items: []    # [effects]
+  
   @moduledoc """
-  `Signal`s are the superglue unit of the ILvMx Galaxy.  
+  `Signal`s are the superglue unit of an ILvMx Galaxy.
   """
   
-  # Signal.set about: Bot.pull "html/about"
-  
   @doc "Make a `Signal`."
-  def m(set \\ Castle.name, thing \\ nil, source \\ nil) do
+  def all(item \\ nil, source \\ nil) do
+    set Castle.name, item, source
+  end
+  def set(path, item \\ nil, items \\ nil) when is_binary(path) do
     %Signal{
-           set: set,
-          item: thing,
-         items: [],
-        source: source,
+          path: path,
+        source: nil,
         unique: Castle.uuid,
-         owner: Player.anon!
+          item: item,
+         items: items || [],
     }
   end
-
+  
   ## Instance
   
   @doc "Add `items` to `signal`."
-  def boost(signal, items) do
-    %{signal| items: List.flatten([signal.items|[items]]) }
+  def boost(signal = %Signal{}, items) do
+    put_in signal.items, List.flatten([items])
   end
 
 end

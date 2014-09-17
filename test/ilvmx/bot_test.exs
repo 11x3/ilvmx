@@ -20,7 +20,7 @@ defmodule BotTest do
       
   test "Bot.pull to grab web pages" do
     ILvMx.reset!
-    Castle.install! Signal.m "lol", "nub"
+    Castle.install! Signal.set "lol", "nub"
     
     assert [] == Bot.pull "lol"
   end

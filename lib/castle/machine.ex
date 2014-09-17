@@ -33,7 +33,7 @@ defmodule Castle.Machine do
     #todo: check for kill9 on signal
     #todo: fix/append the custom items to our castle items
     
-    {:noreply, exe_loop(signal, Castle.map[signal.set], duration)}
+    {:noreply, exe_loop(signal, Castle.map[signal.path], duration)}
   end
   
   @doc "Execute `signal` with `items` for `duration` on the Castle.Machine."
@@ -45,14 +45,14 @@ defmodule Castle.Machine do
     #todo: check for kill9 on signal
     #todo: fix/append the custom items to our castle items
     
-    {:reply, exe_loop(signal, Castle.map[signal.set], duration), state}
+    {:reply, exe_loop(signal, Castle.map[signal.path], duration), state}
   end
 
   ## Private
   defp exe_loop(signal, items, duration) do
     Logger.debug "Castle.Machine:execute
              cpu: #{inspect self}
-             set: #{inspect signal.set}
+             path: #{inspect signal.path}
           signal: #{inspect signal}
     "
     
