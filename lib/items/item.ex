@@ -1,5 +1,5 @@
 defmodule Item do
-  defstruct   kind: nil,  # [:data, :program] (eg. mime/type)
+  defstruct object: nil,  # [:data, :program] (eg. mime/type)
             unique: nil,  # "32453-4544-3434-234324-7879"
            content: nil   # {:file, etc}  => "obj/32453-4544-3434-234324-7879/binary"
             
@@ -7,12 +7,15 @@ defmodule Item do
   Items are the simplest objects in the Kingdom.
   #todo: partition the disk on Item.unique
   """
-  def m(content \\ nil) do
+  def m(content \\ nil, object \\ nil) do
     unique = Castle.uuid
     item = %Item{
       unique: unique,
-     content: content
+     content: content,
+      object: object
     }
+    
+    # create static object
     Bot.make inspect(item), path(item)
     
     item
@@ -30,7 +33,7 @@ defmodule Item do
   #
   #   item
   # end
-    
+  
   def path(item = %Item{}) do
     "obj/#{ item.unique }"
   end

@@ -8,7 +8,7 @@ defmodule CastleTest do
     Castle.install! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
 
     # the Program/fn above is executed... great success.
-    assert ["nub err roo"] = Castle.x "lol"
+    assert "nub err roo" = Castle.x! "lol"
   end
   
   test "Castle.x to return signal items. (aka different magic)." do
@@ -16,7 +16,8 @@ defmodule CastleTest do
     Castle.install! Signal.m("lol", Program.cmd(fn s -> "nub err roo" end))
 
     # the Program/fn above is executed... great success.
-    assert ["nub err roo"] == Castle.x "lol"
+    assert %Signal{items: ["nub err roo"]} = Castle.x "lol"
+    assert "nub err roo" == Castle.x! "lol"
   end
   
   test "Castle.signal", 
@@ -69,7 +70,7 @@ defmodule CastleTest do
     assert lol = %Signal{} = Castle.install! Signal.m("lol", "nub")
     assert sup = %Signal{} = Castle.install! Signal.m("sup", "nub")
     
-    assert [lol] = Castle.execute! Signal.m "lol"
+    assert lol = Castle.execute Signal.m "lol"
   end
   
   test "Castle.download to capture `Castle.Nubspace` items",
@@ -113,11 +114,11 @@ defmodule CastleTest do
   end
     
   test "invalids" do
-    assert [] == Castle.x "something random #{ Castle.uuid }"
+    assert nil == Castle.x! "something random #{ Castle.uuid }"
     
-    assert "[]" == HTTPotion.get(IT.web "./somethinga/$5").body
-    assert "[]" == HTTPotion.get(IT.web "../something").body
-    assert "[]" == HTTPotion.get(IT.web "../something:else").body
+    assert "/" == HTTPotion.get(IT.web "./somethinga/$5").body
+    assert "/" == HTTPotion.get(IT.web "../something").body
+    assert "/" == HTTPotion.get(IT.web "../something:else").body
   end
   
   test "splash" do

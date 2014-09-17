@@ -18,37 +18,53 @@
 
 <div id="page">
         
-    <header id="console" class="row">
-        <p id="poke" class="col-md-4">exe:</p>
-        
-        <form id="lolnub" action="/" method="get" accept-charset="utf-8" class="col-md-8">
-            <input id="execute" placeholder="#lolnub" size=42 >
+    <header id="console" class="content row">
+        <form id="lolnub" action="/" method="get" accept-charset="utf-8">
+            <label id="poke" class="col-md-4">#signals</label>
+            <input id="execute" placeholder="#lolnub" size=42 class="">
             <input type="submit" name="submit" value="#lolnub">
         </form>
     </header>
 
     <section class="content row">
-    
-    <div id="signals" class="content col-md-4">
-        <h1>#signals</h1>
-        <ul id="signals">
-            <li><a href="/">Magic</a></li>       
-            <li><a href="/signals">Signals</a></li>       
-            <li><a href="/programs">Programs</a></li>       
-            <li><a href="/items">Items</a></li>       
-            <li><a href="/players">Players</a></li>       
-        </ul>
-    </div>
-    
 
-    <div id="output" class="col-md-8">
-        <h1>#output</h1>
-    </div>
+        <div id="signals" class="col-md-4">
+            <img src="/img/lol-patches.png" alt="hi from patches">            
+            <ul id="">
+                <li>[<a href="/">magic</a>]</li>
+                <li><a href="/players">Players</a></li>
+                <li><a href="/signals">Signals</a></li>
+                <li><a href="/programs">Programs</a></li>
+                <li><a href="/items">Items</a></li>
+                <li>#todo: <br><em>superpowers</em></li>
+            </ul>
+        </div>
+        
+        
+        <div id="output" class="col-md-8">            
+            <section class="content row">
+                <p><a href="#">Share something?</a></p>
+            	<form method="post" action="/push" name="submit" enctype="multipart/form-data" class="form-horizontal" role="form">		              
+            		<input name="item[content]" class="form-control" type="file" ><br>
+                    <textarea name="item[program]" placeholder="#lolnub" class="col-md" cols=28 rows=8></textarea>
+                    
+                    <img src="/img/lol-nubcake.png" alt="hi from patches" class="pull-right">
+                    <input type="submit" name="submit" value="#lolnub">                    
+                </form>
+            </section>
+            
+            <section href="#" class="content row">
+                <p><a href="#">Set your Privacy preference?</a></p>
+                <img src="/img/broadcast.png" alt="hi from patches">
+                <img src="/img/bepicky.png" alt="hi from patches">
+                <img src="/img/blackout.png" alt="hi from patches">  
+            </section>
+        </div>
+        
+        
+
     </section>
-    
-<code>
-    
-    
+
 
 <!--
     <p id="copyright">

@@ -9,13 +9,12 @@ defmodule Program do
             unique: nil
             
   @moduledoc """
-  Programming Program [wip][betabook]
-  #todo: returns `Signal`
+  #todo: Programming Cakedown [wip][betabook]
   """
   
   ## API
   
-  @doc "Execute a `function`"
+  @doc "Enclose `code` and return Program."
   def cmd(code) when is_function(code) do
     #todo: quote the function for transport
     program = %Program{
@@ -24,10 +23,12 @@ defmodule Program do
     }
   end
   
-  def exe(signal = %Signal{}, program = %Signal{item: %Program{}}) do
-    result = Task.async(fn -> program.item.code.(signal) end) |> Task.await
-        
-    Signal.boost(signal, result)
+  
+  @doc "Execute a signa/function."
+  def exe(signal = %Signal{}, program = %Signal{item: %Program{}}) do    
+    Signal.boost(signal, Task.async(fn ->
+      program.item.code.(signal) 
+    end) |> Task.await)
   end
   def exe(signal = %Signal{}, _signal = %Signal{item: item = %Item{}}) do    
     Signal.boost(signal, item)

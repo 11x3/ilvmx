@@ -1,3 +1,5 @@
+require Logger
+
 defmodule Castle.Wizard do
   use GenServer
 
@@ -15,12 +17,6 @@ defmodule Castle.Wizard do
   
   
   @doc "Stub :before `Signal` traffic review."
-  def review?(signal = %Signal{set: item = %Item{content: %{"binary" => %Plug.Upload{} }}}) do
-    upload = item.content["binary"]
-    
-    # hack: auto-init binary items before the signal is processed    
-    review?(%{signal| item: %{item| kind: upload.content_type, content: File.read!(upload.path) }})
-  end
   def review?(signal) do
     
     signal

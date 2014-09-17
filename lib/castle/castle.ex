@@ -39,13 +39,19 @@ defmodule Castle do
     Castle.signal.item
   end
   
-  @doc "Testing shortcut to create and execute a signal from a binary."
+  @doc "Testing shortcut to create, exe, and return a `Signal`."
   def x(signal_path, thing \\ nil) when is_binary(signal_path) do
     Logger.debug "Castle.x: #{signal_path} thing: #{inspect thing}"
     
-    execute!(Signal.m(signal_path, thing), Castle.signal.items, 0)
+    execute(Signal.m(signal_path, thing), Castle.signal.items, 0)
   end
   
+  @doc "Testing shortcut to create, exe, and return items from Castle.Nubspace at `signal_path`."
+  def x!(signal_path, thing \\ nil) when is_binary(signal_path) do
+    Logger.debug "Castle.x!: #{signal_path} thing: #{inspect thing}"
+    
+    execute!(Signal.m(signal_path, thing), Castle.signal.items, 0)
+  end
   
   ## API (castle)
     
@@ -71,7 +77,6 @@ defmodule Castle do
   end
     
   @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
-  @doc "Boost `signal` and return a `Signal` with Castle.Nubspace `items`."
   def execute(signal, items \\ [], duration \\ 0) do
     Logger.debug "Castle.execute: #{inspect signal.set}"
     
@@ -86,8 +91,15 @@ defmodule Castle do
     |> galaxy!
     |> archive!
   end
+  @doc "Boost `signal` a with `items` and return `Signal.items` or a single `item`."
   def execute!(signal, items \\ [], duration \\ 0) do
-    execute(signal, items, duration).items
+    results = execute(signal, items, duration).items
+    
+    if is_list(results) and length(results) < 2 do
+      results |> List.first
+    else
+      results
+    end
   end
 
   @doc "Ping `signal` through `items`."
@@ -148,7 +160,7 @@ defmodule Castle do
   
   @doc "Save `signal` to disk as configured."
   def archive!(signal = %Signal{}) do
-    Logger.debug "...\\#{ inspect signal }/..............................................................."
+    #Logger.debug "...\\#{ inspect signal }/..............................................................."
     
     # todo: add/update commit times of signal
     
@@ -196,13 +208,12 @@ defmodule Castle do
   
   ## Private
   
-  defp epoch_loop do
-    # exe 10/sec
+  defp epoch_loop(tick \\ 1000, path) do
+    #todo: add longer duration ping paths
+    
     :timer.sleep(1000)
     
-    ping!(Signal.m "ping/1000")
-    
-    epoch_loop
+    ping!(Signal.m path)
   end
   
   
@@ -225,8 +236,9 @@ defmodule Castle do
   def start_link(signal \\ nil) do
     link = {:ok, castle} = GenServer.start_link(Castle, signal)
     
-    Task.async &(epoch_loop/0)
-        
+    Task.async fn -> epoch_loop(1000,   "ping/every/second") end
+    Task.async fn -> epoch_loop(60000,  "ping/every/minute") end
+    
     Logger.debug "Castle: #{ inspect castle } default: #{inspect signal}"
 
     link
