@@ -10,10 +10,14 @@ defmodule Signal do
   `Signal`s are the superglue unit of an ILvMx Galaxy.
   """
   
-  @doc "Make a `Signal`."
+  ## API
+  
+  @doc "Make a catch all `Signal` at the root of Castle.Nubspace."
   def all(item \\ nil, source \\ nil) do
     set Castle.name, item, source
   end
+  
+  @doc "Make a `Signal` at `path` with optional `item` and `items` in Castle.Nubspace."
   def set(path, item \\ nil, items \\ nil) when is_binary(path) do
     %Signal{
           path: path,

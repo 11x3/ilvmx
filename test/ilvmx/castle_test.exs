@@ -40,15 +40,15 @@ defmodule CastleTest do
   end
 
   test "Castle.install! to install a binary string" do
-    signal = %Signal{} = Castle.install! Signal.set "ilvmx", Item.m("todo")
+    signal = %Signal{} = Castle.install! Signal.set "ilvmx", Item.w("todo")
     
     assert Regex.match? ~r/obj/, Item.path(signal.item)
     assert true == File.exists? "priv/static/#{ Item.path(signal.item) }"
     assert "todo" == signal.item.content
   end
   
-  test "Castle.install! to install static content with Bot.take" do
-    signal = %Signal{} = Castle.install! Signal.set "splash", Item.m(Bot.take ["header.html", "footer.html"])
+  test "Castle.install! to install static content with Bot.grab" do
+    signal = %Signal{} = Castle.install! Signal.set "splash", Item.w(Bot.grab ["header.html", "footer.html"])
 
     assert Regex.match? ~r/obj/,      Item.path(signal.item)
     assert File.exists? "priv/static/#{ Item.path(signal.item) }"

@@ -1,18 +1,19 @@
 defmodule Item do
   defstruct object: nil,  # [:data, :program] (eg. mime/type)
             unique: nil,  # "32453-4544-3434-234324-7879"
-           content: nil   # {:file, etc}  => "obj/32453-4544-3434-234324-7879/binary"
+           content: nil   # {:file, <<whatever>>}
             
   @moduledoc """
-  Items are the simplest objects in the Kingdom.
-  #todo: partition the disk on Item.unique
+  Item's are our legos and Nubspace is what we build with them.
   """
-  def m(content \\ nil, object \\ nil) do
+  
+  @doc "Make and return an `item` with optional `content`."
+  def w(content \\ nil) do
     unique = Castle.uuid
     item = %Item{
       unique: unique,
      content: content,
-      object: object
+      object: %{}
     }
     
     # create static object
@@ -21,21 +22,27 @@ defmodule Item do
     item
   end
 
-  # @doc "Return existing `Item`s at `obj_path` which is looks like 'obj/UUID' etc."
-  # def get(obj_paths) when is_list(obj_paths) do
-  #   obj_paths |> Enum.map fn path ->
-  #     get(path)
-  #   end
-  # end
-  # def get(obj_path) do
-  #   # read and eval the item data into an Item
-  #   {item, _binding} = Code.eval_string(take(obj_path))
-  #
-  #   item
-  # end
-  
-  def path(item = %Item{}) do
-    "obj/#{ item.unique }"
+  @doc "Update an existing `item` property `key` with `value`."
+  def set(item = %Item{}, key, value \\ nil) when is_binary(key) do
+    put_in item.object, Dict.put(item.object, key, value)
   end
+  
+  @doc "Return an existing `Item` at `item_unique` which looks something like 'obj/32453-4544-3434-234324-7879'."
+  def get(item_unique) when is_binary(item_unique) do
+    # read and eval the item data into an Item
+    data = Bot.grab(Path.join "obj", item_unique)
+    
+    {item, _binding} = Code.eval_string data
 
+    item
+  end
+  
+  @doc "Return an existing `item`'s path or just use to hit test the unique."
+  def path(item = %Item{}) do
+    Path.join "obj", item.unique
+  end
+  def path(item_unique) when is_binary(item_unique) do
+    Path.join "obj", item_unique
+  end
+   
 end

@@ -4,10 +4,10 @@ defmodule BotTest do
   ## File
 
   test "Bot.make to write files to disk", 
-    do: assert Bot.take("tmp/todo") == Bot.make("todo", "tmp/todo") 
+    do: assert Bot.grab("tmp/todo") == Bot.make("todo", "tmp/todo") 
   
-  test "Bot.take to read files from disk", 
-    do: assert Regex.match?(~r/html/, Bot.take(["header.html", "footer.html"]))
+  test "Bot.grab to read files from disk", 
+    do: assert Regex.match?(~r/html/, Bot.grab(["header.html", "footer.html"]))
   
   
   ## World

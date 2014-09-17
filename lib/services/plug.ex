@@ -21,7 +21,7 @@ defmodule Castle.Plug do
   
   @doc "Plug: *ring*, *ring*"
   def call(conn = %Plug.Conn{path_info: []}, options) do
-    send_resp conn, 200, Bot.take(["header.html", "footer.html"])
+    send_resp conn, 200, Bot.grab(["header.html", "footer.html"])
   end
   
   def call(conn = %Plug.Conn{path_info: signal_path}, options) do
@@ -39,7 +39,7 @@ defmodule Castle.Plug do
     
     # auto-init binary items before the signal is processed
     upload  = conn.params["item"]
-    item    = Item.m File.read!(upload["content"].path), upload["program"]
+    item    = Item.w File.read!(upload["content"].path), upload["program"]
     signal  = Signal.set(signal_path, conn) |> Signal.boost item
     
     game_result(conn, Castle.execute(signal, conn))

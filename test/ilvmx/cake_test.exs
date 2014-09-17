@@ -4,6 +4,6 @@ defmodule CakeTest do
   ## File
 
   test "Bot.make to write files to disk", 
-    do: assert Bot.take("tmp/todo") == Bot.make("todo", "tmp/todo") 
+    do: assert Bot.grab("tmp/todo") == Bot.make("todo", "tmp/todo") 
 
 end

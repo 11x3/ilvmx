@@ -38,8 +38,6 @@ defmodule Castle.Machine do
   
   @doc "Execute `signal` with `items` for `duration` on the Castle.Machine."
   def handle_call({:execute, signal, items, duration}, from, state) do
-
-    
     #todo: add dynamic :boost signal/server
     #todo: return an ownership token
     #todo: check for kill9 on signal
@@ -50,11 +48,10 @@ defmodule Castle.Machine do
 
   ## Private
   defp exe_loop(signal, items, duration) do
-    Logger.debug "Castle.Machine:execute
-             cpu: #{inspect self}
-             path: #{inspect signal.path}
-          signal: #{inspect signal}
-    "
+    # Logger.debug "Castle.Machine:execute
+    #          cpu: #{inspect self}
+    #          path: #{inspect signal.path}
+    #       signal: #{inspect signal}"
     
     exe_loop(signal, items)
   end
